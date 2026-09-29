@@ -25,3 +25,5 @@ Synth(\quindarRadio, [\freq, 2475, \seed, 1969, \variant, 1]); // noisy OUT
 ~racer.set(\whompPeriod, 0.9, \cycle, 5, \motion, 0.32);
 ~racer.set(\malfunction, 0.95); // choking, misfire, pitch instability
 ~racer.set(\malfunction, 0, \throttle, 0.8); // recover and accelerate
+
+~racer.set(\sand, 1.2); // heavier sand ingestion (0–1.5)
