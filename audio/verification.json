@@ -1,21 +1,23 @@
 {
   "desert-pod-racer.wav": {
-    "seconds": 37.0013,
+    "seconds": 38.0013,
     "sample_rate": 48000,
     "channels": 2,
-    "peak_dbfs": -12.46,
-    "rms_dbfs": -25.38,
+    "peak_dbfs": -9.27,
+    "rms_dbfs": -23.42,
     "end_peak": 0.0
   },
   "quindar-in-noisy.wav": {
-    "seconds": 0.6507,
+    "seconds": 0.9013,
     "sample_rate": 48000,
     "channels": 2,
-    "peak_dbfs": -12.28,
-    "rms_dbfs": -20.15,
+    "peak_dbfs": -11.81,
+    "rms_dbfs": -23.87,
     "end_peak": 0.0,
+    "noise_crest_factor": 19.34,
     "measured_hz": 2525,
-    "pre_tone_noise_dbfs": -39.87
+    "pre_tone_noise_dbfs": -42.15,
+    "noise_pair_correlation": 0.0038
   },
   "quindar-in-out.wav": {
     "seconds": 1.8013,
@@ -36,14 +38,16 @@
     "tone_seconds": 0.24996
   },
   "quindar-out-noisy.wav": {
-    "seconds": 0.6507,
+    "seconds": 0.9013,
     "sample_rate": 48000,
     "channels": 2,
-    "peak_dbfs": -12.26,
-    "rms_dbfs": -20.02,
+    "peak_dbfs": -12.2,
+    "rms_dbfs": -23.86,
     "end_peak": 0.0,
+    "noise_crest_factor": 23.54,
     "measured_hz": 2475,
-    "pre_tone_noise_dbfs": -40.39
+    "pre_tone_noise_dbfs": -41.19,
+    "noise_pair_correlation": 0.0038
   },
   "quindar-out.wav": {
     "seconds": 0.4013,
