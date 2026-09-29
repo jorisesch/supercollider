@@ -1,0 +1,3 @@
+interface:
+  display_name: "SuperCollider Music"
+  short_description: "Compose music, design synths, and render audio"
