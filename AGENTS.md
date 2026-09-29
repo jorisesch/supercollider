@@ -2,8 +2,8 @@
 
 This is a public repository of SuperCollider skills, editable synthesis patches, and rendered audio.
 
-- All changes require pull-request review before merging. Do not push implementation changes directly to the default branch or self-merge a pull request.
-- Include the skill, instruments, arrangements, and documentation in review; audio changes also require human listening review.
+- Prepare changes and ask the user for approval in the current session before committing. Direct commits are allowed after approval; pull requests are not required.
+- Human listening review of audio happens in the session; distinguish it from numerical verification.
 - Keep public files portable. Exclude credentials, personal filesystem paths, local logs, temporary scores, and unrelated artifacts.
 - Read `skill/supercollider-music/SKILL.md` when composing or changing synthesis.
 - Keep `instruments.scd` free of playback side effects; `live.scd` is interactive and `render.scd` is a standalone batch process that exits after rendering.
