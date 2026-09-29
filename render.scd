@@ -27,13 +27,13 @@ render.value("quindar-in-noisy", [[0, [\d_recv, ~quindarRadioDef.asBytes]], [0.0
 render.value("quindar-out-noisy", [[0, [\d_recv, ~quindarRadioDef.asBytes]], [0.05, [\s_new, \quindarRadio, 1000, 0, 0, \freq, 2475, \seed, 1969, \variant, 1]]], 0.9);
 render.value("desert-pod-racer", [
     [0, [\d_recv, ~racerDef.asBytes]],
-    [0.1, [\s_new, \desertRacer, 1000, 0, 0, \throttle, 0.45, \whompPeriod, 1.05]],
-    [6, [\n_set, 1000, \throttle, 0.62, \whompPeriod, 0.9]],
-    [12, [\n_set, 1000, \throttle, 0.5, \whompPeriod, 1.2]],
+    [0.1, [\s_new, \desertRacer, 1000, 0, 0, \throttle, 0.45]],
+    [6, [\n_set, 1000, \throttle, 0.62]],
+    [12, [\n_set, 1000, \throttle, 0.5]],
     [15, [\n_set, 1000, \malfunction, 0.95]],
     [17, [\n_set, 1000, \malfunction, 0.55, \throttle, 0.3]],
-    [19, [\n_set, 1000, \malfunction, 0, \throttle, 0.8, \whompPeriod, 0.8]],
-    [25, [\n_set, 1000, \throttle, 0.5, \whompPeriod, 1.1]],
+    [19, [\n_set, 1000, \malfunction, 0, \throttle, 0.8]],
+    [25, [\n_set, 1000, \throttle, 0.5]],
     [29, [\n_set, 1000, \malfunction, 0.7]],
     [30.2, [\n_set, 1000, \malfunction, 0, \throttle, 0.72]],
     [34, [\n_set, 1000, \gate, 0]]

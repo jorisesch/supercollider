@@ -3,8 +3,8 @@
     "seconds": 38.0013,
     "sample_rate": 48000,
     "channels": 2,
-    "peak_dbfs": -4.8,
-    "rms_dbfs": -19.08,
+    "peak_dbfs": -5.82,
+    "rms_dbfs": -16.72,
     "end_peak": 0.0
   },
   "quindar-in-noisy.wav": {
