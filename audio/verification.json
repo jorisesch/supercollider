@@ -1,12 +1,4 @@
 {
-  "desert-pod-racer.wav": {
-    "seconds": 38.0013,
-    "sample_rate": 48000,
-    "channels": 2,
-    "peak_dbfs": -5.82,
-    "rms_dbfs": -16.72,
-    "end_peak": 0.0
-  },
   "quindar-in-noisy.wav": {
     "seconds": 0.9013,
     "sample_rate": 48000,
@@ -58,5 +50,15 @@
     "end_peak": 0.0,
     "measured_hz": 2475.0,
     "tone_seconds": 0.24996
+  },
+  "rocket-launch.wav": {
+    "seconds": 43.0013,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -5.16,
+    "rms_dbfs": -17.19,
+    "end_peak": 0.0,
+    "countdown_beeps": 5,
+    "ignition_seconds": 5.1
   }
 }

@@ -5,7 +5,7 @@ import wave
 from pathlib import Path
 
 expected = {'quindar-in.wav', 'quindar-out.wav', 'quindar-in-out.wav',
-            'quindar-in-noisy.wav', 'quindar-out-noisy.wav', 'desert-pod-racer.wav'}
+            'quindar-in-noisy.wav', 'quindar-out-noisy.wav', 'rocket-launch.wav'}
 assert expected <= {p.name for p in Path('audio').glob('*.wav')}, 'Missing audio renders'
 noise_signatures = {}
 results = {}
@@ -21,6 +21,16 @@ for path in sorted(Path('audio').glob('*.wav')):
     edge = max(map(abs, values[-4800:]))
     assert edge < 0.0001
     result = dict(seconds=round(frames/rate, 4), sample_rate=rate, channels=channels, peak_dbfs=round(20*math.log10(peak), 2), rms_dbfs=round(20*math.log10(rms), 2), end_peak=edge)
+    if path.stem == 'rocket-launch':
+        mono = values[::2]
+        assert abs(frames/rate - 43) < 0.003
+        for second in range(5):
+            beep = mono[int((second+0.11)*rate):int((second+0.2)*rate)]
+            gap = mono[int((second+0.3)*rate):int((second+0.9)*rate)]
+            assert max(map(abs, beep)) > 0.1, 'Missing countdown beep'
+            assert max(map(abs, gap)) < 0.0001, 'Countdown gap must be silent'
+        result['countdown_beeps'] = 5
+        result['ignition_seconds'] = 5.1
     if path.stem in ('quindar-in', 'quindar-out'):
         mono = values[::2]
         segment = mono[int(0.06*rate):int(0.29*rate)]

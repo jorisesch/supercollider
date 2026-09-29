@@ -1,19 +1,19 @@
-# SuperCollider: space signals and desert racer
+# SuperCollider: space signals and rocket launch
 
 - `audio/quindar-in.wav`: 2525 Hz, 250 ms signal with 2 ms softened edges.
 - `audio/quindar-out.wav`: 2475 Hz, 250 ms signal with 2 ms softened edges.
 - `audio/quindar-in-noisy.wav`: separate IN with LP-style groove noise, sparse sharp pops and fine crackle.
 - `audio/quindar-out-noisy.wav`: separate OUT with the vinyl treatment, a separate random seed, and explicitly different pop timings.
 - `audio/quindar-in-out.wav` (optional combined preview): the two signals separated by one second of silence.
-- `audio/desert-pod-racer.wav`: 38-second stereo racer: three uneven startup surges that settle after 4.2 seconds, low combustion rumble, subdued dark sand texture, irregular load drift, engine failure and recovery. Original synthesis; no film samples. Not a seamless loop.
+- `audio/rocket-launch.wav`: 43-second stereo rocket launch: five short countdown beeps spaced one second apart, a higher ignition beep at 5.1 seconds, then three uneven startup surges that settle 4.2 seconds after ignition, low combustion rumble, subdued dark sand texture, irregular load drift, engine failure and recovery. Original synthesis; no film samples. Not a seamless loop.
 
 WAVs are 48 kHz, stereo, 24-bit. Clean single-tone files include 50 ms leading silence and approximately 100 ms trailing silence. Noisy files last 900 ms: a 750 ms vinyl-textured channel starts after 50 ms, with the 250 ms tone starting 180 ms into that channel. Both noisy files are mono signals duplicated to stereo. This is an LP-inspired effect, not a historical recording.
 
 ## Play and control
 
-Open `live.scd` in SuperCollider. Evaluate the first parenthesized block to load definitions, boot the server, and start the racer. Evaluate the remaining lines individually to trigger the Quindar tones, change throttle/grit/pan, or release the racer. `instruments.scd` only defines instruments and does not start audio. The racer releases over 2.5 seconds.
+Open `live.scd` in SuperCollider. Evaluate the first parenthesized block to load definitions, boot the server, and start a five-second countdown followed by the rocket engine. Evaluate the remaining lines individually to trigger the Quindar tones, change throttle/grit/pan, or release the rocket. `instruments.scd` only defines instruments and does not start audio. The rocket releases over 2.5 seconds.
 
-The racer has three unequal startup surges, then settles to steady combustion after 4.2 seconds. There is no repeating whomp trigger or pitched oscillator in the engine. `motion` sets the depth of slow irregular load drift and `cycle` its approximate timescale. `throttle` controls average speed and noise brightness. `sand` controls the subdued, low-pass-filtered sand layer (default 0.28, range 0–1.5). `malfunction` introduces engine dropouts, sputter and pitch instability; return it to 0 to recover. The rendered arrangement fails at 15 seconds, recovers at 19 seconds, briefly stumbles again at 29 seconds, and recovers at 30.2 seconds.
+The rocket has three unequal startup surges, then settles to steady combustion 4.2 seconds after ignition. There is no repeating whomp trigger or pitched oscillator in the engine. `motion` sets the depth of slow irregular load drift and `cycle` its approximate timescale. `throttle` controls average speed and noise brightness. `sand` controls the subdued, low-pass-filtered sand layer (default 0.28, range 0–1.5). `malfunction` introduces engine dropouts and sputter; return it to 0 to recover. The rendered arrangement fails at 20 seconds, recovers at 24 seconds, briefly stumbles again at 34 seconds, and recovers at 35.2 seconds.
 
 ## Re-render
 

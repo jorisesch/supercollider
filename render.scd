@@ -25,17 +25,23 @@ render.value("quindar-out", [[0, [\d_recv, ~quindarDef.asBytes]], [0.05, [\s_new
 render.value("quindar-in-out", [[0, [\d_recv, ~quindarDef.asBytes]], [0.05, [\s_new, \quindar, 1000, 0, 0, \freq, 2525]], [1.3, [\s_new, \quindar, 1001, 0, 0, \freq, 2475]]], 1.8);
 render.value("quindar-in-noisy", [[0, [\d_recv, ~quindarRadioDef.asBytes]], [0.05, [\s_new, \quindarRadio, 1000, 0, 0, \freq, 2525, \seed, 1962, \variant, 0]]], 0.9);
 render.value("quindar-out-noisy", [[0, [\d_recv, ~quindarRadioDef.asBytes]], [0.05, [\s_new, \quindarRadio, 1000, 0, 0, \freq, 2475, \seed, 1969, \variant, 1]]], 0.9);
-render.value("desert-pod-racer", [
-    [0, [\d_recv, ~racerDef.asBytes]],
-    [0.1, [\s_new, \desertRacer, 1000, 0, 0, \throttle, 0.45]],
-    [6, [\n_set, 1000, \throttle, 0.62]],
-    [12, [\n_set, 1000, \throttle, 0.5]],
-    [15, [\n_set, 1000, \malfunction, 0.95]],
-    [17, [\n_set, 1000, \malfunction, 0.55, \throttle, 0.3]],
-    [19, [\n_set, 1000, \malfunction, 0, \throttle, 0.8]],
-    [25, [\n_set, 1000, \throttle, 0.5]],
-    [29, [\n_set, 1000, \malfunction, 0.7]],
-    [30.2, [\n_set, 1000, \malfunction, 0, \throttle, 0.72]],
-    [34, [\n_set, 1000, \gate, 0]]
-], 38);
+render.value("rocket-launch", [
+    [0, [\d_recv, ~rocketDef.asBytes], [\d_recv, ~countdownDef.asBytes]],
+    [0.1, [\s_new, \launchBeep, 1100, 0, 0]],
+    [1.1, [\s_new, \launchBeep, 1101, 0, 0]],
+    [2.1, [\s_new, \launchBeep, 1102, 0, 0]],
+    [3.1, [\s_new, \launchBeep, 1103, 0, 0]],
+    [4.1, [\s_new, \launchBeep, 1104, 0, 0]],
+    [5.1, [\s_new, \launchBeep, 1105, 0, 0, \freq, 1320, \dur, 0.35]],
+    [5.1, [\s_new, \rocketEngine, 1000, 0, 0, \throttle, 0.45]],
+    [11.0, [\n_set, 1000, \throttle, 0.62]],
+    [17.0, [\n_set, 1000, \throttle, 0.5]],
+    [20.0, [\n_set, 1000, \malfunction, 0.95]],
+    [22.0, [\n_set, 1000, \malfunction, 0.55, \throttle, 0.3]],
+    [24.0, [\n_set, 1000, \malfunction, 0, \throttle, 0.8]],
+    [30.0, [\n_set, 1000, \throttle, 0.5]],
+    [34.0, [\n_set, 1000, \malfunction, 0.7]],
+    [35.2, [\n_set, 1000, \malfunction, 0, \throttle, 0.72]],
+    [39.0, [\n_set, 1000, \gate, 0]]
+], 43);
 )
