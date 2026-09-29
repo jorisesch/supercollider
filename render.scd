@@ -23,16 +23,19 @@ render = { |name, events, duration|
 render.value("quindar-in", [[0, [\d_recv, ~quindarDef.asBytes]], [0.05, [\s_new, \quindar, 1000, 0, 0, \freq, 2525]]], 0.4);
 render.value("quindar-out", [[0, [\d_recv, ~quindarDef.asBytes]], [0.05, [\s_new, \quindar, 1000, 0, 0, \freq, 2475]]], 0.4);
 render.value("quindar-in-out", [[0, [\d_recv, ~quindarDef.asBytes]], [0.05, [\s_new, \quindar, 1000, 0, 0, \freq, 2525]], [1.3, [\s_new, \quindar, 1001, 0, 0, \freq, 2475]]], 1.8);
-render.value("quindar-in-noisy", [[0, [\d_recv, ~quindarRadioDef.asBytes]], [0.05, [\s_new, \quindarRadio, 1000, 0, 0, \freq, 2525, \seed, 1962]]], 0.65);
-render.value("quindar-out-noisy", [[0, [\d_recv, ~quindarRadioDef.asBytes]], [0.05, [\s_new, \quindarRadio, 1000, 0, 0, \freq, 2475, \seed, 1969]]], 0.65);
+render.value("quindar-in-noisy", [[0, [\d_recv, ~quindarRadioDef.asBytes]], [0.05, [\s_new, \quindarRadio, 1000, 0, 0, \freq, 2525, \seed, 1962, \variant, 0]]], 0.9);
+render.value("quindar-out-noisy", [[0, [\d_recv, ~quindarRadioDef.asBytes]], [0.05, [\s_new, \quindarRadio, 1000, 0, 0, \freq, 2475, \seed, 1969, \variant, 1]]], 0.9);
 render.value("desert-pod-racer", [
     [0, [\d_recv, ~racerDef.asBytes]],
-    [0.1, [\s_new, \desertRacer, 1000, 0, 0, \throttle, 0.13]],
-    [5, [\n_set, 1000, \throttle, 0.42]],
-    [10, [\n_set, 1000, \throttle, 0.78, \grit, 0.7, \pan, -0.2]],
-    [16, [\n_set, 1000, \throttle, 0.52, \pan, 0.25]],
-    [21, [\n_set, 1000, \throttle, 1, \grit, 0.85, \pan, 0]],
-    [27, [\n_set, 1000, \throttle, 0.18]],
-    [32, [\n_set, 1000, \gate, 0]]
-], 37);
+    [0.1, [\s_new, \desertRacer, 1000, 0, 0, \throttle, 0.45, \whompPeriod, 1.05]],
+    [6, [\n_set, 1000, \throttle, 0.62, \whompPeriod, 0.9]],
+    [12, [\n_set, 1000, \throttle, 0.5, \whompPeriod, 1.2]],
+    [15, [\n_set, 1000, \malfunction, 0.95]],
+    [17, [\n_set, 1000, \malfunction, 0.55, \throttle, 0.3]],
+    [19, [\n_set, 1000, \malfunction, 0, \throttle, 0.8, \whompPeriod, 0.8]],
+    [25, [\n_set, 1000, \throttle, 0.5, \whompPeriod, 1.1]],
+    [29, [\n_set, 1000, \malfunction, 0.7]],
+    [30.2, [\n_set, 1000, \malfunction, 0, \throttle, 0.72]],
+    [34, [\n_set, 1000, \gate, 0]]
+], 38);
 )
