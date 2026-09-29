@@ -9,6 +9,23 @@
 
 WAVs are 48 kHz, stereo, 24-bit. Clean single-tone files include 50 ms leading silence and approximately 100 ms trailing silence. Noisy files last 900 ms: a 750 ms vinyl-textured channel starts after 50 ms, with the 250 ms tone starting 180 ms into that channel. Both noisy files are mono signals duplicated to stereo. This is an LP-inspired effect, not a historical recording.
 
+## Standalone source for every WAV
+
+Each WAV has a matching self-contained `.scd` beside it in `audio/`:
+
+- [quindar-in.scd](audio/quindar-in.scd)
+- [quindar-out.scd](audio/quindar-out.scd)
+- [quindar-in-out.scd](audio/quindar-in-out.scd)
+- [quindar-in-noisy.scd](audio/quindar-in-noisy.scd)
+- [quindar-out-noisy.scd](audio/quindar-out-noisy.scd)
+- [rocket-launch.scd](audio/rocket-launch.scd)
+
+Each file includes all required SynthDefs and its complete timed arrangement, with no project-file or sample dependencies. Open one in SuperCollider, select all, and press **Cmd+Return** (Ctrl+Return on Windows/Linux). It boots the default server if needed and plays once. **Cmd+.** stops playback on macOS. No paths, command-line flags, or separate setup blocks are needed, and execution does not render files or quit the IDE.
+
+To export WAVs, use `render.scd` as described below.
+
+The standalone files are editable snapshots of the sounds. The shared instruments and render scripts below remain available; keep both versions consistent when editing synthesis.
+
 ## Play and control
 
 Open `live.scd` in SuperCollider. Evaluate the first parenthesized block to load definitions, boot the server, and start a five-second countdown followed by the rocket engine. Evaluate the remaining lines individually to trigger the Quindar tones, change throttle/grit/pan, or release the rocket. `instruments.scd` only defines instruments and does not start audio. The rocket releases over 2.5 seconds.
