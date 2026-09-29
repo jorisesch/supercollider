@@ -30,37 +30,43 @@
 });
 
 ~racerDef = SynthDef(\desertRacer, { |out=0, gate=1, amp=0.65, throttle=0.5, grit=0.65, pan=0,
-    motion=0.32, cycle=6, malfunction=0, whompPeriod=1|
+    motion=0.32, cycle=6, malfunction=0, whompPeriod=1, sand=0.85|
     var speed, rpm, pulse, sweep, fault, dropout, engines, sub, turbine, air, sputter, sig, env;
     RandSeed.ir(1, 1977);
     // Continuous acceleration/deceleration; velocity raises ALL engine pitches.
     speed = (Lag.kr(throttle.clip(0, 1), 0.8)
         + (SinOsc.kr(cycle.clip(3, 12).reciprocal, -pi/2) * motion.clip(0, 0.45))).clip(0.05, 1);
     fault = Lag.kr(malfunction.clip(0, 1), 0.12);
-    rpm = speed.linexp(0, 1, 42, 185);
-    // A broad, physical WHOMP once per 0.8–1.2 seconds, with a falling pitch sweep.
-    pulse = Impulse.kr(whompPeriod.clip(0.8, 1.2).reciprocal);
+    rpm = speed.linexp(0, 1, 25, 82);
+    // Broad pressure surges: noise amplitude, not a pitched drum sweep.
+    pulse = Impulse.kr((whompPeriod + LFNoise2.kr(0.7, 0.045)).clip(0.8, 1.2).reciprocal);
     sweep = EnvGen.kr(Env([0, 1, 0.3, 0], [0.025, 0.19, 0.42], [-2, -3, -2]), pulse);
     dropout = 1 - (fault * LFPulse.kr(11 + LFNoise1.kr(3, 4), 0, 0.62) * 0.96);
     engines = Mix.fill(2, { |i|
         var damage = fault * [1, 0.35][i];
-        var f = rpm * [0.985, 1.018][i] * (1 + (sweep * 0.14))
+        var f = rpm * [0.973, 1.027][i]
             * (1 + (LFNoise0.kr(19, 0.27) * damage));
-        var motor = Mix(VarSaw.ar(f * [1, 2.01, 3.98], 0, 0.36, [0.22, 0.09, 0.05]));
-        motor = RLPF.ar(motor, 320 + (speed * 2700) + (sweep * 1600), 0.24);
-        motor = motor * (0.18 + (sweep * 1.15)) * (1 - damage + (damage * dropout));
+        var motor = LPF.ar(BrownNoise.ar(1.2), 180 + (speed * 260))
+            + BPF.ar(PinkNoise.ar(0.7), 110 + (speed * 210), 1.1);
+        // A faint unstable shaft tone beneath broadband combustion and grit.
+        motor = motor + LPF.ar(VarSaw.ar(f * LFNoise2.kr(8).range(0.94, 1.06), 0, 0.4, 0.035), 220);
+        motor = motor * (0.3 + (sweep * 1.25)) * LFNoise2.kr(23).range(0.65, 1)
+            * (1 - damage + (damage * dropout));
         Pan2.ar(motor, [-0.55, 0.55][i]);
     });
-    sub = SinOsc.ar((rpm * 0.52) + (sweep * 34), 0, 0.28) * (0.12 + sweep) * (1 - (fault * 0.5));
-    turbine = SinOsc.ar(rpm * 7.3 + SinOsc.ar(rpm * 1.47, 0, rpm * 1.6), 0, 0.095)
-        * (0.35 + speed) * dropout;
-    air = BPF.ar(PinkNoise.ar(0.24 ! 2), 800 + (speed * 4700), 0.7) * (0.2 + speed);
-    sputter = (BPF.ar(WhiteNoise.ar(0.8), 1800, 0.6)
-        * Decay2.ar(Impulse.ar(13), 0.001, 0.018)
-        + SinOsc.ar(rpm * 3.1, 0, 0.08)) * fault;
+    sub = LPF.ar(BrownNoise.ar(0.55), 85) * (0.35 + sweep) * (1 - (fault * 0.5));
+    turbine = BPF.ar(PinkNoise.ar(0.28), rpm * 5.2, 0.85) * (0.3 + speed) * dropout;
+    // Sand ingestion: continuous coarse rasp plus irregular grain impacts.
+    air = HPF.ar(LPF.ar(PinkNoise.ar(0.7 ! 2), 1900 + (speed * 2200)), 170);
+    air = air + (BPF.ar(WhiteNoise.ar(0.9 ! 2), 950 + (speed * 1200), 1.2)
+        * Decay2.ar(Dust.ar(120 + (speed * 240)), 0.0003, 0.009));
+    air = air * sand.clip(0, 1.5) * (0.45 + (sweep * 0.65))
+        * LFNoise2.kr(17).range(0.55, 1) * (0.15 + (dropout * 0.85));
+    sputter = BPF.ar(WhiteNoise.ar(1.1), 750, 1.1)
+        * Decay2.ar(Impulse.ar(13), 0.001, 0.035) * fault;
     sig = engines + (sub ! 2) + (turbine ! 2) + air + (sputter ! 2);
     sig = (sig * (1.5 + grit.clip(0, 1))).tanh * 0.75;
-    sig = sig + CombC.ar(sig, 0.12, [0.061, 0.083], 0.19, 0.09);
+    // No resonant delay: keep the engine dry, coarse, and non-musical.
     sig = Balance2.ar(sig[0], sig[1], Lag.kr(pan.clip(-1, 1), 0.4));
     env = EnvGen.kr(Env.asr(0.8, 1, 2.5), gate, doneAction: 2);
     Out.ar(out, Limiter.ar(LeakDC.ar(sig) * env * amp, 0.88));
