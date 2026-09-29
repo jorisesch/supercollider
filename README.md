@@ -2,10 +2,12 @@
 
 - `audio/quindar-in.wav`: 2525 Hz, 250 ms signal with 2 ms softened edges.
 - `audio/quindar-out.wav`: 2475 Hz, 250 ms signal with 2 ms softened edges.
-- `audio/quindar-in-out.wav`: the two signals separated by one second of silence.
+- `audio/quindar-in-noisy.wav`: separate IN with band-limited hiss, speckled static, amplitude flutter, and gentle saturation.
+- `audio/quindar-out-noisy.wav`: separate OUT with the same radio treatment and a different static pattern.
+- `audio/quindar-in-out.wav` (optional combined preview): the two signals separated by one second of silence.
 - `audio/desert-pod-racer.wav`: 37-second evolving stereo drone: idle, acceleration, cruise, full throttle, deceleration, shutdown. Original synthesis; no film samples. Not a seamless loop.
 
-WAVs are 48 kHz, stereo, 24-bit. Short signal files include 50 ms leading silence and approximately 100 ms trailing silence.
+WAVs are 48 kHz, stereo, 24-bit. Clean single-tone files include 50 ms leading silence and approximately 100 ms trailing silence. Noisy files last 650 ms: a 450 ms radio channel starts after 50 ms, with the 250 ms tone starting 80 ms into that channel. Both noisy files are mono signals duplicated to stereo, evoking vintage communications without claiming to reproduce a specific historical recording.
 
 ## Play and control
 
@@ -20,9 +22,9 @@ From the repository directory on macOS with SuperCollider installed:
 python3 verify_audio.py
 ```
 
-`render.scd` is a standalone batch script and exits sclang when all four renders finish; do not load it into an IDE session you want to keep open. It uses stock UGens and offline synthesis, without requiring an audio device. A different installation may need its sclang executable path substituted.
+`render.scd` is a standalone batch script and exits sclang when all six renders finish; do not load it into an IDE session you want to keep open. It uses stock UGens and offline synthesis, without requiring an audio device. A different installation may need its sclang executable path substituted.
 
-`audio/verification.json` records measured levels, durations and tone frequencies. All four files rendered with exit code 0, have headroom and silent endings. Verification is numerical, not a listening review.
+`audio/verification.json` records measured levels, durations and tone frequencies. All six files rendered with exit code 0, have headroom and silent endings. Verification is numerical, not a listening review.
 
 ## Reusable skill
 

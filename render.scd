@@ -1,6 +1,7 @@
 (
 var root = thisProcess.nowExecutingPath.dirname;
-var pending = 4;
+var pending = 6;
+var failed = false;
 var render;
 (root +/+ "instruments.scd").load;
 TempoClock.default.tempo = 1;
@@ -13,14 +14,17 @@ render = { |name, events, duration|
         options: options, duration: duration,
         action: { |exitCode|
             (name ++ " render exit: " ++ exitCode).postln;
+            failed = failed or: { exitCode != 0 };
             pending = pending - 1;
-            if(pending == 0) { 0.exit };
+            if(pending == 0) { if(failed) { 1.exit } { 0.exit } };
         }
     );
 };
 render.value("quindar-in", [[0, [\d_recv, ~quindarDef.asBytes]], [0.05, [\s_new, \quindar, 1000, 0, 0, \freq, 2525]]], 0.4);
 render.value("quindar-out", [[0, [\d_recv, ~quindarDef.asBytes]], [0.05, [\s_new, \quindar, 1000, 0, 0, \freq, 2475]]], 0.4);
 render.value("quindar-in-out", [[0, [\d_recv, ~quindarDef.asBytes]], [0.05, [\s_new, \quindar, 1000, 0, 0, \freq, 2525]], [1.3, [\s_new, \quindar, 1001, 0, 0, \freq, 2475]]], 1.8);
+render.value("quindar-in-noisy", [[0, [\d_recv, ~quindarRadioDef.asBytes]], [0.05, [\s_new, \quindarRadio, 1000, 0, 0, \freq, 2525, \seed, 1962]]], 0.65);
+render.value("quindar-out-noisy", [[0, [\d_recv, ~quindarRadioDef.asBytes]], [0.05, [\s_new, \quindarRadio, 1000, 0, 0, \freq, 2475, \seed, 1969]]], 0.65);
 render.value("desert-pod-racer", [
     [0, [\d_recv, ~racerDef.asBytes]],
     [0.1, [\s_new, \desertRacer, 1000, 0, 0, \throttle, 0.13]],

@@ -5,6 +5,23 @@
     Out.ar(out, (SinOsc.ar(freq) * env * amp) ! 2);
 });
 
+// Stylized mono radio channel: hiss, tiny static bursts, flutter, and saturation.
+~quindarRadioDef = SynthDef(\quindarRadio, { |out=0, freq=2525, amp=0.32, noise=0.7, seed=1962|
+    var toneEnv, channelEnv, flutter, tone, hiss, speckles, sig;
+    RandSeed.ir(1, seed);
+    // The tone starts 80 ms into the radio channel and lasts exactly 250 ms.
+    toneEnv = EnvGen.ar(Env([0, 0, 1, 1, 0], [0.08, 0.002, 0.246, 0.002]));
+    channelEnv = EnvGen.ar(Env([0, 1, 1, 0], [0.012, 0.426, 0.012]), doneAction: 2);
+    flutter = LFNoise2.kr(37).range(0.82, 1);
+    tone = SinOsc.ar(freq) * toneEnv * flutter * 0.6;
+    hiss = WhiteNoise.ar(0.11) + PinkNoise.ar(0.05);
+    speckles = WhiteNoise.ar(0.9) * Decay2.ar(Dust.ar(95), 0.0002, 0.0025);
+    sig = tone + ((hiss + speckles) * noise.clip(0, 1));
+    sig = LPF.ar(HPF.ar((sig * 1.8).tanh, 320), 3400);
+    sig = LeakDC.ar(sig) * channelEnv * amp;
+    Out.ar(out, sig ! 2);
+});
+
 ~racerDef = SynthDef(\desertRacer, { |out=0, gate=1, amp=0.5, throttle=0.25, grit=0.55, pan=0|
     var t, rpm, engines, sub, turbine, sand, arc, sig, env;
     RandSeed.ir(1, 1977);

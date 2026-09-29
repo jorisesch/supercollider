@@ -7,6 +7,16 @@
     "rms_dbfs": -25.38,
     "end_peak": 0.0
   },
+  "quindar-in-noisy.wav": {
+    "seconds": 0.6507,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -12.28,
+    "rms_dbfs": -20.15,
+    "end_peak": 0.0,
+    "measured_hz": 2525,
+    "pre_tone_noise_dbfs": -39.87
+  },
   "quindar-in-out.wav": {
     "seconds": 1.8013,
     "sample_rate": 48000,
@@ -24,6 +34,16 @@
     "end_peak": 0.0,
     "measured_hz": 2525.0,
     "tone_seconds": 0.24996
+  },
+  "quindar-out-noisy.wav": {
+    "seconds": 0.6507,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -12.26,
+    "rms_dbfs": -20.02,
+    "end_peak": 0.0,
+    "measured_hz": 2475,
+    "pre_tone_noise_dbfs": -40.39
   },
   "quindar-out.wav": {
     "seconds": 0.4013,
