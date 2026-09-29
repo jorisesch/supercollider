@@ -29,7 +29,12 @@
     Out.ar(out, sig ! 2);
 });
 
-~racerDef = SynthDef(\desertRacer, { |out=0, gate=1, amp=0.65, throttle=0.5, grit=0.65, pan=0,
+~countdownDef = SynthDef(\launchBeep, { |out=0, freq=880, dur=0.12, amp=0.16|
+    var env = EnvGen.ar(Env.linen(0.004, (dur - 0.012).max(0.01), 0.008), doneAction: 2);
+    Out.ar(out, (SinOsc.ar(freq) * env * amp) ! 2);
+});
+
+~rocketDef = SynthDef(\rocketEngine, { |out=0, gate=1, amp=0.65, throttle=0.5, grit=0.65, pan=0,
     motion=0.12, cycle=6, malfunction=0, sand=0.28|
     var speed, rpm, sweep, fault, dropout, engines, sub, turbine, air, sputter, sig, env;
     RandSeed.ir(1, 1977);
