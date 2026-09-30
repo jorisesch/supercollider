@@ -5,7 +5,7 @@ import wave
 from pathlib import Path
 
 expected = {'quindar-in.wav', 'quindar-out.wav', 'quindar-in-out.wav',
-            'quindar-in-noisy.wav', 'quindar-out-noisy.wav', 'rocket-launch.wav'}
+            'quindar-in-noisy.wav', 'quindar-out-noisy.wav', 'rocket-launch.wav', 'pod-racer.wav'}
 assert expected <= {p.name for p in Path('audio').glob('*.wav')}, 'Missing audio renders'
 noise_signatures = {}
 results = {}
