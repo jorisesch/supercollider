@@ -51,9 +51,9 @@ This tests a combination of register, timbre, envelope, and balance changes. An 
 ## Reproduction and preservation
 
 - [v1 source snapshot](revisions/v1/) contains the original instrument definitions, composition, live controls, and manifest. Its [reproduction record](revisions/v1/reproduction.json) stores source, WAV, PCM, and preview SHA-256 checksums, SuperCollider version, and render settings.
-- [v2 source snapshot](revisions/v2/) contains the revised instruments/composition and its own manifest and renderer. It writes distinct `-v2.wav` filenames.
+- [v2 source snapshot](revisions/v2/) contains the revised instruments/composition and its own manifest and renderer. It writes distinct `-v2.wav` filenames locally; WAV output is ignored by Git.
 - Every render is deterministic: 32 bars in 4/4, fixed tempo per track, stereo 48 kHz / 24-bit, a 100 ms lead-in, and a six-second tail. Per-event noise seeds are `31000 + family*1000 + event ordinal`.
-- Original WAV and AAC files are retained. The archival v1 renderer writes to `audio/recreated-v1/` so reproducing a study does not replace the version the user heard.
+- AAC previews are retained publicly. Original and revised WAV renders are local-only; the archival v1 renderer writes to `audio/recreated-v1/` so reproducing a study does not replace the version the user heard.
 
 From the repository directory:
 
@@ -72,7 +72,7 @@ A reproduction trial of Afterglow v1 from its saved snapshot produced PCM identi
 
 Use the same SuperCollider version and render settings for PCM comparisons. The saved recordings remain the exact listening references across platforms and software versions. The legacy root `render.scd` still targets the original filenames; use the versioned commands above to preserve them.
 
-The revision check verifies original recording/source checksums and confirms that each v2 opening's first seven seconds is byte-identical to v1. Numerical verification records the new WAVs separately in `audio/verification.json`. It is separate from the user's listening review.
+When local WAV renders are present, the revision check verifies original recording/source checksums and confirms that each v2 opening's first seven seconds is byte-identical to v1. Public numerical verification is limited to committed previews and is separate from the user's listening review.
 
 
 ## 2026-10-31 — reference direction: Groovix / Da Funk
@@ -104,7 +104,7 @@ Working musical direction for a new original study: chill disco / French-touch-i
 
 User request: “Create a da dunk style track to explore.” Interpreted in the context of the supplied Dafunk Lounge video. This is a new original study, not a transcription of the reference. Subsequent human feedback: **“Not quite there…”**. The user then returned to improving the infinite DJ, describing its songs as too sterile and favoring the original generator as a reference. No detailed per-instrument judgment or rating of Coastal Pocket was supplied.
 
-- Recording: [Coastal Pocket preview](../../audio/study-06-coastal-pocket-v1.m4a), [WAV](../../audio/study-06-coastal-pocket-v1.wav).
+- Recording: [Coastal Pocket preview](../../audio/study-06-coastal-pocket-v1.m4a); render the WAV locally from the revision source when needed.
 - Source and reproduction: [`revisions/disco-v1/`](revisions/disco-v1/README.md). ID `study-06-coastal-pocket-v1`; event seeds start at 62000. All previous recordings and source snapshots remain separate.
 - Composition: 120 BPM, 32 bars, 4/4; Am9–Dm9–G13–Cmaj9, two bars per chord. A written two-bar bass rhythm repeats over the harmony. Melody and chord comping are explicit, not independent note randomization.
 - Sound hypothesis: a fixed-pitch, fundamental-rich bass should avoid EDM B's reported rubber-band snap. Short damped string-resonator chops and warm keys may bring the accompaniment closer to disco/funk. This is a proposed improvement to evaluate, not a listening finding.

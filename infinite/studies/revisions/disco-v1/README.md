@@ -2,7 +2,7 @@
 
 An original 32-bar chill-disco / French-touch-influenced funk study, prompted by the user's [Dafunk Lounge reference](https://www.youtube.com/watch?v=io0zvMJf8aA). The reference's title and description informed the direction; its audio was not analysed. This is original musical material, with no sampled reference audio or external music model.
 
-[Listen to the AAC preview](../../../../audio/study-06-coastal-pocket-v1.m4a) · [48 kHz / 24-bit WAV](../../../../audio/study-06-coastal-pocket-v1.wav)
+[Listen to the AAC preview](../../../../audio/study-06-coastal-pocket-v1.m4a) · local WAV render via `render.scd`
 
 120 BPM, 4/4, C major / A minor. **Am9–Dm9–G13–Cmaj9**, two bars per chord. The 64 seconds of music have a 100 ms lead-in and six seconds for releases and effects.
 

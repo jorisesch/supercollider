@@ -47,7 +47,7 @@ Load [controls.scd](controls.scd) and evaluate `~djShow.value` to open the windo
 
 ## Listen and compare
 
-[112-bar preview](../../../audio/dj-evolving-v2.m4a) · [48 kHz / 24-bit WAV](../../../audio/dj-evolving-v2.wav) · [listening notes](NOTES.md)
+[112-bar AAC preview](../../../audio/dj-evolving-v2.m4a) · [listening notes](NOTES.md)
 
 The preview uses the default seed and settings, follows the live tempo automation, includes an automatic handover and reaches the second record's drop. It is an excerpt of the ongoing set with an ending fade. [preview-timeline.tsv](preview-timeline.tsv) records each bar's scheduled start, tempo, section and effective macros for both decks.
 
@@ -81,4 +81,4 @@ afconvert -f m4af -d 'aac ' -b 192000 -q 127 audio/dj-evolving-v2.wav audio/dj-e
 
 The pure check covers 8,192 seeded bars, the full catalog, six forms, varying length/intensity/macros, root/fifth bass bias, density response, valid timing and eight-track routing, key membership, continuous tempo, pitched-key isolation, Hold/NEXT/hooks and bounded voice lifetimes. Another 2,048 bars check macro extremes, including high Chaos/Tension; explicit Fill/Mutation requests and incoming intro cues are also checked. The muted runtime check covers the handover, window, all knobs, Hook/Fill/Hold, STOP/START continuation, internal signal and node/bus cleanup. It takes about 30 seconds.
 
-The standalone renderer exits after writing the WAV and timeline. `verify_audio.py` checks PCM format, headroom, quiet boundaries, activity in every bar and duration against the changing-tempo timeline; results are in [audio/verification.json](../../../audio/verification.json). [preview.json](preview.json) and [reproduction.json](reproduction.json) retain settings and source/audio checksums. These numerical and runtime checks are separate from human listening review of this revision, which is pending.
+The standalone renderer exits after writing a local WAV and timeline. WAV output is ignored by Git; the AAC preview is the committed listening artifact. `verify_audio.py` checks committed Quindar previews; local DJ WAVs can be inspected separately. [preview.json](preview.json) and [reproduction.json](reproduction.json) retain settings and source/audio checksums. These numerical and runtime checks are separate from human listening review of this revision, which is pending.

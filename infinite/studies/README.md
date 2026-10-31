@@ -2,11 +2,11 @@
 
 Original, composed SuperCollider pieces for choosing the musical direction of the infinite DJ. The first five explore melodic house and EDM; a sixth explores chill disco and funk. Each has a recurring hook, coordinated bass/drums, chord voicings, a breakdown and a return. They use individually written musical material; they do not call the random DJ planner or an external music-generation service.
 
-Each is 32 bars in 4/4, approximately one minute of music, with a 100 ms lead-in and six seconds for release and effects tails. AAC previews are convenient listening copies; WAVs are stereo 48 kHz / 24-bit masters.
+Each is 32 bars in 4/4, approximately one minute of music, with a 100 ms lead-in and six seconds for release and effects tails. AAC previews are the committed listening copies; local WAV renders are stereo 48 kHz / 24-bit masters and are ignored by Git.
 
 ## New: Coastal Pocket
 
-[Listen](../../audio/study-06-coastal-pocket-v1.m4a) · [WAV](../../audio/study-06-coastal-pocket-v1.wav) · [Source and commands](revisions/disco-v1/README.md)
+[Listen](../../audio/study-06-coastal-pocket-v1.m4a) · [Source and commands](revisions/disco-v1/README.md)
 
 A separate **120 BPM chill-disco/funk study** for the Dafunk Lounge direction: a recurring syncopated bass hook, warm electric keys, damped guitar-like chord chops, light swing and a small mid-register melody. Am9–Dm9–G13–Cmaj9, with a short breakdown and a fuller return. It uses new synthesis and musical material and retains all earlier candidates. The reference's published description informed the genre; its audio has not been analysed. Human review of this study is pending.
 
@@ -18,10 +18,10 @@ The first human review is saved in the [listening notebook](NOTES.md). The openi
 
 | # | Warmer v2 preview | Full WAV |
 | --- | --- | --- |
-| 1 | [Afterglow v2](../../audio/study-01-afterglow-v2.m4a) | [WAV](../../audio/study-01-afterglow-v2.wav) |
-| 2 | [Glassline v2](../../audio/study-02-glassline-v2.m4a) | [WAV](../../audio/study-02-glassline-v2.wav) |
-| 3 | [Night Circuit v2](../../audio/study-03-night-circuit-v2.m4a) | [WAV](../../audio/study-03-night-circuit-v2.wav) |
-| 4 | [Sun Room v2](../../audio/study-04-sun-room-v2.m4a) | [WAV](../../audio/study-04-sun-room-v2.wav) |
+| 1 | [Afterglow v2](../../audio/study-01-afterglow-v2.m4a) | local render |
+| 2 | [Glassline v2](../../audio/study-02-glassline-v2.m4a) | local render |
+| 3 | [Night Circuit v2](../../audio/study-03-night-circuit-v2.m4a) | local render |
+| 4 | [Sun Room v2](../../audio/study-04-sun-room-v2.m4a) | local render |
 
 ## Original v1 recordings
 
@@ -29,11 +29,11 @@ The originals below remain untouched. Source snapshots, render settings, seeds, 
 
 | # | Track | Direction | BPM / key | Listen | Full WAV |
 | --- | --- | --- | --- | --- | --- |
-| 1 | Afterglow | Warm melodic house; bell/pluck hook and rounded bass | 124 / A minor | [Preview](../../audio/study-01-afterglow.m4a) | [WAV](../../audio/study-01-afterglow.wav) |
-| 2 | Glassline | Bright progressive; syncopated pluck and longer chord holds | 128 / D minor | [Preview](../../audio/study-02-glassline.m4a) | [WAV](../../audio/study-02-glassline.wav) |
-| 3 | Night Circuit | Dark rolling electro; dry stabs, reese-like bass, and rim percussion | 130 / F# minor | [Preview](../../audio/study-03-night-circuit.m4a) | [WAV](../../audio/study-03-night-circuit.wav) |
-| 4 | Sun Room | Swung garage/house; electric-piano hook and broken kick pattern | 120 / C major | [Preview](../../audio/study-04-sun-room.m4a) | [WAV](../../audio/study-04-sun-room.wav) |
-| 5 | Wide Horizon | Wider melodic progressive; sustained unison lead and rising arp | 126 / E minor | [Preview](../../audio/study-05-wide-horizon.m4a) | [WAV](../../audio/study-05-wide-horizon.wav) |
+| 1 | Afterglow | Warm melodic house; bell/pluck hook and rounded bass | 124 / A minor | [Preview](../../audio/study-01-afterglow.m4a) | local render |
+| 2 | Glassline | Bright progressive; syncopated pluck and longer chord holds | 128 / D minor | [Preview](../../audio/study-02-glassline.m4a) | local render |
+| 3 | Night Circuit | Dark rolling electro; dry stabs, reese-like bass, and rim percussion | 130 / F# minor | [Preview](../../audio/study-03-night-circuit.m4a) | local render |
+| 4 | Sun Room | Swung garage/house; electric-piano hook and broken kick pattern | 120 / C major | [Preview](../../audio/study-04-sun-room.m4a) | local render |
+| 5 | Wide Horizon | Wider melodic progressive; sustained unison lead and rising arp | 126 / E minor | [Preview](../../audio/study-05-wide-horizon.m4a) | local render |
 
 ## What to listen for
 
@@ -61,7 +61,7 @@ python3 infinite/studies/previews.py v2
 python3 infinite/studies/check_revisions.py
 ```
 
-For just one revised WAV, append its number, for example `sclang -D infinite/studies/revisions/v2/render.scd 3`. The v1 renderer accepts 1–5 and writes `audio/recreated-v1/`; v2 accepts 1–4 and writes distinct `-v2.wav` files in `audio/`. To encode reconstruction previews without replacing original AACs, use `python3 infinite/studies/previews.py v1`. The batch process exits after rendering. Substitute your local sclang executable path where needed. AAC previews use macOS `afconvert`; WAV playback does not require that preview step.
+For just one revised local WAV, append its number, for example `sclang -D infinite/studies/revisions/v2/render.scd 3`. The v1 renderer accepts 1–5 and writes `audio/recreated-v1/`; v2 accepts 1–4 and writes distinct `-v2.wav` files in `audio/`. To encode reconstruction previews without replacing original AACs, use `python3 infinite/studies/previews.py v1`. The batch process exits after rendering. Substitute your local sclang executable path where needed. AAC previews use macOS `afconvert`; all WAV output is ignored by Git.
 
 To play original editable source, open and evaluate all of `live.scd`. For v2, use [`revisions/v2/live.scd`](revisions/v2/live.scd) instead. Then evaluate individual lines:
 
@@ -75,6 +75,6 @@ Live playback is finite and includes the effect tail. An explicit server can be 
 
 ## Verification
 
-All five WAVs rendered through SuperCollider with exit code 0. The renderer validates note timing and key membership. `verify_audio.py` checks PCM format, exact 32-bar duration plus tail, non-silence in every bar, headroom, and quiet starts/endings. It records overall and four-bar RMS values in [`audio/verification.json`](../../audio/verification.json). The common mix chain keeps the five active-music RMS levels within approximately 1.1 dB; this is an RMS comparison rather than perceptual loudness normalization.
+All five local WAVs rendered through SuperCollider with exit code 0. The renderer validates note timing and key membership. Public verification covers the committed Quindar previews; local study WAVs remain ignored. The common mix chain keeps the five active-music RMS levels within approximately 1.1 dB; this is an RMS comparison rather than perceptual loudness normalization.
 
 The original live source was also exercised with output muted. Human review of the original and warmer v2 studies is recorded in [NOTES.md](NOTES.md); Coastal Pocket's review is pending. The existing infinite generators are unchanged by these studies.

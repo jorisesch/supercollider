@@ -24,13 +24,13 @@ Want the groove to become a whole set? Try the [**Infinite DJ**](infinite/experi
 
 ## Take an imaginary machine for a spin
 
-The [**pod racer**](audio/pod-racer.wav) is a little scene told through sound: a reluctant engine catches, warms up, shifts gears, and tears past a canyon wall.
+The [**pod racer patch**](audio/pod-racer.scd) is a little scene told through sound: a reluctant engine catches, warms up, shifts gears, and tears past a canyon wall.
 
 Listen for the uneven pistons, the change in character as it accelerates, and the space opening up around a pass. Then [open the patch](audio/pod-racer.scd) or [take the live controls](pod-racer-live.scd) and give the engine a different personality. It is built from synthesis, with no film samples.
 
-**[Listen to the pod racer →](audio/pod-racer.wav)** · [Explore the sound design](docs/sound-design.md) · [Read the research notes](POD_RACER_RESEARCH.md)
+**[Open the pod racer patch →](audio/pod-racer.scd)** · [Explore the sound design](docs/sound-design.md) · [Read the research notes](POD_RACER_RESEARCH.md)
 
-There are other sounds to wander into, too: a [rocket launch](audio/rocket-launch.wav), clean [space-radio signals](audio/quindar-in-out.wav), and their [vinyl-textured cousins](audio/quindar-in-noisy.wav). Each of these has an editable playback patch beside it in [`audio/`](audio/).
+There are other sounds to wander into, too: a [rocket launch patch](audio/rocket-launch.scd), clean [space-radio signals](audio/quindar-in-out.wav), and their [vinyl-textured cousins](audio/quindar-in-noisy.wav). Large rendered WAVs are local-only and ignored; each sound still has an editable playback patch in [`audio/`](audio/).
 
 To play one, open its `.scd` file in SuperCollider, select all, and evaluate with **Cmd+Return** on macOS (**Ctrl+Return** on Windows/Linux).
 

@@ -9,14 +9,14 @@ All file paths and terminal commands below are relative to the repository root.
 - `audio/quindar-in-noisy.wav`: separate IN with LP-style groove noise, sparse sharp pops and fine crackle.
 - `audio/quindar-out-noisy.wav`: separate OUT with the vinyl treatment, a separate random seed, and explicitly different pop timings.
 - `audio/quindar-in-out.wav` (optional combined preview): the two signals separated by one second of silence.
-- `audio/rocket-launch.wav`: 43-second stereo rocket launch: five short countdown beeps spaced one second apart, a higher ignition beep at 5.1 seconds, then three uneven startup surges that settle 4.2 seconds after ignition, low combustion rumble, subdued dark sand texture, irregular load drift, engine failure and recovery. Original synthesis; no film samples. Not a seamless loop.
-- `audio/pod-racer.wav`: 30-second research-based pod racer scene that moves from reluctant twin-piston ignition through warm-up, gear transitions, canyon reflections, a short maximum-speed burst, and release. Its core is two slightly detuned sawtooths through an accelerating LFO-controlled filter, with restrained grit, rare casing clanks, and slow Doppler passes.
+- `audio/rocket-launch.scd`: source for the 43-second stereo rocket launch: five short countdown beeps spaced one second apart, a higher ignition beep at 5.1 seconds, then three uneven startup surges that settle 4.2 seconds after ignition, low combustion rumble, subdued dark sand texture, irregular load drift, engine failure and recovery. Original synthesis; no film samples. Not a seamless loop. Its rendered WAV is local-only.
+- `audio/pod-racer.scd`: source for the 30-second research-based pod racer scene that moves from reluctant twin-piston ignition through warm-up, gear transitions, canyon reflections, a short maximum-speed burst, and release. Its core is two slightly detuned sawtooths through an accelerating LFO-controlled filter, with restrained grit, rare casing clanks, and slow Doppler passes. Its rendered WAV is local-only.
 
-WAVs are 48 kHz, stereo, 24-bit. Clean single-tone files include 50 ms leading silence and approximately 100 ms trailing silence. Noisy files last 900 ms: a 750 ms vinyl-textured channel starts after 50 ms, with the 250 ms tone starting 180 ms into that channel. Both noisy files are mono signals duplicated to stereo. This is an LP-inspired effect, not a historical recording.
+Committed Quindar WAVs are 48 kHz, stereo, 24-bit. Clean single-tone files include 50 ms leading silence and approximately 100 ms trailing silence. Noisy files last 900 ms: a 750 ms vinyl-textured channel starts after 50 ms, with the 250 ms tone starting 180 ms into that channel. Both noisy files are mono signals duplicated to stereo. Larger rendered WAVs are generated locally and ignored by Git. This is an LP-inspired effect, not a historical recording.
 
-## Standalone source for every WAV
+## Standalone source for each sound
 
-Each WAV listed above has a matching self-contained `.scd` beside it in `audio/`:
+Each sound has a matching self-contained `.scd` beside it in `audio/`:
 
 - [quindar-in.scd](../audio/quindar-in.scd)
 - [quindar-out.scd](../audio/quindar-out.scd)
@@ -28,7 +28,7 @@ Each WAV listed above has a matching self-contained `.scd` beside it in `audio/`
 
 Each file includes all required SynthDefs and its complete timed arrangement, with no project-file or sample dependencies. Open one in SuperCollider, select all, and press **Cmd+Return** (Ctrl+Return on Windows/Linux). It boots the default server if needed and plays once. **Cmd+.** stops playback on macOS. No paths, command-line flags, or separate setup blocks are needed, and execution does not render files or quit the IDE.
 
-To export WAVs, use `render.scd` as described below.
+To export local WAVs, use `render.scd` as described below. Rendered WAVs are intentionally not committed.
 
 The standalone files are editable snapshots of the sounds. The shared instruments and render scripts below remain available; keep both versions consistent when editing synthesis.
 
@@ -53,7 +53,7 @@ python3 verify_audio.py
 
 `render.scd` is a standalone batch script for the Quindar and rocket renders and exits sclang when all six renders finish. To render the pod racer separately, run `/Applications/SuperCollider.app/Contents/MacOS/sclang -D pod-racer-render.scd`. Run batch renderers from the terminal rather than loading them into an IDE session you want to keep open. All use stock UGens and offline synthesis. Substitute your installation’s sclang path where needed.
 
-`audio/verification.json` records measured levels, durations and tone frequencies. The seven published sound-effect files rendered with exit code 0, have headroom and silent endings.
+`audio/verification.json` records measured levels, durations and tone frequencies for the committed Quindar previews. Larger local renders are excluded from the public tree.
 
 ## References
 

@@ -6,25 +6,16 @@ import wave
 from pathlib import Path
 
 expected = {'quindar-in.wav', 'quindar-out.wav', 'quindar-in-out.wav',
-            'quindar-in-noisy.wav', 'quindar-out-noisy.wav', 'rocket-launch.wav',
-            'pod-racer.wav', 'sonar-ping.wav', 'infinite-edm.wav', 'infinite-edm-d.wav',
-            'infinite-soundscape.wav'}
-study_manifest_path = Path('infinite/studies/manifest.json')
-study_manifest = json.loads(study_manifest_path.read_text()) if study_manifest_path.exists() else {}
-studies = {item['file']: dict(item, revision='v1') for item in study_manifest.get('tracks', [])}
-for manifest_path in sorted(Path('infinite/studies/revisions').glob('*/manifest.json')):
-    revision_manifest = json.loads(manifest_path.read_text())
-    for item in revision_manifest.get('tracks', []):
-        studies[item['file']] = dict(item, revision=revision_manifest.get('revision', manifest_path.parent.name))
-expected.update(studies)
-dj_manifest_path = Path('infinite/experiments/dj/preview.json')
-dj_manifest = json.loads(dj_manifest_path.read_text()) if dj_manifest_path.exists() else None
-if dj_manifest:
-    expected.add(dj_manifest['file'])
+            'quindar-in-noisy.wav', 'quindar-out-noisy.wav'}
+studies = {}
+study_manifest = {}
+dj_manifest = None
 assert expected <= {p.name for p in Path('audio').glob('*.wav')}, 'Missing audio renders'
 noise_signatures = {}
 results = {}
 for path in sorted(Path('audio').glob('*.wav')):
+    if path.name not in expected:
+        continue
     with wave.open(str(path), 'rb') as w:
         rate, channels, width, frames = w.getframerate(), w.getnchannels(), w.getsampwidth(), w.getnframes()
         raw = w.readframes(frames)
