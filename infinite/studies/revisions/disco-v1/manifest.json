@@ -1,0 +1,24 @@
+{
+  "revision": "disco-v1",
+  "bars": 32,
+  "beats_per_bar": 4,
+  "lead_in_seconds": 0.1,
+  "tail_seconds": 6,
+  "tracks": [
+    {
+      "file": "study-06-coastal-pocket-v1.wav",
+      "preview": "study-06-coastal-pocket-v1.m4a",
+      "title": "Coastal Pocket",
+      "bpm": 120,
+      "key": "C major / A minor",
+      "direction": "Original chill disco / French-touch-influenced funk",
+      "progression": ["Am9", "Dm9", "G13", "Cmaj9"],
+      "bars_per_chord": 2,
+      "seed": 62000,
+      "four_bar_sections": ["settle", "pocket", "hook", "answer", "breath", "lift", "return", "close"],
+      "reference_url": "https://www.youtube.com/watch?v=io0zvMJf8aA",
+      "reference_scope": "Uploader title/description only; reference audio not analysed. Original musical material, no sampled reference audio.",
+      "listening_review": "Pending"
+    }
+  ]
+}

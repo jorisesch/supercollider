@@ -16,7 +16,7 @@ WAVs are 48 kHz, stereo, 24-bit. Clean single-tone files include 50 ms leading s
 
 ## Standalone source for every WAV
 
-Each WAV has a matching self-contained `.scd` beside it in `audio/`:
+Each WAV listed above has a matching self-contained `.scd` beside it in `audio/`:
 
 - [quindar-in.scd](../audio/quindar-in.scd)
 - [quindar-out.scd](../audio/quindar-out.scd)

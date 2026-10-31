@@ -1,0 +1,13 @@
+{
+  "file": "dj-evolving-v2.wav",
+  "preview": "dj-evolving-v2.m4a",
+  "title": "Infinite DJ — evolving grooves v2",
+  "bars": 112,
+  "seed": 2600,
+  "initial_bpm": 128,
+  "settings": {"chaos": 0.25, "density": 0.55, "mutation": 0.30, "tension": 0.20},
+  "lead_in_seconds": 0.1,
+  "tail_seconds": 4,
+  "timeline": "infinite/experiments/dj/preview-timeline.tsv",
+  "human_listening_review": "pending"
+}

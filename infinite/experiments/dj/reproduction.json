@@ -1,0 +1,55 @@
+{
+  "revision": "evolving-grooves-v2",
+  "render_date": "2026-10-31",
+  "human_listening_review": "pending",
+  "supercollider_version": "3.13.0",
+  "preview_settings": {
+    "file": "dj-evolving-v2.wav",
+    "preview": "dj-evolving-v2.m4a",
+    "title": "Infinite DJ \u2014 evolving grooves v2",
+    "bars": 112,
+    "seed": 2600,
+    "initial_bpm": 128,
+    "settings": {
+      "chaos": 0.25,
+      "density": 0.55,
+      "mutation": 0.3,
+      "tension": 0.2
+    },
+    "lead_in_seconds": 0.1,
+    "tail_seconds": 4,
+    "timeline": "infinite/experiments/dj/preview-timeline.tsv",
+    "human_listening_review": "pending"
+  },
+  "render_settings": {
+    "sample_rate": 48000,
+    "channels": 2,
+    "sample_format": "int24",
+    "num_wire_buffers": 128,
+    "realtime_memory_kb": 65536,
+    "load_external_synthdefs": false
+  },
+  "source_sha256": {
+    "infinite/experiments/dj/library.scd": "bee26a40ef644cf142b2cd4eec5a88d3f5c1ddfba6370f1b4d6b1d9f52dd34c5",
+    "infinite/experiments/dj/engine.scd": "fc3726272cbe447ac2cfe8ad08adfe0f7f6b7c4385da12b35c94e35dd4a94bc7",
+    "infinite/experiments/dj/instruments.scd": "a700a5cc704e6d14678955d2d47b0a45ae98b80f524e60c11f6d639095247363",
+    "infinite/experiments/dj/live.scd": "fa05eb858554b40ee80b5b1236e82a1f9151d227dbee9966f1fe8be60bac7537",
+    "infinite/experiments/dj/controls.scd": "730d432c64ed8d5074d73bcbf76718b5c1fc82bf04d81e97fd4ff5c7b120b943",
+    "infinite/experiments/dj/launch.scd": "1dd51455add981c8c9902724ff1e197744f9a1abf3486e8a4157661587d97c93",
+    "infinite/experiments/dj/render.scd": "251c778c91d9af0ea4102fe224c60e8f8c7c57116980f5ea9faa6af0eb751092",
+    "infinite/experiments/dj/preview.json": "3aed0a62ffcf69d25a88034f55e2c708079beda89f1976dd463073f16638f2d0",
+    "infinite/infinite-engine.scd": "5ba4d1866e19ba3bc8d5c9b10fbe786f2746325e6ed3fffb1b3b8d273ea42483",
+    "infinite/experiments/c-edm.scd": "b68b18c867504930a48225cf857a736f61e310a53d5f0b11a50cacc51a0669cf"
+  },
+  "timeline_sha256": "97a6cec54893369c3589dd01fd22b2f91f6c6b7d7b25081ffae6b8a59d1de9c7",
+  "wav_sha256": "a1c64d1b2956eb3dcad5be63b0ebd1d487ba426441bbf3f12a01149fc2e6f072",
+  "pcm_sha256": "4af3f5b98fa1a874900829c4d6521c460c895faed274bf727bb0e5f7b7ff8ebf",
+  "preview_sha256": "0b559c790e1f3d6ce6bde04fecc115fc9cbbd711cbf7407e27241d06e5da6351",
+  "default_pcm_reproduction_trial": "Final re-render was PCM-identical across the complete preview to the previous default render. The high-control diatonic guard left default audio unchanged.",
+  "render_command": "sclang -D infinite/experiments/dj/render.scd",
+  "checks": {
+    "seeded_bars": 8192,
+    "macro_extreme_bars": 2048,
+    "runtime": "Muted handover, GUI knobs, Hook/Fill/Hold, STOP/START and resource cleanup passed."
+  }
+}

@@ -15,6 +15,7 @@ Translate the brief into a sonic identity, controllable instruments, and a playa
 - Give sustained voices a gate/release and one-shots an envelope with doneAction: 2. Remove DC, stage gains conservatively, and limit complex layered outputs. Smooth live parameter changes. Do not globally stop unrelated sessions to manage a patch.
 - Create depth with purposeful layers and different time scales: foundation, character, texture, space. Use correlated modulation for coherent motion; reserve independent noise for organic variation. For music, shape phrases and transitions rather than merely stacking loops.
 - Include a minimal live example with definition loading, s.waitForBoot, s.sync before Synth creation, parameter edits, and a graceful stop. Keep rendering from starting live playback.
+- Treat GUI controls as a separate observable contract from synthesis: each knob/button callback should post a concise confirmation, and live testing should exercise the actual window while observing the language post window. A changed widget alone does not prove that the callback reached the engine; log the requested action and, where changes are quantized, say when it will take effect.
 
 ## Render and verify
 

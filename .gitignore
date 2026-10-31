@@ -3,3 +3,4 @@ __pycache__/
 *.pyc
 audio/*.osc
 audio/*.log
+audio/recreated-v1/

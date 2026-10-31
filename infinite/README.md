@@ -22,7 +22,9 @@ EDM has **four logical lanes**: bass, lead, arpeggio, and drums. The drum lane c
 - **Arpeggio:** a rotated 16-step Euclidean rhythm uses 3–14 pulses as Density rises, with chord-tone cycling and probabilistic omissions. To adjust its hit probability separately in the IDE, set `~infiniteEngine.controls.arpProbability=0.9`.
 - **Drums:** stable four-on-the-floor, snare backbeats, accented offbeat hats, optional ghost notes, and short end-of-section fills. Deliberate kick omissions are restricted to the last beat of an eight-bar section.
 
-All lanes share key, scale, progression, tempo, and tension. A dense bass reduces lead activity. Eight-bar groove, lift, space, and return sections create a 32-bar cycle; the lift adds bass subdivisions and an arp pulse, the space section thins lead and arp while keeping the rhythmic foundation, and the return rotates the arp rhythm. Seeded random decisions sit inside these musical constraints. **Fill next bar**, **Mutate**, **Hold motifs**, **Restart seed**, and **Stop** are available in the control window. Hold preserves bass/lead motif memory; drum variations and omissions continue. Explicit mutation takes effect next bar unless held; automatic mutation happens only at four-bar boundaries.
+All lanes share key, scale, progression, tempo, and tension. A dense bass reduces lead activity. Eight-bar groove, lift, space, and return sections create a 32-bar cycle; the lift adds bass subdivisions and an arp pulse, the space section thins lead and arp while keeping the rhythmic foundation, and the return rotates the arp rhythm. Seeded random decisions sit inside these musical constraints. **Fill next bar**, **Mutate**, **Hold motifs**, **Restart seed**, and **STOP / START** are available in the control window. STOP fades out and becomes START. START continues at the next bar with the same phrases, settings, mode, seed, and tempo; Restart seed begins the composition again. The button also follows stops and starts issued from the IDE. Hold preserves bass/lead motif memory; drum variations and omissions continue. Explicit mutation takes effect next bar unless held; automatic mutation happens only at four-bar boundaries.
+
+The control window logs knob changes and button requests in the sclang terminal. Fill and mutation requests are consumed at the next bar; if the engine is not running, the terminal reports that the request was ignored.
 
 For IDE use, open `infinite/infinite-live.scd` and evaluate the whole file to define the controls, then evaluate these lines individually:
 
@@ -34,6 +36,7 @@ For IDE use, open `infinite/infinite-live.scd` and evaluate the whole file to de
 ~mutateInfinite.value;
 ~holdInfinite.value(true);      // false to resume motif changes
 ~stopInfinite.value;            // three-second fade; only this generator stops
+~resumeInfinite.value;          // continue the retained composition at its next bar
 ```
 
 To open the window from the IDE, evaluate the whole `infinite/infinite-controls.scd` file, then `~showInfiniteControls.value`. Loading definitions starts no playback. Repeated starts fade the old performance and cancel pending starts. The CLI launcher uses its own server on localhost port 57130; IDE playback uses `s` by default. Existing SuperCollider startup scripts still run when sclang starts.
@@ -49,3 +52,18 @@ Run the composition checks without playback or audio exports:
 The checks cover seeded reproducibility across 128 bars, key membership, bass root/fifth bias, lead resolution, motif repetition, Euclidean pulse counts, density, fills, and macro bounds. Synthesis and GUI controls were also exercised with real-time output muted. This is structural/runtime validation, not a human listening review.
 
 No WAV previews are included with this version. Any local `audio/infinite-*.wav` previews from the earlier engine do not demonstrate the current composition. `infinite-render.scd` remains an optional batch renderer for a future explicitly requested export; it renders the current sources at their factory tempos (120/60 BPM), writing to the repository’s `audio/` directory. This reorganization did not change synthesis or create new renders.
+
+
+## Separate experiments
+
+The current generator remains the baseline. New prototypes live under [`experiments/`](experiments/README.md): **EDM A**, melodic/progressive EDM with new voices and a longer arrangement; **EDM B**, a harder bass and drum treatment of the same four tracks; **EDM C**, an eight-track infinite DJ with changing keys and tempo-matched handovers; **EDM D**, a syncopated, vibrato-led treatment with added texture and percussion; and **warm ambient**, with slow harmony and overlapping layers. Each has its own launch command and controls; the original commands above continue to work unchanged. See the [experiment guide](experiments/README.md) for listening and comparison instructions.
+
+The latest [infinite DJ revision](experiments/dj/README.md) reuses this baseline's composition engine, with variable song lengths, repeated answer patterns, probabilistic drums and changing intensity/chaos/density. It preserves the earlier DJ as a playable snapshot. Run `sclang -D infinite/experiments/c-edm.scd 2600 128 0.25 0.55 0.30 0.20` from the repository directory to compare at the baseline's macro settings.
+
+
+To check STOP/START in every control window, run `sclang -D infinite/transport-check.scd` from the repository directory. This real-time test mutes its own server and checks continuation, repeated clicks, Restart seed, and cleanup across both baseline modes, EDM A, EDM B, and warm ambient. It creates no audio files.
+
+
+## Composed listening studies
+
+[32-bar studies](studies/README.md) explore warm melodic house, bright progressive, dark rolling electro, swung garage/house, and a wider melodic track. The latest addition, [**Coastal Pocket**](studies/revisions/disco-v1/README.md), explores chill disco and funk with a bass hook, warm keys and muted guitar-like chord chops. Each has a complete arrangement, a recurring hook, an AAC preview, a 48 kHz/24-bit WAV, and editable SuperCollider source. Compare groove, hook, and sound separately to guide the next DJ iteration.

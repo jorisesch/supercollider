@@ -1,0 +1,98 @@
+{
+  "bars": 32,
+  "beats_per_bar": 4,
+  "lead_in_seconds": 0.1,
+  "tail_seconds": 6,
+  "tracks": [
+    {
+      "file": "study-01-afterglow.wav",
+      "preview": "study-01-afterglow.m4a",
+      "title": "Afterglow",
+      "bpm": 124,
+      "key": "A minor",
+      "direction": "Warm melodic house",
+      "four_bar_sections": [
+        "groove",
+        "tease",
+        "theme",
+        "theme",
+        "break",
+        "build",
+        "drop",
+        "close"
+      ]
+    },
+    {
+      "file": "study-02-glassline.wav",
+      "preview": "study-02-glassline.m4a",
+      "title": "Glassline",
+      "bpm": 128,
+      "key": "D minor",
+      "direction": "Bright progressive",
+      "four_bar_sections": [
+        "intro",
+        "theme",
+        "theme",
+        "answer",
+        "break",
+        "build",
+        "drop",
+        "close"
+      ]
+    },
+    {
+      "file": "study-03-night-circuit.wav",
+      "preview": "study-03-night-circuit.m4a",
+      "title": "Night Circuit",
+      "bpm": 130,
+      "key": "F# minor",
+      "direction": "Dark rolling electro",
+      "four_bar_sections": [
+        "groove",
+        "groove",
+        "theme",
+        "answer",
+        "break",
+        "build",
+        "drop",
+        "close"
+      ]
+    },
+    {
+      "file": "study-04-sun-room.wav",
+      "preview": "study-04-sun-room.m4a",
+      "title": "Sun Room",
+      "bpm": 120,
+      "key": "C major",
+      "direction": "Swung garage / house",
+      "four_bar_sections": [
+        "intro",
+        "groove",
+        "theme",
+        "theme",
+        "break",
+        "return",
+        "drop",
+        "close"
+      ]
+    },
+    {
+      "file": "study-05-wide-horizon.wav",
+      "preview": "study-05-wide-horizon.m4a",
+      "title": "Wide Horizon",
+      "bpm": 126,
+      "key": "E minor",
+      "direction": "Wide melodic progressive",
+      "four_bar_sections": [
+        "intro",
+        "tease",
+        "theme",
+        "theme",
+        "break",
+        "build",
+        "drop",
+        "close"
+      ]
+    }
+  ]
+}

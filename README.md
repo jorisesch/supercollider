@@ -20,6 +20,8 @@ With SuperCollider installed on macOS, run this from the repository directory:
 
 A control window opens and the music starts. Close it to fade out. The [music guide](infinite/README.md) has the other modes, controls, and ways to experiment.
 
+Want the groove to become a whole set? Try the [**Infinite DJ**](infinite/experiments/dj/README.md): two decks, changing keys, recurring hooks, and songs with different lengths and energy. Its latest experiment brings the original generator's controlled randomness into the mix.
+
 ## Take an imaginary machine for a spin
 
 The [**pod racer**](audio/pod-racer.wav) is a little scene told through sound: a reluctant engine catches, warms up, shifts gears, and tears past a canyon wall.

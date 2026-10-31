@@ -1,0 +1,140 @@
+{
+  "revision": "v1",
+  "review_date": "2026-10-31",
+  "supercollider_version": "3.13.0",
+  "render_settings": {
+    "sample_rate": 48000,
+    "channels": 2,
+    "sample_format": "int24",
+    "bars": 32,
+    "beats_per_bar": 4,
+    "lead_in_seconds": 0.1,
+    "tail_seconds": 6,
+    "num_wire_buffers": 128,
+    "realtime_memory_kb": 65536,
+    "load_external_synthdefs": false
+  },
+  "source_sha256": {
+    "instruments.scd": "68597efda19fb54e44e40e885de86ede82193442620cf46210a67d5d3a78449d",
+    "tracks.scd": "a88780b130d023764621d007e0a536d978a2d20452507a63ff920bb4c958c9c1",
+    "live.scd": "3170fd4347eb7e50ccbb24fda47e2b3b8cba575019fd0653d3d8220fa7c9e3e6",
+    "manifest.json": "5183da6dff5f6bf5e51113b70d860837cfe7314cfe50703799963e58466a087e",
+    "render.scd": "dcebee8456b550e30a518b0b423610baa08288b25833cd9585e516286237285a"
+  },
+  "tracks": [
+    {
+      "file": "study-01-afterglow.wav",
+      "preview": "study-01-afterglow.m4a",
+      "title": "Afterglow",
+      "bpm": 124,
+      "key": "A minor",
+      "direction": "Warm melodic house",
+      "four_bar_sections": [
+        "groove",
+        "tease",
+        "theme",
+        "theme",
+        "break",
+        "build",
+        "drop",
+        "close"
+      ],
+      "wav_sha256": "7097610098d34e49124b9be2b6e9b1820124a6a5d301bfe3a0794839ba790529",
+      "preview_sha256": "930022a15faa2755781f5a244497aa3c84f1c209f49da2d7a3ebce0c6de363e9",
+      "pcm_sha256": "9f4e2d9ad1280e89a299c96f9bc838c5047b4f819ee21aae827b1cd4e9c77857"
+    },
+    {
+      "file": "study-02-glassline.wav",
+      "preview": "study-02-glassline.m4a",
+      "title": "Glassline",
+      "bpm": 128,
+      "key": "D minor",
+      "direction": "Bright progressive",
+      "four_bar_sections": [
+        "intro",
+        "theme",
+        "theme",
+        "answer",
+        "break",
+        "build",
+        "drop",
+        "close"
+      ],
+      "wav_sha256": "8c48cd2a5633ba7947d57f9debae94ac67f709f85ffb2eccb97292bc03774a57",
+      "preview_sha256": "798506d23bd1da253be66acf6848d2bec9ab548eba008ff0ed9eb944708d4dda",
+      "pcm_sha256": "72a9b60432e9f1565c51de5348f681a1075e67bf969dead0e9799d6ad8d64461"
+    },
+    {
+      "file": "study-03-night-circuit.wav",
+      "preview": "study-03-night-circuit.m4a",
+      "title": "Night Circuit",
+      "bpm": 130,
+      "key": "F# minor",
+      "direction": "Dark rolling electro",
+      "four_bar_sections": [
+        "groove",
+        "groove",
+        "theme",
+        "answer",
+        "break",
+        "build",
+        "drop",
+        "close"
+      ],
+      "wav_sha256": "0155059cc99a394b6dd58b6320af344d4837a45e270916e57c64d096a2f0f5e6",
+      "preview_sha256": "75fc93425c4e81e81883fdcff2ee7ef47f7d0f5feb71282b1d853f40ceac30e3",
+      "pcm_sha256": "5cd4e8727b69052052d909b62036fd7f150ead50fabe351ae21a4df6e69b20c7"
+    },
+    {
+      "file": "study-04-sun-room.wav",
+      "preview": "study-04-sun-room.m4a",
+      "title": "Sun Room",
+      "bpm": 120,
+      "key": "C major",
+      "direction": "Swung garage / house",
+      "four_bar_sections": [
+        "intro",
+        "groove",
+        "theme",
+        "theme",
+        "break",
+        "return",
+        "drop",
+        "close"
+      ],
+      "wav_sha256": "e7fab61870f639abdb2e80aaca7c46f83fb973a5eef9e6623c67e9df5f715308",
+      "preview_sha256": "af403f5d5497cb0b2c0bd8e51701f75c677c65312d57a719a4131e24d7cc6714",
+      "pcm_sha256": "1750ee6c0f7ec938f767b2f2fae779100a60333aa29ab074746ea3eadb760c0b"
+    },
+    {
+      "file": "study-05-wide-horizon.wav",
+      "preview": "study-05-wide-horizon.m4a",
+      "title": "Wide Horizon",
+      "bpm": 126,
+      "key": "E minor",
+      "direction": "Wide melodic progressive",
+      "four_bar_sections": [
+        "intro",
+        "tease",
+        "theme",
+        "theme",
+        "break",
+        "build",
+        "drop",
+        "close"
+      ],
+      "wav_sha256": "2d511af3c726c3639cbde498fe5fa1911c1494358d306ff0a71c30a6e4801404",
+      "preview_sha256": "61474e03a24160fcd15c7e9a100663a8f233c2e97a7b9a218e0a456fc6123244",
+      "pcm_sha256": "e8ea700eda8f626435580550f23756af1448445c94889cddeee61bd3a8678ae7"
+    }
+  ],
+  "original_renderer_sha256": "0c6a3d3ba9d6a289943660370a4bf0bf90fce6990a754f3eed10856c489ce2aa",
+  "recreation_command": "sclang -D infinite/studies/revisions/v1/render.scd",
+  "recreation_output": "audio/recreated-v1/",
+  "recreation_trial": {
+    "file": "study-01-afterglow.wav",
+    "pcm_sha256": "9f4e2d9ad1280e89a299c96f9bc838c5047b4f819ee21aae827b1cd4e9c77857",
+    "matches_reference": true,
+    "date": "2026-10-31"
+  }
+}
