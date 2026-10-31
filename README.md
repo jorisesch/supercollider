@@ -60,3 +60,13 @@ Quindar specifications: [NASA speech research paper, Sangwan et al.](https://per
 Pod-racer sound design: [Ben Burtt on The Phantom Menace](https://www.starwars.com/news/ben-burtt-the-phantom-menace) and [Matthew Wood on The Phantom Menace](https://www.starwars.com/news/matthew-wood-the-phantom-menace).
 
 Offline rendering: [SuperCollider Score documentation](https://doc.sccode.org/Classes/Score.html).
+
+## Infinite four-track generator
+
+The generator lives in [`infinite/`](infinite/README.md), with EDM and soundscape modes, shared harmony, four macro controls, and a live control window. From the repository directory:
+
+```sh
+/Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/infinite-run.scd edm 0.25 0.55 0.30 0.20 128 2600
+```
+
+See the [generator guide](infinite/README.md) for controls, IDE use, architecture, and composition checks. Playback does not export audio.
