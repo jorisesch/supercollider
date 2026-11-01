@@ -1,0 +1,12 @@
+{
+  "version": "DJ v1 before evolving-groove changes",
+  "source_sha256": {
+    "engine.scd": "995d6e8f9b81ee76450dfda9754b77d23371fa515879ef5feb73413122520f50",
+    "library.scd": "ace82f2f1e7f734907d2fcd932ecf299b31459d0818f41a248124cb0091ec453",
+    "instruments.scd": "e5368f01291fa8f1475a0585926b9a3bd9bfc9f92bd4d1b6d05424f613792976",
+    "live.scd": "736024f411610d4a66b3b7cc3b80c55aad7b80ee4f7dd931c2f3b845fbe5bb09",
+    "controls.scd": "3deab5872be01b1fec500872979988cea4ce4661378b132ae9413721f4313384",
+    "launch.scd": "9c9c930c846563b9f68eeb15d4cdc71366c0f8e6c63a4fb58e8ca4662a641bb3",
+    "README.md": "9c1bc3ed731f762b2be643cd59ef5b885309e04499df50fcc4ac8376a4f3300e"
+  }
+}

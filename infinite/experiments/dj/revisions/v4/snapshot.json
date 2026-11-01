@@ -1,0 +1,17 @@
+{
+  "description": "Lead-forward v4 source preserved before the bass-and-drums arrangement",
+  "source_sha256": {
+    "ABOUT.md": "55e555b0fd66b677ded3d6a1716da28522ec5a0592d2bba7067d77f853f72457",
+    "README.md": "9d086b301aaae57c88850085f7109635c14340c4254f8a60b263ee4ad28ef69d",
+    "controls.scd": "8b17aafd9eb7040209f3e84997e4201d97fc0f6ae5618f781da0514cf5ef738a",
+    "engine.scd": "b895d3356c6e35a8918b8c247bed647f0c8f4384cfd094423245ca7a792d8c4b",
+    "instruments.scd": "eff99c10958824dc4ddb6f054563d87cce566b25af89c1aa989cac5e6539afc6",
+    "launch.scd": "5d20ecc0c30a055bbecea85ccd1d2858d76114002576154503c2c0d29ed52612",
+    "library.scd": "82ef8f4e6eb4e358a233ebc2d6aeb648a2205a4d6c7453df74ecb56202c950a3",
+    "live.scd": "afa7a0a7fccbad20c227a9de72ed46e5c3c8cb12d901ec1ffdf60f2d76df70e3",
+    "palette-instruments.scd": "8c7579d5407c10da32fdf69929c7893a79bd39b953fbe8285e1d41b1baeb5b4f",
+    "reproduction.json": "50d696c8a747e6a2e72ba6770c0132d12cac6b52053c825d28a382c6dd9e9355",
+    "run.scd": "c6b3de085eee76910b9c60800daf9b55a85e148c79013e0ac654169a044e2a63",
+    "style.scd": "102b8544747e6d85ba47c6a90738113b79d6e03e85e8bfe771b0b5e28e855fae"
+  }
+}

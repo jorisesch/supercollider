@@ -1,0 +1,349 @@
+{
+  "revision": "interlock-v4-rotating-palettes-and-automatic-fx",
+  "render_date": "2026-10-31",
+  "supercollider_version": "3.13.0",
+  "human_listening_review": "pending",
+  "source_sha256": {
+    "infinite/experiments/dj/library.scd": "82ef8f4e6eb4e358a233ebc2d6aeb648a2205a4d6c7453df74ecb56202c950a3",
+    "infinite/experiments/dj/style.scd": "102b8544747e6d85ba47c6a90738113b79d6e03e85e8bfe771b0b5e28e855fae",
+    "infinite/experiments/dj/instruments.scd": "eff99c10958824dc4ddb6f054563d87cce566b25af89c1aa989cac5e6539afc6",
+    "infinite/experiments/dj/palette-instruments.scd": "8c7579d5407c10da32fdf69929c7893a79bd39b953fbe8285e1d41b1baeb5b4f",
+    "infinite/experiments/dj/engine.scd": "b895d3356c6e35a8918b8c247bed647f0c8f4384cfd094423245ca7a792d8c4b",
+    "infinite/experiments/dj/live.scd": "afa7a0a7fccbad20c227a9de72ed46e5c3c8cb12d901ec1ffdf60f2d76df70e3",
+    "infinite/experiments/dj/controls.scd": "8b17aafd9eb7040209f3e84997e4201d97fc0f6ae5618f781da0514cf5ef738a",
+    "infinite/experiments/dj/launch.scd": "5d20ecc0c30a055bbecea85ccd1d2858d76114002576154503c2c0d29ed52612",
+    "infinite/experiments/dj/render.scd": "b5a49b4683a393d0cb02f1082951ff16626a374fbeedea2b85befcd670eb4c8b",
+    "infinite/experiments/dj/check.scd": "888a073c433d9d34b611d9955e6f0cf95aaa3d86d9237159edfe546673acdf59",
+    "infinite/experiments/dj/runtime-check.scd": "1be76b74fd784c9bbc03be2d96125e31f20cb1975e054845cc70845a5ecc22a5",
+    "infinite/experiments/dj/stutter-check.scd": "0c91482a724ef7c3a1be988a08e150c78c711887ac31edbda0e92cbd48fbfa85",
+    "infinite/experiments/dj/verify_stutter.py": "e0321864b1128b87cd73647cdc5fdffe2ad5a3358a46957a7400d70fc7639d1c",
+    "infinite/experiments/dj/preview.json": "8f81c10f0b8b581e35d9f169ecf65316fa45f272ea578b03b52280c04ea5fd64",
+    "infinite/experiments/dj/track.json": "a70c8f523feef8d4dfd890957d93b36c99f9ca8a5757a9a5136ca4781647b81c",
+    "infinite/experiments/dj/palette-tour.json": "6bc0ba1ddc673b9d36611a75ef142ef6acebf8c971ffc97f0f688edd41b402dd",
+    "verify_audio.py": "673a1d5a3af80c34dc368fee2d56416a6381530b99f5456a2db28dc85a32230c"
+  },
+  "render_settings": {
+    "sample_rate": 48000,
+    "channels": 2,
+    "sample_format": "int24",
+    "num_wire_buffers": 128,
+    "realtime_memory_kb": 65536,
+    "load_external_synthdefs": false
+  },
+  "renders": [
+    {
+      "manifest": "infinite/experiments/dj/palette-tour.json",
+      "settings": {
+        "file": "dj-palette-tour.wav",
+        "preview": "dj-palette-tour.m4a",
+        "title": "Four ensembles \u2014 the same eight-bar hook",
+        "bars": 32,
+        "seed": 2600,
+        "initial_bpm": 128,
+        "settings": {
+          "chaos": 0.25,
+          "density": 0.55,
+          "mutation": 0.3,
+          "tension": 0.2,
+          "hold": true,
+          "autoStutter": false
+        },
+        "lead_in_seconds": 0.1,
+        "tail_seconds": 4,
+        "minimum_records": 1,
+        "minimum_palettes": 4,
+        "timeline": "infinite/experiments/dj/dj-palette-tour-timeline.tsv",
+        "segments": [
+          {
+            "start_seconds": 0.1,
+            "name": "Wired House",
+            "bass": "Classic sub",
+            "lead": "Octave saw",
+            "drums": "Tight house"
+          },
+          {
+            "start_seconds": 15.1,
+            "name": "Brass Circuit",
+            "bass": "Reese bass",
+            "lead": "Unison brass",
+            "drums": "Analog punch"
+          },
+          {
+            "start_seconds": 30.1,
+            "name": "Digital Drive",
+            "bass": "FM bass",
+            "lead": "FM growl",
+            "drums": "Dry electro"
+          },
+          {
+            "start_seconds": 45.1,
+            "name": "Acid Foundry",
+            "bass": "Acid bass",
+            "lead": "Sync stack",
+            "drums": "Dust metal"
+          }
+        ],
+        "human_listening_review": "pending"
+      },
+      "wav_sha256": "1332cb3f6e49e5c2841abda831a2c0c81762540ec17c251e0742dd78fcd51ead",
+      "pcm_sha256": "828d3a39af6ad6be9bfba5673730d51fddd7a391d1c576b605398646f223a8be",
+      "preview_sha256": "8d507c1d6e9fa6989ae54baadf44e99bbea5ce692a071beefa5d696e2446a6f6",
+      "timeline_sha256": "0ee67c59a373beb1b07520e88fc2d43b26e554a5f7ebbe7af5c7ca836dfeaa26",
+      "measurements": {
+        "seconds": 64.1013,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -2.45,
+        "rms_dbfs": -18.72,
+        "end_peak": 0.0,
+        "automatic_stutter_phrases": [],
+        "title": "Four ensembles \u2014 the same eight-bar hook",
+        "seed": 2600,
+        "bars": 32,
+        "settings": {
+          "chaos": 0.25,
+          "density": 0.55,
+          "mutation": 0.3,
+          "tension": 0.2,
+          "hold": true,
+          "autoStutter": false
+        },
+        "records": [
+          0
+        ],
+        "palettes": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "music_seconds": 60.0,
+        "music_rms_dbfs": -18.43,
+        "four_bar_rms_dbfs": [
+          -18.55,
+          -18.34,
+          -18.83,
+          -18.67,
+          -17.61,
+          -17.37,
+          -19.29,
+          -19.17
+        ],
+        "palette_rms_dbfs": {
+          "Wired House": -18.43,
+          "Brass Circuit": -18.74,
+          "Digital Drive": -17.45,
+          "Acid Foundry": -19.23
+        }
+      }
+    },
+    {
+      "manifest": "infinite/experiments/dj/track.json",
+      "settings": {
+        "file": "interlock-track-v4.wav",
+        "preview": "interlock-track-v4.m4a",
+        "title": "Interlock \u2014 Wired House track edit",
+        "bars": 48,
+        "seed": 2600,
+        "initial_bpm": 128,
+        "settings": {
+          "chaos": 0.25,
+          "density": 0.55,
+          "mutation": 0.3,
+          "tension": 0.2,
+          "hold": true,
+          "autoStutter": true
+        },
+        "lead_in_seconds": 0.1,
+        "tail_seconds": 4,
+        "minimum_records": 1,
+        "minimum_palettes": 1,
+        "minimum_auto_stutters": 1,
+        "timeline": "infinite/experiments/dj/interlock-track-v4-timeline.tsv",
+        "human_listening_review": "pending"
+      },
+      "wav_sha256": "cba93779996e548a061febec73c8a8eecac74bd2b1a7c74cfbe8bf984bfd2170",
+      "pcm_sha256": "69de5978ded3637f2fd0a14e3995f3ade26f08bf834cc4fb0522d78e22f0e337",
+      "preview_sha256": "70049a1e0c0820c76f365da4760a68795ed92b1a877fab460c3ce90e27af895f",
+      "timeline_sha256": "90aeee60ba64281bbd33803e304712d1258d56a4749d286bed85b48247c590af",
+      "measurements": {
+        "seconds": 94.1013,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -2.45,
+        "rms_dbfs": -19.04,
+        "end_peak": 0.0,
+        "automatic_stutter_phrases": [
+          {
+            "bar": 28,
+            "seconds": 52.6,
+            "division": 8,
+            "bars": 2
+          }
+        ],
+        "title": "Interlock \u2014 Wired House track edit",
+        "seed": 2600,
+        "bars": 48,
+        "settings": {
+          "chaos": 0.25,
+          "density": 0.55,
+          "mutation": 0.3,
+          "tension": 0.2,
+          "hold": true,
+          "autoStutter": true
+        },
+        "records": [
+          0
+        ],
+        "palettes": [
+          0
+        ],
+        "music_seconds": 90.0,
+        "music_rms_dbfs": -18.84,
+        "four_bar_rms_dbfs": [
+          -19.01,
+          -19.24,
+          -18.52,
+          -18.34,
+          -18.88,
+          -19.97,
+          -18.47,
+          -18.49,
+          -18.51,
+          -19.08,
+          -19.01,
+          -18.86
+        ]
+      }
+    },
+    {
+      "manifest": "infinite/experiments/dj/preview.json",
+      "settings": {
+        "file": "dj-interlock-v4.wav",
+        "preview": "dj-interlock-v4.m4a",
+        "title": "Infinite DJ \u2014 rotating palettes v4",
+        "bars": 112,
+        "seed": 2600,
+        "initial_bpm": 128,
+        "settings": {
+          "chaos": 0.25,
+          "density": 0.55,
+          "mutation": 0.3,
+          "tension": 0.2,
+          "autoStutter": true
+        },
+        "lead_in_seconds": 0.1,
+        "tail_seconds": 4,
+        "minimum_records": 2,
+        "minimum_palettes": 2,
+        "minimum_auto_stutters": 1,
+        "timeline": "infinite/experiments/dj/dj-interlock-v4-timeline.tsv",
+        "human_listening_review": "pending"
+      },
+      "wav_sha256": "b2570f0c7b4bda9a08515de660f258aaae935d08c33ac280a35d5d361ebbcb72",
+      "pcm_sha256": "38e2fd060e0acbda7395287436407b3fe9da7b3eb9b347a42b25f1fc0c817994",
+      "preview_sha256": "72c61cb44b741cd245a6512a688e848bcd743dee8668436ffb9aad98dea9a094",
+      "timeline_sha256": "a2a6e3153367705d4e4485bde9d148c5c735c8451a2d0c2d7a64cc5d160a9111",
+      "measurements": {
+        "seconds": 210.236,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -2.45,
+        "rms_dbfs": -19.09,
+        "end_peak": 0.0,
+        "automatic_stutter_phrases": [
+          {
+            "bar": 28,
+            "seconds": 52.6,
+            "division": 8,
+            "bars": 2
+          },
+          {
+            "bar": 68,
+            "seconds": 126.235808234,
+            "division": 8,
+            "bars": 2
+          },
+          {
+            "bar": 88,
+            "seconds": 162.599444598,
+            "division": 16,
+            "bars": 1
+          },
+          {
+            "bar": 100,
+            "seconds": 184.417626416,
+            "division": 4,
+            "bars": 2
+          }
+        ],
+        "title": "Infinite DJ \u2014 rotating palettes v4",
+        "seed": 2600,
+        "bars": 112,
+        "settings": {
+          "chaos": 0.25,
+          "density": 0.55,
+          "mutation": 0.3,
+          "tension": 0.2,
+          "autoStutter": true
+        },
+        "records": [
+          0,
+          1
+        ],
+        "palettes": [
+          0,
+          2
+        ],
+        "music_seconds": 206.1358,
+        "music_rms_dbfs": -19.0,
+        "four_bar_rms_dbfs": [
+          -19.01,
+          -19.24,
+          -18.48,
+          -18.33,
+          -18.86,
+          -19.95,
+          -18.53,
+          -18.49,
+          -18.57,
+          -19.12,
+          -20.6,
+          -20.68,
+          -19.19,
+          -17.98,
+          -19.29,
+          -19.59,
+          -17.26,
+          -17.91,
+          -17.08,
+          -19.43,
+          -28.81,
+          -28.5,
+          -20.45,
+          -18.93,
+          -17.52,
+          -18.4,
+          -17.27,
+          -19.18
+        ]
+      }
+    }
+  ],
+  "checks": {
+    "seeded_bars": 8192,
+    "macro_extreme_bars": 2048,
+    "palettes": "Passed: all four palettes rotate without consecutive repeats, remain fixed within each record, route only to defined SynthDefs, and preserve composed events when selected independently.",
+    "runtime": "Passed: muted palette/key/tempo handover, labels, Auto OFF switch, four-bar duration menu, six FX buttons and queried rates, transport continuation and node/bus cleanup.",
+    "audio": "All three WAVs checked against timelines, including palette coverage, signal in every bar, headroom and quiet endings. Same-hook ensemble mix levels differ by less than 2 dB.",
+    "automatic_stutter": "Passed: 204 automatic phrases / 493 of 8192 bars (about 6%); three rates and 1/2/4-bar lengths; phrase placement, cooldown, record ownership, manual four-bar release, Auto OFF and unchanged composition.",
+    "stutter_signal": "Passed: measured 4 pulses for one bar, 8 pulses for two bars, 16 pulses for four bars, then steady bypass at 120 BPM."
+  },
+  "listening_excerpt": {
+    "file": "audio/dj-auto-stutter.m4a",
+    "source": "audio/dj-interlock-v4.wav",
+    "start_seconds": 49.6,
+    "duration_seconds": 9.75,
+    "sha256": "97594b41de15f952b88ef1700be499c643a6f2851d84fa1a4b6daa03b88fcfed"
+  }
+}

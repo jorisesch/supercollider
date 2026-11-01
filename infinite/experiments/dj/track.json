@@ -1,0 +1,29 @@
+{
+  "file": "groove-track-v6d.wav",
+  "preview": "groove-track-v6d.m4a",
+  "title": "Bass and drums \u2014 Wired House edit v6.3",
+  "bars": 48,
+  "seed": 2600,
+  "initial_bpm": 128,
+  "settings": {
+    "chaos": 0.25,
+    "density": 0.55,
+    "mutation": 0.3,
+    "tension": 0.2,
+    "hold": true,
+    "autoStutter": true
+  },
+  "lead_in_seconds": 0.1,
+  "tail_seconds": 4,
+  "minimum_records": 1,
+  "minimum_palettes": 1,
+  "minimum_auto_stutters": 1,
+  "timeline": "infinite/experiments/dj/groove-track-v6d-timeline.tsv",
+  "check_groove_gaps": true,
+  "pullback_beats": 1,
+  "maximum_pullbacks": 2,
+  "maximum_drum_spotlights": 1,
+  "human_listening_review": "Original groove-track-v6c remains the favourite. Wired House instruments and arrangement are unchanged; this render has no separate listening judgment.",
+  "preferred_listening_reference": false,
+  "reference_recording": "audio/groove-track-v6c.m4a"
+}

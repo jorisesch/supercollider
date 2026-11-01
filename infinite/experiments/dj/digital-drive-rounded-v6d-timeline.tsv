@@ -1,0 +1,6 @@
+bar	seconds	bpm	mixing	record_a	record_b	section_a	section_b	intensity_a	intensity_b	chaos_a	chaos_b	density_a	density_b	palette_a	palette_b	stutter_division	stutter_remaining	stutter_source	stutter_deck	breath_a	breath_b	low_gap_a	low_gap_b	bass_tone_a	bass_tone_b	bass_drive_a	bass_drive_b	cut_from_a	cut_from_b	drum_spotlight_a	drum_spotlight_b	stutter_start_beat	stutter_bars
+0	0.1	128	0	0	-1	hook	waiting	0.89	0	0.2905	0	0.5566	0	2	-1	0	0	none	-1	0	0	0	0	0.60706571428571	0	0.58360571428571	0	4	4	0	0	0	0
+1	1.975	128	0	0	-1	hook	waiting	0.89	0	0.2905	0	0.5566	0	2	-1	0	0	none	-1	0	0	0	0	0.63563714285714	0	0.61217714285714	0	4	4	0	0	0	0
+2	3.85	128	0	0	-1	hook	waiting	0.89	0	0.2905	0	0.5566	0	2	-1	0	0	none	-1	1	0	0	0	0.66420857142857	0	0.64074857142857	0	3	4	0	0	0	0
+3	5.725	128	0	0	-1	hook	waiting	0.89	0	0.2905	0	0.5566	0	2	-1	0	0	none	-1	0	0	0	0	0.69278	0	0.66932	0	4	4	0	0	0	0
+4	7.6	128	0	-1	-1	end	end	0	0	0	0	0	0	-1	-1	0	0	none	-1	0	0	0	0	0	0	0	0	4	4	0	0	0	0

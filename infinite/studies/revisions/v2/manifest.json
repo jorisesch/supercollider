@@ -1,0 +1,90 @@
+{
+  "bars": 32,
+  "beats_per_bar": 4,
+  "lead_in_seconds": 0.1,
+  "tail_seconds": 6,
+  "tracks": [
+    {
+      "file": "study-01-afterglow-v2.wav",
+      "preview": "study-01-afterglow-v2.m4a",
+      "title": "Afterglow / warmer lead v2",
+      "bpm": 124,
+      "key": "A minor",
+      "direction": "Warm melodic house",
+      "four_bar_sections": [
+        "groove",
+        "tease",
+        "theme",
+        "theme",
+        "break",
+        "build",
+        "drop",
+        "close"
+      ],
+      "revision": "v2",
+      "change": "Hook one octave lower with a softer dark lead; quieter, lower bell ornaments. Pitch-class melody, rhythm, drums, bass and chords retained."
+    },
+    {
+      "file": "study-02-glassline-v2.wav",
+      "preview": "study-02-glassline-v2.m4a",
+      "title": "Glassline / warmer lead v2",
+      "bpm": 128,
+      "key": "D minor",
+      "direction": "Bright progressive",
+      "four_bar_sections": [
+        "intro",
+        "theme",
+        "theme",
+        "answer",
+        "break",
+        "build",
+        "drop",
+        "close"
+      ],
+      "revision": "v2",
+      "change": "Hook one octave lower with a softer dark lead; quieter, lower bell ornaments. Pitch-class melody, rhythm, drums, bass and chords retained."
+    },
+    {
+      "file": "study-03-night-circuit-v2.wav",
+      "preview": "study-03-night-circuit-v2.m4a",
+      "title": "Night Circuit / warmer lead v2",
+      "bpm": 130,
+      "key": "F# minor",
+      "direction": "Dark rolling electro",
+      "four_bar_sections": [
+        "groove",
+        "groove",
+        "theme",
+        "answer",
+        "break",
+        "build",
+        "drop",
+        "close"
+      ],
+      "revision": "v2",
+      "change": "Hook one octave lower with a softer dark lead; quieter, lower bell ornaments. Pitch-class melody, rhythm, drums, bass and chords retained."
+    },
+    {
+      "file": "study-04-sun-room-v2.wav",
+      "preview": "study-04-sun-room-v2.m4a",
+      "title": "Sun Room / warmer lead v2",
+      "bpm": 120,
+      "key": "C major",
+      "direction": "Swung garage / house",
+      "four_bar_sections": [
+        "intro",
+        "groove",
+        "theme",
+        "theme",
+        "break",
+        "return",
+        "drop",
+        "close"
+      ],
+      "revision": "v2",
+      "change": "Hook one octave lower with a softer dark lead; quieter, lower bell ornaments. Pitch-class melody, rhythm, drums, bass and chords retained."
+    }
+  ],
+  "revision": "v2",
+  "based_on": "v1"
+}

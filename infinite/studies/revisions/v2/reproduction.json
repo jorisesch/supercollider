@@ -1,0 +1,121 @@
+{
+  "revision": "v2",
+  "based_on": "v1",
+  "render_date": "2026-10-31",
+  "human_listening_review": "pending",
+  "supercollider_version": "3.13.0",
+  "render_settings": {
+    "sample_rate": 48000,
+    "channels": 2,
+    "sample_format": "int24",
+    "bars": 32,
+    "beats_per_bar": 4,
+    "lead_in_seconds": 0.1,
+    "tail_seconds": 6,
+    "num_wire_buffers": 128,
+    "realtime_memory_kb": 65536,
+    "load_external_synthdefs": false
+  },
+  "source_sha256": {
+    "instruments.scd": "cad7ec9312ad865f86b57edb3de70a9d1bfe5cabdd0ecd782603071b621ee4d8",
+    "tracks.scd": "7947da08aefe5109d504affb084bbac481ff4a4a17029f122ebfa33839e7b1e4",
+    "live.scd": "3170fd4347eb7e50ccbb24fda47e2b3b8cba575019fd0653d3d8220fa7c9e3e6",
+    "render.scd": "8dbdb5fdf506c3e535cf4f0fe6b3a7adb21298de97428b776dc08ec84c03455b",
+    "manifest.json": "edfb47cf0e9005a61ffba26b47887e993bfcc0d46f823f9035a3405305acbab6"
+  },
+  "tracks": [
+    {
+      "file": "study-01-afterglow-v2.wav",
+      "preview": "study-01-afterglow-v2.m4a",
+      "title": "Afterglow / warmer lead v2",
+      "bpm": 124,
+      "key": "A minor",
+      "direction": "Warm melodic house",
+      "four_bar_sections": [
+        "groove",
+        "tease",
+        "theme",
+        "theme",
+        "break",
+        "build",
+        "drop",
+        "close"
+      ],
+      "revision": "v2",
+      "change": "Hook one octave lower with a softer dark lead; quieter, lower bell ornaments. Pitch-class melody, rhythm, drums, bass and chords retained.",
+      "wav_sha256": "15334b3dfa049036e4acf897909775096418b3ed14e1229dfb781ccc0cfc6a07",
+      "preview_sha256": "9a9cab572e203720f4e15d545dfac373e7f880fecef695a3acd7869bc88e2a7c",
+      "pcm_sha256": "ef5600c58250e9bbfe9f97ab4e526bd66038880fdb9b4b4900c8391f33c5a820"
+    },
+    {
+      "file": "study-02-glassline-v2.wav",
+      "preview": "study-02-glassline-v2.m4a",
+      "title": "Glassline / warmer lead v2",
+      "bpm": 128,
+      "key": "D minor",
+      "direction": "Bright progressive",
+      "four_bar_sections": [
+        "intro",
+        "theme",
+        "theme",
+        "answer",
+        "break",
+        "build",
+        "drop",
+        "close"
+      ],
+      "revision": "v2",
+      "change": "Hook one octave lower with a softer dark lead; quieter, lower bell ornaments. Pitch-class melody, rhythm, drums, bass and chords retained.",
+      "wav_sha256": "585091f03511603d3978cb24b52b8ebf6f5662ab0bdccfa673b7760851d749b2",
+      "preview_sha256": "dbdf656c464fa37b52caa572a3e346de21b71792af1275a210be96f85c3a825f",
+      "pcm_sha256": "f85eae86f3965f4bccca1cccda10c96813496e0db5f701f78e6ec1c8790d333c"
+    },
+    {
+      "file": "study-03-night-circuit-v2.wav",
+      "preview": "study-03-night-circuit-v2.m4a",
+      "title": "Night Circuit / warmer lead v2",
+      "bpm": 130,
+      "key": "F# minor",
+      "direction": "Dark rolling electro",
+      "four_bar_sections": [
+        "groove",
+        "groove",
+        "theme",
+        "answer",
+        "break",
+        "build",
+        "drop",
+        "close"
+      ],
+      "revision": "v2",
+      "change": "Hook one octave lower with a softer dark lead; quieter, lower bell ornaments. Pitch-class melody, rhythm, drums, bass and chords retained.",
+      "wav_sha256": "d55316c7796cd072b5a533da575311656548711d820a46390412b029b9fa6260",
+      "preview_sha256": "4fe8f842d495fed382ab6058ea0131359e2691e91f7337ebdd95be2175387ee7",
+      "pcm_sha256": "d5ab53339b5c053f8804a1ea320f4d83372c4846b5ba21ccbdb005357b8f86f9"
+    },
+    {
+      "file": "study-04-sun-room-v2.wav",
+      "preview": "study-04-sun-room-v2.m4a",
+      "title": "Sun Room / warmer lead v2",
+      "bpm": 120,
+      "key": "C major",
+      "direction": "Swung garage / house",
+      "four_bar_sections": [
+        "intro",
+        "groove",
+        "theme",
+        "theme",
+        "break",
+        "return",
+        "drop",
+        "close"
+      ],
+      "revision": "v2",
+      "change": "Hook one octave lower with a softer dark lead; quieter, lower bell ornaments. Pitch-class melody, rhythm, drums, bass and chords retained.",
+      "wav_sha256": "ab8d4deaf9076a64ab2edb003ee66d17a93fa9a377cdf729d724d5b67e4367d7",
+      "preview_sha256": "054c20ba23819941196f8671f429272c219a5ee5bddf89be21eca546b0705e2c",
+      "pcm_sha256": "cae63b04f78ac80e8734ecbcdf1c14dae93c6a5d3073cf4ec7ade6ff20e75e0c"
+    }
+  ],
+  "command": "sclang -D infinite/studies/revisions/v2/render.scd"
+}

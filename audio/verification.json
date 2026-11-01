@@ -1,11 +1,244 @@
 {
-  "pod-racer.wav": {
-    "seconds": 30.0013,
+  "digital-drive-rounded-v6d.wav": {
+    "seconds": 11.6013,
     "sample_rate": 48000,
     "channels": 2,
-    "peak_dbfs": -8.29,
-    "rms_dbfs": -24.5,
-    "end_peak": 0.0
+    "peak_dbfs": -2.45,
+    "rms_dbfs": -19.84,
+    "end_peak": 0.0,
+    "automatic_stutter_phrases": [],
+    "title": "Digital Drive \u2014 rounded FM lead in context",
+    "seed": 2600,
+    "bars": 4,
+    "settings": {
+      "chaos": 0.25,
+      "density": 0.55,
+      "mutation": 0.3,
+      "tension": 0.2,
+      "hold": true,
+      "autoStutter": false,
+      "palette": 2
+    },
+    "records": [
+      0
+    ],
+    "palettes": [
+      2
+    ],
+    "music_seconds": 7.5,
+    "music_rms_dbfs": -17.95,
+    "four_bar_rms_dbfs": [
+      -17.95
+    ]
+  },
+  "dj-groove-palettes-v6d.wav": {
+    "seconds": 64.1013,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -2.45,
+    "rms_dbfs": -19.01,
+    "end_peak": 0.0,
+    "automatic_stutter_phrases": [],
+    "title": "Four ensembles \u2014 groove and space v6.3",
+    "seed": 2600,
+    "bars": 32,
+    "settings": {
+      "chaos": 0.25,
+      "density": 0.55,
+      "mutation": 0.3,
+      "tension": 0.2,
+      "hold": true,
+      "autoStutter": false
+    },
+    "records": [
+      0
+    ],
+    "palettes": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "music_seconds": 60.0,
+    "music_rms_dbfs": -18.72,
+    "four_bar_rms_dbfs": [
+      -18.3,
+      -18.33,
+      -18.89,
+      -18.99,
+      -18.01,
+      -17.92,
+      -19.84,
+      -19.95
+    ],
+    "palette_rms_dbfs": {
+      "Wired House": -18.29,
+      "Brass Circuit": -18.95,
+      "Digital Drive": -17.92,
+      "Acid Foundry": -19.9
+    }
+  },
+  "dj-groove-v6d.wav": {
+    "seconds": 212.14,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -2.45,
+    "rms_dbfs": -19.12,
+    "end_peak": 0.0,
+    "automatic_stutter_phrases": [
+      {
+        "bar": 28,
+        "seconds": 53.5375,
+        "division": 16,
+        "bars": 0.5,
+        "duration_seconds": 0.9375
+      },
+      {
+        "bar": 88,
+        "seconds": 164.7542,
+        "division": 16,
+        "bars": 0.5,
+        "duration_seconds": 0.9231
+      }
+    ],
+    "title": "Infinite DJ \u2014 rounded Digital Drive lead v6.3",
+    "seed": 2600,
+    "bars": 112,
+    "settings": {
+      "chaos": 0.25,
+      "density": 0.55,
+      "mutation": 0.3,
+      "tension": 0.2,
+      "autoStutter": true
+    },
+    "records": [
+      0,
+      1
+    ],
+    "palettes": [
+      0,
+      2
+    ],
+    "music_seconds": 208.0388,
+    "music_rms_dbfs": -19.03,
+    "four_bar_rms_dbfs": [
+      -18.72,
+      -18.44,
+      -18.31,
+      -18.32,
+      -18.73,
+      -19.44,
+      -18.35,
+      -18.35,
+      -18.3,
+      -18.37,
+      -20.48,
+      -20.55,
+      -18.43,
+      -19.74,
+      -18.81,
+      -19.16,
+      -17.95,
+      -19.43,
+      -18.39,
+      -19.46,
+      -22.52,
+      -23.12,
+      -20.38,
+      -19.38,
+      -17.74,
+      -19.07,
+      -18.17,
+      -19.19
+    ]
+  },
+  "groove-track-v6d.wav": {
+    "seconds": 94.1013,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -2.45,
+    "rms_dbfs": -18.74,
+    "end_peak": 0.0,
+    "automatic_stutter_phrases": [
+      {
+        "bar": 28,
+        "seconds": 53.5375,
+        "division": 16,
+        "bars": 0.5,
+        "duration_seconds": 0.9375
+      }
+    ],
+    "groove_gaps": [
+      {
+        "bar": 14,
+        "seconds": 27.7563,
+        "duration_seconds": 0.4688,
+        "kind": "phrase pullback"
+      },
+      {
+        "bar": 23,
+        "seconds": 44.6313,
+        "duration_seconds": 0.4688,
+        "kind": "pre-drop pickup"
+      },
+      {
+        "bar": 30,
+        "seconds": 57.7563,
+        "duration_seconds": 0.4688,
+        "kind": "phrase pullback"
+      }
+    ],
+    "drum_spotlights": [
+      {
+        "bar": 36,
+        "seconds": 67.6,
+        "duration_seconds": 1.875
+      }
+    ],
+    "title": "Bass and drums \u2014 Wired House edit v6.3",
+    "seed": 2600,
+    "bars": 48,
+    "settings": {
+      "chaos": 0.25,
+      "density": 0.55,
+      "mutation": 0.3,
+      "tension": 0.2,
+      "hold": true,
+      "autoStutter": true
+    },
+    "records": [
+      0
+    ],
+    "palettes": [
+      0
+    ],
+    "music_seconds": 90.0,
+    "music_rms_dbfs": -18.55,
+    "four_bar_rms_dbfs": [
+      -18.72,
+      -18.44,
+      -18.27,
+      -18.33,
+      -18.73,
+      -19.52,
+      -18.34,
+      -18.39,
+      -18.32,
+      -18.46,
+      -18.69,
+      -18.48
+    ]
+  },
+  "neon-rush.wav": {
+    "seconds": 87.5787,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -3.22,
+    "rms_dbfs": -19.59,
+    "end_peak": 1.1920928955078125e-07,
+    "title": "Neon Rush",
+    "bpm": 138,
+    "bars": 48
   },
   "quindar-in-noisy.wav": {
     "seconds": 0.9013,
@@ -58,15 +291,5 @@
     "end_peak": 0.0,
     "measured_hz": 2475.0,
     "tone_seconds": 0.24996
-  },
-  "rocket-launch.wav": {
-    "seconds": 43.0013,
-    "sample_rate": 48000,
-    "channels": 2,
-    "peak_dbfs": -5.16,
-    "rms_dbfs": -17.19,
-    "end_peak": 0.0,
-    "countdown_beeps": 5,
-    "ignition_seconds": 5.1
   }
 }

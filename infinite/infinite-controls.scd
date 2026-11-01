@@ -1,7 +1,7 @@
 // Optional native control panel. Load after infinite-live.scd, then ~showInfiniteControls.value.
 (
 ~showInfiniteControls = {
-    var window, status, holdButton, update;
+    var window, status, holdButton, transportButton, update;
     if(~infiniteWindow.isNil) {
     window=Window("Infinite music", Rect(180, 180, 560, 285));
     ~infiniteWindow=window;
@@ -14,6 +14,7 @@
             .value_(~infiniteSettings[key]).action_ { |view|
                 ~infiniteSettings[key]=view.value;
                 ~setInfinite.value;
+                ("Infinite UI: " ++ key ++ " -> " ++ (view.value * 100).round.asInteger ++ "%").postln;
                 label.string_((view.value * 100).round.asInteger.asString ++ "%");
             };
         label.string_((knob.value * 100).round.asInteger.asString ++ "%");
@@ -26,14 +27,21 @@
         holdButton.value_(0);
         ~startInfinite.value(~infiniteMode ? \edm, ~infiniteSeed ? 2600, ~infiniteBpm, ~infiniteServer);
     };
-    Button(window, Rect(440, 182, 95, 30)).states_([["Stop"]]).action_ { ~stopInfinite.value };
+    transportButton=Button(window, Rect(440, 182, 95, 30)).states_([["STOP"], ["START"]])
+        .value_(if(~infinitePlaying ? false, 0, 1)).action_ { |view|
+            if(~infinitePlaying ? false) { ~stopInfinite.value } { ~resumeInfinite.value };
+            view.value_(if(~infinitePlaying ? false, 0, 1));
+        };
     status=StaticText(window, Rect(20, 225, 520, 42));
     update=Routine {
         loop {
-            var engine=~infiniteEngine;
+            var engine=~infiniteEngine, playing=~infinitePlaying ? false;
+            transportButton.value_(if(playing, 0, 1));
             if(engine.notNil) {
-                status.string_("Bar " ++ (engine.state.bar + 1) ++ " / " ++ engine.state.section
-                    ++ " / " ++ engine.bpm ++ " BPM\nChanges enter on the next bar. Close window to fade and stop.");
+                status.string_(if(playing, "Playing / Bar ", "Stopped / Bar ") ++ (engine.state.bar + 1) ++ " / " ++ engine.state.section
+                    ++ " / " ++ engine.bpm ++ " BPM\n" ++ if(playing,
+                        "Changes enter on the next bar. Close window to fade and stop.",
+                        "START continues next bar. Restart seed begins again."));
             };
             0.25.wait;
         };
