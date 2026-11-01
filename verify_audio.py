@@ -20,7 +20,7 @@ assert expected <= {p.name for p in Path('audio').glob('*.wav')}, 'Missing audio
 noise_signatures = {}
 results = {}
 for path in sorted(Path('audio').glob('*.wav')):
-    if path.name not in expected and path.name not in dj_manifests:
+    if path.name not in expected and path.name not in dj_manifests and path.name != 'neon-rush.wav':
         continue
     dj_manifest = dj_manifests.get(path.name)
     with wave.open(str(path), 'rb') as w:
@@ -127,6 +127,10 @@ for path in sorted(Path('audio').glob('*.wav')):
                 palette_levels[spec['name']] = round(20*math.log10(level), 2)
             assert max(palette_levels.values()) - min(palette_levels.values()) < 6, 'Palette mix levels are poorly matched'
             result['palette_rms_dbfs'] = palette_levels
+    if path.name == 'neon-rush.wav':
+        assert abs(frames/rate - (0.1 + 48*4*60/138 + 4)) < 0.003
+        assert max(map(abs, values[:int(0.08*rate)*2])) < 0.0001
+        result.update(title='Neon Rush', bpm=138, bars=48)
     if path.name in studies:
         spec = studies[path.name]
         beat_seconds = 60 / spec['bpm']

@@ -4,6 +4,14 @@ Put on headphones. Let a groove run. Start an imaginary engine. Open a patch and
 
 This is an open notebook of experiments made with **SuperCollider**: music that keeps going, machines with a character of their own, and a reusable skill for making more of both. There is audio to listen to, code to take apart, and plenty still to explore.
 
+## Neon Rush
+
+An original 138 BPM trance / Eurodance instrumental with bright saw leads, offbeat bass, a breakdown and a final return. The 48-bar arrangement lasts about 88 seconds including the effect tail.
+
+Evaluate [`neon-rush/live.scd`](neon-rush/live.scd) in SuperCollider to play it; the file includes level and stop commands. Edit [`track.scd`](neon-rush/track.scd) for the arrangement and [`instruments.scd`](neon-rush/instruments.scd) for synthesis. Loading the instruments alone does not start playback.
+
+From the repository root, run `sclang -D neon-rush/render.scd` to generate `audio/neon-rush.wav`, then `python3 verify_audio.py` to update the numerical checks. The WAV remains local and is excluded from Git. Numerical verification passed; the preview also received a positive human listening review in the session.
+
 ## Find your next groove
 
 [**Infinite music**](infinite/README.md) starts with a simple question: how much can a pattern change and still feel familiar?
