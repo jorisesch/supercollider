@@ -2,6 +2,8 @@
 
 ![Two decks connected by an infinity loop of amber and cyan sound waves](docs/images/infinite-dj-banner.png)
 
+**[Companion listening page & setup](site/README.md)** — embedded listening demos, the live controls and a quick technical introduction.
+
 An ongoing DJ set generated with **[SuperCollider](https://supercollider.github.io/)**, free, open-source audio software for macOS, Windows and Linux.
 
 Infinite DJ is a music generator that can keep playing indefinitely. It creates and mixes successive records as it goes, changing instruments, keys and arrangements across the set.
@@ -53,7 +55,8 @@ To find your active startup file, evaluate `Platform.userConfigDir +/+ "startup.
 - [patches/](patches/README.md): sound-design sources, live controls, batch renderers and the optional startup example.
 - [audio/](audio/): compact listening previews and self-contained playback patches.
 - [neon-rush/](neon-rush/README.md): the standalone trance / Eurodance sketch.
-- [scripts/](scripts/README.md): audio verification tools.
+- [scripts/](scripts/README.md): audio verification and site packaging tools.
+- [site/](site/README.md): the companion listening page and GitHub Pages setup.
 - [docs/](docs/sound-design.md): sound-design notes, research and README images.
 - [skill/](skill/supercollider-music/SKILL.md): the reusable composition skill.
 

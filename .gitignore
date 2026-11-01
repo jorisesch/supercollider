@@ -6,3 +6,5 @@ audio/*.log
 audio/*.wav
 audio/recreated-v1/
 infinite/experiments/dj/saved-tracks/
+
+_site/
