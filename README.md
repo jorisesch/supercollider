@@ -1,65 +1,46 @@
-# A playground for sound
+# Infinite DJ
 
-Put on headphones. Let a groove run. Start an imaginary engine. Open a patch and change something.
+![Two decks connected by an infinity loop of amber and cyan sound waves](docs/images/infinite-dj-banner.png)
 
-This is an open notebook of experiments made with **SuperCollider**: music that keeps going, machines with a character of their own, and a reusable skill for making more of both. There is audio to listen to, code to take apart, and plenty still to explore.
+An ongoing DJ set generated with **[SuperCollider](https://supercollider.github.io/)**, free, open-source audio software for macOS, Windows and Linux.
 
-## Neon Rush
+Infinite DJ is a music generator that can keep playing indefinitely. It creates and mixes successive records as it goes, changing instruments, keys and arrangements across the set.
 
-An original 138 BPM trance / Eurodance instrumental with bright saw leads, offbeat bass, a breakdown and a final return. The 48-bar arrangement lasts about 88 seconds including the effect tail.
+The current direction is house and electro driven by bass and drums: recognizable grooves, small rhythmic variations and sparse melodic phrases. Four instrument ensembles give successive records different characters.
 
-Evaluate [`neon-rush/live.scd`](neon-rush/live.scd) in SuperCollider to play it; the file includes level and stop commands. Edit [`track.scd`](neon-rush/track.scd) for the arrangement and [`instruments.scd`](neon-rush/instruments.scd) for synthesis. Loading the instruments alone does not start playback.
+A live control window lets you steer the music, hold a record, request fills and perform filter sweeps, echo throws and rhythmic stutters.
 
-From the repository root, run `sclang -D neon-rush/render.scd` to generate `audio/neon-rush.wav`, then `python3 verify_audio.py` to update the numerical checks. The WAV remains local and is excluded from Git. Numerical verification passed; the preview also received a positive human listening review in the session.
+![Infinite DJ control window with deck status, channel selector, four knobs, performance effects and stereo spectrum panels](docs/images/infinite-dj-controls.png)
 
-## Find your next groove
+*Preview of the updated control window, including the channel selector and spectrum panels; playback is stopped.*
 
-[**Infinite music**](infinite/README.md) starts with a simple question: how much can a pattern change and still feel familiar?
+**[Listen to the current set](audio/dj-groove-v6d.m4a)** · **[Hear the favorite groove](audio/groove-track-v6c.m4a)** · **[Launch Infinite DJ](infinite/experiments/dj/README.md)**
 
-Four tracks share a musical world. Basslines remember their phrases, melodies repeat and resolve, rhythms leave gaps, and the arrangement makes room for a return. Try EDM for a steady pulse and melodic patterns, or soundscapes for slower layers and space.
+## Other experiments
 
-Four knobs let you steer: **Chaos**, **Density**, **Mutation**, and **Tension**. Find a groove you like, hold it for a while, then nudge it somewhere else.
+- **[Infinite music and soundscapes](infinite/README.md):** the original four-track generator, with controls for how its patterns evolve.
+- **[Composed tracks](infinite/studies/README.md):** shorter arrangements exploring house, electro, garage, disco and funk.
+- **[Neon Rush](neon-rush/README.md):** a short trance / Eurodance sketch with editable synths and an offline render.
+- **[Sound design](docs/sound-design.md):** Quindar radio tones, vinyl crackle, a rocket launch and an experimental pod-racer engine. There is also a **[submarine sonar patch](audio/sonar-ping.scd)**.
 
-With SuperCollider installed on macOS, run this from the repository directory:
+## Try it
 
-```sh
-/Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/infinite-run.scd
-```
+Install SuperCollider, then follow the [Infinite DJ guide](infinite/experiments/dj/README.md) to start the music and open its controls.
 
-A control window opens and the music starts. Close it to fade out. The [music guide](infinite/README.md) has the other modes, controls, and ways to experiment.
+For individual sound effects, open a standalone `.scd` patch from [`audio/`](audio/) in SuperCollider, select the entire file and evaluate it. Each includes its instruments and playback sequence.
 
-Want the groove to become a whole set? Try the [**Infinite DJ**](infinite/experiments/dj/README.md): two decks, changing keys and four rotating instrument ensembles. Its current style centres on bass and drums, with rare melodic accents, drum spotlights and live DJ effects.
+Compact listening previews are included in the repository. Large WAV exports are generated locally and excluded from Git.
 
-## Take an imaginary machine for a spin
+### Does launching sclang start the audio server?
 
-The [**pod racer patch**](audio/pod-racer.scd) is a little scene told through sound: a reluctant engine catches, warms up, shifts gears, and tears past a canyon wall.
+Normally, `sclang` starts the language interpreter; `scsynth` is the separate audio server. Code such as `s.boot` or `s.waitForBoot` starts the server. Infinite DJ boots its own server automatically, so no manual boot is needed.
 
-Listen for the uneven pistons, the change in character as it accelerates, and the space opening up around a pass. Then [open the patch](audio/pod-racer.scd) or [take the live controls](pod-racer-live.scd) and give the engine a different personality. It is built from synthesis, with no film samples.
+SuperCollider also evaluates your user `startup.scd` whenever the language starts, including command-line renders. A startup file that boots the server and starts SuperDirt therefore makes those services start automatically. This is a local configuration choice, not a requirement of Infinite DJ. Running multiple language sessions with that setup can cause OSC port conflicts.
 
-**[Open the pod racer patch →](audio/pod-racer.scd)** · [Explore the sound design](docs/sound-design.md) · [Read the research notes](POD_RACER_RESEARCH.md)
+The optional [startup.scd example](startup.scd) in this repo configures a stereo, output-only default server and starts SuperDirt on OSC port 57120. It requires SuperDirt and its samples. Personal sample folders and custom patch loads are omitted. **The repository copy does not run automatically**, and Infinite DJ does not need it.
 
-There are other sounds to wander into, too: a [rocket launch patch](audio/rocket-launch.scd), clean [space-radio signals](audio/quindar-in-out.wav), and their [vinyl-textured cousins](audio/quindar-in-noisy.wav). Large rendered WAVs are local-only and ignored; each sound still has an editable playback patch in [`audio/`](audio/).
+To find your active startup file, evaluate `Platform.userConfigDir +/+ "startup.scd"` in SuperCollider, or choose **File → Open startup file**. On macOS it is normally `~/Library/Application Support/SuperCollider/startup.scd`. Back up any existing file before copying or merging the example into that location. Leave it uninstalled for a DJ-only setup, or comment out the SuperDirt boot block in your active file if you want to start SuperDirt manually. Editing the repository example does not change your installed startup file.
 
-To play one, open its `.scd` file in SuperCollider, select all, and evaluate with **Cmd+Return** on macOS (**Ctrl+Return** on Windows/Linux).
+## Build more
 
-## Make the next experiment
-
-The [**SuperCollider music skill**](skill/supercollider-music/SKILL.md) collects the working methods behind these projects: turn an idea into an instrument, give it a playable arrangement, render it, measure it, and listen again.
-
-Use it with Codex, or read it as a practical starting point for your own patches. It covers composition and sound design, keeping instruments separate from playback, and checking what a render actually produced.
-
-<details>
-<summary>Install the skill for Codex</summary>
-
-From the repository directory:
-
-```sh
-mkdir -p "${CODEX_HOME:-$HOME/.codex}/skills"
-cp -R skill/supercollider-music "${CODEX_HOME:-$HOME/.codex}/skills/"
-```
-
-Refresh skills, then invoke `$supercollider-music`.
-
-</details>
-
-These are working experiments. Try a different tempo, change a sound, follow an unexpected result. If you find a direction worth exploring, bring it back as an issue or a pull request.
+The **[SuperCollider music skill](skill/supercollider-music/SKILL.md)** gives a coding agent a working approach to composition and sound design: build editable instruments, arrange them, render audio and check the result. It can also serve as a guide for making your own patches.
