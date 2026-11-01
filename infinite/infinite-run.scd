@@ -3,18 +3,18 @@
 (
 var root=thisProcess.nowExecutingPath.dirname, args=thisProcess.argv;
 var mode=(args.at(0) ? "edm").asSymbol, values, bpm, seed, server;
-if([\edm, \soundscape, \pop].includes(mode).not) {
-    "Usage: infinite-run.scd edm|soundscape|pop chaos density mutation tension bpm seed [nogui]".postln;
+if([\edm, \soundscape, \pop, \baseline].includes(mode).not) {
+    "Usage: infinite-run.scd edm|soundscape|pop|baseline chaos density mutation tension bpm seed [nogui]".postln;
     1.exit;
 };
 values=[0.25, 0.55, 0.30, 0.20].collect { |fallback, i|
     if(args.at(i + 1).notNil) { args[i + 1].asFloat.clip(0, 1) } { fallback };
 };
-bpm=if(args.at(5).notNil) { args[5].asFloat.clip(40, 200) } { if(mode == \edm, 128, if(mode==\pop,138,60)) };
+bpm=if(args.at(5).notNil) { args[5].asFloat.clip(40, 200) } { if([\edm,\baseline].includes(mode), 128, if(mode==\pop,138,60)) };
 seed=if(args.at(6).notNil) { args[6].asInteger } { 2600 };
-if(mode==\pop) {
+if([\edm,\pop].includes(mode)) {
     (root +/+ "experiments/dj/launch.scd").load;
-    ~djRun.value([seed.asString,bpm.asString]++values.collect(_.asString)++["pop"]
+    ~djRun.value([seed.asString,bpm.asString]++values.collect(_.asString)++[mode.asString]
         ++if(args.includesEqual("nogui")){["nogui"]}{[]});
 } {
 (root +/+ "infinite-live.scd").load;
@@ -22,7 +22,7 @@ if(mode==\pop) {
 // Own server: do not replace or reconfigure an existing IDE server.
 server=Server(\infiniteMusic, NetAddr("127.0.0.1", 57130),
     ServerOptions.new.numInputBusChannels_(0).numOutputBusChannels_(2));
-~startInfinite.value(mode, seed, bpm, server);
+~startInfinite.value(if(mode==\baseline){\edm}{mode}, seed, bpm, server);
 if(args.includes("nogui").not) {
     (root +/+ "infinite-controls.scd").load;
     {

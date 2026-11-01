@@ -15,6 +15,9 @@ try {
         assert.value(File.readAllString(root +/+ file).compile.notNil,"Parse failed: " ++ file);
     };
     (root +/+ "engine.scd").load;
+    ~makeClassicDJEngine={ |seed=2600,bpm=128,settings|
+        ~makeDJEngine.value(seed,bpm,(settings ? ()).copy.put(\channel,\edm))
+    };
     (root +/+ "instruments.scd").load;
     ~djDefs.do { |def| assert.value(def.asBytes.size > 0,"Invalid instrument") };
     definitionNames=~djDefs.collect(_.name);
@@ -31,14 +34,14 @@ try {
             "Bass instrument is missing its filter or saturation control");
     };
     {
-        var left=~makeDJEngine.value(2600,128,(palette:0)),right=~makeDJEngine.value(2600,128,(palette:2));
+        var left=~makeClassicDJEngine.value(2600,128,(palette:0)),right=~makeClassicDJEngine.value(2600,128,(palette:2));
         var musicalFields={ |frame| frame.events.collect { |e| [e.role,e.beat,e.midinote,e.duration,e.amp,e.seed] } };
         32.do {
             assert.value(musicalFields.value(left[\nextBar].value)==musicalFields.value(right[\nextBar].value),
                 "Changing instruments changed the composition");
         };
     }.value;
-    a=~makeDJEngine.value(2600,128); b=~makeDJEngine.value(2600,128);
+    a=~makeClassicDJEngine.value(2600,128); b=~makeClassicDJEngine.value(2600,128);
     8192.do {
         var frame=a[\nextBar].value, other=b[\nextBar].value, previous=0, barBpm=frame.automation[0].bpm;
         assert.value(frame.events.asCompileString == other.events.asCompileString,"Seeded notes changed");
@@ -214,7 +217,7 @@ try {
     assert.value(swingHits>100 and: {ghostHits>100} and: {breaths>100} and: {lowGaps>0} and: {returns>0}
         and: {bassTones.size>12} and: {bassDrives.size>12},"Missing groove, articulation, subtraction or coordinated returns");
     {
-        var held=~makeDJEngine.value(2600,128,(hold:true,autoStutter:false)),cells=List.new;
+        var held=~makeClassicDJEngine.value(2600,128,(hold:true,autoStutter:false)),cells=List.new;
         var tones=List.new,drives=List.new,percCounts=Set.new;
         16.do { |i|
             var frame=held[\nextBar].value,bass=frame.events.select { |e| e.role==\djBass };
@@ -236,7 +239,7 @@ try {
     assert.value(mixed > 0 and: { builds > 0 } and: { hookBars > 0 } and: { drumOnlyBars > 0 }
         and: { peak < 160 },"Missing arrangement, drum spotlight, or excessive voices");
     {
-        var held=~makeDJEngine.value(17,128);
+        var held=~makeClassicDJEngine.value(17,128);
         held.controls.hold=true;
         80.do { held[\nextBar].value; assert.value(held.state.currentSerial == 0,"Hold changed records") };
         assert.value(held.state.decks[0].mutations==0,"Hold allowed pattern mutations");
@@ -247,7 +250,7 @@ try {
         assert.value(held.state.mixing,"NEXT did not override Hold");
     }.value;
     {
-        var manual=~makeDJEngine.value(19,128),normal=~makeDJEngine.value(19,128),frame;
+        var manual=~makeClassicDJEngine.value(19,128),normal=~makeClassicDJEngine.value(19,128),frame;
         manual[\requestHook].value;
         4.do {
             var base=normal[\nextBar].value,bass,baseBass;
@@ -262,13 +265,13 @@ try {
         assert.value(manual[\nextBar].value.decks[0].hook.not,"Bass hook button failed to release");
     }.value;
     {
-        var low=~makeDJEngine.value(2600,128,(density:0.1,chaos:0)),high=~makeDJEngine.value(2600,128,(density:0.9,chaos:0.8));
+        var low=~makeClassicDJEngine.value(2600,128,(density:0.1,chaos:0)),high=~makeClassicDJEngine.value(2600,128,(density:0.9,chaos:0.8));
         var lowCount=0,highCount=0;
         32.do { lowCount=lowCount+low[\nextBar].value.events.size; highCount=highCount+high[\nextBar].value.events.size };
         assert.value(highCount > (lowCount*1.15),"Density did not affect musical activity");
     }.value;
     [[0,0,0,0],[1,1,1,1],[1,0.2,0.9,0.1],[0.1,0.95,0.1,1]].do { |values|
-        var extreme=~makeDJEngine.value(2600,128,
+        var extreme=~makeClassicDJEngine.value(2600,128,
             (chaos:values[0],density:values[1],mutation:values[2],tension:values[3]));
         512.do {
             var frame=extreme[\nextBar].value;
@@ -284,14 +287,14 @@ try {
         };
     };
     {
-        var manual=~makeDJEngine.value(2600,128),frame;
+        var manual=~makeClassicDJEngine.value(2600,128),frame;
         manual[\requestFill].value; manual[\requestMutation].value; frame=manual[\nextBar].value;
         assert.value(frame.events.count { |event| [\djClap,\djSnare].includes(event.role)
             and: { event.beat >= 3.25 } } >= 3,"Fill request failed");
         assert.value(frame.decks[0].mutations==1,"Mutation request failed");
     }.value;
     {
-        var manual=~makeDJEngine.value(2600,128,(autoStutter:false)),frame;
+        var manual=~makeClassicDJEngine.value(2600,128,(autoStutter:false)),frame;
         manual[\requestFX].value(\stutter16,0.5); frame=manual[\nextBar].value;
         assert.value(frame.stutter.bars==0.5 and: {frame.automation[0].fx[0].stutter==0}
             and: {frame.automation[8].fx[0].stutter>0} and: {frame.automation.last.fx[0].stutter==0},
@@ -310,7 +313,7 @@ try {
         assert.value(frame.stutter.isNil and: {frame.automation[0].fx[0].stutter==0},"Long stutter failed to release");
     }.value;
     {
-        var on=~makeDJEngine.value(2600,128),off=~makeDJEngine.value(2600,128,(autoStutter:false)),frame;
+        var on=~makeClassicDJEngine.value(2600,128),off=~makeClassicDJEngine.value(2600,128,(autoStutter:false)),frame;
         var fields={ |f| f.events.collect { |e| [e.voice,e.beat,e.midinote,e.duration,e.amp] } };
         256.do {
             frame=off[\nextBar].value;
@@ -319,7 +322,7 @@ try {
         };
     }.value;
     {
-        var engine=~makeDJEngine.value(2600,128),frame,found=false;
+        var engine=~makeClassicDJEngine.value(2600,128),frame,found=false;
         96.do {
             if(found.not) {
                 frame=engine[\nextBar].value;
@@ -331,7 +334,7 @@ try {
         assert.value(engine[\nextBar].value.stutter.isNil,"Auto OFF failed to release a running automatic phrase");
     }.value;
     {
-        var hot=~makeDJEngine.value(2600,128),frame,deck;
+        var hot=~makeClassicDJEngine.value(2600,128),frame,deck;
         hot[\requestFX].value(\echo); frame=hot[\nextBar].value;
         deck=hot.state.currentSerial%2;
         assert.value(hot.state.lastFX==\echo and: { frame.automation[0].hotFX==\echo },"Hot FX request was not recorded");

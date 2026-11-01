@@ -1,0 +1,42 @@
+{
+  "revision": "standard-edm-from-e",
+  "date": "2026-11-01",
+  "default_channel": "edme",
+  "classic_channel": "edm",
+  "preview": "audio/edm-e-set.m4a",
+  "timeline": "infinite/experiments/dj/edm-e-set-timeline.tsv",
+  "seed": 2600,
+  "initial_bpm": 128,
+  "checks": [
+    "256-bar E/default equivalence; Classic and Pop unchanged",
+    "8192-bar Classic suite",
+    "1024-bar E/default suite",
+    "held-FX and three-channel recall",
+    "pre-promotion Classic recipe compatibility",
+    "muted UI, handover and Classic selector",
+    "SuperCollider default NRT render and numerical WAV verification"
+  ],
+  "human_listening_review": "promotion requested by user; no new listening pass claimed",
+  "source_sha256": {
+    "infinite/experiments/dj/engine.scd": "faaf51fe6ad4b4c2faceca154398a75b0b09f5d6606a7c2b890a641daff0d470",
+    "infinite/experiments/dj/e-style.scd": "aba44538c8c0223f1bbc6794695e205ab22ef5c662388dd89ff73208d908aa8e",
+    "infinite/experiments/dj/e-instruments.scd": "398cd6400dfd7d2a1f7e962faba9e8bf00cdfebfd8a39fbf6723829cb5127f9f",
+    "infinite/experiments/dj/live.scd": "16e7f12b786d7a53e8c334ae10945e46cbe7d61148c49649990736e36b0f5639",
+    "infinite/experiments/dj/launch.scd": "3adb462ccda21db17ed34c158891c9cce105402761f92712e13ed049c6c2e4a6",
+    "infinite/experiments/dj/controls.scd": "959aafed19c796afe2f039c0866f0dc9bee835daab7fbcffe9049e2ad4f74795",
+    "infinite/experiments/dj/recall.scd": "f9956f2c083af55e1f6ed2695b13a3bee7a8664f8e81ead5badef448ca2d1a97",
+    "infinite/experiments/dj/render.scd": "928a1fae5345d071a8b17f5454201fc983496e1e8243a7a78d2efcafb9817714",
+    "infinite/experiments/dj/e-check.scd": "a89f2cc8ff93444e8e498554041c09500a9db03c36e842aa923472178510baad",
+    "infinite/experiments/dj/e-runtime-check.scd": "8d362549ac57ad53896303174f11749b93d227b97a089ae62242891ca513d20f",
+    "infinite/infinite-run.scd": "08d6d1a751907e60648f9e5d22c42b219f5dd028165fa462b8019c9c6fa9a0ad",
+    "infinite/experiments/c-edm.scd": "b68b18c867504930a48225cf857a736f61e310a53d5f0b11a50cacc51a0669cf",
+    "infinite/experiments/e-edm.scd": "1bad73b76f8431a4174320394cfa4fa4b1986d1ee9524f1f5bc6b305f1263645",
+    "site/index.html": "c20766a6e55e9d6e9324bf2091c5c8213b77bc044086344849e4657dc2bb6333",
+    "scripts/build_site.py": "3338fb23b9d0204ab7ea529db46c720041b0093471d3cd871048b64f0c596cfe",
+    "scripts/verify_audio.py": "e03972880bd292ed212182cc77761e61d74f80d10328667f84ac049de0b9bf83"
+  },
+  "audio_sha256": {
+    "audio/edm-e-set.wav": "05d91e6d78f3d32138b18f78b0a2bc2375761e62aadebe06c91e6bb53329ef5f",
+    "audio/edm-e-set.m4a": "9d57fe66c497c232d029b07d4f7a88510a3e16b230d071f81e845c80f2429590"
+  }
+}

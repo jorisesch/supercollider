@@ -65,8 +65,8 @@ var root=thisProcess.nowExecutingPath.dirname;
                 );
                 view.value_(0);
             };
-        channel=PopUpMenu(window,Rect(665,190,175,30)).items_(["EDM","Pop"])
-            .toolTip_("Change channel and restart with a fade.").action_ { |view|~djChannel.value([\edm,\pop][view.value])};
+        channel=PopUpMenu(window,Rect(665,190,175,30)).items_(["EDM","Pop","EDM Classic"])
+            .toolTip_("Change channel and restart with a fade.").action_ { |view|~djChannel.value([\edme,\pop,\edm][view.value])};
         fxMenu=PopUpMenu(window,Rect(20,240,245,30)).items_(fxNames)
             .toolTip_("Choose an effect, then press Start FX. Selection alone does not activate it.").action_ { |view|
                 ("DJ effect selected / " ++ fxNames[view.value] ++ " / press Start FX").postln;
@@ -100,7 +100,7 @@ var root=thisProcess.nowExecutingPath.dirname;
                         Array.fill(2,{ |deck|if(deck==currentDeck) {[1,1,1]} {[0,0,0]}})
                     };
                     blend=gains[1][2].clip(0,1);
-                    channel.value_(if(engine.channel==\pop) {1} {0});
+                    channel.value_([\edme,\pop,\edm].indexOf(engine.channel) ? 0);
                     hook.states_([[if(engine.channel==\pop) {"Chorus"} {"Bass hook"}]]);
                     hold.value_(if(engine.controls.hold) {1} {0});
                     auto.value_(if(engine.controls.autoStutter) {1} {0});

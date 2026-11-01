@@ -1,0 +1,32 @@
+{
+  "file": "edm-e-set.wav",
+  "preview": "edm-e-set.m4a",
+  "title": "EDM E \u2014 two-deck set",
+  "bars": 112,
+  "seed": 2600,
+  "initial_bpm": 128,
+  "settings": {
+    "channel": "edme",
+    "chaos": 0.25,
+    "density": 0.55,
+    "mutation": 0.3,
+    "tension": 0.2,
+    "hold": false,
+    "autoStutter": true
+  },
+  "lead_in_seconds": 0.1,
+  "tail_seconds": 4,
+  "minimum_records": 2,
+  "minimum_palettes": 2,
+  "minimum_auto_stutters": 0,
+  "timeline": "infinite/experiments/dj/edm-e-set-timeline.tsv",
+  "human_listening_review": "pending",
+  "e_building_blocks": [
+    "e_chord_notes",
+    "e_shaker_hits",
+    "e_tom_hits",
+    "e_signature_hits",
+    "e_slides"
+  ],
+  "check_e_variants": true
+}

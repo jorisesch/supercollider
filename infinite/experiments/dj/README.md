@@ -1,6 +1,6 @@
-# Infinite DJ — groove and space v6.3
+# Infinite DJ — EDM, Pop and EDM Classic
 
-Two decks play an ongoing house/electro set at 118–140 BPM. Bass and drums carry the record: a repeating low bass groove, four-on-the-floor kick, percussion and long stretches with no lead. Brief melodic tags punctuate selected phrase endings. Every record selects a coordinated bass, accent synth and drum kit. Both the track edit and the infinite set use [style.scd](style.scd), [instruments.scd](instruments.scd) and the same playback adapters.
+Two decks play an ongoing house/electro set at 118–140 BPM. Bass and drums carry the record: a repeating low bass groove, four-on-the-floor kick, percussion and long stretches with no lead. Brief melodic tags punctuate selected phrase endings. Every record selects a coordinated bass, accent synth and drum kit. Standard EDM builds on [style.scd](style.scd) with [e-style.scd](e-style.scd) and [e-instruments.scd](e-instruments.scd), using the same playback adapters. The earlier grammar remains available as EDM Classic.
 
 From the repository directory:
 
@@ -10,9 +10,45 @@ From the repository directory:
 
 Arguments: seed bpm chaos density mutation tension [nogui]. The window opens automatically. Close it to fade out and exit; Ctrl+C exits immediately. The optional nogui flag skips the window. Live playback records no audio.
 
+## Standard EDM
+
+The former E experiment is now **EDM**, the default for `c-edm.scd`, the common `infinite-run.scd edm` launcher, IDE starts and unqualified set renders. The menu contains **EDM**, **Pop** and **EDM Classic**. This promotion preserves the experiment's notes and synthesis.
+
+The normal launcher starts standard EDM. The `e-edm.scd` command below remains a compatible alias:
+
+~~~sh
+sclang -D infinite/experiments/e-edm.scd
+# Optional: seed bpm chaos density mutation tension [nogui]
+sclang -D infinite/experiments/e-edm.scd 2600 128 0.25 0.55 0.30 0.20
+~~~
+
+E develops the current groove with short warm chord stabs, shaker/tom conversations, articulated bass and occasional slides. A small synthesized vowel-like signature returns in selected hook/drop phrases. The drop introduces a B bass rhythm for eight bars and returns to A for eight; **Bass hook** requests B for four bars. A short reverse breath marks the pre-drop pickup. Bass and drums remain central, with no continuous new melody. The original groove and its favorite remain available as **EDM Classic**. Select it in the menu, or run `sclang -D infinite/experiments/c-edm.scd classic`.
+
+[Track edit, 94 seconds](../../../audio/edm-e-groove.m4a) · [Building-block comparison, 64 seconds](../../../audio/edm-e-building-blocks.m4a) · [Infinite-set excerpt](../../../audio/edm-e-set.m4a)
+
+The comparison repeats the same seed, settings and first eight-bar groove four times: **baseline 0.1s**, **percussion 15.1s**, **chord stabs 30.1s**, **bass articulation 45.1s**. Foundation drum/bass events are identical for the percussion and chord passes; the bass pass changes the bass timbre and note lengths, including slides. Each pass uses the same mix settings; the measured RMS spread is under 0.3 dB. The combined track includes the B-to-A return, sparse signature and turnaround, which are outside these isolated passes.
+
+The named favorite **Midnight Horizon at Lunar Air** has a separate [plain EDM excerpt](../../../audio/midnight-horizon-at-lunar-air-edm.m4a) and [EDM E adaptation](../../../audio/midnight-horizon-at-lunar-air-edm-e.m4a). Both use its saved seed 2600, 128 BPM and macros 17% / 100% / 0% / 90%. The 40-bar excerpts cover the groove through the drop, before the handover. Its original recipe is preserved in [the comparison record](midnight-horizon-comparison.json), and the [listening notebook](NOTES.md) records the preference.
+
+An earlier listening review preferred Classic for this particular saved track. The later request to make E standard supersedes that default choice; the earlier comparison and Classic favorite remain preserved. Three separate 79-second auditions isolate [added shaker/tom percussion](../../../audio/midnight-horizon-at-lunar-air-edm-e-percussion.m4a), [added chord stabs](../../../audio/midnight-horizon-at-lunar-air-edm-e-chords.m4a), and [bass articulation with the alternate groove](../../../audio/midnight-horizon-at-lunar-air-edm-e-bass.m4a). The percussion and chord versions keep every original part; the bass version replaces only the bass. E's signature and reverse breath are excluded. All three share the original's timing, settings and mix automation. [Settings and verification](midnight-horizon-isolated.json) record these auditions; individual listening judgments are pending.
+
+E shares the deck FX, automatic handovers, transport, names/recall and spectrum displays. [e-style.scd](e-style.scd) adds the composition rules and [e-instruments.scd](e-instruments.scd) defines stock-UGen voices. The original melodic D remains available through [d-edm.scd](../d-edm.scd) and [d-render.scd](../d-render.scd).
+
+~~~sh
+sclang -D infinite/experiments/e-render.scd         # 48-bar combined track
+sclang -D infinite/experiments/e-render.scd compare # 4 x 8-bar component comparison
+sclang -D infinite/experiments/e-render.scd set     # 112-bar set with handover
+sclang -D infinite/experiments/dj/e-check.scd
+sclang -D infinite/experiments/dj/e-runtime-check.scd
+sclang -D infinite/experiments/dj/interaction-check.scd
+python3 scripts/verify_audio.py
+~~~
+
+The structural check covers 1,024 reproducible E bars, all new voices, key membership, sparse supporting parts, A/B development, the four-bar Bass hook, pullbacks and unchanged comparison foundations. The muted native-window check exercises channel selection, Bass hook/Fill callbacks, internal signal, a handover, STOP/START and switching back to EDM. Settings, event-count timelines, hashes and numerical checks are recorded in [e-track.json](e-track.json), [e-compare.json](e-compare.json), [e-set.json](e-set.json) and [e-reproduction.json](e-reproduction.json). Listening judgment remains yours.
+
 ## Pop channel
 
-The window now has an **EDM / Pop** channel selector. EDM remains the default and retains its existing catalog, instruments and musical grammar. Switching channels fades the old performance and restarts the seed at the selected channel's factory tempo (EDM: 128 BPM; Pop: 138 BPM), preserving the knobs, Hold and automatic FX setting. STOP / START continues the current channel. Soundscape remains available through its original launcher.
+The window now has an **EDM / Pop / EDM E** channel selector. EDM remains the default and retains its existing catalog, instruments and musical grammar. Switching channels fades the old performance and restarts the seed at the selected channel's factory tempo (EDM and E: 128 BPM; Pop: 138 BPM), preserving the knobs, Hold and automatic FX setting. STOP / START continues the current channel. Soundscape remains available through its original launcher.
 
 Start Pop directly from the repository root:
 
@@ -24,7 +60,7 @@ sclang -D infinite/experiments/pop.scd 2600 138 0.25 0.55 0.30 0.20
 
 Pop develops the original [Neon Rush](../../../neon-rush/track.scd) sketch into continuously generated instrumental records: offbeat pulse bass, bright detuned saw leads, sustained chord beds, and rotating drum kits. Each record chooses a key, familiar four-chord progression and four-bar chorus motif. Verses leave melodic space; the chorus repeats its motif when it returns. Mutation changes verse/bass answers while preserving the chorus. The **Chorus** button brings that hook forward for four bars. Existing deck FX, Fill, Hold, NEXT and transport remain available.
 
-The mixer labels its Pop song sections using the shared internal names: `groove` is a verse, `hook` and `drop` are choruses, `space` and `breakdown` are bridges. Pop records have 64- or 96-bar forms with eight-bar automatic handovers. Its own catalog and voices are in [pop-style.scd](pop-style.scd) and [pop-instruments.scd](pop-instruments.scd). Loading them starts no playback. The EDM style and existing instrument definitions are unchanged.
+The mixer labels its Pop song sections using the shared internal names: `groove` is a verse, `hook` and `drop` are choruses, `space` and `breakdown` are bridges. Pop records have 64- or 96-bar forms with eight-bar automatic handovers. Its own catalog and voices are in [pop-style.scd](pop-style.scd) and [pop-instruments.scd](pop-instruments.scd). Loading them starts no playback. Pop is unchanged by the promotion; EDM Classic retains the preceding EDM definitions.
 
 [Listen to the Pop excerpt](../../../audio/dj-pop-preview.m4a): 96 bars, around 2:53 including the ending, with a complete first record and an automatic handover. Its [manifest](pop.json) and [timeline](dj-pop-preview-timeline.tsv) describe the render. **Human listening review is pending**; numerical and muted runtime checks do not establish musical quality.
 
@@ -34,7 +70,7 @@ For IDE playback, load `live.scd` and `controls.scd`, then evaluate:
 ~djSettings.channel=\pop;
 ~djStart.value(2600,138);
 ~djShow.value;
-~djChannel.value(\edm); // fade and restart in EDM
+~djChannel.value(\edme); // fade and restart in standard EDM
 ~djChannel.value(\pop); // fade and restart in Pop
 ~djStop.value;           // graceful stop
 ~~~
@@ -59,7 +95,7 @@ The bass opens gradually through each eight-bar phrase: filter brightness and sa
 
 Kick anchors remain on the grid. Odd sixteenths in the bass, hats, ghost snares and percussion share subtle swing, roughly 11–20 ms at 128 BPM. Hats have deliberate accents and different lengths; quiet snare/hat ghosts connect the main hits. Extra hats arrive after the phrase has settled, and percussion enters later, then leaves for the next foundation passage.
 
-There is no recurring lead riff, automatic arpeggio or chord comping. Occasional quiet phrases range from a short tag to a fuller melodic gesture, with repeated notes, syncopation and a resolving answer. Their rhythms and contours vary by record and mutation; the drop can develop the earlier phrase. Each entrance occupies one bar, separated by long bass/drum passages. In the first 48-bar edit, only two bars contain lead notes. Breakdowns keep a reduced kick, hats and sub pulse, with one quiet two-voice atmosphere at the entrance. Space sections remove extra percussion. One kick envelope ducks bass, accents and effect returns together. Bass and kick stay centred.
+EDM Classic has no recurring lead riff, automatic arpeggio or chord comping. Standard EDM adds the short E chord stabs and percussion described above to this foundation. Occasional quiet phrases range from a short tag to a fuller melodic gesture, with repeated notes, syncopation and a resolving answer. Their rhythms and contours vary by record and mutation; the drop can develop the earlier phrase. Each entrance occupies one bar, separated by long bass/drum passages. In the first 48-bar edit, only two bars contain lead notes. Breakdowns keep a reduced kick, hats and sub pulse, with one quiet two-voice atmosphere at the entrance. Space sections remove extra percussion. One kick envelope ducks bass, accents and effect returns together. Bass and kick stay centred.
 
 Four ensembles rotate through a seeded shuffle bag. Each is stable for its whole record, including Hold and motif mutations. Consecutive records choose different ensembles; the display and post window identify the instruments. Palette selection has its own random stream, so changing the ensemble preserves the composed notes and rhythms.
 
@@ -101,6 +137,23 @@ The **Spectrum** panel shows separate left/right FFTs of the final output, with 
 Choose **More... → Replay track...**, paste the complete name, and press Play track. The name restores the record's original entry, including its handover context, from a small local JSON recipe. Recipes record the seed, channel, starting controls and earlier knob/action history; the notes and automation are generated again. Later live gestures are a new performance and are not encoded by that starting name.
 
 Recipes live in `infinite/experiments/dj/saved-tracks/`, which is ignored by Git. Copy that folder with the matching music source to move your library to another machine. A name is a lookup key in this library, not a globally published song ID. Recipes check their source version before playing. No WAV is needed. The [recall code](recall.scd) is separate from the pure composition engine and never evaluates recipe data as code.
+
+To export a named favorite or compare its EDM/E interpretation, use [render-named.scd](render-named.scd) with a name from that library. The original recipe is read without changing it; both channels retain its seed, controls and action history. The renderer checks core drum events and mix automation against the original on every bar.
+
+~~~sh
+/Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/experiments/dj/render-named.scd "Midnight Horizon at Lunar Air" edm 40
+/Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/experiments/dj/render-named.scd "Midnight Horizon at Lunar Air" edme 40
+~~~
+
+Outputs use the lowercased, hyphenated track name plus `-edm` or `-edm-e`. Omit the channel argument (or use `original`) to render the saved channel. The final argument is the number of bars, default 40. Original-channel replay also supports Pop recipes; cross-channel comparisons are restricted to EDM and EDM E.
+
+An optional fourth argument isolates `percussion`, `chords` or `bass` on the original EDM. For example:
+
+~~~sh
+/Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/experiments/dj/render-named.scd "Midnight Horizon at Lunar Air" edme 40 percussion
+~~~
+
+Each output adds the component name to its filename. Percussion and chords are overlays, retaining the original percussion, bass and melodic parts. Bass uses E's articulation and B-to-A phrase development while retaining the original drums and other musical parts.
 
 For IDE playback, load [live.scd](live.scd), then evaluate:
 
@@ -146,8 +199,8 @@ The lead-forward [v4 source snapshot](revisions/v4/ABOUT.md), [v2](revisions/v2/
 
 ~~~sh
 # Complete first-record edit:
-sclang -D infinite/experiments/dj/render.scd track
-# Longer set excerpt, including handovers:
+sclang -D infinite/experiments/dj/render.scd classic track
+# Standard EDM set, including handovers (edm-e-set.wav):
 sclang -D infinite/experiments/dj/render.scd
 # Same bass groove, eight bars per ensemble:
 sclang -D infinite/experiments/dj/render.scd palettes
@@ -180,4 +233,12 @@ afconvert -f m4af -d 'aac ' -b 192000 -q 127 audio/digital-drive-lead-ab-v6d.wav
 
 The renderer exits after writing the WAV and its timeline. WAVs and temporary scores remain ignored by Git; small AAC listening copies can be committed.
 
-The pure check covers 8,192 seeded bars and 2,048 bars at macro extremes: timing, scales, catalog rotation, palette routing and stable composition. It checks motif repetition and small answers, bounded swing, quiet ghosts, percussion entrances/exits, bass filter/drive variation, quarter-bar cut limits and coordinated returns. Automatic stutters must occupy only the final half-bar, reset at beat three and leave sixteen clear bars; manual half-bar and longer actions remain covered. The signal check measures eight pulses inside the half-bar with steady output before and after, alongside the longer gate rates. The muted runtime check exercises the compact window, tooltips, all six menu-selected held effects and immediate release against the server, handovers, transport, track-name replay and cleanup. The interaction check compares unchanged EDM events/automation with the favourite snapshot and checks EDM/Pop recall after prior knob and action history. The offline manual-FX probe verifies a sixteenth stutter through its sixth held bar and continuous output after release. Audio verification checks available v6.3 renders against their timelines, palette levels, activity, duration, finite samples, headroom and quiet boundaries; it also measures the track's cuts and limits their count. The lead comparison checks that only the FM lead SynthDef changed, and measures reduced upper-band energy at comparable RMS levels. These checks do not establish musical quality.
+The pure check covers 8,192 seeded bars and 2,048 bars at macro extremes: timing, scales, catalog rotation, palette routing and stable composition. It checks motif repetition and small answers, bounded swing, quiet ghosts, percussion entrances/exits, bass filter/drive variation, quarter-bar cut limits and coordinated returns. Automatic stutters must occupy only the final half-bar, reset at beat three and leave sixteen clear bars; manual half-bar and longer actions remain covered. The signal check measures eight pulses inside the half-bar with steady output before and after, alongside the longer gate rates. The muted runtime check exercises the compact window, tooltips, all six menu-selected held effects and immediate release against the server, handovers, transport, track-name replay and cleanup. The interaction check compares unchanged EDM events/automation with the favourite snapshot and checks EDM/Pop/EDM E recall after prior knob and action history. The offline manual-FX probe verifies a sixteenth stutter through its sixth held bar and continuous output after release. Audio verification checks available v6.3 renders against their timelines, palette levels, activity, duration, finite samples, headroom and quiet boundaries; it also measures the track's cuts and limits their count. The lead comparison checks that only the FM lead SynthDef changed, and measures reduced upper-band energy at comparable RMS levels. These checks do not establish musical quality.
+
+## Compatibility after promoting E
+
+Internal recipe channel IDs remain `edm` (Classic), `pop` and `edme` (standard EDM), so existing recipes retain their original musical interpretation. A default engine/session now chooses `edme`. Explicit `(channel: \edm)` keeps Classic. Recipes from the immediately preceding E source fingerprint remain accepted because explicit-channel music is unchanged; older incompatible recipes still need their source version.
+
+Default rendering writes the standard set: `sclang -D infinite/experiments/dj/render.scd`. Add `track` for its 48-bar edit. `classic` and `classic track` regenerate the older set/edit filenames; `palettes` and `digital` remain Classic comparisons. `e-render.scd` remains a compatible alias. Historical reproduction manifests describe their original sources, not current source hashes.
+
+The promoted standard render and current source checksums are recorded in [standard-reproduction.json](standard-reproduction.json).

@@ -1,5 +1,36 @@
 # Infinite DJ listening notebook
 
+## 2026-11-01 — promote E to standard EDM
+
+User request: “Merge that into EDM as the standard.” E is promoted unchanged to the default launcher and menu label. The prior grammar and named favorite remain available as EDM Classic. Earlier listening preferences below remain historical records. Promotion validation compares default/E, Classic and Pop notes and automation across 256 bars each. Numerical/runtime checks are separate from a new human listening review.
+
+## 2026-11-01 — isolate E additions on the favorite
+
+Human listening feedback: “So far, in aggregate, edm-E is not beating the plain version yet.”
+Plain EDM remains the preferred version of Midnight Horizon at Lunar Air.
+
+Three separate auditions retain the same saved seed, knobs, arrangement and mix
+automation: original plus shaker/tom percussion; original plus chord stabs;
+original with only its bass replaced by E's articulation and alternate groove.
+The percussion audition keeps the original percussion too. The signature and
+reverse breath are excluded from all three. Each excerpt covers the same 40 bars
+as the earlier comparison; individual listening judgments are pending.
+
+## 2026-11-01 — favorite: Midnight Horizon at Lunar Air
+
+Human listening feedback: “Favorites so far: Midnight Horizon at Lunar Air under plain EDM.”
+Saved recipe: first record, seed 2600, 128 BPM, Chaos 17%, Density 100%,
+Mutation 0%, Tension 90%, Hold off and automatic stutter on. No prior actions.
+The recipe is accepted by the current source (fingerprint 858238036).
+
+Matching 40-bar excerpts compare the original EDM with EDM E. Both begin at the
+saved entry, keep the same settings, and end after the drop's B-to-A development,
+before the first handover. The renderer verifies unchanged foundation drums and
+mix automation on every bar. The E version's listening review is pending.
+
+- [Plain EDM excerpt](../../../audio/midnight-horizon-at-lunar-air-edm.m4a)
+- [EDM E adaptation](../../../audio/midnight-horizon-at-lunar-air-edm-e.m4a)
+
 ## 2026-10-31 — Digital Drive lead refinement v6.3
 
 Feedback: “We kind of got it! Nice.” Digital Drive's lead was still too harsh.

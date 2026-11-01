@@ -1,0 +1,45 @@
+{
+  "file": "midnight-horizon-at-lunar-air-edm.wav",
+  "preview": "midnight-horizon-at-lunar-air-edm.m4a",
+  "title": "Midnight Horizon at Lunar Air \u2014 plain EDM",
+  "bars": 40,
+  "seed": 2600,
+  "initial_bpm": 128,
+  "settings": {
+    "channel": "edm",
+    "chaos": 0.17,
+    "density": 1.0,
+    "mutation": 0.0,
+    "tension": 0.9,
+    "hold": false,
+    "autoStutter": true
+  },
+  "lead_in_seconds": 0.1,
+  "tail_seconds": 4,
+  "minimum_records": 1,
+  "minimum_palettes": 1,
+  "minimum_auto_stutters": 0,
+  "timeline": "infinite/experiments/dj/midnight-horizon-at-lunar-air-edm-timeline.tsv",
+  "source_track_name": "Midnight Horizon at Lunar Air",
+  "source_recipe": [
+    2,
+    858238036,
+    2600,
+    128,
+    0,
+    [
+      0.17,
+      1.0,
+      0.0,
+      0.9,
+      0,
+      1,
+      -1
+    ],
+    0,
+    0,
+    [],
+    0
+  ],
+  "human_listening_review": "User favorite in live EDM; this offline excerpt and E adaptation await comparison."
+}

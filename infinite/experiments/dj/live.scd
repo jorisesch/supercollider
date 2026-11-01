@@ -7,7 +7,7 @@ var root=thisProcess.nowExecutingPath.dirname;
 ~djSettings=~djSettings ? (chaos:0.25,density:0.55,mutation:0.30,tension:0.20,hold:false);
 ~djSettings.autoStutter=~djSettings[\autoStutter] ? true;
 ~djStutterBars=~djStutterBars ? 0.5;
-~djSettings.channel=~djSettings[\channel] ? \edm;
+~djSettings.channel=~djSettings[\channel] ? \edme;
 ~djLastFX=\none;
 ~djLastFXLabel="none";
 ~djManualFX=nil;
@@ -86,8 +86,8 @@ var root=thisProcess.nowExecutingPath.dirname;
     if([4,8,16].includes(division).not) {Error("Stutter division must be 4, 8 or 16").throw};
     ~djHot.value(("stutter" ++ division.asInteger).asSymbol,bars ? ~djStutterBars);
 };
-~djChannel={ |channel=\edm|
-    if([\edm,\pop].includes(channel).not) {Error("DJ channel must be edm or pop").throw};
+~djChannel={ |channel=\edme|
+    if([\edm,\pop,\edme].includes(channel).not) {Error("DJ channel must be edm, pop or edme").throw};
     ~djSettings.channel=channel;
     ("DJ channel: "++channel++" / restarting set with fade").postln;
     ~djStart.value(~djSeed ? 2600,if(channel==\pop){138}{128},~djServer);

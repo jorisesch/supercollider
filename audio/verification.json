@@ -223,6 +223,227 @@
       -20.67
     ]
   },
+  "edm-e-building-blocks.wav": {
+    "seconds": 64.1013,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -2.45,
+    "rms_dbfs": -18.92,
+    "end_peak": 0.0,
+    "automatic_stutter_phrases": [],
+    "title": "EDM E \u2014 building blocks comparison",
+    "seed": 2600,
+    "bars": 32,
+    "settings": {
+      "channel": "edme",
+      "chaos": 0.25,
+      "density": 0.55,
+      "mutation": 0.3,
+      "tension": 0.2,
+      "hold": true,
+      "autoStutter": false
+    },
+    "records": [
+      0
+    ],
+    "palettes": [
+      0
+    ],
+    "music_seconds": 60.0,
+    "music_rms_dbfs": -18.63,
+    "four_bar_rms_dbfs": [
+      -18.72,
+      -18.44,
+      -18.68,
+      -18.44,
+      -18.68,
+      -18.43,
+      -18.94,
+      -18.72
+    ],
+    "segment_rms_dbfs": {
+      "Baseline": -18.56,
+      "Percussion": -18.55,
+      "Chord stabs": -18.55,
+      "Bass articulation": -18.83
+    }
+  },
+  "edm-e-groove.wav": {
+    "seconds": 94.1013,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -2.45,
+    "rms_dbfs": -19.02,
+    "end_peak": 0.0,
+    "automatic_stutter_phrases": [
+      {
+        "bar": 28,
+        "seconds": 53.5375,
+        "division": 16,
+        "bars": 0.5,
+        "duration_seconds": 0.9375
+      }
+    ],
+    "e_building_blocks": {
+      "e_chord_notes": 54,
+      "e_shaker_hits": 90,
+      "e_tom_hits": 24,
+      "e_signature_hits": 4,
+      "e_slides": 11
+    },
+    "e_variants": [
+      "a",
+      "b"
+    ],
+    "groove_gaps": [
+      {
+        "bar": 14,
+        "seconds": 27.7563,
+        "duration_seconds": 0.4688,
+        "kind": "phrase pullback"
+      },
+      {
+        "bar": 23,
+        "seconds": 44.6313,
+        "duration_seconds": 0.4688,
+        "kind": "pre-drop pickup"
+      },
+      {
+        "bar": 30,
+        "seconds": 57.7563,
+        "duration_seconds": 0.4688,
+        "kind": "phrase pullback"
+      }
+    ],
+    "drum_spotlights": [
+      {
+        "bar": 36,
+        "seconds": 67.6,
+        "duration_seconds": 1.875
+      }
+    ],
+    "title": "EDM E \u2014 groove, harmony and percussion",
+    "seed": 2600,
+    "bars": 48,
+    "settings": {
+      "channel": "edme",
+      "chaos": 0.25,
+      "density": 0.55,
+      "mutation": 0.3,
+      "tension": 0.2,
+      "hold": true,
+      "autoStutter": true
+    },
+    "records": [
+      0
+    ],
+    "palettes": [
+      0
+    ],
+    "music_seconds": 90.0,
+    "music_rms_dbfs": -18.82,
+    "four_bar_rms_dbfs": [
+      -18.98,
+      -18.72,
+      -18.57,
+      -18.66,
+      -18.98,
+      -19.87,
+      -18.57,
+      -18.62,
+      -18.62,
+      -18.74,
+      -18.96,
+      -18.76
+    ]
+  },
+  "edm-e-set.wav": {
+    "seconds": 212.14,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -2.45,
+    "rms_dbfs": -19.23,
+    "end_peak": 0.0,
+    "automatic_stutter_phrases": [
+      {
+        "bar": 28,
+        "seconds": 53.5375,
+        "division": 16,
+        "bars": 0.5,
+        "duration_seconds": 0.9375
+      },
+      {
+        "bar": 88,
+        "seconds": 164.7542,
+        "division": 16,
+        "bars": 0.5,
+        "duration_seconds": 0.9231
+      }
+    ],
+    "e_building_blocks": {
+      "e_chord_notes": 144,
+      "e_shaker_hits": 222,
+      "e_tom_hits": 59,
+      "e_signature_hits": 8,
+      "e_slides": 26
+    },
+    "e_variants": [
+      "a",
+      "b"
+    ],
+    "title": "EDM E \u2014 two-deck set",
+    "seed": 2600,
+    "bars": 112,
+    "settings": {
+      "channel": "edme",
+      "chaos": 0.25,
+      "density": 0.55,
+      "mutation": 0.3,
+      "tension": 0.2,
+      "hold": false,
+      "autoStutter": true
+    },
+    "records": [
+      0,
+      1
+    ],
+    "palettes": [
+      0,
+      2
+    ],
+    "music_seconds": 208.0388,
+    "music_rms_dbfs": -19.14,
+    "four_bar_rms_dbfs": [
+      -18.98,
+      -18.72,
+      -18.61,
+      -18.65,
+      -18.98,
+      -19.79,
+      -18.58,
+      -18.61,
+      -18.6,
+      -18.65,
+      -20.59,
+      -20.66,
+      -18.46,
+      -19.87,
+      -18.68,
+      -19.06,
+      -17.99,
+      -19.59,
+      -18.11,
+      -19.19,
+      -22.47,
+      -23.17,
+      -20.41,
+      -19.48,
+      -17.59,
+      -19.12,
+      -18.25,
+      -19.36
+    ]
+  },
   "groove-track-v6d.wav": {
     "seconds": 94.1013,
     "sample_rate": 48000,
@@ -309,6 +530,296 @@
     "end_peak": 0.0,
     "seed": 2600,
     "preview_bars": 8
+  },
+  "midnight-horizon-at-lunar-air-edm-e-bass.wav": {
+    "seconds": 79.1013,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -2.45,
+    "rms_dbfs": -18.98,
+    "end_peak": 0.0,
+    "automatic_stutter_phrases": [
+      {
+        "bar": 28,
+        "seconds": 53.5375,
+        "division": 16,
+        "bars": 0.5,
+        "duration_seconds": 0.9375
+      }
+    ],
+    "e_building_blocks": {
+      "e_slides": 9
+    },
+    "isolated_component": "bass",
+    "excluded_building_blocks": {
+      "e_chord_notes": 0,
+      "e_shaker_hits": 0,
+      "e_tom_hits": 0,
+      "e_signature_hits": 0
+    },
+    "e_variants": [
+      "a",
+      "b"
+    ],
+    "title": "Midnight Horizon at Lunar Air \u2014 original with E bass articulation and alternate groove",
+    "seed": 2600,
+    "bars": 40,
+    "settings": {
+      "channel": "edme",
+      "chaos": 0.17,
+      "density": 1.0,
+      "mutation": 0.0,
+      "tension": 0.9,
+      "hold": false,
+      "autoStutter": true
+    },
+    "records": [
+      0
+    ],
+    "palettes": [
+      0
+    ],
+    "music_seconds": 75.0,
+    "music_rms_dbfs": -18.74,
+    "four_bar_rms_dbfs": [
+      -18.94,
+      -18.56,
+      -18.55,
+      -18.58,
+      -18.97,
+      -19.82,
+      -18.45,
+      -18.58,
+      -18.55,
+      -18.62
+    ]
+  },
+  "midnight-horizon-at-lunar-air-edm-e-chords.wav": {
+    "seconds": 79.1013,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -2.45,
+    "rms_dbfs": -18.68,
+    "end_peak": 0.0,
+    "automatic_stutter_phrases": [
+      {
+        "bar": 28,
+        "seconds": 53.5375,
+        "division": 16,
+        "bars": 0.5,
+        "duration_seconds": 0.9375
+      }
+    ],
+    "e_building_blocks": {
+      "e_chord_notes": 54
+    },
+    "isolated_component": "chords",
+    "excluded_building_blocks": {
+      "e_shaker_hits": 0,
+      "e_tom_hits": 0,
+      "e_signature_hits": 0,
+      "e_slides": 0
+    },
+    "title": "Midnight Horizon at Lunar Air \u2014 original + warm chord stabs",
+    "seed": 2600,
+    "bars": 40,
+    "settings": {
+      "channel": "edme",
+      "chaos": 0.17,
+      "density": 1.0,
+      "mutation": 0.0,
+      "tension": 0.9,
+      "hold": false,
+      "autoStutter": true
+    },
+    "records": [
+      0
+    ],
+    "palettes": [
+      0
+    ],
+    "music_seconds": 75.0,
+    "music_rms_dbfs": -18.44,
+    "four_bar_rms_dbfs": [
+      -18.66,
+      -18.26,
+      -18.23,
+      -18.23,
+      -18.7,
+      -19.45,
+      -18.2,
+      -18.3,
+      -18.22,
+      -18.32
+    ]
+  },
+  "midnight-horizon-at-lunar-air-edm-e-percussion.wav": {
+    "seconds": 79.1013,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -2.45,
+    "rms_dbfs": -18.68,
+    "end_peak": 0.0,
+    "automatic_stutter_phrases": [
+      {
+        "bar": 28,
+        "seconds": 53.5375,
+        "division": 16,
+        "bars": 0.5,
+        "duration_seconds": 0.9375
+      }
+    ],
+    "e_building_blocks": {
+      "e_shaker_hits": 90,
+      "e_tom_hits": 24
+    },
+    "isolated_component": "percussion",
+    "excluded_building_blocks": {
+      "e_chord_notes": 0,
+      "e_signature_hits": 0,
+      "e_slides": 0
+    },
+    "title": "Midnight Horizon at Lunar Air \u2014 original + shaker/tom percussion",
+    "seed": 2600,
+    "bars": 40,
+    "settings": {
+      "channel": "edme",
+      "chaos": 0.17,
+      "density": 1.0,
+      "mutation": 0.0,
+      "tension": 0.9,
+      "hold": false,
+      "autoStutter": true
+    },
+    "records": [
+      0
+    ],
+    "palettes": [
+      0
+    ],
+    "music_seconds": 75.0,
+    "music_rms_dbfs": -18.45,
+    "four_bar_rms_dbfs": [
+      -18.66,
+      -18.27,
+      -18.24,
+      -18.24,
+      -18.7,
+      -19.45,
+      -18.21,
+      -18.3,
+      -18.23,
+      -18.32
+    ]
+  },
+  "midnight-horizon-at-lunar-air-edm-e.wav": {
+    "seconds": 79.1013,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -2.45,
+    "rms_dbfs": -18.97,
+    "end_peak": 0.0,
+    "automatic_stutter_phrases": [
+      {
+        "bar": 28,
+        "seconds": 53.5375,
+        "division": 16,
+        "bars": 0.5,
+        "duration_seconds": 0.9375
+      }
+    ],
+    "e_building_blocks": {
+      "e_chord_notes": 54,
+      "e_shaker_hits": 90,
+      "e_tom_hits": 24,
+      "e_signature_hits": 4,
+      "e_slides": 9
+    },
+    "e_variants": [
+      "a",
+      "b"
+    ],
+    "title": "Midnight Horizon at Lunar Air \u2014 EDM E adaptation",
+    "seed": 2600,
+    "bars": 40,
+    "settings": {
+      "channel": "edme",
+      "chaos": 0.17,
+      "density": 1.0,
+      "mutation": 0.0,
+      "tension": 0.9,
+      "hold": false,
+      "autoStutter": true
+    },
+    "records": [
+      0
+    ],
+    "palettes": [
+      0
+    ],
+    "music_seconds": 75.0,
+    "music_rms_dbfs": -18.74,
+    "four_bar_rms_dbfs": [
+      -18.93,
+      -18.55,
+      -18.55,
+      -18.58,
+      -18.97,
+      -19.82,
+      -18.45,
+      -18.58,
+      -18.54,
+      -18.62
+    ]
+  },
+  "midnight-horizon-at-lunar-air-edm.wav": {
+    "seconds": 79.1013,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -2.45,
+    "rms_dbfs": -18.68,
+    "end_peak": 0.0,
+    "automatic_stutter_phrases": [
+      {
+        "bar": 28,
+        "seconds": 53.5375,
+        "division": 16,
+        "bars": 0.5,
+        "duration_seconds": 0.9375
+      }
+    ],
+    "title": "Midnight Horizon at Lunar Air \u2014 plain EDM",
+    "seed": 2600,
+    "bars": 40,
+    "settings": {
+      "channel": "edm",
+      "chaos": 0.17,
+      "density": 1.0,
+      "mutation": 0.0,
+      "tension": 0.9,
+      "hold": false,
+      "autoStutter": true
+    },
+    "records": [
+      0
+    ],
+    "palettes": [
+      0
+    ],
+    "music_seconds": 75.0,
+    "music_rms_dbfs": -18.45,
+    "four_bar_rms_dbfs": [
+      -18.66,
+      -18.27,
+      -18.24,
+      -18.24,
+      -18.7,
+      -19.45,
+      -18.21,
+      -18.3,
+      -18.23,
+      -18.32
+    ]
   },
   "neon-rush.wav": {
     "seconds": 87.5787,

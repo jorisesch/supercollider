@@ -8,7 +8,7 @@ An ongoing DJ set generated with **[SuperCollider](https://supercollider.github.
 
 Infinite DJ is a music generator that can keep playing indefinitely. It creates and mixes successive records as it goes, changing instruments, keys and arrangements across the set.
 
-The current direction is house and electro driven by bass and drums: recognizable grooves, small rhythmic variations and sparse melodic phrases. Four instrument ensembles give successive records different characters.
+Standard EDM now incorporates the former E experiment: bass-led house and electro with warm chord stabs, shaker/tom phrases, bass slides and an alternate groove that returns home. The previous groove remains available as **EDM Classic**. Four instrument ensembles give successive records different characters.
 
 A compact control window lets you steer the music, hold a record, request fills and start or stop an effect from one menu. Playing indicators and an A/B mix slider show which deck you hear. Hover over a track name for its details, or use the name to replay it from your local recipe library. A stereo spectrum analyzer shows the final mix.
 
@@ -16,7 +16,7 @@ A compact control window lets you steer the music, hold a record, request fills 
 
 *Live EDM playback: the leading deck is highlighted and both spectrum panels show the actual stereo mix.*
 
-**[Listen to the current set](audio/dj-groove-v6d.m4a)** · **[Hear the favorite groove](audio/groove-track-v6c.m4a)** · **[Launch Infinite DJ](infinite/experiments/dj/README.md)**
+**[Listen to the current set](audio/edm-e-set.m4a)** · **[Hear the Classic favorite](audio/groove-track-v6c.m4a)** · **[Launch Infinite DJ](infinite/experiments/dj/README.md)**
 
 ### Pop channel
 

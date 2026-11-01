@@ -5,10 +5,13 @@ var root=thisProcess.nowExecutingPath.dirname;
 (root +/+ "library.scd").load;
 (root +/+ "style.scd").load;
 (root +/+ "pop-style.scd").load;
+(root +/+ "e-style.scd").load;
 ~makeDJEngine={ |seed=2600,bpm=128,settings|
-    var channel=(settings ? () )[\channel] ? \edm;
-    var lib=if(channel==\pop) {~djPopLibrary.value(~djLibrary)} {~djLibrary};
-    var styleBar=if(channel==\pop) {~djPopBar} {~djStyleBar};
+    var channel=(settings ? () )[\channel] ? \edme;
+    var eMode=(settings ? ())[\eMode] ? \full;
+    var lib=case {channel==\pop} {~djPopLibrary.value(~djLibrary)}
+        {channel==\edme} {~djELibrary.value(~djLibrary,eMode)} {true} {~djLibrary};
+    var styleBar=case {channel==\pop} {~djPopBar} {channel==\edme} {~djEBar} {true} {~djStyleBar};
     var rng=(seed.abs%2147483646)+1,random,choose,take,makeRecord,nextBar,engine;
     var bags=(variation:List.new,key:List.new,duration:List.new,hook:List.new,form:List.new,
         major:List.new,minor:List.new);
@@ -89,6 +92,7 @@ var root=thisProcess.nowExecutingPath.dirname;
         if(index > 0 and: { plan.targetBpm==previousBpm }) {
             plan.targetBpm=previousBpm+if(previousBpm >= 130) {-2} {2};
         };
+        if(channel==\edme) {plan.eMode=eMode;plan.style=\edme};
         next={
             var local=localBar,part=sections.detect { |item| local < (item.start+item.bars) };
             var section=part.name,partBar=local-part.start,progress=partBar/(part.bars-1).max(1);
@@ -309,6 +313,7 @@ var root=thisProcess.nowExecutingPath.dirname;
         \amp,event.amp,\sustain,event.duration*60/bpm,\pan,event.pan,
         \color,event.color,\tone,event.tone,\seed,event.seed];
     if(event.lane==0) {message=message++[\drive,event.drive ? 0.35]};
+    if(event[\glide].notNil) {message=message++[\fromFreq,event[\fromNote].midicps,\glide,event[\glide]]};
     message;
 };
 ~djAutomation={ |point,decks|

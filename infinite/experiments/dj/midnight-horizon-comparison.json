@@ -1,0 +1,291 @@
+{
+  "title": "Midnight Horizon at Lunar Air \u2014 EDM versus EDM E",
+  "date": "2026-11-01",
+  "source_name": "Midnight Horizon at Lunar Air",
+  "source_recipe": [
+    2,
+    858238036,
+    2600,
+    128,
+    0,
+    [
+      0.17,
+      1.0,
+      0.0,
+      0.9,
+      0,
+      1,
+      -1
+    ],
+    0,
+    0,
+    [],
+    0
+  ],
+  "preference": "User named the live plain EDM record as a favorite. E adaptation awaits listening feedback.",
+  "comparison": "Both 40-bar excerpts begin at the saved entry with original settings; only the musical channel changes. End before the first handover.",
+  "source_sha256": {
+    "infinite/experiments/e-edm.scd": "a3bc7290e6d51eb1bdb0c668bdbb0578d14e193ac2e67b1ac6e7d1095c9d690d",
+    "infinite/experiments/e-render.scd": "a5d67e7afc6858779a8f4f9281b1bb0ed1f433badc745162a259cb3a07a9ac9e",
+    "infinite/experiments/dj/library.scd": "cd1cec5a0d3d33657a4791aef0bd0593ebc7a12fed16552e76a33b821044e291",
+    "infinite/experiments/dj/style.scd": "12c86ec3813a267d80393f35aba15c6bd6a6516e1b3bcedfe99e9e13a8ba99c7",
+    "infinite/experiments/dj/instruments.scd": "c898ef528e548e7376e84ee1f2c3175b7e08443f1c9b5545de549d57a986ffaf",
+    "infinite/experiments/dj/palette-instruments.scd": "d727d555ec7562e8c3853930c9ee849e25fa9faeb70cc56b3dfda07217348960",
+    "infinite/experiments/dj/pop-style.scd": "a9aa3e44fef05d74b2bc0896b171018e411a4811fbf9046bbba903c707f40b18",
+    "infinite/experiments/dj/pop-instruments.scd": "06c15c4f229cf6852d6f61ec76e5aae9927c36f1dc0768d913b42315d9d79049",
+    "infinite/experiments/dj/engine.scd": "0be77fdf0f899bb6b1dbeccdbbd2180f36ffd4a0f515abe7c3c0fc765e309477",
+    "infinite/experiments/dj/live.scd": "f503ca17336fde0cceca4cacfcfc76e32d879eb837007e46f1a80881efbfc4b1",
+    "infinite/experiments/dj/controls.scd": "2594c3015804dcd2935224d8305eaad15f977ecb95075399d149370ddcc628c5",
+    "infinite/experiments/dj/spectrum.scd": "e9903f3c318c4c7700b7d1a0f2efbbd4a84c30ddce420febf0109f72ac02f458",
+    "infinite/experiments/dj/recall.scd": "c6a8f68bbac015b4651632c62eb15be4046cdfedf8531fbe93edc14bd87e4640",
+    "infinite/experiments/dj/launch.scd": "fa3fb5d9bd734ea4ffae90b4c8fe8e8185483e1df4cf056ea505146be375520f",
+    "infinite/experiments/dj/render.scd": "fc7df77b1011cbef5042e4e88a313a1f453da1aa9aa2c997a697214f57abf2b3",
+    "infinite/experiments/dj/e-style.scd": "aba44538c8c0223f1bbc6794695e205ab22ef5c662388dd89ff73208d908aa8e",
+    "infinite/experiments/dj/e-instruments.scd": "398cd6400dfd7d2a1f7e962faba9e8bf00cdfebfd8a39fbf6723829cb5127f9f",
+    "infinite/experiments/dj/e-check.scd": "1947cdb90924e80527c955560144aac0d33a76963cec5a8dbcc2aeef551aceed",
+    "infinite/experiments/dj/e-runtime-check.scd": "2d99994711df89aca6180a53dbc263851ccfa31b2713709e62a52de0984f5e1a",
+    "infinite/experiments/dj/interaction-check.scd": "2386063157c72776cd58979e365a5ef6b52a5d66a58d6d57039560977979eec3",
+    "infinite/experiments/dj/e-track.json": "e6aaf1721ff9deabeecaecdc6a92534a0b8f56835555a27cfaa40a4264ac9479",
+    "infinite/experiments/dj/e-compare.json": "1469973028ec837a0afa3ef9902aeb280e55a873906667a30b3ba34b102d292f",
+    "infinite/experiments/dj/e-set.json": "cdea4b36f314506d95ea4fed23232666bf8547534c2b2a9619812fd4b0230388",
+    "scripts/verify_audio.py": "ebb820095440bf6393f6e239f679d254cbfc55d1736f1c90fcda26a653fe25a5",
+    "infinite/experiments/dj/render-named.scd": "46980a6f709daf5692e85b86bca40cc123cbcdb9b3a634b7a477e3fca1a28498"
+  },
+  "render_settings": {
+    "sample_rate": 48000,
+    "channels": 2,
+    "sample_format": "int24",
+    "num_wire_buffers": 128,
+    "realtime_memory_kb": 65536,
+    "load_external_synthdefs": false
+  },
+  "renders": [
+    {
+      "manifest": "infinite/experiments/dj/midnight-horizon-edm.json",
+      "settings": {
+        "file": "midnight-horizon-at-lunar-air-edm.wav",
+        "preview": "midnight-horizon-at-lunar-air-edm.m4a",
+        "title": "Midnight Horizon at Lunar Air \u2014 plain EDM",
+        "bars": 40,
+        "seed": 2600,
+        "initial_bpm": 128,
+        "settings": {
+          "channel": "edm",
+          "chaos": 0.17,
+          "density": 1.0,
+          "mutation": 0.0,
+          "tension": 0.9,
+          "hold": false,
+          "autoStutter": true
+        },
+        "lead_in_seconds": 0.1,
+        "tail_seconds": 4,
+        "minimum_records": 1,
+        "minimum_palettes": 1,
+        "minimum_auto_stutters": 0,
+        "timeline": "infinite/experiments/dj/midnight-horizon-at-lunar-air-edm-timeline.tsv",
+        "source_track_name": "Midnight Horizon at Lunar Air",
+        "source_recipe": [
+          2,
+          858238036,
+          2600,
+          128,
+          0,
+          [
+            0.17,
+            1.0,
+            0.0,
+            0.9,
+            0,
+            1,
+            -1
+          ],
+          0,
+          0,
+          [],
+          0
+        ],
+        "human_listening_review": "User favorite in live EDM; this offline excerpt and E adaptation await comparison."
+      },
+      "wav_sha256": "d396124e186a81ee52af48def407319f173d429c2589db55ad467ffdea6f3516",
+      "pcm_sha256": "da862d101818cc5ac5ba3400a8758f6b327cb4dd1816264aad6720435257fe26",
+      "preview_sha256": "cd49e2d6592d33183894f66678d3d3aa1b43c23fab356b443ef6b77647f20b7e",
+      "timeline_sha256": "42fac8e37976ffb7313e6f7d1bea397a205b5fe217af983b0e5aea7b681bc598",
+      "measurements": {
+        "seconds": 79.1013,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -2.45,
+        "rms_dbfs": -18.68,
+        "end_peak": 0.0,
+        "automatic_stutter_phrases": [
+          {
+            "bar": 28,
+            "seconds": 53.5375,
+            "division": 16,
+            "bars": 0.5,
+            "duration_seconds": 0.9375
+          }
+        ],
+        "title": "Midnight Horizon at Lunar Air \u2014 plain EDM",
+        "seed": 2600,
+        "bars": 40,
+        "settings": {
+          "channel": "edm",
+          "chaos": 0.17,
+          "density": 1.0,
+          "mutation": 0.0,
+          "tension": 0.9,
+          "hold": false,
+          "autoStutter": true
+        },
+        "records": [
+          0
+        ],
+        "palettes": [
+          0
+        ],
+        "music_seconds": 75.0,
+        "music_rms_dbfs": -18.45,
+        "four_bar_rms_dbfs": [
+          -18.66,
+          -18.27,
+          -18.24,
+          -18.24,
+          -18.7,
+          -19.45,
+          -18.21,
+          -18.3,
+          -18.23,
+          -18.32
+        ]
+      }
+    },
+    {
+      "manifest": "infinite/experiments/dj/midnight-horizon-edm-e.json",
+      "settings": {
+        "file": "midnight-horizon-at-lunar-air-edm-e.wav",
+        "preview": "midnight-horizon-at-lunar-air-edm-e.m4a",
+        "title": "Midnight Horizon at Lunar Air \u2014 EDM E adaptation",
+        "bars": 40,
+        "seed": 2600,
+        "initial_bpm": 128,
+        "settings": {
+          "channel": "edme",
+          "chaos": 0.17,
+          "density": 1.0,
+          "mutation": 0.0,
+          "tension": 0.9,
+          "hold": false,
+          "autoStutter": true
+        },
+        "lead_in_seconds": 0.1,
+        "tail_seconds": 4,
+        "minimum_records": 1,
+        "minimum_palettes": 1,
+        "minimum_auto_stutters": 0,
+        "timeline": "infinite/experiments/dj/midnight-horizon-at-lunar-air-edm-e-timeline.tsv",
+        "source_track_name": "Midnight Horizon at Lunar Air",
+        "source_recipe": [
+          2,
+          858238036,
+          2600,
+          128,
+          0,
+          [
+            0.17,
+            1.0,
+            0.0,
+            0.9,
+            0,
+            1,
+            -1
+          ],
+          0,
+          0,
+          [],
+          0
+        ],
+        "human_listening_review": "User favorite in live EDM; this offline excerpt and E adaptation await comparison.",
+        "e_building_blocks": [
+          "e_chord_notes",
+          "e_shaker_hits",
+          "e_tom_hits",
+          "e_signature_hits",
+          "e_slides"
+        ],
+        "check_e_variants": true
+      },
+      "wav_sha256": "ea59a091d277b01bd0e1464b090734a4748d68a730f9aea2a86ff5e7b93f968d",
+      "pcm_sha256": "b04bc7835ff0f8c0d723e8d797ed397a7e0e1ba71b0889f90e062d603ffb55cc",
+      "preview_sha256": "667b7e6cc1a13f1efb291ae5069c82d6d774cf4d4275da58d2679a5d63278b6e",
+      "timeline_sha256": "64b7178a13476f32ad7734765be02467c7f8e28361182d3891be7588c03741d3",
+      "measurements": {
+        "seconds": 79.1013,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -2.45,
+        "rms_dbfs": -18.97,
+        "end_peak": 0.0,
+        "automatic_stutter_phrases": [
+          {
+            "bar": 28,
+            "seconds": 53.5375,
+            "division": 16,
+            "bars": 0.5,
+            "duration_seconds": 0.9375
+          }
+        ],
+        "e_building_blocks": {
+          "e_chord_notes": 54,
+          "e_shaker_hits": 90,
+          "e_tom_hits": 24,
+          "e_signature_hits": 4,
+          "e_slides": 9
+        },
+        "e_variants": [
+          "a",
+          "b"
+        ],
+        "title": "Midnight Horizon at Lunar Air \u2014 EDM E adaptation",
+        "seed": 2600,
+        "bars": 40,
+        "settings": {
+          "channel": "edme",
+          "chaos": 0.17,
+          "density": 1.0,
+          "mutation": 0.0,
+          "tension": 0.9,
+          "hold": false,
+          "autoStutter": true
+        },
+        "records": [
+          0
+        ],
+        "palettes": [
+          0
+        ],
+        "music_seconds": 75.0,
+        "music_rms_dbfs": -18.74,
+        "four_bar_rms_dbfs": [
+          -18.93,
+          -18.55,
+          -18.55,
+          -18.58,
+          -18.97,
+          -19.82,
+          -18.45,
+          -18.58,
+          -18.54,
+          -18.62
+        ]
+      }
+    }
+  ],
+  "checks": {
+    "recipe": "Accepted by current source fingerprint; original local recipe file remains unchanged.",
+    "foundation": "All 40 bars have identical core kick, clap, snare and hat events and identical mix automation. E supplies its own bass articulation, chord stabs, shaker/tom phrases and signature.",
+    "audio": "Both excerpts passed sample format, duration, finite samples, activity, headroom, quiet boundaries and timeline verification. E includes A/B variants and every expected new building block.",
+    "listening": "Pending for these exports."
+  }
+}

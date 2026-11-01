@@ -1,0 +1,408 @@
+{
+  "revision": "edm-e-building-blocks-v1",
+  "render_date": "2026-11-01",
+  "supercollider_version": "3.13.0",
+  "human_listening_review": "pending",
+  "source_sha256": {
+    "infinite/experiments/e-edm.scd": "a3bc7290e6d51eb1bdb0c668bdbb0578d14e193ac2e67b1ac6e7d1095c9d690d",
+    "infinite/experiments/e-render.scd": "a5d67e7afc6858779a8f4f9281b1bb0ed1f433badc745162a259cb3a07a9ac9e",
+    "infinite/experiments/dj/library.scd": "cd1cec5a0d3d33657a4791aef0bd0593ebc7a12fed16552e76a33b821044e291",
+    "infinite/experiments/dj/style.scd": "12c86ec3813a267d80393f35aba15c6bd6a6516e1b3bcedfe99e9e13a8ba99c7",
+    "infinite/experiments/dj/instruments.scd": "c898ef528e548e7376e84ee1f2c3175b7e08443f1c9b5545de549d57a986ffaf",
+    "infinite/experiments/dj/palette-instruments.scd": "d727d555ec7562e8c3853930c9ee849e25fa9faeb70cc56b3dfda07217348960",
+    "infinite/experiments/dj/pop-style.scd": "a9aa3e44fef05d74b2bc0896b171018e411a4811fbf9046bbba903c707f40b18",
+    "infinite/experiments/dj/pop-instruments.scd": "06c15c4f229cf6852d6f61ec76e5aae9927c36f1dc0768d913b42315d9d79049",
+    "infinite/experiments/dj/engine.scd": "0be77fdf0f899bb6b1dbeccdbbd2180f36ffd4a0f515abe7c3c0fc765e309477",
+    "infinite/experiments/dj/live.scd": "f503ca17336fde0cceca4cacfcfc76e32d879eb837007e46f1a80881efbfc4b1",
+    "infinite/experiments/dj/controls.scd": "2594c3015804dcd2935224d8305eaad15f977ecb95075399d149370ddcc628c5",
+    "infinite/experiments/dj/spectrum.scd": "e9903f3c318c4c7700b7d1a0f2efbbd4a84c30ddce420febf0109f72ac02f458",
+    "infinite/experiments/dj/recall.scd": "c6a8f68bbac015b4651632c62eb15be4046cdfedf8531fbe93edc14bd87e4640",
+    "infinite/experiments/dj/launch.scd": "fa3fb5d9bd734ea4ffae90b4c8fe8e8185483e1df4cf056ea505146be375520f",
+    "infinite/experiments/dj/render.scd": "fc7df77b1011cbef5042e4e88a313a1f453da1aa9aa2c997a697214f57abf2b3",
+    "infinite/experiments/dj/e-style.scd": "aba44538c8c0223f1bbc6794695e205ab22ef5c662388dd89ff73208d908aa8e",
+    "infinite/experiments/dj/e-instruments.scd": "398cd6400dfd7d2a1f7e962faba9e8bf00cdfebfd8a39fbf6723829cb5127f9f",
+    "infinite/experiments/dj/e-check.scd": "1947cdb90924e80527c955560144aac0d33a76963cec5a8dbcc2aeef551aceed",
+    "infinite/experiments/dj/e-runtime-check.scd": "2d99994711df89aca6180a53dbc263851ccfa31b2713709e62a52de0984f5e1a",
+    "infinite/experiments/dj/interaction-check.scd": "2386063157c72776cd58979e365a5ef6b52a5d66a58d6d57039560977979eec3",
+    "infinite/experiments/dj/e-track.json": "e6aaf1721ff9deabeecaecdc6a92534a0b8f56835555a27cfaa40a4264ac9479",
+    "infinite/experiments/dj/e-compare.json": "1469973028ec837a0afa3ef9902aeb280e55a873906667a30b3ba34b102d292f",
+    "infinite/experiments/dj/e-set.json": "cdea4b36f314506d95ea4fed23232666bf8547534c2b2a9619812fd4b0230388",
+    "scripts/verify_audio.py": "ebb820095440bf6393f6e239f679d254cbfc55d1736f1c90fcda26a653fe25a5"
+  },
+  "render_settings": {
+    "sample_rate": 48000,
+    "channels": 2,
+    "sample_format": "int24",
+    "num_wire_buffers": 128,
+    "realtime_memory_kb": 65536,
+    "load_external_synthdefs": false
+  },
+  "renders": [
+    {
+      "manifest": "infinite/experiments/dj/e-track.json",
+      "settings": {
+        "file": "edm-e-groove.wav",
+        "preview": "edm-e-groove.m4a",
+        "title": "EDM E \u2014 groove, harmony and percussion",
+        "bars": 48,
+        "seed": 2600,
+        "initial_bpm": 128,
+        "settings": {
+          "channel": "edme",
+          "chaos": 0.25,
+          "density": 0.55,
+          "mutation": 0.3,
+          "tension": 0.2,
+          "hold": true,
+          "autoStutter": true
+        },
+        "lead_in_seconds": 0.1,
+        "tail_seconds": 4,
+        "minimum_records": 1,
+        "minimum_palettes": 1,
+        "minimum_auto_stutters": 0,
+        "timeline": "infinite/experiments/dj/edm-e-groove-timeline.tsv",
+        "human_listening_review": "pending",
+        "check_groove_gaps": true,
+        "pullback_beats": 1,
+        "maximum_pullbacks": 2,
+        "maximum_drum_spotlights": 1,
+        "e_building_blocks": [
+          "e_chord_notes",
+          "e_shaker_hits",
+          "e_tom_hits",
+          "e_signature_hits",
+          "e_slides"
+        ],
+        "check_e_variants": true
+      },
+      "wav_sha256": "7aab6e63e44d77cec5e638d730e475f08f0c7fd05019a9de86b75715e6c0fb32",
+      "preview_sha256": "71fcb8520564af2153e473d07cb201149cca865a1879e7eeb6b0d749b1ff24e4",
+      "timeline_sha256": "e96ad9ebb1c40c3f6dd303a6731f5cefc9d351f4dc045e69be27036da1f67747",
+      "measurements": {
+        "seconds": 94.1013,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -2.45,
+        "rms_dbfs": -19.02,
+        "end_peak": 0.0,
+        "automatic_stutter_phrases": [
+          {
+            "bar": 28,
+            "seconds": 53.5375,
+            "division": 16,
+            "bars": 0.5,
+            "duration_seconds": 0.9375
+          }
+        ],
+        "e_building_blocks": {
+          "e_chord_notes": 54,
+          "e_shaker_hits": 90,
+          "e_tom_hits": 24,
+          "e_signature_hits": 4,
+          "e_slides": 11
+        },
+        "e_variants": [
+          "a",
+          "b"
+        ],
+        "groove_gaps": [
+          {
+            "bar": 14,
+            "seconds": 27.7563,
+            "duration_seconds": 0.4688,
+            "kind": "phrase pullback"
+          },
+          {
+            "bar": 23,
+            "seconds": 44.6313,
+            "duration_seconds": 0.4688,
+            "kind": "pre-drop pickup"
+          },
+          {
+            "bar": 30,
+            "seconds": 57.7563,
+            "duration_seconds": 0.4688,
+            "kind": "phrase pullback"
+          }
+        ],
+        "drum_spotlights": [
+          {
+            "bar": 36,
+            "seconds": 67.6,
+            "duration_seconds": 1.875
+          }
+        ],
+        "title": "EDM E \u2014 groove, harmony and percussion",
+        "seed": 2600,
+        "bars": 48,
+        "settings": {
+          "channel": "edme",
+          "chaos": 0.25,
+          "density": 0.55,
+          "mutation": 0.3,
+          "tension": 0.2,
+          "hold": true,
+          "autoStutter": true
+        },
+        "records": [
+          0
+        ],
+        "palettes": [
+          0
+        ],
+        "music_seconds": 90.0,
+        "music_rms_dbfs": -18.82,
+        "four_bar_rms_dbfs": [
+          -18.98,
+          -18.72,
+          -18.57,
+          -18.66,
+          -18.98,
+          -19.87,
+          -18.57,
+          -18.62,
+          -18.62,
+          -18.74,
+          -18.96,
+          -18.76
+        ]
+      }
+    },
+    {
+      "manifest": "infinite/experiments/dj/e-compare.json",
+      "settings": {
+        "file": "edm-e-building-blocks.wav",
+        "preview": "edm-e-building-blocks.m4a",
+        "title": "EDM E \u2014 building blocks comparison",
+        "bars": 32,
+        "seed": 2600,
+        "initial_bpm": 128,
+        "settings": {
+          "channel": "edme",
+          "chaos": 0.25,
+          "density": 0.55,
+          "mutation": 0.3,
+          "tension": 0.2,
+          "hold": true,
+          "autoStutter": false
+        },
+        "lead_in_seconds": 0.1,
+        "tail_seconds": 4,
+        "minimum_records": 1,
+        "minimum_palettes": 1,
+        "minimum_auto_stutters": 0,
+        "timeline": "infinite/experiments/dj/edm-e-building-blocks-timeline.tsv",
+        "human_listening_review": "pending",
+        "comparison_mode": true,
+        "segments": [
+          {
+            "name": "Baseline",
+            "start_seconds": 0.1
+          },
+          {
+            "name": "Percussion",
+            "start_seconds": 15.1
+          },
+          {
+            "name": "Chord stabs",
+            "start_seconds": 30.1
+          },
+          {
+            "name": "Bass articulation",
+            "start_seconds": 45.1
+          }
+        ]
+      },
+      "wav_sha256": "407d77b021a4b6f75e5223150208bf127e43dac390a57199a0c6819930640a13",
+      "preview_sha256": "6aa78c290f2b7e044c08bb6b3b8604c0d065ceeaa1836d2263def9ebb3adb813",
+      "timeline_sha256": "e9ceab8d0a7223264de37cc57642e4002e96063418cc9d8bb0f14e91608feb21",
+      "measurements": {
+        "seconds": 64.1013,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -2.45,
+        "rms_dbfs": -18.92,
+        "end_peak": 0.0,
+        "automatic_stutter_phrases": [],
+        "title": "EDM E \u2014 building blocks comparison",
+        "seed": 2600,
+        "bars": 32,
+        "settings": {
+          "channel": "edme",
+          "chaos": 0.25,
+          "density": 0.55,
+          "mutation": 0.3,
+          "tension": 0.2,
+          "hold": true,
+          "autoStutter": false
+        },
+        "records": [
+          0
+        ],
+        "palettes": [
+          0
+        ],
+        "music_seconds": 60.0,
+        "music_rms_dbfs": -18.63,
+        "four_bar_rms_dbfs": [
+          -18.72,
+          -18.44,
+          -18.68,
+          -18.44,
+          -18.68,
+          -18.43,
+          -18.94,
+          -18.72
+        ],
+        "segment_rms_dbfs": {
+          "Baseline": -18.56,
+          "Percussion": -18.55,
+          "Chord stabs": -18.55,
+          "Bass articulation": -18.83
+        }
+      }
+    },
+    {
+      "manifest": "infinite/experiments/dj/e-set.json",
+      "settings": {
+        "file": "edm-e-set.wav",
+        "preview": "edm-e-set.m4a",
+        "title": "EDM E \u2014 two-deck set",
+        "bars": 112,
+        "seed": 2600,
+        "initial_bpm": 128,
+        "settings": {
+          "channel": "edme",
+          "chaos": 0.25,
+          "density": 0.55,
+          "mutation": 0.3,
+          "tension": 0.2,
+          "hold": false,
+          "autoStutter": true
+        },
+        "lead_in_seconds": 0.1,
+        "tail_seconds": 4,
+        "minimum_records": 2,
+        "minimum_palettes": 2,
+        "minimum_auto_stutters": 0,
+        "timeline": "infinite/experiments/dj/edm-e-set-timeline.tsv",
+        "human_listening_review": "pending",
+        "e_building_blocks": [
+          "e_chord_notes",
+          "e_shaker_hits",
+          "e_tom_hits",
+          "e_signature_hits",
+          "e_slides"
+        ],
+        "check_e_variants": true
+      },
+      "wav_sha256": "9ed6f75157e2b499d3815fee14596458ce4d6690f85ff38a935b603902403801",
+      "preview_sha256": "fb725786aa16eb430b18b645b807ffd81b44bb0faf65d40d2b00581f4afc6e73",
+      "timeline_sha256": "8fef6d848353684f002c6e2e261e3bc747f9e236a4c09929ee0a672bf03f650a",
+      "measurements": {
+        "seconds": 212.14,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -2.45,
+        "rms_dbfs": -19.23,
+        "end_peak": 0.0,
+        "automatic_stutter_phrases": [
+          {
+            "bar": 28,
+            "seconds": 53.5375,
+            "division": 16,
+            "bars": 0.5,
+            "duration_seconds": 0.9375
+          },
+          {
+            "bar": 88,
+            "seconds": 164.7542,
+            "division": 16,
+            "bars": 0.5,
+            "duration_seconds": 0.9231
+          }
+        ],
+        "e_building_blocks": {
+          "e_chord_notes": 144,
+          "e_shaker_hits": 222,
+          "e_tom_hits": 59,
+          "e_signature_hits": 8,
+          "e_slides": 26
+        },
+        "e_variants": [
+          "a",
+          "b"
+        ],
+        "title": "EDM E \u2014 two-deck set",
+        "seed": 2600,
+        "bars": 112,
+        "settings": {
+          "channel": "edme",
+          "chaos": 0.25,
+          "density": 0.55,
+          "mutation": 0.3,
+          "tension": 0.2,
+          "hold": false,
+          "autoStutter": true
+        },
+        "records": [
+          0,
+          1
+        ],
+        "palettes": [
+          0,
+          2
+        ],
+        "music_seconds": 208.0388,
+        "music_rms_dbfs": -19.14,
+        "four_bar_rms_dbfs": [
+          -18.98,
+          -18.72,
+          -18.61,
+          -18.65,
+          -18.98,
+          -19.79,
+          -18.58,
+          -18.61,
+          -18.6,
+          -18.65,
+          -20.59,
+          -20.66,
+          -18.46,
+          -19.87,
+          -18.68,
+          -19.06,
+          -17.99,
+          -19.59,
+          -18.11,
+          -19.19,
+          -22.47,
+          -23.17,
+          -20.41,
+          -19.48,
+          -17.59,
+          -19.12,
+          -18.25,
+          -19.36
+        ]
+      }
+    }
+  ],
+  "checks": {
+    "d_composition": "Passed: 1024 reproducible bars; defined voices, key membership, event bounds, sparse chord/signature placement, 265 short glides, A/B return, four-bar Bass hook, clear pullbacks and drum-only spots.",
+    "foundation": "Passed: percussion and chord comparison modes preserve foundation drum/bass events over sixteen bars each.",
+    "edm_regression": "Passed: 8192 seeded bars plus existing macro-extreme checks; 256-bar event/automation comparison against the favourite remains identical.",
+    "recall": "Passed: EDM, Pop and EDM E replay exact entry and following bars after macro and action history.",
+    "muted_native_ui": "Passed: actual EDM E channel menu and Bass hook/Fill callbacks, B groove, non-silent internal signal, handover, STOP/START, return to EDM and old-bus cleanup.",
+    "audio": "Passed: all three E WAVs checked against timelines for format, duration, finite samples, levels, quiet boundaries and expected building blocks. Comparison RMS spread is 0.28 dB.",
+    "listening": "Pending; numerical and runtime checks do not assess musical quality.",
+    "rename": "Original D entry point and renderer restored byte-for-byte from HEAD; D composition checks pass. E composition, recall and muted native UI checks pass after renaming.",
+    "named_track_renderer": "Added optional recipe rendering; ordinary E render path and synthesis are unchanged. Named comparison verifies core drums and mix automation against the original for every bar."
+  },
+  "preferred_reference": {
+    "file": "audio/groove-track-v6c.m4a",
+    "status": "Preserved; user favourite",
+    "sha256": "97e0f259a9a841ff2a50ab970f249b93ee39b91920205399ec37f7f04e0def92"
+  }
+}

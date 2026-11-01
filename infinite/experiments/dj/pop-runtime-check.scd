@@ -51,7 +51,7 @@ server.waitForBoot {
             assert.value(~djEngine===engine,"Resume reset Pop composition");
             oldBus=~djBus;
             ui.value {menu.valueAction_(0)};
-            waitFor.value {~djRoutine.notNil and:{~djEngine.channel==\edm}};
+            waitFor.value {~djRoutine.notNil and:{~djEngine.channel==\edme}};
             3.4.wait;
             assert.value(oldBus.index.isNil,"Channel switch leaked its old bus");
             assert.value(~djInitialBpm==128,"EDM switch changed default tempo");

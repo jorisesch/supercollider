@@ -1,0 +1,56 @@
+{
+  "file": "midnight-horizon-at-lunar-air-edm-e-percussion.wav",
+  "preview": "midnight-horizon-at-lunar-air-edm-e-percussion.m4a",
+  "title": "Midnight Horizon at Lunar Air \u2014 original + shaker/tom percussion",
+  "bars": 40,
+  "seed": 2600,
+  "initial_bpm": 128,
+  "settings": {
+    "channel": "edme",
+    "chaos": 0.17,
+    "density": 1.0,
+    "mutation": 0.0,
+    "tension": 0.9,
+    "hold": false,
+    "autoStutter": true
+  },
+  "lead_in_seconds": 0.1,
+  "tail_seconds": 4,
+  "minimum_records": 1,
+  "minimum_palettes": 1,
+  "minimum_auto_stutters": 0,
+  "timeline": "infinite/experiments/dj/midnight-horizon-at-lunar-air-edm-e-percussion-timeline.tsv",
+  "source_track_name": "Midnight Horizon at Lunar Air",
+  "source_recipe": [
+    2,
+    858238036,
+    2600,
+    128,
+    0,
+    [
+      0.17,
+      1.0,
+      0.0,
+      0.9,
+      0,
+      1,
+      -1
+    ],
+    0,
+    0,
+    [],
+    0
+  ],
+  "human_listening_review": "Pending; user still prefers plain EDM over the combined EDM E adaptation.",
+  "isolated_component": "percussion",
+  "e_building_blocks": [
+    "e_shaker_hits",
+    "e_tom_hits"
+  ],
+  "absent_building_blocks": [
+    "e_chord_notes",
+    "e_signature_hits",
+    "e_slides"
+  ],
+  "render_method": "Preserve all original EDM events; add only the selected E part. Bass replaces only the original bass events."
+}

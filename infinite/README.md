@@ -1,9 +1,13 @@
-# Infinite four-track music generator
+# Infinite music generators
 
-Start the improved EDM engine from the SuperCollider repository directory (macOS, SuperCollider installed):
+Standard EDM is now the two-deck DJ with the former E groove additions. Run `sclang -D infinite/experiments/c-edm.scd` or `sclang -D infinite/infinite-run.scd edm`. Select **EDM Classic** for the preceding DJ grammar. See the [DJ guide](experiments/dj/README.md#standard-edm).
+
+## Original four-track baseline
+
+The earlier four-track engine is preserved with the explicit `baseline` launcher mode. From the repository directory:
 
 ```sh
-/Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/infinite-run.scd edm 0.25 0.55 0.30 0.20 128 2600
+/Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/infinite-run.scd baseline 0.25 0.55 0.30 0.20 128 2600
 ```
 
 This plays live and opens a four-knob window. It does not record or export audio. Close the window to fade out over three seconds and exit; Ctrl+C in the terminal exits immediately. Arguments are `mode chaos density mutation tension bpm seed [nogui]`. The four macros use values from 0 to 1, not percentages. Omitted arguments use the defaults above. For the slower soundscape mode, use `sclang -D infinite/infinite-run.scd soundscape` (60 BPM by default). Add `nogui` after the seed to run without a control window; Ctrl+C stops that process.
@@ -56,7 +60,7 @@ The Soundscape preview linked below is rendered from the current engine. Older l
 
 ## Separate experiments
 
-The current generator remains the baseline. New prototypes live under [`experiments/`](experiments/README.md): **EDM A**, melodic/progressive EDM with new voices and a longer arrangement; **EDM B**, a harder bass and drum treatment of the same four tracks; **EDM C**, an eight-track infinite DJ with changing keys and tempo-matched handovers; **EDM D**, a syncopated, vibrato-led treatment with added texture and percussion; and **warm ambient**, with slow harmony and overlapping layers. Each has its own launch command and controls; the original commands above continue to work unchanged. See the [experiment guide](experiments/README.md) for listening and comparison instructions.
+The current generator remains the baseline. New prototypes live under [`experiments/`](experiments/README.md): **EDM A**, melodic/progressive EDM with new voices and a longer arrangement; **EDM B**, a harder bass and drum treatment of the same four tracks; **EDM C**, an eight-track infinite DJ with changing keys and tempo-matched handovers; **EDM D**, the original syncopated, vibrato-led treatment with texture and percussion; **EDM E**, now the standard EDM DJ, a bass-led variation with warm chord stabs, percussion phrases, bass articulation and a returning alternate groove; and **warm ambient**, with slow harmony and overlapping layers. Each has its own launch command and controls; the original commands above continue to work unchanged. See the [experiment guide](experiments/README.md) for listening and comparison instructions.
 
 The latest [infinite DJ revision](experiments/dj/README.md) uses a shared bass-and-drums style with rotating instrument ensembles, sparse melodic phrases, variable song lengths and automatic handovers. Its compact window adds track-name recall, manual Start/Stop effects and stereo spectrum displays. Earlier DJ versions remain playable snapshots. Run `sclang -D infinite/experiments/c-edm.scd 2600 128 0.25 0.55 0.30 0.20` from the repository directory to compare at the baseline's macro settings.
 
@@ -72,7 +76,7 @@ To check STOP/START in every control window, run `sclang -D infinite/transport-c
 
 The Infinite DJ now has an instrumental **Pop** channel based on Neon Rush, with repeating choruses, verses, bridges and tempo-matched handovers. Run `sclang -D infinite/experiments/pop.scd` or select **Pop** in the DJ window. See the [Pop channel guide and listening preview](experiments/dj/README.md#pop-channel).
 
-The common launcher also accepts `pop`: `sclang -D infinite/infinite-run.scd pop 0.25 0.55 0.30 0.20 138 2600`. Existing `edm` and `soundscape` invocations retain their original engines and behavior; Pop dispatches to the two-deck DJ.
+The common launcher also accepts `pop`: `sclang -D infinite/infinite-run.scd pop 0.25 0.55 0.30 0.20 138 2600`. Soundscape retains its separate engine. `edm` and `pop` now dispatch to the two-deck DJ; `baseline` selects the original four-track EDM.
 
 ## Soundscape listening preview
 

@@ -17,7 +17,15 @@ dj_manifests = {}
 for manifest_path in (Path('infinite/experiments/dj/preview.json'), Path('infinite/experiments/dj/track.json'),
                       Path('infinite/experiments/dj/palette-tour.json'),
                       Path('infinite/experiments/dj/digital-drive.json'),
-                      Path('infinite/experiments/dj/pop.json')):
+                      Path('infinite/experiments/dj/pop.json'),
+                      Path('infinite/experiments/dj/e-track.json'),
+                      Path('infinite/experiments/dj/e-compare.json'),
+                      Path('infinite/experiments/dj/e-set.json'),
+                      Path('infinite/experiments/dj/midnight-horizon-edm.json'),
+                      Path('infinite/experiments/dj/midnight-horizon-edm-e.json'),
+                      Path('infinite/experiments/dj/midnight-horizon-percussion.json'),
+                      Path('infinite/experiments/dj/midnight-horizon-chords.json'),
+                      Path('infinite/experiments/dj/midnight-horizon-bass.json')):
     if manifest_path.exists():
         spec = json.loads(manifest_path.read_text())
         dj_manifests[spec['file']] = spec
@@ -79,6 +87,22 @@ for path in sorted(Path('audio').glob('*.wav')):
         if dj_manifest.get('settings', {}).get('autoStutter') is False:
             assert not automatic, 'Automatic stutter leaked into the clean palette comparison'
         result['automatic_stutter_phrases'] = automatic
+        if dj_manifest.get('e_building_blocks'):
+            blocks = {key: sum(int(row[key]) for row in timeline[:-1])
+                      for key in dj_manifest['e_building_blocks']}
+            assert all(count > 0 for count in blocks.values()), 'Missing EDM E building block'
+            result['e_building_blocks'] = blocks
+        if dj_manifest.get('isolated_component'):
+            assert all(row['e_mode'] == dj_manifest['isolated_component'] for row in timeline[:-1]), 'Incorrect isolated component'
+            excluded = {key: sum(int(row[key]) for row in timeline[:-1])
+                        for key in dj_manifest.get('absent_building_blocks', [])}
+            assert all(count == 0 for count in excluded.values()), 'Other E parts leaked into the isolated sample'
+            result['isolated_component'] = dj_manifest['isolated_component']
+            result['excluded_building_blocks'] = excluded
+        if dj_manifest.get('check_e_variants'):
+            variants = {row[key] for row in timeline[:-1] for key in ('e_variant_a', 'e_variant_b')}
+            assert {'a', 'b'} <= variants, 'EDM E has no A/B return'
+            result['e_variants'] = sorted(variants - {'none'})
         if dj_manifest.get('check_groove_gaps'):
             def window_rms(start, end):
                 samples = values[int(start*rate)*channels:int(end*rate)*channels]
@@ -131,7 +155,7 @@ for path in sorted(Path('audio').glob('*.wav')):
                 level = math.sqrt(sum(v*v for v in segment)/len(segment))
                 palette_levels[spec['name']] = round(20*math.log10(level), 2)
             assert max(palette_levels.values()) - min(palette_levels.values()) < 6, 'Palette mix levels are poorly matched'
-            result['palette_rms_dbfs'] = palette_levels
+            result['segment_rms_dbfs' if dj_manifest.get('comparison_mode') else 'palette_rms_dbfs'] = palette_levels
     if path.name == 'neon-rush.wav':
         assert abs(frames/rate - (0.1 + 48*4*60/138 + 4)) < 0.003
         assert max(map(abs, values[:int(0.08*rate)*2])) < 0.0001

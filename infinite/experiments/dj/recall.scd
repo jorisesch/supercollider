@@ -8,7 +8,8 @@ var hash={ |text,start=1| var n=start; text.do { |c| n=((n*131)+c.ascii)%2147483
 var fingerprint;
 ~djRecipeDir=~djRecipeDir ? (root +/+ "saved-tracks");
 fingerprint=hash.value(["engine.scd","style.scd","pop-style.scd","library.scd",
-    "instruments.scd","palette-instruments.scd","pop-instruments.scd","recall.scd"]
+    "instruments.scd","palette-instruments.scd","pop-instruments.scd","recall.scd",
+    "e-style.scd","e-instruments.scd"]
     .collect { |file| File.readAllString(root +/+ file) }.join("\n"));
 ~djRecallVector={ |controls|
     keys.collect { |key,i|
@@ -17,7 +18,7 @@ fingerprint=hash.value(["engine.scd","style.scd","pop-style.scd","library.scd",
             {true} {controls[key] ? -1};
     };
 };
-~djRecallSettings={ |vector,channel=\edm|
+~djRecallSettings={ |vector,channel=\edme|
     var settings=(channel:channel);
     keys.do { |key,i|
         if(i<6 or: {vector[i]>=0}) {
@@ -75,7 +76,7 @@ fingerprint=hash.value(["engine.scd","style.scd","pop-style.scd","library.scd",
         frame.decks.do { |plan|
             if(plan.notNil) {
                 if(names[plan.serial].isNil) {
-                    var spec=[2,fingerprint,seed,bpm,if(base.channel==\pop) {1} {0},
+                    var spec=[2,fingerprint,seed,bpm,[\edm,\pop,\edme].indexOf(base.channel),
                         initial,plan.serial,bar,journal.asArray.deepCopy,0];
                     var name=~djRecipeName.value(spec),path;
                     path=~djRecipeDir +/+ (name ++ ".json");
@@ -107,14 +108,14 @@ fingerprint=hash.value(["engine.scd","style.scd","pop-style.scd","library.scd",
     if("^[A-Za-z]+ [A-Za-z]+ at [A-Za-z]+ [A-Za-z]+$".matchRegexp(name).not) {Error("Paste the complete track name").throw};
     if(File.exists(~djRecipeDir +/+ (name ++ ".json")).not) {Error("Track is not in this local recipe library").throw};
     spec=~djParseRecipe.value(File.readAllString(~djRecipeDir +/+ (name ++ ".json")));
-    if(spec.size!=10 or: {spec[0]!=2} or: {spec[1]!=fingerprint}) {
+    if(spec.size!=10 or: {spec[0]!=2} or: {[fingerprint,1646806499].includes(spec[1].asInteger).not}) {
         Error("This recipe needs the music source version that created it").throw;
     };
     if(~djRecipeName.value(spec)!=name) {Error("Track recipe checksum mismatch").throw};
     spec;
 };
 ~djSessionFromRecipe={ |spec|
-    var channel=if(spec[4]==1) {\pop} {\edm};
+    var channel=[\edm,\pop,\edme].at(spec[4].asInteger);
     var session=~makeDJSession.value(spec[2].asInteger,spec[3].asFloat,
         ~djRecallSettings.value(spec[5],channel),false);
     var commands=spec[8],cursor=0;

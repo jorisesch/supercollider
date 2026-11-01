@@ -7,9 +7,9 @@ try {
     engine=~makeDJEngine.value(2600,128);
     256.do {var f=engine[\nextBar].value;reference.add([f.events.asCompileString,f.automation.asCompileString])};
     (root +/+ "engine.scd").load;(root +/+ "recall.scd").load;
-    engine=~makeDJEngine.value(2600,128);
+    engine=~makeDJEngine.value(2600,128,(channel:\edm));
     reference.do { |old|var f=engine[\nextBar].value;
-        assert.value([f.events.asCompileString,f.automation.asCompileString]==old,"Default EDM groove changed")};
+        assert.value([f.events.asCompileString,f.automation.asCompileString]==old,"EDM Classic groove changed")};
     engine=~makeDJEngine.value(2600,128,(hold:true));
     [\filter,\echo,\wash,\stutter4,\stutter8,\stutter16].do { |kind|
         engine[\startFX].value(kind);
@@ -30,7 +30,7 @@ try {
     };
     // Recall after earlier macro moves, forced transitions and manual performance.
     recipeDir=Platform.defaultTempDir +/+ "dj-recipe-check";~djRecipeDir=recipeDir;
-    [\edm,\pop].do { |channel|
+    [\edm,\pop,\edme].do { |channel|
         session=~makeDJSession.value(7429,128,(channel:channel));
         36.do { |bar|
             if(bar==3) {session.controls.density=0.81};
@@ -53,7 +53,7 @@ try {
             if(index==0) {assert.value(f.decks[1].trackName==name,"Recall changed the name")};
         };
     };
-    "PASS: favourite EDM events/automation unchanged; all six effects persist eight bars then release; EDM and Pop names restore exact entry and following bars after macro/action history. No audio.".postln;
+    "PASS: favourite EDM events/automation unchanged; all six effects persist eight bars then release; EDM, Pop and EDM E names restore exact entry and following bars after macro/action history. No audio.".postln;
     0.exit;
 } { |error|error.reportError;1.exit};
 )
