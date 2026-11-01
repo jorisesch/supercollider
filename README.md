@@ -2,7 +2,7 @@
 
 ![Two decks connected by an infinity loop of amber and cyan sound waves](docs/images/infinite-dj-banner.png)
 
-**[Companion listening page & setup](site/README.md)** — embedded listening demos, the live controls and a quick technical introduction.
+**[Companion listening page & setup](site/README.md)** — embedded EDM, Pop and Soundscape demos, the live controls and a quick technical introduction.
 
 An ongoing DJ set generated with **[SuperCollider](https://supercollider.github.io/)**, free, open-source audio software for macOS, Windows and Linux.
 

@@ -1,11 +1,17 @@
 // Standalone batch preview: same events and adapter as live playback.
 (
-var root=thisProcess.nowExecutingPath.dirname, pending=2, failed=false;
+var root=thisProcess.nowExecutingPath.dirname, pending, failed=false;
+var requested=thisProcess.argv.at(0);
+var modes=if(requested.isNil) {[\edm, \soundscape]} {[requested.asSymbol]};
 var audioDir=root.dirname +/+ "audio";
+if(modes.every { |mode| [\edm,\soundscape].includes(mode) }.not) {
+    "Usage: infinite-render.scd [edm|soundscape]".postln; 1.exit;
+};
+pending=modes.size;
 (root +/+ "infinite-instruments.scd").load;
 (root +/+ "infinite-engine.scd").load;
 TempoClock.default.tempo=1;
-[\edm, \soundscape].do { |mode|
+modes.do { |mode|
     var engine=~makeInfiniteEngine.value(mode, 2600), events=List.new, node=1000;
     var bars=if(mode == \edm, 32, 8), end, duration;
     events.add([0] ++ ~infiniteDefs.collect { |def| [\d_recv, def.asBytes] });

@@ -51,7 +51,7 @@ Run the composition checks without playback or audio exports:
 
 The checks cover seeded reproducibility across 128 bars, key membership, bass root/fifth bias, lead resolution, motif repetition, Euclidean pulse counts, density, fills, and macro bounds. Synthesis and GUI controls were also exercised with real-time output muted. This is structural/runtime validation, not a human listening review.
 
-No WAV previews are included with this version. Any local `audio/infinite-*.wav` previews from the earlier engine do not demonstrate the current composition. `infinite-render.scd` remains an optional batch renderer for a future explicitly requested export; it renders the current sources at their factory tempos (120/60 BPM), writing to the repository’s `audio/` directory. This reorganization did not change synthesis or create new renders.
+The Soundscape preview linked below is rendered from the current engine. Older local `audio/infinite-*.wav` previews may come from earlier versions and should not be treated as current listening references. `infinite-render.scd` remains an optional batch renderer for a future explicitly requested export; it renders the current sources at their factory tempos (120/60 BPM), writing to the repository’s `audio/` directory. This reorganization did not change synthesis or create new renders.
 
 
 ## Separate experiments
@@ -73,3 +73,7 @@ To check STOP/START in every control window, run `sclang -D infinite/transport-c
 The Infinite DJ now has an instrumental **Pop** channel based on Neon Rush, with repeating choruses, verses, bridges and tempo-matched handovers. Run `sclang -D infinite/experiments/pop.scd` or select **Pop** in the DJ window. See the [Pop channel guide and listening preview](experiments/dj/README.md#pop-channel).
 
 The common launcher also accepts `pop`: `sclang -D infinite/infinite-run.scd pop 0.25 0.55 0.30 0.20 138 2600`. Existing `edm` and `soundscape` invocations retain their original engines and behavior; Pop dispatches to the two-deck DJ.
+
+## Soundscape listening preview
+
+The [companion page](../site/README.md) includes a Soundscape excerpt from the current baseline engine. Render only that mode with `sclang -D infinite/infinite-render.scd soundscape`; omit the argument to retain the original two-mode batch render. The local WAV goes to `audio/infinite-soundscape.wav`; run `python3 scripts/verify_audio.py` afterward. The compact [M4A preview](../audio/infinite-soundscape.m4a) is published with the page. Soundscape remains separate from the two-deck DJ.

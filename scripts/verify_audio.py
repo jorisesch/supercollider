@@ -25,7 +25,7 @@ assert expected <= {p.name for p in Path('audio').glob('*.wav')}, 'Missing audio
 noise_signatures = {}
 results = {}
 for path in sorted(Path('audio').glob('*.wav')):
-    if path.name not in expected and path.name not in dj_manifests and path.name != 'neon-rush.wav':
+    if path.name not in expected and path.name not in dj_manifests and path.name not in {'neon-rush.wav', 'infinite-soundscape.wav'}:
         continue
     dj_manifest = dj_manifests.get(path.name)
     with wave.open(str(path), 'rb') as w:

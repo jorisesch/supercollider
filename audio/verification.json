@@ -300,6 +300,16 @@
       -18.48
     ]
   },
+  "infinite-soundscape.wav": {
+    "seconds": 36.1013,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -16.65,
+    "rms_dbfs": -30.37,
+    "end_peak": 0.0,
+    "seed": 2600,
+    "preview_bars": 8
+  },
   "neon-rush.wav": {
     "seconds": 87.5787,
     "sample_rate": 48000,
