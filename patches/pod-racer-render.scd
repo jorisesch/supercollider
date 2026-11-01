@@ -34,8 +34,8 @@ Score([
     [26.0, [\n_set, 1000, \gear, 0, \flyby, 0, \canyon, 0]],
     [27.5, [\n_set, 1000, \gate, 0]]
 ]).recordNRT(
-    oscFilePath: root +/+ "audio/pod-racer.osc",
-    outputFilePath: root +/+ "audio/pod-racer.wav",
+    oscFilePath: root.dirname +/+ "audio/pod-racer.osc",
+    outputFilePath: root.dirname +/+ "audio/pod-racer.wav",
     sampleRate: 48000, headerFormat: "WAV", sampleFormat: "int24",
     options: ServerOptions.new.numOutputBusChannels_(2).numInputBusChannels_(0),
     duration: 30, action: { |code| ("pod-racer render exit: " ++ code).postln; code.exit }

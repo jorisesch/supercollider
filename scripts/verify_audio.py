@@ -2,8 +2,12 @@ import array
 import csv
 import json
 import math
+import os
 import wave
 from pathlib import Path
+
+# Resolve all manifests and audio against the repository, regardless of cwd.
+os.chdir(Path(__file__).resolve().parents[1])
 
 expected = {'quindar-in.wav', 'quindar-out.wav', 'quindar-in-out.wav',
             'quindar-in-noisy.wav', 'quindar-out-noisy.wav'}

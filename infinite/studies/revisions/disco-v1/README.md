@@ -23,7 +23,7 @@ From the repository directory on macOS:
 
 ```sh
 /Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/studies/revisions/disco-v1/render.scd
-python3 verify_audio.py
+python3 scripts/verify_audio.py
 python3 infinite/studies/previews.py disco-v1
 ```
 
@@ -39,6 +39,6 @@ For interactive playback, evaluate [live.scd](live.scd) in the SuperCollider IDE
 
 [track.scd](track.scd) holds every note, rhythm, chord voicing and section rule. [instruments.scd](instruments.scd) holds the voices and mix chain and starts no playback when loaded. [manifest.json](manifest.json) records the musical and render settings; [reproduction.json](reproduction.json) records source/audio checksums. This is a finite composition for evaluation, not yet an infinite generator.
 
-SuperCollider rendered successfully and root `verify_audio.py` passed: 70.1013 seconds, stereo 48 kHz / 24-bit, peak −2.03 dBFS, active-music RMS −17.48 dBFS, with quiet edges and activity in all 32 bars. The renderer also checked timing, key membership and deterministic event generation. Muted live playback exercised start, stop, rapid restart, mix control and a complete arrangement at accelerated tempo with automatic cleanup. Original recordings and archived v1 source passed the preservation check.
+SuperCollider rendered successfully and root `scripts/verify_audio.py` passed: 70.1013 seconds, stereo 48 kHz / 24-bit, peak −2.03 dBFS, active-music RMS −17.48 dBFS, with quiet edges and activity in all 32 bars. The renderer also checked timing, key membership and deterministic event generation. Muted live playback exercised start, stop, rapid restart, mix control and a complete arrangement at accelerated tempo with automatic cleanup. Original recordings and archived v1 source passed the preservation check.
 
 These numerical/runtime checks do not judge the musical result. Human listening review of this new study is pending; leave feedback in the [listening notebook](../../NOTES.md).

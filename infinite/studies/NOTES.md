@@ -63,14 +63,14 @@ From the repository directory:
 
 # Render the four revised candidates; append 1..4 to choose one.
 /Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/studies/revisions/v2/render.scd
-python3 verify_audio.py
+python3 scripts/verify_audio.py
 python3 infinite/studies/previews.py v2
 python3 infinite/studies/check_revisions.py
 ```
 
 A reproduction trial of Afterglow v1 from its saved snapshot produced PCM identical to the original across the full recording, not only its opening. This result is recorded in `revisions/v1/reproduction.json`.
 
-Use the same SuperCollider version and render settings for PCM comparisons. The saved recordings remain the exact listening references across platforms and software versions. The legacy root `render.scd` still targets the original filenames; use the versioned commands above to preserve them.
+Use the same SuperCollider version and render settings for PCM comparisons. The saved recordings remain the exact listening references across platforms and software versions. The legacy `patches/render.scd` still targets the original filenames; use the versioned commands above to preserve them.
 
 When local WAV renders are present, the revision check verifies original recording/source checksums and confirms that each v2 opening's first seven seconds is byte-identical to v1. Public numerical verification is limited to committed previews and is separate from the user's listening review.
 
@@ -111,4 +111,4 @@ User request: “Create a da dunk style track to explore.” Interpreted in the 
 - Melody stays at MIDI 53–67 (F3–G4), with a soft reed/organ-like voice, modest level and a repeated eight-bar phrase. This follows the earlier concern about high, disconnected harp-like entrances.
 - Structure: sparse opening, fuller groove, melody from bar 9 (~16 seconds), a two-bar kick withdrawal at bar 17 (~32 seconds), gradual brightening from bar 21 (~40 seconds), full return at bar 25 (~48 seconds), and a C-major ending. No large noise riser or new high-register arp is introduced.
 - Evaluation focus: whether the bass/chord rhythm invites movement; whether the melody feels part of the same track; whether the return adds enough energy. Numerical checks cannot answer those questions.
-- Verification: SuperCollider completed successfully; `verify_audio.py` passed (70.1013 seconds, peak −2.03 dBFS, active-music RMS −17.48 dBFS, quiet boundaries, all bars active). Muted start/stop/restart and accelerated natural completion passed. The original-five preservation check passed. This records numerical/runtime evidence, not a listening judgment.
+- Verification: SuperCollider completed successfully; `scripts/verify_audio.py` passed (70.1013 seconds, peak −2.03 dBFS, active-music RMS −17.48 dBFS, quiet boundaries, all bars active). Muted start/stop/restart and accelerated natural completion passed. The original-five preservation check passed. This records numerical/runtime evidence, not a listening judgment.

@@ -1,4 +1,4 @@
-// Definitions only. Select-all playback is in audio/pod-racer.scd.
+// Definitions only. Select-all playback is in ../audio/pod-racer.scd.
 (
 ~podRacerDef = SynthDef(\podRacer, { |out=0, gate=1, amp=0.68, speed=0.12,
     lfoRate=0.3, lfoDepth=0.7, lfoShape=0, cutoff=320, resonance=0.24,

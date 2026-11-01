@@ -28,16 +28,16 @@ Each sound has a matching self-contained `.scd` beside it in `audio/`:
 
 Each file includes all required SynthDefs and its complete timed arrangement, with no project-file or sample dependencies. Open one in SuperCollider, select all, and press **Cmd+Return** (Ctrl+Return on Windows/Linux). It boots the default server if needed and plays once. **Cmd+.** stops playback on macOS. No paths, command-line flags, or separate setup blocks are needed, and execution does not render files or quit the IDE.
 
-To export local WAVs, use `render.scd` as described below. Rendered WAVs are intentionally not committed.
+To export local WAVs, use `patches/render.scd` as described below. Rendered WAVs are intentionally not committed.
 
 The standalone files are editable snapshots of the sounds. The shared instruments and render scripts below remain available; keep both versions consistent when editing synthesis.
 
-The pod racer source is also available as [pod-racer.scd](../pod-racer.scd), with its arrangement in [pod-racer-render.scd](../pod-racer-render.scd) and live controls in [pod-racer-live.scd](../pod-racer-live.scd). The source follows the sound-design approach described in the StarWars.com interviews linked below: a collage of familiar vehicle textures, distinct gear transitions, and a dry close engine with sparse canyon echoes. `speed` raises the engine pitch, `lfoRate` controls the acceleration cue, `gear` triggers a transition, `flyby` triggers a slow stereo pass, `canyon` sends transient material to the wall echoes, and `clankRate` controls rare mechanical strikes.
+The pod racer source is also available as [pod-racer.scd](../patches/pod-racer.scd), with its arrangement in [pod-racer-render.scd](../patches/pod-racer-render.scd) and live controls in [pod-racer-live.scd](../patches/pod-racer-live.scd). The source follows the sound-design approach described in the StarWars.com interviews linked below: a collage of familiar vehicle textures, distinct gear transitions, and a dry close engine with sparse canyon echoes. `speed` raises the engine pitch, `lfoRate` controls the acceleration cue, `gear` triggers a transition, `flyby` triggers a slow stereo pass, `canyon` sends transient material to the wall echoes, and `clankRate` controls rare mechanical strikes.
 
 
 ## Play and control
 
-Open `live.scd` in SuperCollider. Evaluate the first parenthesized block to load definitions, boot the server, and start a five-second countdown followed by the rocket engine. Evaluate the remaining lines individually to trigger the Quindar tones, change throttle/grit/pan, or release the rocket. `instruments.scd` only defines instruments and does not start audio. The rocket releases over 2.5 seconds.
+Open `patches/live.scd` in SuperCollider. Evaluate the first parenthesized block to load definitions, boot the server, and start a five-second countdown followed by the rocket engine. Evaluate the remaining lines individually to trigger the Quindar tones, change throttle/grit/pan, or release the rocket. `patches/instruments.scd` only defines instruments and does not start audio. The rocket releases over 2.5 seconds.
 
 The rocket has three unequal startup surges, then settles to steady combustion 4.2 seconds after ignition. There is no repeating whomp trigger or pitched oscillator in the engine. `motion` sets the depth of slow irregular load drift and `cycle` its approximate timescale. `throttle` controls average speed and noise brightness. `sand` controls the subdued, low-pass-filtered sand layer (default 0.28, range 0–1.5). `malfunction` introduces engine dropouts and sputter; return it to 0 to recover. The rendered arrangement fails at 20 seconds, recovers at 24 seconds, briefly stumbles again at 34 seconds, and recovers at 35.2 seconds.
 
@@ -46,12 +46,12 @@ The rocket has three unequal startup surges, then settles to steady combustion 4
 From the repository directory on macOS with SuperCollider installed:
 
 ```sh
-/Applications/SuperCollider.app/Contents/MacOS/sclang -D render.scd
-python3 verify_audio.py
+/Applications/SuperCollider.app/Contents/MacOS/sclang -D patches/render.scd
+python3 scripts/verify_audio.py
 ```
 
 
-`render.scd` is a standalone batch script for the Quindar and rocket renders and exits sclang when all six renders finish. To render the pod racer separately, run `/Applications/SuperCollider.app/Contents/MacOS/sclang -D pod-racer-render.scd`. Run batch renderers from the terminal rather than loading them into an IDE session you want to keep open. All use stock UGens and offline synthesis. Substitute your installation’s sclang path where needed.
+`patches/render.scd` is a standalone batch script for the Quindar and rocket renders and exits sclang when all six renders finish. To render the pod racer separately, run `/Applications/SuperCollider.app/Contents/MacOS/sclang -D patches/pod-racer-render.scd`. Run batch renderers from the terminal rather than loading them into an IDE session you want to keep open. All use stock UGens and offline synthesis. Substitute your installation’s sclang path where needed.
 
 `audio/verification.json` records measured levels, durations and tone frequencies for the committed Quindar previews. Larger local renders are excluded from the public tree.
 

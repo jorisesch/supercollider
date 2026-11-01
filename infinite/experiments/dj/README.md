@@ -45,7 +45,7 @@ Render and check Pop with:
 sclang -D infinite/experiments/dj/render.scd pop
 sclang -D infinite/experiments/dj/pop-check.scd
 sclang -D infinite/experiments/dj/pop-runtime-check.scd
-python3 verify_audio.py
+python3 scripts/verify_audio.py
 afconvert -f m4af -d aac -b 192000 -q 127 audio/dj-pop-preview.wav audio/dj-pop-preview.m4a
 ~~~
 
@@ -168,7 +168,7 @@ sclang -D infinite/experiments/dj/bass-check.scd /tmp/dj-bass-check.wav
 python3 infinite/experiments/dj/verify_bass.py /tmp/dj-bass-check.wav
 sclang -D infinite/experiments/dj/stutter-check.scd /tmp/dj-stutter-check.wav
 python3 infinite/experiments/dj/verify_stutter.py /tmp/dj-stutter-check.wav
-python3 verify_audio.py
+python3 scripts/verify_audio.py
 
 # Compact listening copies on macOS:
 afconvert -f m4af -d 'aac ' -b 192000 -q 127 audio/groove-track-v6d.wav audio/groove-track-v6d.m4a

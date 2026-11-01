@@ -1,4 +1,4 @@
-// Definition only. Select-all playback is in audio/sonar-ping.scd.
+// Definition only. Select-all playback is in ../audio/sonar-ping.scd.
 (
 ~sonarPingDef = SynthDef(\sonarPing, { |out=0, gate=1, amp=0.62, freq=960,
     decay=4.2, reverb=0.42, water=0.14, hull=0.34, creakRate=0.28, pan=0|

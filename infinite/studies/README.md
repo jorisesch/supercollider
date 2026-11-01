@@ -56,7 +56,7 @@ From the repository directory, reproduce all five originals into a separate fold
 ```sh
 /Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/studies/revisions/v1/render.scd
 /Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/studies/revisions/v2/render.scd
-python3 verify_audio.py
+python3 scripts/verify_audio.py
 python3 infinite/studies/previews.py v2
 python3 infinite/studies/check_revisions.py
 ```

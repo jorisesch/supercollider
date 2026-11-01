@@ -55,13 +55,13 @@ Load [controls.scd](controls.scd) and evaluate `~djShow.value` to open the windo
 
 ## Listen and compare
 
-[112-bar AAC preview](../../../audio/dj-evolving-v2.m4a) · [listening notes](NOTES.md)
+[112-bar AAC preview](../../../../../audio/dj-evolving-v2.m4a) · [listening notes](../../NOTES.md)
 
-The committed AAC is the earlier v2 listening artifact. The current deck-FX pass renders to the ignored local [WAV](../../../audio/dj-evolving-v2.wav) for review; this machine's `afconvert` does not expose an AAC encoder.
+The committed AAC is the earlier v2 listening artifact. The current deck-FX pass renders to the ignored local [WAV](../../../../../audio/dj-evolving-v2.wav) for review; this machine's `afconvert` does not expose an AAC encoder.
 
-The preview uses the default seed and settings, follows the live tempo automation, includes an automatic handover and reaches the second record's drop. It is an excerpt of the ongoing set with an ending fade. [preview-timeline.tsv](preview-timeline.tsv) records each bar's scheduled start, tempo, section and effective macros for both decks.
+The preview uses the default seed and settings, follows the live tempo automation, includes an automatic handover and reaches the second record's drop. It is an excerpt of the ongoing set with an ending fade. preview-timeline.tsv (`preview-timeline.tsv`; historical artifact not bundled in this snapshot) records each bar's scheduled start, tempo, section and effective macros for both decks.
 
-The previous DJ is preserved as a playable [v1 snapshot](revisions/v1/ABOUT.md):
+The previous DJ is preserved as a playable [v1 snapshot](../v1/ABOUT.md):
 
 ```sh
 /Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/experiments/dj/revisions/v1/run.scd 2600 128
@@ -73,7 +73,7 @@ The original generator is also still available with the user's reference setting
 /Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/infinite-run.scd edm 0.25 0.55 0.30 0.20 128 2600
 ```
 
-Close one performance before starting another. Compare phrase identity, groove, energy changes, hook returns and whether transitions feel too empty. Human judgments and implementation hypotheses are kept in [NOTES.md](NOTES.md).
+Close one performance before starting another. Compare phrase identity, groove, energy changes, hook returns and whether transitions feel too empty. Human judgments and implementation hypotheses are kept in [NOTES.md](../../NOTES.md).
 
 ## Rendering and checks
 
@@ -83,7 +83,7 @@ Close one performance before starting another. Compare phrase identity, groove, 
 /Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/experiments/dj/check.scd
 /Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/experiments/dj/runtime-check.scd
 /Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/experiments/dj/render.scd
-python3 verify_audio.py
+python3 scripts/verify_audio.py
 
 # Optional compact listening copy on macOS:
 afconvert -f m4af -d 'aac ' -b 192000 -q 127 audio/dj-evolving-v2.wav audio/dj-evolving-v2.m4a
@@ -91,4 +91,4 @@ afconvert -f m4af -d 'aac ' -b 192000 -q 127 audio/dj-evolving-v2.wav audio/dj-e
 
 The pure check covers 8,192 seeded bars, the full catalog, six forms, varying length/intensity/macros, root/fifth bass bias, density response, recurring drum-only spotlights, valid timing and eight-track routing, key membership, continuous tempo, pitched-key isolation, Hold/NEXT/hooks, deck-local FX bounds/variation and bounded voice lifetimes. Another 2,048 bars check macro extremes, including high Chaos/Tension; explicit Fill/Mutation and hot-FX requests and incoming intro cues are also checked. The muted runtime check covers the handover, window, all knobs, Hook/Fill/Hold, all four HOT FX buttons, STOP/START continuation, internal signal and node/bus cleanup. It takes about 30 seconds.
 
-The standalone renderer exits after writing a local WAV and timeline. WAV output is ignored by Git; the AAC preview is the committed listening artifact. `verify_audio.py` checks committed Quindar previews; local DJ WAVs can be inspected separately. [preview.json](preview.json) and [reproduction.json](reproduction.json) retain settings and source/audio checksums. These numerical and runtime checks are separate from human listening review of this revision, which is pending.
+The standalone renderer exits after writing a local WAV and timeline. WAV output is ignored by Git; the AAC preview is the committed listening artifact. `scripts/verify_audio.py` checks committed Quindar previews; local DJ WAVs can be inspected separately. preview.json (`preview.json`; historical artifact not bundled in this snapshot) and reproduction.json (`reproduction.json`; historical artifact not bundled in this snapshot) retain settings and source/audio checksums. These numerical and runtime checks are separate from human listening review of this revision, which is pending.

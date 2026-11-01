@@ -8,8 +8,8 @@ TempoClock.default.tempo = 1;
 render = { |name, events, duration|
     var options = ServerOptions.new.numOutputBusChannels_(2).numInputBusChannels_(0);
     Score(events).recordNRT(
-        oscFilePath: root +/+ "audio" +/+ (name ++ ".osc"),
-        outputFilePath: root +/+ "audio" +/+ (name ++ ".wav"),
+        oscFilePath: root.dirname +/+ "audio" +/+ (name ++ ".osc"),
+        outputFilePath: root.dirname +/+ "audio" +/+ (name ++ ".wav"),
         sampleRate: 48000, headerFormat: "WAV", sampleFormat: "int24",
         options: options, duration: duration,
         action: { |exitCode|

@@ -8,7 +8,7 @@ From the repository root, run:
 
 ```sh
 sclang -D neon-rush/render.scd
-python3 verify_audio.py
+python3 scripts/verify_audio.py
 ```
 
 This generates `audio/neon-rush.wav` and updates the numerical checks. The WAV remains local and is excluded from Git. Numerical verification passed; the preview also received a positive human listening review in the session.

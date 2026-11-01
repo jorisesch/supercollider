@@ -75,15 +75,15 @@ Load [controls.scd](controls.scd) and evaluate ~djShow.value to open the window.
 
 ## Listen
 
-[Compare all four ensembles](../../../audio/dj-palette-tour.m4a) · [112-bar Infinite DJ excerpt](../../../audio/dj-interlock-v4.m4a) · [48-bar Wired House edit](../../../audio/interlock-track-v4.m4a)
+[Compare all four ensembles](../../../../../audio/dj-palette-tour.m4a) · [112-bar Infinite DJ excerpt](../../../../../audio/dj-interlock-v4.m4a) · [48-bar Wired House edit](../../../../../audio/interlock-track-v4.m4a)
 
-[Automatic stutter excerpt](../../../audio/dj-auto-stutter.m4a) includes a two-bar eighth-note phrase between stretches of normal playback. It starts about three seconds into this excerpt, or at 52.6 seconds in the full DJ preview.
+[Automatic stutter excerpt](../../../../../audio/dj-auto-stutter.m4a) includes a two-bar eighth-note phrase between stretches of normal playback. It starts about three seconds into this excerpt, or at 52.6 seconds in the full DJ preview.
 
 The 64-second palette tour plays the same eight-bar hook with Wired House at 0.1 seconds, Brass Circuit at 15.1, Digital Drive at 30.1 and Acid Foundry at 45.1. Automatic stutter is disabled for this timbre comparison; the track edit and live DJ include it. Restart a running DJ to load the controls and automatic FX.
 
-The track edit is 94.1 seconds at 128 BPM, including its ending fade. Its sections are groove, hook, space, buildup, drop and outro; the drop arrives at about 45 seconds. The longer excerpt demonstrates the same style across automatic handovers and instrument changes. Settings, timelines and checksums are recorded in [track.json](track.json), [preview.json](preview.json), [palette-tour.json](palette-tour.json) and [reproduction.json](reproduction.json).
+The track edit is 94.1 seconds at 128 BPM, including its ending fade. Its sections are groove, hook, space, buildup, drop and outro; the drop arrives at about 45 seconds. The longer excerpt demonstrates the same style across automatic handovers and instrument changes. Settings, timelines and checksums are recorded in track.json (`track.json`; historical artifact not bundled in this snapshot), preview.json (`preview.json`; historical artifact not bundled in this snapshot), palette-tour.json (`palette-tour.json`; historical artifact not bundled in this snapshot) and [reproduction.json](reproduction.json).
 
-Earlier candidates are preserved as a playable [v2 source snapshot](revisions/v2/ABOUT.md) and [v1](revisions/v1/ABOUT.md). Existing v2/v3 audio files are retained separately. Human listening feedback belongs in [NOTES.md](NOTES.md); listening to the new ensembles is pending.
+Earlier candidates are preserved as a playable [v2 source snapshot](../v2/ABOUT.md) and [v1](../v1/ABOUT.md). Existing v2/v3 audio files are retained separately. Human listening feedback belongs in [NOTES.md](../../NOTES.md); listening to the new ensembles is pending.
 
 ## Rendering and checks
 
@@ -99,7 +99,7 @@ sclang -D infinite/experiments/dj/check.scd
 sclang -D infinite/experiments/dj/runtime-check.scd
 sclang -D infinite/experiments/dj/stutter-check.scd /tmp/dj-stutter-check.wav
 python3 infinite/experiments/dj/verify_stutter.py /tmp/dj-stutter-check.wav
-python3 verify_audio.py
+python3 scripts/verify_audio.py
 
 # Compact listening copies on macOS:
 afconvert -f m4af -d 'aac ' -b 192000 -q 127 audio/interlock-track-v4.wav audio/interlock-track-v4.m4a

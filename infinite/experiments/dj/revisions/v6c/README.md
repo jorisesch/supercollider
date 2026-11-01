@@ -80,17 +80,17 @@ Load [controls.scd](controls.scd) and evaluate ~djShow.value to open the window.
 
 ## Listen
 
-[48-bar groove track](../../../audio/groove-track-v6c.m4a) · [112-bar Infinite DJ excerpt](../../../audio/dj-groove-v6c.m4a) · [Compare all four ensembles](../../../audio/dj-groove-palettes-v6c.m4a)
+[48-bar groove track](../../../../../audio/groove-track-v6c.m4a) · [112-bar Infinite DJ excerpt](../../../../../audio/dj-groove-v6c.m4a) · [Compare all four ensembles](../../../../../audio/dj-groove-palettes-v6c.m4a)
 
 The v6.2 groove track is the user's **favourite so far** (2026-10-31): “pretty good.” It is the listening reference for future refinements.
 
-The first half-bar sixteenth-note stutter runs from about 53.54 to 54.48 seconds in the track and set. The earlier [v4 stutter excerpt](../../../audio/dj-auto-stutter.m4a) is retained for comparison.
+The first half-bar sixteenth-note stutter runs from about 53.54 to 54.48 seconds in the track and set. The earlier [v4 stutter excerpt](../../../../../audio/dj-auto-stutter.m4a) is retained for comparison.
 
 The 64-second palette tour plays the same eight-bar bass-led section with Wired House at 0.1 seconds, Brass Circuit at 15.1, Digital Drive at 30.1 and Acid Foundry at 45.1. Automatic stutter is disabled for this timbre comparison; the track edit and live DJ include it. Restart a running DJ to load the new arrangement and Bass hook control.
 
 The track edit is 94.1 seconds at 128 BPM, including its ending fade. Its sections are groove, hook, space, buildup, drop and outro. It has two regular one-beat pullbacks, around 27.8 and 57.8 seconds; the pre-drop pickup starts around 44.6 seconds. Each lasts about 0.47 seconds. A single drum-only bar starts around 67.6 seconds. The longer excerpt demonstrates the same style across automatic handovers and instrument changes. Timelines record the start beat of each cut, drum spotlights and bass tone/drive. Settings, timelines and checksums are recorded in [track.json](track.json), [preview.json](preview.json), [palette-tour.json](palette-tour.json) and [reproduction.json](reproduction.json).
 
-The lead-forward [v4 source snapshot](revisions/v4/ABOUT.md), [v2](revisions/v2/ABOUT.md) and [v1](revisions/v1/ABOUT.md) remain playable. Earlier audio files are retained separately. Human listening feedback belongs in [NOTES.md](NOTES.md); separate listening judgments for the longer set and palette tour remain pending.
+The lead-forward [v4 source snapshot](../v4/ABOUT.md), [v2](../v2/ABOUT.md) and [v1](../v1/ABOUT.md) remain playable. Earlier audio files are retained separately. Human listening feedback belongs in [NOTES.md](../../NOTES.md); separate listening judgments for the longer set and palette tour remain pending.
 
 ## Rendering and checks
 
@@ -108,7 +108,7 @@ sclang -D infinite/experiments/dj/bass-check.scd /tmp/dj-bass-check.wav
 python3 infinite/experiments/dj/verify_bass.py /tmp/dj-bass-check.wav
 sclang -D infinite/experiments/dj/stutter-check.scd /tmp/dj-stutter-check.wav
 python3 infinite/experiments/dj/verify_stutter.py /tmp/dj-stutter-check.wav
-python3 verify_audio.py
+python3 scripts/verify_audio.py
 
 # Compact listening copies on macOS:
 afconvert -f m4af -d 'aac ' -b 192000 -q 127 audio/groove-track-v6c.wav audio/groove-track-v6c.m4a
