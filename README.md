@@ -12,7 +12,7 @@ A compact control window lets you steer the music, hold a record, request fills 
 
 ![Infinite DJ control window with track names, four knobs, an effect menu and stereo spectrum panels](docs/images/infinite-dj-controls.png)
 
-*The control window highlights the leading deck and identifies what is playing.*
+*Live EDM playback: the leading deck is highlighted and both spectrum panels show the actual stereo mix.*
 
 **[Listen to the current set](audio/dj-groove-v6d.m4a)** · **[Hear the favorite groove](audio/groove-track-v6c.m4a)** · **[Launch Infinite DJ](infinite/experiments/dj/README.md)**
 

@@ -1,7 +1,7 @@
 # README images
 
 - `infinite-dj-banner.png`: conceptual cover artwork generated with the built-in ImageGen tool. It is not an application screenshot.
-- `infinite-dj-controls.png`: captured directly from the SuperCollider Infinite DJ window, with a seeded EDM record loaded and playback stopped. The spectrum panels are empty because playback is stopped. No music playback was started for the capture.
+- `infinite-dj-controls.png`: captured directly from the SuperCollider Infinite DJ window during seeded EDM playback. Both spectrum panels show the actual stereo master mix, routed through a private audio bus for capture while hardware output remained muted. No test tones or simulated spectrum graphics were used.
 
 ## Banner prompt
 
