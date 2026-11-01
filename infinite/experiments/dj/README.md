@@ -54,6 +54,8 @@ Choose **Pop** in the window's channel menu, or start it directly on macOS:
 /Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/experiments/pop.scd
 ```
 
+Pop chooses from a broad range of chord progressions and timings. Verses, choruses and bridges have different harmony, while the chorus keeps a recognizable melody.
+
 Switching channels starts a new set with a fade. Close your current session before launching another from Terminal.
 
 ## Soundscapes

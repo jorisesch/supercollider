@@ -62,7 +62,7 @@ sclang -D infinite/experiments/pop.scd
 sclang -D infinite/experiments/pop.scd 2600 138 0.25 0.55 0.30 0.20
 ~~~
 
-Pop develops the original [Neon Rush](../../../neon-rush/track.scd) sketch into continuously generated instrumental records: offbeat pulse bass, bright detuned saw leads, sustained chord beds, and rotating drum kits. Each record chooses a key, familiar four-chord progression and four-bar chorus motif. Verses leave melodic space; the chorus repeats its motif when it returns. Mutation changes verse/bass answers while preserving the chorus. The **Chorus** button brings that hook forward for four bars. Existing deck FX, Fill, Hold, NEXT and transport remain available.
+Pop develops the original [Neon Rush](../../../neon-rush/track.scd) sketch into continuously generated instrumental records: offbeat pulse bass, bright detuned saw leads, sustained chord beds, and rotating drum kits. Each record chooses a key, separate verse/chorus/bridge progressions and a four-bar chorus motif. Verses leave melodic space; the chorus repeats its motif when it returns. Mutation changes verse/bass answers while preserving the chorus. The **Chorus** button brings that hook forward for four bars. Existing deck FX, Fill, Hold, NEXT and transport remain available.
 
 The mixer labels its Pop song sections using the shared internal names: `groove` is a verse, `hook` and `drop` are choruses, `space` and `breakdown` are bridges. Pop records have 64- or 96-bar forms with eight-bar automatic handovers. Its own catalog and voices are in [pop-style.scd](pop-style.scd) and [pop-instruments.scd](pop-instruments.scd). Loading them starts no playback. Pop is unchanged by the promotion; EDM Classic retains the preceding EDM definitions.
 
@@ -246,3 +246,13 @@ Internal recipe channel IDs remain `edm` (Classic), `pop` and `edme` (standard E
 Default rendering writes the standard set: `sclang -D infinite/experiments/dj/render.scd`. Add `track` for its 48-bar edit. `classic` and `classic track` regenerate the older set/edit filenames; `palettes` and `digital` remain Classic comparisons. `e-render.scd` remains a compatible alias. Historical reproduction manifests describe their original sources, not current source hashes.
 
 The promoted standard render and current source checksums are recorded in [standard-reproduction.json](standard-reproduction.json).
+
+## Pop harmony
+
+Pop has 24 diatonic progressions per major/minor mode (48 total), cycled through shuffled bags. The initial progression and timing are seeded too, rather than forced to the same opening on every restart. Eight eight-bar duration patterns combine one-, two-, three- and four-bar chords. Verse and chorus use different progression/timing choices; bridge harmony moves more slowly. Chorus and bridge choices exclude rotated copies of the verse. Buildups lead to the dominant in their last two bars. Sections reset their harmonic phrase at their entrance, and returning choruses retain their progression and melody.
+
+Harmony is planned once per record with a separate deterministic random stream. Hold retains that plan, including when the record loops. Chords, bass and the current-chord tooltip all read the same schedule. The four existing melodic motif families are retained; Mutation does not replace the chorus melody. This is continuous generative playback, with intentional phrase repetition, rather than a promise that no musical combination will ever recur.
+
+Run `sclang -D infinite/experiments/dj/pop-check.scd` for 8,192 seeded bars covering all progressions/rhythms, section contrast, chord/bass agreement, stable chorus returns and transport requests. Render with `sclang -D infinite/experiments/dj/render.scd pop`, then `python3 scripts/verify_audio.py`. The Pop timeline includes current degree, section harmony, progression and chord length for both decks; verification checks that the excerpt actually contains different verse/chorus/bridge harmony and one-bar changes.
+
+Saved Pop recipes from before this harmony change require their original source version; silently playing them with different chords would not be faithful recall. Previous compatible EDM and Classic recipes remain accepted. The current preview, source hashes and checks are recorded in [pop-reproduction.json](pop-reproduction.json). Human listening review of the refreshed preview is pending.

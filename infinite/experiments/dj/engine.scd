@@ -58,14 +58,16 @@ var root=thisProcess.nowExecutingPath.dirname;
         key=take.value(bags.key,12,previousKey,preferred);
         mode=if(index.even) {\minor} {\major};
         scale=if(mode==\minor) {[0,2,3,5,7,8,10]} {[0,2,4,5,7,9,11]};
-        progressionID=take.value(bags[mode],lib[mode].size,nil,preferred);
-        durationID=take.value(bags.duration,lib.durations.size,nil,preferred);
+        progressionID=take.value(bags[mode],lib[mode].size,nil,if(channel==\pop){nil}{preferred});
+        durationID=take.value(bags.duration,lib.durations.size,nil,if(channel==\pop){nil}{preferred});
         hookID=take.value(bags.hook,lib.hooks.size,nil,preferred);
         formID=take.value(bags.form,lib.forms.size,nil,preferred);
         variation=lib.variations[take.value(bags.variation,lib.variations.size,nil,preferred)].copy;
         if(first) { variation.name=if(channel==\pop) {"Neon Pop / C minor"} {"Interlock / C minor"} };
         progression=lib[mode][progressionID];
-        durations=lib.durations[durationID].collect { |n| (n/2).round.asInteger.max(1)*2 }; form=lib.forms[formID];
+        durations=if(channel==\pop) {lib.durations[durationID].copy} {
+            lib.durations[durationID].collect { |n| (n/2).round.asInteger.max(1)*2 }
+        }; form=lib.forms[formID];
         form.do { |part|
             sections.add((name:part[0],start:total,bars:part[1])); total=total+part[1];
         };
@@ -93,6 +95,7 @@ var root=thisProcess.nowExecutingPath.dirname;
             plan.targetBpm=previousBpm+if(previousBpm >= 130) {-2} {2};
         };
         if(channel==\edme) {plan.eMode=eMode;plan.style=\edme};
+        if(channel==\pop) {plan.schedule=~djPopHarmony.value(plan,lib,seed)};
         next={
             var local=localBar,part=sections.detect { |item| local < (item.start+item.bars) };
             var section=part.name,partBar=local-part.start,progress=partBar/(part.bars-1).max(1);

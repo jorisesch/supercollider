@@ -2,9 +2,28 @@
 (
 ~djPopLibrary={ |original|
     var lib=original.copy;
-    lib.minor=[[0,5,2,6],[0,3,5,6],[0,6,5,6],[0,5,3,4]];
-    lib.major=[[0,4,5,3],[5,3,0,4],[0,5,3,4],[0,3,4,0]];
-    lib.durations=[[2,2,2,2]];
+    // Diatonic four-chord phrases: familiar shapes, different starts and cadences.
+    lib.minor=[
+        [0,5,2,6], [0,3,5,6], [0,6,5,6], [0,5,3,4],
+        [0,2,3,5], [0,4,5,3], [0,3,6,2], [0,6,3,5],
+        [5,6,0,0], [5,3,0,6], [2,6,0,5], [3,5,0,4],
+        [0,0,3,6], [0,5,6,4], [0,2,5,6], [0,3,4,0],
+        [5,2,6,0], [3,0,5,4], [2,5,3,6], [0,4,3,6],
+        [0,6,2,3], [5,0,3,6], [0,3,2,6], [0,5,4,0]
+    ];
+    lib.major=[
+        [0,4,5,3], [5,3,0,4], [0,5,3,4], [0,3,4,0],
+        [0,1,3,4], [0,2,5,3], [3,4,2,5], [0,3,5,4],
+        [5,4,3,0], [0,4,1,3], [0,2,3,4], [0,5,1,4],
+        [3,0,1,4], [0,1,4,0], [2,5,1,4], [0,4,3,5],
+        [0,0,3,4], [5,1,3,4], [3,1,0,4], [0,2,1,4],
+        [5,0,3,4], [0,3,2,4], [0,1,5,4], [3,0,4,5]
+    ];
+    // Each pattern spans eight bars; unlike EDM, Pop also changes chords every bar.
+    lib.durations=[
+        [2,2,2,2], [4,2,1,1], [2,1,1,4], [1,1,2,4],
+        [4,1,1,2], [1,2,1,4], [2,1,2,3], [3,1,2,2]
+    ];
     // Existing mixer names: groove=verse, hook/drop=chorus, space/breakdown=bridge.
     lib.forms=[
         [[\intro,8],[\groove,8],[\buildup,4],[\hook,8],[\breakdown,8],[\buildup,4],[\drop,16],[\outro,8]],
@@ -19,6 +38,43 @@
         p;
     };
     lib;
+};
+// Plan harmony once per record. Separate RNG leaves melody/drum decisions alone.
+~djPopHarmony={ |plan,lib,seed|
+    var rng=((seed.abs+(plan.serial*104729)+32252843)%2147483646)+1,choose,contrast;
+    var bank=lib[plan.mode],verse=plan.progression,chorus,bridge,chorusDurations;
+    var harmony,schedule=Array.newClear(plan.length);
+    choose={ |items| rng=(rng*48271)%2147483647;items[(rng/2147483647*items.size).floor.asInteger] };
+    // A rotated copy of the verse is not enough contrast for a chorus or bridge.
+    contrast={ |excluded|
+        choose.value(bank.select { |candidate|
+            excluded.every { |other| (0..3).every { |n| candidate!=other.rotate(n) } }
+        });
+    };
+    chorus=contrast.value([verse]);
+    // A spacious two-chord bridge is fully heard within its eight-bar section.
+    bridge=contrast.value([verse,chorus]).atAll([0,2]);
+    chorusDurations=choose.value(lib.durations.reject { |durations| durations==plan.durations });
+    harmony=(verse:verse,chorus:chorus,bridge:bridge,
+        buildup:[bridge[0],4],verseDurations:plan.durations,chorusDurations:chorusDurations);
+    plan.harmony=harmony;
+    plan.sections.do { |part|
+        var role,progression,durations,cursor=part.start,index=0;
+        role=case {[\hook,\drop].includes(part.name)} {\chorus}
+            {[\space,\breakdown].includes(part.name)} {\bridge}
+            {part.name==\buildup} {\buildup} {true} {\verse};
+        progression=harmony[role];
+        durations=switch(role,
+            \chorus,{chorusDurations}, \bridge,{[4,4]},
+            \buildup,{[part.bars-2,2]}, {plan.durations});
+        while {cursor<(part.start+part.bars)} {
+            var length=durations.wrapAt(index).min(part.start+part.bars-cursor);
+            var chord=(start:cursor,bars:length,degree:progression.wrapAt(index),harmonyRole:role);
+            length.do { |offset| schedule[cursor+offset]=chord };
+            cursor=cursor+length;index=index+1;
+        };
+    };
+    schedule;
 };
 ~djPopBar={ |plan,local,section,progress,effective,hook,drumBreak,patternID,fill,seed,random,forced=false|
     var events=List.new,part=plan.sections.detect { |p| local<(p.start+p.bars) };
@@ -42,6 +98,7 @@
             midinote:note,duration:length,amp:amp,pan:pan,color:plan.palette.color,tone:tone,
             drive:0.25,seed:seed+(plan.serial*100003)+(local*101)+events.size));
     };
+    plan.currentProgression=plan.harmony[plan.schedule[local].harmonyRole];
     plan.breath=false; plan.lowOut=false; plan.cutFrom=4;
     plan.bassTone=0.5; plan.bassDrive=0.25;
     if(bridge.not or:{partBar>=(part.bars-2)}) {

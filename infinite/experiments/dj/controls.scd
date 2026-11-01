@@ -139,7 +139,7 @@ var root=thisProcess.nowExecutingPath.dirname;
                                 plan.keyName ++ " / " ++ plan.section ++ " / " ++ plan.targetBpm ++ " BPM\n"
                                 ++ plan.palette.name ++ " / " ++ plan.palette.kitName ++ "\n"
                                 ++ plan.palette.bassName ++ " + " ++ plan.palette.leadName ++ "\n"
-                                ++ "Chords " ++ (plan.progression+1).asString ++ " / lengths " ++ plan.durations.asString
+                                ++ "Chords " ++ ((plan[\currentProgression] ? plan.progression)+1).asString ++ if(plan.style==\pop) {" / current chord " ++ plan.schedule[plan.localBar].bars ++ " bars"} {" / lengths " ++ plan.durations.asString}
                                 ++ " / " ++ plan.length ++ " bars\n"
                                 ++ "Intensity " ++ (plan.intensity*100).round ++ "% / Chaos "
                                 ++ (plan.effective.chaos*100).round ++ "% / Density " ++ (plan.effective.density*100).round ++ "%\n"

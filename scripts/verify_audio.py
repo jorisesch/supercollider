@@ -69,6 +69,33 @@ for path in sorted(Path('audio').glob('*.wav')):
             palettes.update(int(row[key]) for key in ('palette_a', 'palette_b') if int(row.get(key, -1)) >= 0)
         assert len(records) >= dj_manifest.get('minimum_records', 2), 'DJ render has too few records'
         assert len(palettes) >= dj_manifest.get('minimum_palettes', 0), 'DJ render has too few instrument palettes'
+        if dj_manifest.get('section_harmony'):
+            sections_by_record = {}
+            one_bar_chords = 0
+            for row in timeline[:-1]:
+                for deck in ('a', 'b'):
+                    serial = int(row[f'record_{deck}'])
+                    if serial < 0:
+                        continue
+                    role = row[f'pop_harmony_{deck}']
+                    progression = tuple(map(int, row[f'pop_progression_{deck}'].split(',')))
+                    degree = int(row[f'pop_degree_{deck}'])
+                    length = int(row[f'pop_chord_bars_{deck}'])
+                    assert degree in progression and all(0 <= n <= 6 for n in progression)
+                    assert 1 <= length <= (8 if role == 'buildup' else 4)
+                    one_bar_chords += length == 1
+                    known = sections_by_record.setdefault(serial, {})
+                    if role in known:
+                        assert known[role] == progression, 'Section harmony changed unexpectedly'
+                    known[role] = progression
+            complete = [parts for parts in sections_by_record.values()
+                        if {'verse', 'chorus', 'bridge'} <= parts.keys()]
+            assert complete, 'Preview does not demonstrate verse/chorus/bridge harmony'
+            for parts in complete:
+                assert len({parts['verse'], parts['chorus'], parts['bridge']}) == 3
+            assert one_bar_chords > 0, 'Preview has no faster chord changes'
+            result['section_progressions'] = sections_by_record
+            result['one_bar_chord_bars'] = one_bar_chords
         automatic = []
         previous_auto = False
         for row in timeline[:-1]:

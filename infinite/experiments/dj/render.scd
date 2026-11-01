@@ -22,7 +22,9 @@ var columns=["bar","seconds","bpm","mixing","record_a","record_b","section_a","s
     "stutter_division","stutter_remaining","stutter_source","stutter_deck",
     "breath_a","breath_b","low_gap_a","low_gap_b","bass_tone_a","bass_tone_b","bass_drive_a","bass_drive_b",
     "cut_from_a","cut_from_b","drum_spotlight_a","drum_spotlight_b","stutter_start_beat","stutter_bars","e_mode","e_variant_a","e_variant_b",
-    "e_chord_notes","e_shaker_hits","e_tom_hits","e_signature_hits","e_slides"];
+    "e_chord_notes","e_shaker_hits","e_tom_hits","e_signature_hits","e_slides"]
+    ++ if(pop) {["pop_degree_a","pop_degree_b","pop_harmony_a","pop_harmony_b",
+        "pop_progression_a","pop_progression_b","pop_chord_bars_a","pop_chord_bars_b"]} {[]};
 try {
     (root +/+ "engine.scd").load; (root +/+ "instruments.scd").load;
     name=case {eCompare} {"edm-e-building-blocks"} {eSet} {"edm-e-set"}
@@ -125,6 +127,14 @@ try {
             frame.events.count { |e|e.role==\eChord},frame.events.count { |e|e.role==\eShaker},
             frame.events.count { |e|e.role==\eTom},frame.events.count { |e|e.role==\eSignature},
             frame.events.count { |e|(e[\glide] ? 0)>0}];
+        if(pop) {
+            var degree={ |id| if(plans[id].isNil) {-1} {plans[id].schedule[plans[id].localBar].degree} };
+            var role={ |id| if(plans[id].isNil) {\waiting} {plans[id].schedule[plans[id].localBar].harmonyRole} };
+            var progression={ |id| if(plans[id].isNil) {"none"} {plans[id].currentProgression.join(",")} };
+            var length={ |id| if(plans[id].isNil) {0} {plans[id].schedule[plans[id].localBar].bars} };
+            row=row++[degree.value(0),degree.value(1),role.value(0),role.value(1),
+                progression.value(0),progression.value(1),length.value(0),length.value(1)];
+        };
         timeline.write(row.collect(_.asString).join("\t") ++ "\n");
         frame.automation.do { |point| actions.add((beat:point.beat,automation:point)) };
         frame.events.do { |event| actions.add((beat:event.beat,note:event)) };
@@ -144,7 +154,8 @@ try {
         };
         time=time+((4-previous)*60/tempo);
     };
-    timeline.write([bars,time.round(0.000000001),tempo,0,-1,-1,"end","end",0,0,0,0,0,0,-1,-1,0,0,"none",-1,0,0,0,0,0,0,0,0,4,4,0,0,0,0,"end","none","none",0,0,0,0,0]
+    timeline.write(([bars,time.round(0.000000001),tempo,0,-1,-1,"end","end",0,0,0,0,0,0,-1,-1,0,0,"none",-1,0,0,0,0,0,0,0,0,4,4,0,0,0,0,"end","none","none",0,0,0,0,0]
+        ++if(pop) {[-1,-1,"end","end","none","none",0,0]} {[]})
         .collect(_.asString).join("\t") ++ "\n");
     timeline.close;
     score.add([time,[\n_set,999,\gate,0]]);

@@ -1,5 +1,9 @@
 # Infinite DJ listening notebook
 
+## 2026-11-01 — more Pop harmony
+
+User feedback: the Pop chorus keeps sounding like the same progression. Expanded the progression catalog and chord timings; separate verse, chorus and bridge harmony now provides contrast inside each record. Returning chorus melodies remain stable. The refreshed render awaits human listening review; structural and numerical checks do not establish musical quality.
+
 ## 2026-11-01 — promote E to standard EDM
 
 User request: “Merge that into EDM as the standard.” E is promoted unchanged to the default launcher and menu label. The prior grammar and named favorite remain available as EDM Classic. Earlier listening preferences below remain historical records. Promotion validation compares default/E, Classic and Pop notes and automation across 256 bars each. Numerical/runtime checks are separate from a new human listening review.

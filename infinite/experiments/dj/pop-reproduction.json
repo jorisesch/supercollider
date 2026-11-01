@@ -1,0 +1,35 @@
+{
+  "revision": "pop-section-harmony",
+  "seed": 2600,
+  "initial_bpm": 138,
+  "bars": 96,
+  "progressions_per_mode": 24,
+  "chord_duration_patterns": 8,
+  "preview": "audio/dj-pop-preview.m4a",
+  "timeline": "infinite/experiments/dj/dj-pop-preview-timeline.tsv",
+  "human_listening_review": "pending",
+  "source_sha256": {
+    "infinite/experiments/dj/engine.scd": "a197d8e51a5bced8a07ab9f212d80029f86867b387570c232168f6b063441fd1",
+    "infinite/experiments/dj/pop-style.scd": "b9ef923ff76200b707cb01c412f7e3f5c02ecd2f6e856eec357df624fd2fd1db",
+    "infinite/experiments/dj/pop-instruments.scd": "06c15c4f229cf6852d6f61ec76e5aae9927c36f1dc0768d913b42315d9d79049",
+    "infinite/experiments/dj/recall.scd": "f5e8dd3608bf1e669048f07e2399569833634b10a447eb398f2f43204d6d2dfd",
+    "infinite/experiments/dj/controls.scd": "bd01a18a4c2bff45f4c468f846f8a865dc2bed70e13510b322c7bf5363b5c06e",
+    "infinite/experiments/dj/render.scd": "2e5c0933946d1584ef8529fb4c5a5c52217e16bdef15b839ac790b72ad8d02d4",
+    "infinite/experiments/dj/pop-check.scd": "a88af65cf085805b944885b455765ee84e9688abfb985dcc7558ff8141ab4739",
+    "infinite/experiments/dj/pop.json": "12e6cc339452f23e68b128e3efd48d487670cd65ad9375b15f19830f2ea3e090",
+    "scripts/verify_audio.py": "b81d39d9435962bf76d890634abe3467f99995d8b62f52fe5cabab579ec33bab"
+  },
+  "audio_sha256": {
+    "audio/dj-pop-preview.wav": "484235c1776c8380cffff955e4b1d81d353f25a94c92601ae8463f25a9c894b3",
+    "audio/dj-pop-preview.m4a": "57e3f1f10fd57a34d8c77e675c03392f12e0bc3d230f2a053f67e998251737aa"
+  },
+  "checks": [
+    "8192 seeded bars: all 48 progressions and 8 rhythms, section contrast, chord/bass agreement and stable chorus melodies",
+    "Pop GUI callbacks, handover, transport and cleanup on muted server",
+    "256 bars each: EDM and Classic events/automation unchanged",
+    "128 Soundscape bars unchanged",
+    "three-channel recipe round trips and held-FX checks",
+    "WAV format, duration, finite activity, headroom, quiet ending and rendered section-harmony timeline",
+    "Prior EDM/Classic recipes retain exact music; old Pop recipes are explicitly version-incompatible"
+  ]
+}

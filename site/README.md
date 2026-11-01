@@ -23,4 +23,4 @@ Recorded demos run in the browser. The infinite generator itself requires a loca
 
 The Soundscape preview is generated from the current baseline with `sclang -D infinite/infinite-render.scd soundscape`, checked with `python3 scripts/verify_audio.py`, then encoded with `afconvert -f m4af -d aac -b 192000 audio/infinite-soundscape.wav audio/infinite-soundscape.m4a`. It is an excerpt of the separate Soundscape engine, not a two-deck DJ channel.
 
-The EDM player demonstrates the promoted E grammar (`edm-e-set.m4a`). The standard launcher starts it; the preceding version is EDM Classic. Pop and Soundscape remain unchanged.
+The players demonstrate the current EDM, Pop and Soundscape generators. The refreshed Pop preview includes contrasting verse, chorus and bridge harmony.

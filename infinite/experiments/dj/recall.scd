@@ -108,7 +108,10 @@ fingerprint=hash.value(["engine.scd","style.scd","pop-style.scd","library.scd",
     if("^[A-Za-z]+ [A-Za-z]+ at [A-Za-z]+ [A-Za-z]+$".matchRegexp(name).not) {Error("Paste the complete track name").throw};
     if(File.exists(~djRecipeDir +/+ (name ++ ".json")).not) {Error("Track is not in this local recipe library").throw};
     spec=~djParseRecipe.value(File.readAllString(~djRecipeDir +/+ (name ++ ".json")));
-    if(spec.size!=10 or: {spec[0]!=2} or: {[fingerprint,1646806499].includes(spec[1].asInteger).not}) {
+    if(spec.size!=10 or: {spec[0]!=2} or: {(spec[1]!=fingerprint) and: {
+        // Old Pop harmony changed; only unchanged EDM/Classic recipes are compatible.
+        spec[4]==1 or: {[506492780,1646806499].includes(spec[1].asInteger).not}
+    }}) {
         Error("This recipe needs the music source version that created it").throw;
     };
     if(~djRecipeName.value(spec)!=name) {Error("Track recipe checksum mismatch").throw};
