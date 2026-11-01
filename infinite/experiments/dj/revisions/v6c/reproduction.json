@@ -1,0 +1,414 @@
+{
+  "revision": "groove-and-space-v6.2-half-bar-sixteenths",
+  "render_date": "2026-10-31",
+  "supercollider_version": "3.13.0",
+  "human_listening_review": "2026-10-31: groove-track-v6c is the user's favourite so far. Separate judgments for the longer set and palette tour remain pending.",
+  "source_sha256": {
+    "infinite/experiments/dj/library.scd": "82ef8f4e6eb4e358a233ebc2d6aeb648a2205a4d6c7453df74ecb56202c950a3",
+    "infinite/experiments/dj/style.scd": "12c86ec3813a267d80393f35aba15c6bd6a6516e1b3bcedfe99e9e13a8ba99c7",
+    "infinite/experiments/dj/instruments.scd": "5887b4524197f50fec8099d308020199d7c7144c84cb36f4296b5c29c5c71522",
+    "infinite/experiments/dj/palette-instruments.scd": "85c0a90dcb113896fdbc6227b6e158451216322d6d31f30c411888a2ce6f13ac",
+    "infinite/experiments/dj/engine.scd": "597cc76b9aba0cb0c9255358dfc5a370318c5be14113d23d181ed3463d593717",
+    "infinite/experiments/dj/live.scd": "216a5d8e583bb17a26cb2d2e24ab5e173c5ba37bdcaab65db4ede1b36591d866",
+    "infinite/experiments/dj/controls.scd": "968d52ab424ceb3ba94a82bcae3ba463454817ba545f8aa2acf80fce96bfa23e",
+    "infinite/experiments/dj/launch.scd": "5d20ecc0c30a055bbecea85ccd1d2858d76114002576154503c2c0d29ed52612",
+    "infinite/experiments/dj/render.scd": "41cad4b85d44cbcfc7c61aa10d34291fb8e14ef73777911b836737cdb6b0b255",
+    "infinite/experiments/dj/check.scd": "0fa25e33bc537e278e1587bf9cfcf86ececd9daf78b20fa71c5ddc7c94337bf3",
+    "infinite/experiments/dj/runtime-check.scd": "d8b5dc36d7c49f02b42633a8717e98a7484c3e0366ffd75d11b60e41f54dd5c1",
+    "infinite/experiments/dj/stutter-check.scd": "336df66e8a6f689e1de463927621c725534ed72bb5af3b992d5d0b9bfba2e4a3",
+    "infinite/experiments/dj/verify_stutter.py": "ec1eb46a8f7a548383c80300b28490129a8fc9e0180ef6f3a62d3a8df9bc81d1",
+    "infinite/experiments/dj/preview.json": "144a72b03cd14a936a946c7bb3c28196baea55027c8b23e62ba125ec484a0d4c",
+    "infinite/experiments/dj/track.json": "883ecd4c6d0c814c7ae45d91876c72e8566b1fd2a45702b7109a00127df9dfe5",
+    "infinite/experiments/dj/palette-tour.json": "4be767f2ea57c202edbb6b468af94cd8f90d1da19fc9c9213d7c44e34213595a",
+    "verify_audio.py": "861fb2e71f634030baaf46f41dd267e85a81fc534540641914e8c1a51e2622f2",
+    "infinite/experiments/dj/bass-check.scd": "fc5275b0dd0d13629fee79a07242051e57dc98848dbbe654704f3b6dc43c42f7",
+    "infinite/experiments/dj/verify_bass.py": "73e24fd5120349839918e190d3f8b23c7732fcb51e701ce26b0a847b10597de2"
+  },
+  "render_settings": {
+    "sample_rate": 48000,
+    "channels": 2,
+    "sample_format": "int24",
+    "num_wire_buffers": 128,
+    "realtime_memory_kb": 65536,
+    "load_external_synthdefs": false
+  },
+  "renders": [
+    {
+      "manifest": "infinite/experiments/dj/palette-tour.json",
+      "settings": {
+        "file": "dj-groove-palettes-v6c.wav",
+        "preview": "dj-groove-palettes-v6c.m4a",
+        "title": "Four ensembles \u2014 groove and space v6.2",
+        "bars": 32,
+        "seed": 2600,
+        "initial_bpm": 128,
+        "settings": {
+          "chaos": 0.25,
+          "density": 0.55,
+          "mutation": 0.3,
+          "tension": 0.2,
+          "hold": true,
+          "autoStutter": false
+        },
+        "lead_in_seconds": 0.1,
+        "tail_seconds": 4,
+        "minimum_records": 1,
+        "minimum_palettes": 4,
+        "timeline": "infinite/experiments/dj/dj-groove-palettes-v6c-timeline.tsv",
+        "segments": [
+          {
+            "start_seconds": 0.1,
+            "name": "Wired House",
+            "bass": "Classic sub",
+            "lead": "Octave saw",
+            "drums": "Tight house"
+          },
+          {
+            "start_seconds": 15.1,
+            "name": "Brass Circuit",
+            "bass": "Reese bass",
+            "lead": "Unison brass",
+            "drums": "Analog punch"
+          },
+          {
+            "start_seconds": 30.1,
+            "name": "Digital Drive",
+            "bass": "FM bass",
+            "lead": "FM growl",
+            "drums": "Dry electro"
+          },
+          {
+            "start_seconds": 45.1,
+            "name": "Acid Foundry",
+            "bass": "Acid bass",
+            "lead": "Sync stack",
+            "drums": "Dust metal"
+          }
+        ],
+        "human_listening_review": "pending"
+      },
+      "wav_sha256": "a7242150dd689ae42823bb4a0558351fcba68ba05ad93b78e58f47c5903811d2",
+      "pcm_sha256": "04346b0f130193e088b9e7a5a81d06d74d1b1ddcfcd4e1924ac8ab70bcb8b19e",
+      "preview_sha256": "242de41f0d64b3f746f9a87a6aae07a8bef8af6e3256eba129178fabc25dee37",
+      "timeline_sha256": "dcd76e9ad26f0a2569584f5804e8a864aec5fe9fdcdaafe4684e3828cca189dd",
+      "measurements": {
+        "seconds": 64.1013,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -2.45,
+        "rms_dbfs": -19.0,
+        "end_peak": 0.0,
+        "automatic_stutter_phrases": [],
+        "title": "Four ensembles \u2014 groove and space v6.2",
+        "seed": 2600,
+        "bars": 32,
+        "settings": {
+          "chaos": 0.25,
+          "density": 0.55,
+          "mutation": 0.3,
+          "tension": 0.2,
+          "hold": true,
+          "autoStutter": false
+        },
+        "records": [
+          0
+        ],
+        "palettes": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "music_seconds": 60.0,
+        "music_rms_dbfs": -18.72,
+        "four_bar_rms_dbfs": [
+          -18.3,
+          -18.33,
+          -18.89,
+          -18.99,
+          -18.01,
+          -17.91,
+          -19.84,
+          -19.95
+        ],
+        "palette_rms_dbfs": {
+          "Wired House": -18.29,
+          "Brass Circuit": -18.95,
+          "Digital Drive": -17.92,
+          "Acid Foundry": -19.9
+        }
+      }
+    },
+    {
+      "manifest": "infinite/experiments/dj/track.json",
+      "settings": {
+        "file": "groove-track-v6c.wav",
+        "preview": "groove-track-v6c.m4a",
+        "title": "Bass and drums \u2014 half-bar stutters v6.2",
+        "bars": 48,
+        "seed": 2600,
+        "initial_bpm": 128,
+        "settings": {
+          "chaos": 0.25,
+          "density": 0.55,
+          "mutation": 0.3,
+          "tension": 0.2,
+          "hold": true,
+          "autoStutter": true
+        },
+        "lead_in_seconds": 0.1,
+        "tail_seconds": 4,
+        "minimum_records": 1,
+        "minimum_palettes": 1,
+        "minimum_auto_stutters": 1,
+        "timeline": "infinite/experiments/dj/groove-track-v6c-timeline.tsv",
+        "check_groove_gaps": true,
+        "pullback_beats": 1,
+        "maximum_pullbacks": 2,
+        "maximum_drum_spotlights": 1,
+        "human_listening_review": "2026-10-31: user called this groove track pretty good and their favourite so far.",
+        "preferred_listening_reference": true
+      },
+      "wav_sha256": "89d2012a675f3efa9200513596cc1da3811f9b2c08e4797da6d97644a4900fcb",
+      "pcm_sha256": "accc790f276beff1d92a5c95a39334b04541924ac2a6f17f4b085b87ae89d102",
+      "preview_sha256": "97e0f259a9a841ff2a50ab970f249b93ee39b91920205399ec37f7f04e0def92",
+      "timeline_sha256": "95fdaf187222545063fad2a5fdf096db2a592c6b9006280ff9d88262a4906003",
+      "measurements": {
+        "seconds": 94.1013,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -2.45,
+        "rms_dbfs": -18.74,
+        "end_peak": 0.0,
+        "automatic_stutter_phrases": [
+          {
+            "bar": 28,
+            "seconds": 53.5375,
+            "division": 16,
+            "bars": 0.5,
+            "duration_seconds": 0.9375
+          }
+        ],
+        "groove_gaps": [
+          {
+            "bar": 14,
+            "seconds": 27.7563,
+            "duration_seconds": 0.4688,
+            "kind": "phrase pullback"
+          },
+          {
+            "bar": 23,
+            "seconds": 44.6313,
+            "duration_seconds": 0.4688,
+            "kind": "pre-drop pickup"
+          },
+          {
+            "bar": 30,
+            "seconds": 57.7563,
+            "duration_seconds": 0.4688,
+            "kind": "phrase pullback"
+          }
+        ],
+        "drum_spotlights": [
+          {
+            "bar": 36,
+            "seconds": 67.6,
+            "duration_seconds": 1.875
+          }
+        ],
+        "title": "Bass and drums \u2014 half-bar stutters v6.2",
+        "seed": 2600,
+        "bars": 48,
+        "settings": {
+          "chaos": 0.25,
+          "density": 0.55,
+          "mutation": 0.3,
+          "tension": 0.2,
+          "hold": true,
+          "autoStutter": true
+        },
+        "records": [
+          0
+        ],
+        "palettes": [
+          0
+        ],
+        "music_seconds": 90.0,
+        "music_rms_dbfs": -18.55,
+        "four_bar_rms_dbfs": [
+          -18.72,
+          -18.44,
+          -18.27,
+          -18.33,
+          -18.73,
+          -19.52,
+          -18.34,
+          -18.39,
+          -18.32,
+          -18.46,
+          -18.69,
+          -18.48
+        ]
+      }
+    },
+    {
+      "manifest": "infinite/experiments/dj/preview.json",
+      "settings": {
+        "file": "dj-groove-v6c.wav",
+        "preview": "dj-groove-v6c.m4a",
+        "title": "Infinite DJ \u2014 half-bar stutters v6.2",
+        "bars": 112,
+        "seed": 2600,
+        "initial_bpm": 128,
+        "settings": {
+          "chaos": 0.25,
+          "density": 0.55,
+          "mutation": 0.3,
+          "tension": 0.2,
+          "autoStutter": true
+        },
+        "lead_in_seconds": 0.1,
+        "tail_seconds": 4,
+        "minimum_records": 2,
+        "minimum_palettes": 2,
+        "minimum_auto_stutters": 1,
+        "timeline": "infinite/experiments/dj/dj-groove-v6c-timeline.tsv",
+        "human_listening_review": "pending"
+      },
+      "wav_sha256": "faa176f066a64259c83ac27f71929188dc6b66f434a42361fce399d37061c714",
+      "pcm_sha256": "b121713ac3b2cd80f04293ad19b45c55d3b6f08872ddd2faa8cd84c289c8b48d",
+      "preview_sha256": "7c2f24c6c1c71e9f68dbff5ef139c0b5d8704d6c07a8fdc3395dfeb392e476d9",
+      "timeline_sha256": "d22e85aba15e0894135ab3e67c14328716115bafbb1ffc31b4a3d08b4a59551b",
+      "measurements": {
+        "seconds": 212.14,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -2.45,
+        "rms_dbfs": -19.12,
+        "end_peak": 0.0,
+        "automatic_stutter_phrases": [
+          {
+            "bar": 28,
+            "seconds": 53.5375,
+            "division": 16,
+            "bars": 0.5,
+            "duration_seconds": 0.9375
+          },
+          {
+            "bar": 88,
+            "seconds": 164.7542,
+            "division": 16,
+            "bars": 0.5,
+            "duration_seconds": 0.9231
+          }
+        ],
+        "title": "Infinite DJ \u2014 half-bar stutters v6.2",
+        "seed": 2600,
+        "bars": 112,
+        "settings": {
+          "chaos": 0.25,
+          "density": 0.55,
+          "mutation": 0.3,
+          "tension": 0.2,
+          "autoStutter": true
+        },
+        "records": [
+          0,
+          1
+        ],
+        "palettes": [
+          0,
+          2
+        ],
+        "music_seconds": 208.0388,
+        "music_rms_dbfs": -19.03,
+        "four_bar_rms_dbfs": [
+          -18.72,
+          -18.44,
+          -18.31,
+          -18.32,
+          -18.73,
+          -19.44,
+          -18.35,
+          -18.35,
+          -18.3,
+          -18.37,
+          -20.48,
+          -20.55,
+          -18.43,
+          -19.74,
+          -18.81,
+          -19.16,
+          -17.95,
+          -19.43,
+          -18.39,
+          -19.46,
+          -22.52,
+          -23.12,
+          -20.38,
+          -19.38,
+          -17.74,
+          -19.07,
+          -18.17,
+          -19.19
+        ]
+      }
+    }
+  ],
+  "checks": {
+    "seeded_bars": 8192,
+    "macro_extreme_bars": 2048,
+    "palettes": "Passed: all four palettes rotate without consecutive repeats, remain fixed within each record, route only to defined SynthDefs, and preserve composed events when selected independently.",
+    "runtime": "Passed v6.2: half-bar default/menu, real STUTTER 1/16 button hit and server release, longer manual durations and queried rates, Auto OFF, handovers, labels, knobs, transport and node/bus cleanup. Hardware muted.",
+    "audio": "All three v6.2 WAVs checked against timelines, palette coverage, per-bar activity, headroom and quiet endings. Quarter-bar pullbacks and half-bar sixteenth timing verified. Ensemble mix levels differ by 1.98 dB.",
+    "automatic_stutter": "Passed: 207 automatic half-bar sixteenth phrases / 103.5 bar equivalents of 8192 bars (about 1.3%); only beats three/four, one phase reset at entrance, sixteen full clear bars, record ownership, Auto OFF and unchanged composed events. Manual half-bar and longer actions also pass.",
+    "stutter_signal": "Passed: steady first half, exactly eight sixteenth pulses during the second half, then steady bypass at 120 BPM. Existing quarter/eighth/sixteenth full and multi-bar tests also passed.",
+    "arrangement": "Passed: bass in 9098 of 9464 deck-bars (96%); 1049 lead notes in 273 deck-bars (2.9%). Regular and pre-drop cuts retain low end through beat three; pullbacks are at least sixteen bars apart and one-bar drum spotlights at least thirty-two bars apart.",
+    "local_startup": "No parser or server errors found in the new NRT render logs. The scoped muted DJ runtime check passed.",
+    "groove": {
+      "swung_hits": 32456,
+      "ghost_hits": 13944,
+      "one_beat_pullbacks": 336,
+      "pre_drop_pickups": 126,
+      "one_bar_drum_spotlights": 84,
+      "coordinated_drop_returns": 147,
+      "bass_tone_levels": 32,
+      "bass_drive_levels": 31,
+      "motif_and_percussion": "Passed: cell repetition, small fourth-bar answer, rising filter/drive and percussion entrances/exits."
+    },
+    "bass_signal": {
+      "method": "Prior v6 bass signal probe passed. Bass SynthDefs and note adapter are unchanged; stutter automation changes have separate signal and runtime checks.",
+      "Classic sub": {
+        "filter_difference": 0.1994,
+        "drive_difference": 0.0973
+      },
+      "Reese bass": {
+        "filter_difference": 0.1119,
+        "drive_difference": 0.0801
+      },
+      "FM bass": {
+        "filter_difference": 0.1739,
+        "drive_difference": 0.1285
+      },
+      "Acid bass": {
+        "filter_difference": 0.377,
+        "drive_difference": 0.0671
+      }
+    }
+  },
+  "listening_preview": {
+    "file": "audio/groove-track-v6c.m4a",
+    "source": "audio/groove-track-v6c.wav",
+    "seconds": 94.1013,
+    "sha256": "97e0f259a9a841ff2a50ab970f249b93ee39b91920205399ec37f7f04e0def92"
+  },
+  "preferred_listening_reference": {
+    "file": "audio/groove-track-v6c.m4a",
+    "date": "2026-10-31",
+    "feedback": [
+      "That groove track is pretty good!",
+      "My fav so far"
+    ],
+    "sha256": "97e0f259a9a841ff2a50ab970f249b93ee39b91920205399ec37f7f04e0def92"
+  }
+}

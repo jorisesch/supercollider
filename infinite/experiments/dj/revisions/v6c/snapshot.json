@@ -1,0 +1,20 @@
+{
+  "description": "Favourite groove v6.2 playback source, preserved before the Digital Drive lead refinement",
+  "source_sha256": {
+    "ABOUT.md": "fdcdff83b48009194b8be5d04d132dae387d59a8fad1dd233484c5256271bc40",
+    "README.md": "2b3a053e0d1b4d8caf2b158235345ddcbd6bafaaa4a339560d7a790ca5ed3203",
+    "controls.scd": "968d52ab424ceb3ba94a82bcae3ba463454817ba545f8aa2acf80fce96bfa23e",
+    "engine.scd": "597cc76b9aba0cb0c9255358dfc5a370318c5be14113d23d181ed3463d593717",
+    "instruments.scd": "5887b4524197f50fec8099d308020199d7c7144c84cb36f4296b5c29c5c71522",
+    "launch.scd": "5d20ecc0c30a055bbecea85ccd1d2858d76114002576154503c2c0d29ed52612",
+    "library.scd": "82ef8f4e6eb4e358a233ebc2d6aeb648a2205a4d6c7453df74ecb56202c950a3",
+    "live.scd": "216a5d8e583bb17a26cb2d2e24ab5e173c5ba37bdcaab65db4ede1b36591d866",
+    "palette-instruments.scd": "85c0a90dcb113896fdbc6227b6e158451216322d6d31f30c411888a2ce6f13ac",
+    "palette-tour.json": "4be767f2ea57c202edbb6b468af94cd8f90d1da19fc9c9213d7c44e34213595a",
+    "preview.json": "144a72b03cd14a936a946c7bb3c28196baea55027c8b23e62ba125ec484a0d4c",
+    "reproduction.json": "7d66e57c982cb6e42ee0621272aa35558711a51afce916bdd5fa53168701c2e2",
+    "run.scd": "4a2c53bf8717aa55885abaec65e02d4ca7175cced4a61b10b53111cab3718bfd",
+    "style.scd": "12c86ec3813a267d80393f35aba15c6bd6a6516e1b3bcedfe99e9e13a8ba99c7",
+    "track.json": "883ecd4c6d0c814c7ae45d91876c72e8566b1fd2a45702b7109a00127df9dfe5"
+  }
+}

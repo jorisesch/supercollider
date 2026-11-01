@@ -1,25 +1,32 @@
 {
-  "revision": "evolving-grooves-v2",
+  "revision": "groove-and-space-v6.3-rounded-digital-drive-lead",
   "render_date": "2026-10-31",
-  "human_listening_review": "pending",
   "supercollider_version": "3.13.0",
-  "preview_settings": {
-    "file": "dj-evolving-v2.wav",
-    "preview": "dj-evolving-v2.m4a",
-    "title": "Infinite DJ \u2014 evolving grooves v2",
-    "bars": 112,
-    "seed": 2600,
-    "initial_bpm": 128,
-    "settings": {
-      "chaos": 0.25,
-      "density": 0.55,
-      "mutation": 0.3,
-      "tension": 0.2
-    },
-    "lead_in_seconds": 0.1,
-    "tail_seconds": 4,
-    "timeline": "infinite/experiments/dj/preview-timeline.tsv",
-    "human_listening_review": "pending"
+  "human_listening_review": "Original groove-track-v6c remains the favourite so far. User found Digital Drive lead too harsh; this revised lead awaits listening feedback.",
+  "source_sha256": {
+    "infinite/experiments/dj/library.scd": "cd1cec5a0d3d33657a4791aef0bd0593ebc7a12fed16552e76a33b821044e291",
+    "infinite/experiments/dj/style.scd": "12c86ec3813a267d80393f35aba15c6bd6a6516e1b3bcedfe99e9e13a8ba99c7",
+    "infinite/experiments/dj/instruments.scd": "5887b4524197f50fec8099d308020199d7c7144c84cb36f4296b5c29c5c71522",
+    "infinite/experiments/dj/palette-instruments.scd": "d727d555ec7562e8c3853930c9ee849e25fa9faeb70cc56b3dfda07217348960",
+    "infinite/experiments/dj/engine.scd": "597cc76b9aba0cb0c9255358dfc5a370318c5be14113d23d181ed3463d593717",
+    "infinite/experiments/dj/live.scd": "216a5d8e583bb17a26cb2d2e24ab5e173c5ba37bdcaab65db4ede1b36591d866",
+    "infinite/experiments/dj/controls.scd": "968d52ab424ceb3ba94a82bcae3ba463454817ba545f8aa2acf80fce96bfa23e",
+    "infinite/experiments/dj/launch.scd": "5d20ecc0c30a055bbecea85ccd1d2858d76114002576154503c2c0d29ed52612",
+    "infinite/experiments/dj/render.scd": "f1a3c8fe99ed88f63cd81e46be8f9bcc61343ddb3d2c8b62b9e17e192f6820e6",
+    "infinite/experiments/dj/check.scd": "0fa25e33bc537e278e1587bf9cfcf86ececd9daf78b20fa71c5ddc7c94337bf3",
+    "infinite/experiments/dj/runtime-check.scd": "d8b5dc36d7c49f02b42633a8717e98a7484c3e0366ffd75d11b60e41f54dd5c1",
+    "infinite/experiments/dj/stutter-check.scd": "336df66e8a6f689e1de463927621c725534ed72bb5af3b992d5d0b9bfba2e4a3",
+    "infinite/experiments/dj/verify_stutter.py": "ec1eb46a8f7a548383c80300b28490129a8fc9e0180ef6f3a62d3a8df9bc81d1",
+    "infinite/experiments/dj/preview.json": "6542079a95fae7cb1f126735c7c036b2e823c5921b2ba2d57f73295166f5c423",
+    "infinite/experiments/dj/track.json": "6b6c65a7f2efd6fba82ff01802efc0ae4a9d1ea1a35779084802d95b8a664f25",
+    "infinite/experiments/dj/palette-tour.json": "8a62f38decfabf4bb9aebcfc501a23a692d3e77bbbbd3d295a73eed4c070466f",
+    "verify_audio.py": "5b7202ae9936c02e62c21c8c203a357f842b5a17b1aa4a370286bcb677cfab2b",
+    "infinite/experiments/dj/bass-check.scd": "fc5275b0dd0d13629fee79a07242051e57dc98848dbbe654704f3b6dc43c42f7",
+    "infinite/experiments/dj/verify_bass.py": "73e24fd5120349839918e190d3f8b23c7732fcb51e701ce26b0a847b10597de2",
+    "infinite/experiments/dj/lead-compare.scd": "7ab8ef3eef9f97f505105d153fb4384f4f696597aa890d6c7d5e2ce7313f1789",
+    "infinite/experiments/dj/verify_lead.py": "4975c5cefc901c5e47503066ebf0d323ef9ecbff3bac57908dcd60204ac3c244",
+    "infinite/experiments/dj/digital-drive.json": "a0a802cff8bc9e5e833ff3f74dd0a2cd01a88bcf34430cba8bfbff25f2343082",
+    "infinite/experiments/dj/revisions/v6c/snapshot.json": "37d57a2dc0e66506ad274674d4d07ca960d5d6c3d80a87f9fac99a7defe12b8c"
   },
   "render_settings": {
     "sample_rate": 48000,
@@ -29,27 +36,489 @@
     "realtime_memory_kb": 65536,
     "load_external_synthdefs": false
   },
-  "source_sha256": {
-    "infinite/experiments/dj/library.scd": "bee26a40ef644cf142b2cd4eec5a88d3f5c1ddfba6370f1b4d6b1d9f52dd34c5",
-    "infinite/experiments/dj/engine.scd": "fc3726272cbe447ac2cfe8ad08adfe0f7f6b7c4385da12b35c94e35dd4a94bc7",
-    "infinite/experiments/dj/instruments.scd": "a700a5cc704e6d14678955d2d47b0a45ae98b80f524e60c11f6d639095247363",
-    "infinite/experiments/dj/live.scd": "fa05eb858554b40ee80b5b1236e82a1f9151d227dbee9966f1fe8be60bac7537",
-    "infinite/experiments/dj/controls.scd": "730d432c64ed8d5074d73bcbf76718b5c1fc82bf04d81e97fd4ff5c7b120b943",
-    "infinite/experiments/dj/launch.scd": "1dd51455add981c8c9902724ff1e197744f9a1abf3486e8a4157661587d97c93",
-    "infinite/experiments/dj/render.scd": "251c778c91d9af0ea4102fe224c60e8f8c7c57116980f5ea9faa6af0eb751092",
-    "infinite/experiments/dj/preview.json": "3aed0a62ffcf69d25a88034f55e2c708079beda89f1976dd463073f16638f2d0",
-    "infinite/infinite-engine.scd": "5ba4d1866e19ba3bc8d5c9b10fbe786f2746325e6ed3fffb1b3b8d273ea42483",
-    "infinite/experiments/c-edm.scd": "b68b18c867504930a48225cf857a736f61e310a53d5f0b11a50cacc51a0669cf"
-  },
-  "timeline_sha256": "97a6cec54893369c3589dd01fd22b2f91f6c6b7d7b25081ffae6b8a59d1de9c7",
-  "wav_sha256": "a1c64d1b2956eb3dcad5be63b0ebd1d487ba426441bbf3f12a01149fc2e6f072",
-  "pcm_sha256": "4af3f5b98fa1a874900829c4d6521c460c895faed274bf727bb0e5f7b7ff8ebf",
-  "preview_sha256": "0b559c790e1f3d6ce6bde04fecc115fc9cbbd711cbf7407e27241d06e5da6351",
-  "default_pcm_reproduction_trial": "Final re-render was PCM-identical across the complete preview to the previous default render. The high-control diatonic guard left default audio unchanged.",
-  "render_command": "sclang -D infinite/experiments/dj/render.scd",
+  "renders": [
+    {
+      "manifest": "infinite/experiments/dj/digital-drive.json",
+      "settings": {
+        "file": "digital-drive-rounded-v6d.wav",
+        "preview": "digital-drive-rounded-v6d.m4a",
+        "title": "Digital Drive \u2014 rounded FM lead in context",
+        "bars": 4,
+        "seed": 2600,
+        "initial_bpm": 128,
+        "settings": {
+          "chaos": 0.25,
+          "density": 0.55,
+          "mutation": 0.3,
+          "tension": 0.2,
+          "hold": true,
+          "autoStutter": false,
+          "palette": 2
+        },
+        "lead_in_seconds": 0.1,
+        "tail_seconds": 4,
+        "minimum_records": 1,
+        "minimum_palettes": 1,
+        "timeline": "infinite/experiments/dj/digital-drive-rounded-v6d-timeline.tsv",
+        "human_listening_review": "pending"
+      },
+      "wav_sha256": "b794f128ea74d06166efcb025370d9e74ee4970c6e28e2619a2559c798d6e92e",
+      "pcm_sha256": "9cfeb8bf7300182a72e12bae6afacddd9c4e7e22d7de3900572dc4b7c1c35005",
+      "preview_sha256": "f77be218cc970e915c988cdf521c542ab8aa15da056cf0ea8cfc2efa7645949d",
+      "timeline_sha256": "bf475a3a2c9edece45280e8b18ce932e39b195c055872188744428325299497d",
+      "measurements": {
+        "seconds": 11.6013,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -2.45,
+        "rms_dbfs": -19.84,
+        "end_peak": 0.0,
+        "automatic_stutter_phrases": [],
+        "title": "Digital Drive \u2014 rounded FM lead in context",
+        "seed": 2600,
+        "bars": 4,
+        "settings": {
+          "chaos": 0.25,
+          "density": 0.55,
+          "mutation": 0.3,
+          "tension": 0.2,
+          "hold": true,
+          "autoStutter": false,
+          "palette": 2
+        },
+        "records": [
+          0
+        ],
+        "palettes": [
+          2
+        ],
+        "music_seconds": 7.5,
+        "music_rms_dbfs": -17.95,
+        "four_bar_rms_dbfs": [
+          -17.95
+        ]
+      }
+    },
+    {
+      "manifest": "infinite/experiments/dj/palette-tour.json",
+      "settings": {
+        "file": "dj-groove-palettes-v6d.wav",
+        "preview": "dj-groove-palettes-v6d.m4a",
+        "title": "Four ensembles \u2014 groove and space v6.3",
+        "bars": 32,
+        "seed": 2600,
+        "initial_bpm": 128,
+        "settings": {
+          "chaos": 0.25,
+          "density": 0.55,
+          "mutation": 0.3,
+          "tension": 0.2,
+          "hold": true,
+          "autoStutter": false
+        },
+        "lead_in_seconds": 0.1,
+        "tail_seconds": 4,
+        "minimum_records": 1,
+        "minimum_palettes": 4,
+        "timeline": "infinite/experiments/dj/dj-groove-palettes-v6d-timeline.tsv",
+        "segments": [
+          {
+            "start_seconds": 0.1,
+            "name": "Wired House",
+            "bass": "Classic sub",
+            "lead": "Octave saw",
+            "drums": "Tight house"
+          },
+          {
+            "start_seconds": 15.1,
+            "name": "Brass Circuit",
+            "bass": "Reese bass",
+            "lead": "Unison brass",
+            "drums": "Analog punch"
+          },
+          {
+            "start_seconds": 30.1,
+            "name": "Digital Drive",
+            "bass": "FM bass",
+            "lead": "Rounded FM",
+            "drums": "Dry electro"
+          },
+          {
+            "start_seconds": 45.1,
+            "name": "Acid Foundry",
+            "bass": "Acid bass",
+            "lead": "Sync stack",
+            "drums": "Dust metal"
+          }
+        ],
+        "human_listening_review": "pending; Digital Drive lead softened after user feedback"
+      },
+      "wav_sha256": "67e63de23b65fd2b34f226c5fb7e5111b16e2390c5cb0e29938c86842e46bf8b",
+      "pcm_sha256": "840a68d5d9e091c6a21275f96b726f445eb01f55c31fd4a262fd64660a616663",
+      "preview_sha256": "c64aa727936d00ce82059ad5cebf30f5a89af43171069e82373de4623f70e7a3",
+      "timeline_sha256": "dcd76e9ad26f0a2569584f5804e8a864aec5fe9fdcdaafe4684e3828cca189dd",
+      "measurements": {
+        "seconds": 64.1013,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -2.45,
+        "rms_dbfs": -19.01,
+        "end_peak": 0.0,
+        "automatic_stutter_phrases": [],
+        "title": "Four ensembles \u2014 groove and space v6.3",
+        "seed": 2600,
+        "bars": 32,
+        "settings": {
+          "chaos": 0.25,
+          "density": 0.55,
+          "mutation": 0.3,
+          "tension": 0.2,
+          "hold": true,
+          "autoStutter": false
+        },
+        "records": [
+          0
+        ],
+        "palettes": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "music_seconds": 60.0,
+        "music_rms_dbfs": -18.72,
+        "four_bar_rms_dbfs": [
+          -18.3,
+          -18.33,
+          -18.89,
+          -18.99,
+          -18.01,
+          -17.92,
+          -19.84,
+          -19.95
+        ],
+        "palette_rms_dbfs": {
+          "Wired House": -18.29,
+          "Brass Circuit": -18.95,
+          "Digital Drive": -17.92,
+          "Acid Foundry": -19.9
+        }
+      }
+    },
+    {
+      "manifest": "infinite/experiments/dj/track.json",
+      "settings": {
+        "file": "groove-track-v6d.wav",
+        "preview": "groove-track-v6d.m4a",
+        "title": "Bass and drums \u2014 Wired House edit v6.3",
+        "bars": 48,
+        "seed": 2600,
+        "initial_bpm": 128,
+        "settings": {
+          "chaos": 0.25,
+          "density": 0.55,
+          "mutation": 0.3,
+          "tension": 0.2,
+          "hold": true,
+          "autoStutter": true
+        },
+        "lead_in_seconds": 0.1,
+        "tail_seconds": 4,
+        "minimum_records": 1,
+        "minimum_palettes": 1,
+        "minimum_auto_stutters": 1,
+        "timeline": "infinite/experiments/dj/groove-track-v6d-timeline.tsv",
+        "check_groove_gaps": true,
+        "pullback_beats": 1,
+        "maximum_pullbacks": 2,
+        "maximum_drum_spotlights": 1,
+        "human_listening_review": "Original groove-track-v6c remains the favourite. Wired House instruments and arrangement are unchanged; this render has no separate listening judgment.",
+        "preferred_listening_reference": false,
+        "reference_recording": "audio/groove-track-v6c.m4a"
+      },
+      "wav_sha256": "55a30ffde14ff8ce284a6d23c67732287fd1f920214da139d038f880e1216a4f",
+      "pcm_sha256": "81d099154b390376286747ecc3fd98686bc30561aa4913bcb0437201e143d1d0",
+      "preview_sha256": "8d5fed58e7ed24b0ebf1711af0d59c6249ec9e4ad44e96f80fa2f7f6e0e56f52",
+      "timeline_sha256": "95fdaf187222545063fad2a5fdf096db2a592c6b9006280ff9d88262a4906003",
+      "measurements": {
+        "seconds": 94.1013,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -2.45,
+        "rms_dbfs": -18.74,
+        "end_peak": 0.0,
+        "automatic_stutter_phrases": [
+          {
+            "bar": 28,
+            "seconds": 53.5375,
+            "division": 16,
+            "bars": 0.5,
+            "duration_seconds": 0.9375
+          }
+        ],
+        "groove_gaps": [
+          {
+            "bar": 14,
+            "seconds": 27.7563,
+            "duration_seconds": 0.4688,
+            "kind": "phrase pullback"
+          },
+          {
+            "bar": 23,
+            "seconds": 44.6313,
+            "duration_seconds": 0.4688,
+            "kind": "pre-drop pickup"
+          },
+          {
+            "bar": 30,
+            "seconds": 57.7563,
+            "duration_seconds": 0.4688,
+            "kind": "phrase pullback"
+          }
+        ],
+        "drum_spotlights": [
+          {
+            "bar": 36,
+            "seconds": 67.6,
+            "duration_seconds": 1.875
+          }
+        ],
+        "title": "Bass and drums \u2014 Wired House edit v6.3",
+        "seed": 2600,
+        "bars": 48,
+        "settings": {
+          "chaos": 0.25,
+          "density": 0.55,
+          "mutation": 0.3,
+          "tension": 0.2,
+          "hold": true,
+          "autoStutter": true
+        },
+        "records": [
+          0
+        ],
+        "palettes": [
+          0
+        ],
+        "music_seconds": 90.0,
+        "music_rms_dbfs": -18.55,
+        "four_bar_rms_dbfs": [
+          -18.72,
+          -18.44,
+          -18.27,
+          -18.33,
+          -18.73,
+          -19.52,
+          -18.34,
+          -18.39,
+          -18.32,
+          -18.46,
+          -18.69,
+          -18.48
+        ]
+      }
+    },
+    {
+      "manifest": "infinite/experiments/dj/preview.json",
+      "settings": {
+        "file": "dj-groove-v6d.wav",
+        "preview": "dj-groove-v6d.m4a",
+        "title": "Infinite DJ \u2014 rounded Digital Drive lead v6.3",
+        "bars": 112,
+        "seed": 2600,
+        "initial_bpm": 128,
+        "settings": {
+          "chaos": 0.25,
+          "density": 0.55,
+          "mutation": 0.3,
+          "tension": 0.2,
+          "autoStutter": true
+        },
+        "lead_in_seconds": 0.1,
+        "tail_seconds": 4,
+        "minimum_records": 2,
+        "minimum_palettes": 2,
+        "minimum_auto_stutters": 1,
+        "timeline": "infinite/experiments/dj/dj-groove-v6d-timeline.tsv",
+        "human_listening_review": "pending; Digital Drive lead softened after user feedback"
+      },
+      "wav_sha256": "c3e0270b1e6940fdff6a332eb89e5507d86ce4336869679323ae857a0fc9a385",
+      "pcm_sha256": "c2e24a0af77d300d700e0049a8dda8c42c6cfb8e2637b3a3f061a1b5374cb86d",
+      "preview_sha256": "427bbcef714432adb5430ad059587c67d7097462f3e08ebda023ce4872aa3c89",
+      "timeline_sha256": "d22e85aba15e0894135ab3e67c14328716115bafbb1ffc31b4a3d08b4a59551b",
+      "measurements": {
+        "seconds": 212.14,
+        "sample_rate": 48000,
+        "channels": 2,
+        "peak_dbfs": -2.45,
+        "rms_dbfs": -19.12,
+        "end_peak": 0.0,
+        "automatic_stutter_phrases": [
+          {
+            "bar": 28,
+            "seconds": 53.5375,
+            "division": 16,
+            "bars": 0.5,
+            "duration_seconds": 0.9375
+          },
+          {
+            "bar": 88,
+            "seconds": 164.7542,
+            "division": 16,
+            "bars": 0.5,
+            "duration_seconds": 0.9231
+          }
+        ],
+        "title": "Infinite DJ \u2014 rounded Digital Drive lead v6.3",
+        "seed": 2600,
+        "bars": 112,
+        "settings": {
+          "chaos": 0.25,
+          "density": 0.55,
+          "mutation": 0.3,
+          "tension": 0.2,
+          "autoStutter": true
+        },
+        "records": [
+          0,
+          1
+        ],
+        "palettes": [
+          0,
+          2
+        ],
+        "music_seconds": 208.0388,
+        "music_rms_dbfs": -19.03,
+        "four_bar_rms_dbfs": [
+          -18.72,
+          -18.44,
+          -18.31,
+          -18.32,
+          -18.73,
+          -19.44,
+          -18.35,
+          -18.35,
+          -18.3,
+          -18.37,
+          -20.48,
+          -20.55,
+          -18.43,
+          -19.74,
+          -18.81,
+          -19.16,
+          -17.95,
+          -19.43,
+          -18.39,
+          -19.46,
+          -22.52,
+          -23.12,
+          -20.38,
+          -19.38,
+          -17.74,
+          -19.07,
+          -18.17,
+          -19.19
+        ]
+      }
+    }
+  ],
   "checks": {
     "seeded_bars": 8192,
     "macro_extreme_bars": 2048,
-    "runtime": "Muted handover, GUI knobs, Hook/Fill/Hold, STOP/START and resource cleanup passed."
+    "palettes": "Passed: all four palettes rotate without consecutive repeats, remain fixed within each record, route only to defined SynthDefs, and preserve composed events when selected independently.",
+    "runtime": "Prior v6.2 muted UI/transport checks passed. This refinement changes one existing SynthDef and display name; routing, playback adapters and controls are unchanged. New definitions were compiled and rendered with NRT; GUI test not repeated.",
+    "audio": "All four v6.3 music WAVs verified against their timelines, including the focused Digital Drive passage. Lead before/after WAV separately checked for format, headroom, quiet ending and spectral change at comparable RMS levels. Original favourite audio preserved.",
+    "automatic_stutter": "Passed: 207 automatic half-bar sixteenth phrases / 103.5 bar equivalents of 8192 bars (about 1.3%); only beats three/four, one phase reset at entrance, sixteen full clear bars, record ownership, Auto OFF and unchanged composed events. Manual half-bar and longer actions also pass.",
+    "stutter_signal": "Passed: steady first half, exactly eight sixteenth pulses during the second half, then steady bypass at 120 BPM. Existing quarter/eighth/sixteenth full and multi-bar tests also passed.",
+    "arrangement": "Passed: bass in 9098 of 9464 deck-bars (96%); 1049 lead notes in 273 deck-bars (2.9%). Regular and pre-drop cuts retain low end through beat three; pullbacks are at least sixteen bars apart and one-bar drum spotlights at least thirty-two bars apart.",
+    "local_startup": "No parser or server errors found in the new NRT render logs.",
+    "groove": {
+      "swung_hits": 32456,
+      "ghost_hits": 13944,
+      "one_beat_pullbacks": 336,
+      "pre_drop_pickups": 126,
+      "one_bar_drum_spotlights": 84,
+      "coordinated_drop_returns": 147,
+      "bass_tone_levels": 32,
+      "bass_drive_levels": 31,
+      "motif_and_percussion": "Passed: cell repetition, small fourth-bar answer, rising filter/drive and percussion entrances/exits."
+    },
+    "bass_signal": {
+      "method": "Prior v6 bass signal probe passed. Bass SynthDefs and note adapter are unchanged; stutter automation changes have separate signal and runtime checks.",
+      "Classic sub": {
+        "filter_difference": 0.1994,
+        "drive_difference": 0.0973
+      },
+      "Reese bass": {
+        "filter_difference": 0.1119,
+        "drive_difference": 0.0801
+      },
+      "FM bass": {
+        "filter_difference": 0.1739,
+        "drive_difference": 0.1285
+      },
+      "Acid bass": {
+        "filter_difference": 0.377,
+        "drive_difference": 0.0671
+      }
+    },
+    "lead_refinement": {
+      "scope": "Compiled SynthDef bytes confirm only djFMLead changed from the favourite snapshot; composition and other instruments retain their source.",
+      "method": "Same notes and controls, RMS and normalized FFT energy fraction above 2.5 kHz.",
+      "measurements": [
+        {
+          "midi": 60,
+          "treble_fraction_change_db": -44.04,
+          "rms_change_db": -0.89
+        },
+        {
+          "midi": 67,
+          "treble_fraction_change_db": -34.25,
+          "rms_change_db": -0.68
+        },
+        {
+          "midi": 74,
+          "treble_fraction_change_db": -26.61,
+          "rms_change_db": -0.39
+        },
+        {
+          "midi": 74,
+          "treble_fraction_change_db": -25.92,
+          "rms_change_db": 0.11
+        }
+      ],
+      "listening": "pending"
+    }
+  },
+  "listening_preview": {
+    "file": "audio/digital-drive-rounded-v6d.m4a",
+    "source": "audio/digital-drive-rounded-v6d.wav",
+    "seconds": 11.6013,
+    "lead_enters_seconds": 6.4281,
+    "sha256": "f77be218cc970e915c988cdf521c542ab8aa15da056cf0ea8cfc2efa7645949d"
+  },
+  "preferred_listening_reference": {
+    "file": "audio/groove-track-v6c.m4a",
+    "date": "2026-10-31",
+    "feedback": [
+      "That groove track is pretty good!",
+      "My fav so far"
+    ],
+    "sha256": "97e0f259a9a841ff2a50ab970f249b93ee39b91920205399ec37f7f04e0def92",
+    "source_snapshot": "infinite/experiments/dj/revisions/v6c"
+  },
+  "lead_comparison": {
+    "file": "audio/digital-drive-lead-ab-v6d.m4a",
+    "source": "audio/digital-drive-lead-ab-v6d.wav",
+    "before_seconds": [
+      0,
+      4
+    ],
+    "after_seconds": [
+      4,
+      8
+    ],
+    "wav_sha256": "97395774f641189e0f3017fb7a0a7e78a8bd4445be35fb7643e6ea017b940d70",
+    "preview_sha256": "5ac3c2e27b931edbf882e2801c740c88310555e9a994c3d7e1e1660a1c584b68"
   }
 }

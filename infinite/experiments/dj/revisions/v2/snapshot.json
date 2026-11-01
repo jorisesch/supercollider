@@ -1,0 +1,14 @@
+{
+  "description": "Pre-v3 source preserved before the shared riff style",
+  "source_sha256": {
+    "ABOUT.md": "a095f21d07f6435c79715f55785b6588b19ab22470d1da38faed3e680be7e1d0",
+    "README.md": "dae8b5e1a99e2ae9347d3cacb85ca60e3d20ed1954b2bfbea3a4dcea54b3f713",
+    "controls.scd": "9b24e4ffa0c4115edc6eaeea8992ec6413267113694cac95aac9a324c94eeee5",
+    "engine.scd": "0161bf6cd9284f329c5a103a6032d61afbcf12c25517f6edb8f688f88ab08ec7",
+    "instruments.scd": "0f86637c7763486d4ed7236003747d48d3376267d6355e131b0f97fb49d455c4",
+    "launch.scd": "1dd51455add981c8c9902724ff1e197744f9a1abf3486e8a4157661587d97c93",
+    "library.scd": "bee26a40ef644cf142b2cd4eec5a88d3f5c1ddfba6370f1b4d6b1d9f52dd34c5",
+    "live.scd": "1339a9cabfa04744faba935a59dbafd96a3d8d79cb946abcce37468e0ede6fd0",
+    "run.scd": "0080f6dbd55b45c81968eaec4d84b82597b2d12eac72763b111b7f7e42021ae4"
+  }
+}

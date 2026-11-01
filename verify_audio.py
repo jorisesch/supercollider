@@ -9,13 +9,20 @@ expected = {'quindar-in.wav', 'quindar-out.wav', 'quindar-in-out.wav',
             'quindar-in-noisy.wav', 'quindar-out-noisy.wav'}
 studies = {}
 study_manifest = {}
-dj_manifest = None
+dj_manifests = {}
+for manifest_path in (Path('infinite/experiments/dj/preview.json'), Path('infinite/experiments/dj/track.json'),
+                      Path('infinite/experiments/dj/palette-tour.json'),
+                      Path('infinite/experiments/dj/digital-drive.json')):
+    if manifest_path.exists():
+        spec = json.loads(manifest_path.read_text())
+        dj_manifests[spec['file']] = spec
 assert expected <= {p.name for p in Path('audio').glob('*.wav')}, 'Missing audio renders'
 noise_signatures = {}
 results = {}
 for path in sorted(Path('audio').glob('*.wav')):
-    if path.name not in expected:
+    if path.name not in expected and path.name not in dj_manifests:
         continue
+    dj_manifest = dj_manifests.get(path.name)
     with wave.open(str(path), 'rb') as w:
         rate, channels, width, frames = w.getframerate(), w.getnchannels(), w.getsampwidth(), w.getnframes()
         raw = w.readframes(frames)
@@ -38,6 +45,7 @@ for path in sorted(Path('audio').glob('*.wav')):
         assert abs(frames/rate - times[-1] - dj_manifest['tail_seconds']) < 0.003, 'DJ render/timeline length mismatch'
         assert max(map(abs, values[:int(0.08*rate)*2])) < 0.0001, 'DJ preview must begin quietly'
         records = set()
+        palettes = set()
         block_rms = []
         for bar, row in enumerate(timeline[:-1]):
             assert int(row['bar']) == bar and times[bar+1] > times[bar]
@@ -45,7 +53,58 @@ for path in sorted(Path('audio').glob('*.wav')):
             start, end = int(times[bar]*rate)*2, int(times[bar+1]*rate)*2
             assert max(map(abs, values[start:end])) > 0.002, 'Unexpected silent DJ bar'
             records.update(int(row[key]) for key in ('record_a', 'record_b') if int(row[key]) >= 0)
-        assert len(records) >= 2, 'DJ preview must include an automatic record handover'
+            palettes.update(int(row[key]) for key in ('palette_a', 'palette_b') if int(row.get(key, -1)) >= 0)
+        assert len(records) >= dj_manifest.get('minimum_records', 2), 'DJ render has too few records'
+        assert len(palettes) >= dj_manifest.get('minimum_palettes', 0), 'DJ render has too few instrument palettes'
+        automatic = []
+        previous_auto = False
+        for row in timeline[:-1]:
+            active = row.get('stutter_source') == 'auto'
+            if active:
+                assert int(row['stutter_division']) == 16
+                assert float(row['stutter_remaining']) == 0.5
+                assert float(row['stutter_bars']) == 0.5 and float(row['stutter_start_beat']) == 2
+                if not previous_auto:
+                    bar = int(row['bar'])
+                    half_seconds = (times[bar+1]-times[bar])*0.5
+                    automatic.append(dict(bar=bar, seconds=round(float(row['seconds'])+half_seconds, 4),
+                                          division=16, bars=0.5, duration_seconds=round(half_seconds, 4)))
+            previous_auto = active
+        assert len(automatic) >= dj_manifest.get('minimum_auto_stutters', 0), 'Automatic stutter is missing from render'
+        if dj_manifest.get('settings', {}).get('autoStutter') is False:
+            assert not automatic, 'Automatic stutter leaked into the clean palette comparison'
+        result['automatic_stutter_phrases'] = automatic
+        if dj_manifest.get('check_groove_gaps'):
+            def window_rms(start, end):
+                samples = values[int(start*rate)*channels:int(end*rate)*channels]
+                return math.sqrt(sum(v*v for v in samples) / len(samples))
+
+            gaps = []
+            spotlights = []
+            for bar, row in enumerate(timeline[:-1]):
+                if int(row['mixing']):
+                    continue
+                start, end = times[bar], times[bar+1]
+                breath = int(row['breath_a']) or int(row['breath_b'])
+                pickup = int(row['low_gap_a']) or int(row['low_gap_b'])
+                if breath or pickup:
+                    cut_beat = min(float(row['cut_from_a']), float(row['cut_from_b']))
+                    assert 4-cut_beat == dj_manifest['pullback_beats'], 'Pullback is too long'
+                    cut_time = start+(end-start)*cut_beat/4
+                    before = window_rms(start+0.08, cut_time-0.06)
+                    after = window_rms(cut_time+0.12, end-0.04)
+                    assert after < before*0.75, 'Pullback did not reduce the audio energy'
+                    gaps.append(dict(bar=bar, seconds=round(cut_time, 4),
+                                     duration_seconds=round(end-cut_time, 4),
+                                     kind='phrase pullback' if breath else 'pre-drop pickup'))
+                if int(row['drum_spotlight_a']) or int(row['drum_spotlight_b']):
+                    spotlights.append(dict(bar=bar, seconds=start, duration_seconds=round(end-start, 4)))
+            regular = [g for g in gaps if g['kind'] == 'phrase pullback']
+            assert 0 < len(regular) <= dj_manifest['maximum_pullbacks'], 'Pullbacks are too frequent'
+            assert any(g['kind'] == 'pre-drop pickup' for g in gaps)
+            assert 0 < len(spotlights) <= dj_manifest['maximum_drum_spotlights'], 'Drum spotlights are too frequent'
+            result['groove_gaps'] = gaps
+            result['drum_spotlights'] = spotlights
         for bar in range(0, dj_manifest['bars'], 4):
             segment = values[int(times[bar]*rate)*2:int(times[min(bar+4,dj_manifest['bars'])]*rate)*2]
             level = math.sqrt(sum(v*v for v in segment)/len(segment))
@@ -53,9 +112,21 @@ for path in sorted(Path('audio').glob('*.wav')):
         active = values[int(times[0]*rate)*2:int(times[-1]*rate)*2]
         level = math.sqrt(sum(v*v for v in active)/len(active))
         result.update(title=dj_manifest['title'], seed=dj_manifest['seed'], bars=dj_manifest['bars'],
-                      settings=dj_manifest['settings'], records=sorted(records),
+                      settings=dj_manifest['settings'], records=sorted(records), palettes=sorted(palettes),
                       music_seconds=round(times[-1]-times[0], 4),
                       music_rms_dbfs=round(20*math.log10(level), 2), four_bar_rms_dbfs=block_rms)
+        if dj_manifest.get('segments'):
+            palette_levels = {}
+            segments = dj_manifest['segments']
+            for i, spec in enumerate(segments):
+                end = segments[i+1]['start_seconds'] if i+1 < len(segments) else times[-1]
+                start = int((spec['start_seconds'] + 0.25) * rate) * channels
+                stop = int((end - 0.15) * rate) * channels
+                segment = values[start:stop]
+                level = math.sqrt(sum(v*v for v in segment)/len(segment))
+                palette_levels[spec['name']] = round(20*math.log10(level), 2)
+            assert max(palette_levels.values()) - min(palette_levels.values()) < 6, 'Palette mix levels are poorly matched'
+            result['palette_rms_dbfs'] = palette_levels
     if path.name in studies:
         spec = studies[path.name]
         beat_seconds = 60 / spec['bpm']

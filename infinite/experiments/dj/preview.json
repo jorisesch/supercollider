@@ -1,13 +1,22 @@
 {
-  "file": "dj-evolving-v2.wav",
-  "preview": "dj-evolving-v2.m4a",
-  "title": "Infinite DJ — evolving grooves v2",
+  "file": "dj-groove-v6d.wav",
+  "preview": "dj-groove-v6d.m4a",
+  "title": "Infinite DJ \u2014 rounded Digital Drive lead v6.3",
   "bars": 112,
   "seed": 2600,
   "initial_bpm": 128,
-  "settings": {"chaos": 0.25, "density": 0.55, "mutation": 0.30, "tension": 0.20},
+  "settings": {
+    "chaos": 0.25,
+    "density": 0.55,
+    "mutation": 0.3,
+    "tension": 0.2,
+    "autoStutter": true
+  },
   "lead_in_seconds": 0.1,
   "tail_seconds": 4,
-  "timeline": "infinite/experiments/dj/preview-timeline.tsv",
-  "human_listening_review": "pending"
+  "minimum_records": 2,
+  "minimum_palettes": 2,
+  "minimum_auto_stutters": 1,
+  "timeline": "infinite/experiments/dj/dj-groove-v6d-timeline.tsv",
+  "human_listening_review": "pending; Digital Drive lead softened after user feedback"
 }

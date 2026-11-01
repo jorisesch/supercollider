@@ -1,0 +1,52 @@
+{
+  "file": "dj-groove-palettes-v6d.wav",
+  "preview": "dj-groove-palettes-v6d.m4a",
+  "title": "Four ensembles \u2014 groove and space v6.3",
+  "bars": 32,
+  "seed": 2600,
+  "initial_bpm": 128,
+  "settings": {
+    "chaos": 0.25,
+    "density": 0.55,
+    "mutation": 0.3,
+    "tension": 0.2,
+    "hold": true,
+    "autoStutter": false
+  },
+  "lead_in_seconds": 0.1,
+  "tail_seconds": 4,
+  "minimum_records": 1,
+  "minimum_palettes": 4,
+  "timeline": "infinite/experiments/dj/dj-groove-palettes-v6d-timeline.tsv",
+  "segments": [
+    {
+      "start_seconds": 0.1,
+      "name": "Wired House",
+      "bass": "Classic sub",
+      "lead": "Octave saw",
+      "drums": "Tight house"
+    },
+    {
+      "start_seconds": 15.1,
+      "name": "Brass Circuit",
+      "bass": "Reese bass",
+      "lead": "Unison brass",
+      "drums": "Analog punch"
+    },
+    {
+      "start_seconds": 30.1,
+      "name": "Digital Drive",
+      "bass": "FM bass",
+      "lead": "Rounded FM",
+      "drums": "Dry electro"
+    },
+    {
+      "start_seconds": 45.1,
+      "name": "Acid Foundry",
+      "bass": "Acid bass",
+      "lead": "Sync stack",
+      "drums": "Dust metal"
+    }
+  ],
+  "human_listening_review": "pending; Digital Drive lead softened after user feedback"
+}

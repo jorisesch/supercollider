@@ -16,7 +16,7 @@ var root=thisProcess.nowExecutingPath.dirname;
         ServerOptions.new.numInputBusChannels_(0).numOutputBusChannels_(2)
             .numWireBufs_(128).memSize_(65536).loadDefs_(false));
     ~djStart.value(seed,bpm,server);
-    if(args.includes("nogui").not) {
+    if(args.includesEqual("nogui").not) {
         {
             var close;
             ~djShow.value; close=~djWindow.onClose;

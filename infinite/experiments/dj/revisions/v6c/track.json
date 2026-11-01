@@ -1,0 +1,21 @@
+{
+  "file": "groove-track-v6c.wav",
+  "preview": "groove-track-v6c.m4a",
+  "title": "Bass and drums — half-bar stutters v6.2",
+  "bars": 48,
+  "seed": 2600,
+  "initial_bpm": 128,
+  "settings": {"chaos": 0.25, "density": 0.55, "mutation": 0.30, "tension": 0.20, "hold": true, "autoStutter": true},
+  "lead_in_seconds": 0.1,
+  "tail_seconds": 4,
+  "minimum_records": 1,
+  "minimum_palettes": 1,
+  "minimum_auto_stutters": 1,
+  "timeline": "infinite/experiments/dj/groove-track-v6c-timeline.tsv",
+  "check_groove_gaps": true,
+  "pullback_beats": 1,
+  "maximum_pullbacks": 2,
+  "maximum_drum_spotlights": 1,
+  "human_listening_review": "2026-10-31: user called this groove track pretty good and their favourite so far.",
+  "preferred_listening_reference": true
+}

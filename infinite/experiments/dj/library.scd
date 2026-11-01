@@ -62,4 +62,20 @@
     [0,3,4,7,8,10,13,14], [0,2,3,6,8,10,11,14]
 ];
 ~djLibrary.compRhythms=[[2,10],[0,7,14],[2,6,11,14],[0,6,10],[3,11],[2,7,10,15],[0,10],[3,6,11,14]];
+// A record keeps one coordinated ensemble. These are different synth graphs,
+// not just brightness presets; new records rotate the ensemble.
+~djLibrary.palettes=[
+    (id:0,name:"Wired House",bassName:"Classic sub",leadName:"Octave saw",kitName:"Tight house",color:0,
+        voices:(djBass:\djBass,djHook:\djHook,djPad:\djPad,djArp:\djArp,djStab:\djStab,
+            djKick:\djKick,djClap:\djClap,djSnare:\djSnare,djHat:\djHat,djPerc:\djPerc)),
+    (id:1,name:"Brass Circuit",bassName:"Reese bass",leadName:"Unison brass",kitName:"Analog punch",color:1,
+        voices:(djBass:\djReeseBass,djHook:\djBrassLead,djPad:\djStringPad,djArp:\djBrassLead,djStab:\djBrassLead,
+            djKick:\djAnalogKick,djClap:\djAnalogClap,djSnare:\djAnalogSnare,djHat:\djAnalogHat,djPerc:\djAnalogPerc)),
+    (id:2,name:"Digital Drive",bassName:"FM bass",leadName:"Rounded FM",kitName:"Dry electro",color:2,
+        voices:(djBass:\djFMBass,djHook:\djFMLead,djPad:\djGlassPad,djArp:\djFMLead,djStab:\djFMLead,
+            djKick:\djElectroKick,djClap:\djElectroClap,djSnare:\djElectroSnare,djHat:\djElectroHat,djPerc:\djElectroPerc)),
+    (id:3,name:"Acid Foundry",bassName:"Acid bass",leadName:"Sync stack",kitName:"Dust metal",color:3,
+        voices:(djBass:\djAcidBass,djHook:\djSyncLead,djPad:\djStringPad,djArp:\djSyncLead,djStab:\djStab,
+            djKick:\djDustKick,djClap:\djDustClap,djSnare:\djDustSnare,djHat:\djDustHat,djPerc:\djDustPerc))
+];
 )

@@ -1,84 +1,132 @@
-# Infinite DJ — evolving grooves
+# Infinite DJ — groove and space v6.3
 
-Two four-track decks play an ongoing set with changing keys, recurring hooks, fills and tempo-matched handovers. This revision takes its compositional foundation directly from the original generator: its Markov bass, remembered lead motifs, Euclidean arpeggio and probabilistic drums. It adds different song forms and a changing performance around those phrases.
+Two decks play an ongoing house/electro set at 118–140 BPM. Bass and drums carry the record: a repeating low bass groove, four-on-the-floor kick, percussion and long stretches with no lead. Brief melodic tags punctuate selected phrase endings. Every record selects a coordinated bass, accent synth and drum kit. Both the track edit and the infinite set use [style.scd](style.scd), [instruments.scd](instruments.scd) and the same playback adapters.
 
 From the repository directory:
 
-```sh
+~~~sh
 /Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/experiments/c-edm.scd 2600 128 0.25 0.55 0.30 0.20
-```
+~~~
 
-Arguments are `seed bpm chaos density mutation tension [nogui]`. With no arguments, the command uses the values above. The older `seed bpm [nogui]` form still works. The window opens automatically; close it to fade out and exit. Ctrl+C exits immediately. Live playback records no audio.
+Arguments: seed bpm chaos density mutation tension [nogui]. The window opens automatically. Close it to fade out and exit; Ctrl+C exits immediately. The optional nogui flag skips the window. Live playback records no audio.
 
-## What changes as it plays
+## The style
 
-- **Song length and form:** six arrangements, 56–96 bars long, with different amounts and ordering of groove, hook, space, breakdown, buildup, drop and outro. The first record skips its intro. Incoming records are cued so a short handover does not leave a long intro afterward.
-- **Pattern memory:** the original two-bar Markov bass and melodic memory continue underneath the arrangement. A repeated bass answer changes the fourth bar; new rhythm choices and motif mutations happen at phrase boundaries. Hooks return in stronger sections, with a lower-volume call and response in the groove.
-- **Intensity and macros:** each record has its own energy, density and adventurousness. Section envelopes and small four-bar changes move effective Density, Chaos, Mutation and Tension around the knob settings. Drops become busier; space sections thin out. Some breakdowns keep a quiet low-end pulse. The window shows current intensity, effective Chaos and effective Density for each deck.
-- **Groove and articulation:** accented hats, probabilistic sixteenths, short percussion ghosts, fills and occasional deliberate kick omissions. Small velocity and timing variations affect supporting parts; bass and kick retain their grid anchors. Swung profiles and repeated answer rhythms create character without reselecting every note.
-- **Sound:** warmer pulse/triangle lead and filtered saw arpeggio replace the brighter FM-like voices. Bass keeps a steady oscillator pitch. Rhythmic chord stabs complement pads used in spacious sections. The master has more gain, gentle compression and a limiter; this is gain staging, not perceptual loudness normalization.
+The bass is the hook. Each record keeps a recognizable rhythmic cell with strong offbeat roots and quieter syncopated pickups. The first three bars repeat the cell; a small change to its last beat answers in the fourth bar. Root/fifth notes and occasional octave pickups keep the low part focused. Mutation varies the answer while Hold preserves it.
 
-The opening record deliberately uses C minor, the original `[0,5,2,6]` progression, two bars per chord, and the baseline groove profile. Subsequent records rotate 32 profiles, 32 progressions, 20 chord-duration patterns, 16 hook templates and 12 key centres, using shuffle bags. Consecutive records change key centre. Note choices remain inside the current deck's scale even when Chaos rises.
+The bass opens gradually through each eight-bar phrase: filter brightness and saturation rise together, with stronger articulation in hook/drop sections and a darker sound in reduced sections. All four bass synths expose these controls. The low fundamental remains beneath the harmonic grit.
 
-Handovers last eight or sixteen bars. Both decks follow one beat grid while tempo gradually moves to the new record's target. Outgoing music and bass clear before the incoming key arrives, with percussion bridging the gap. Post-effect gains also clear the old reverb. Logical tracks 1–4 belong to deck A, tracks 5–8 to deck B; drums contain multiple subvoices within their lane.
+Kick anchors remain on the grid. Odd sixteenths in the bass, hats, ghost snares and percussion share subtle swing, roughly 11–20 ms at 128 BPM. Hats have deliberate accents and different lengths; quiet snare/hat ghosts connect the main hits. Extra hats arrive after the phrase has settled, and percussion enters later, then leaves for the next foundation passage.
+
+There is no recurring lead riff, automatic arpeggio or chord comping. Occasional quiet phrases range from a short tag to a fuller melodic gesture, with repeated notes, syncopation and a resolving answer. Their rhythms and contours vary by record and mutation; the drop can develop the earlier phrase. Each entrance occupies one bar, separated by long bass/drum passages. In the first 48-bar edit, only two bars contain lead notes. Breakdowns keep a reduced kick, hats and sub pulse, with one quiet two-voice atmosphere at the entrance. Space sections remove extra percussion. One kick envelope ducks bass, accents and effect returns together. Bass and kick stay centred.
+
+Four ensembles rotate through a seeded shuffle bag. Each is stable for its whole record, including Hold and motif mutations. Consecutive records choose different ensembles; the display and post window identify the instruments. Palette selection has its own random stream, so changing the ensemble preserves the composed notes and rhythms.
+
+| Ensemble | Bass | Lead | Drum kit |
+| --- | --- | --- | --- |
+| Wired House | Classic sub | Octave saw | Tight house |
+| Brass Circuit | Reese bass | Unison brass | Analog punch |
+| Digital Drive | FM bass | Rounded FM | Dry electro |
+| Acid Foundry | Resonant acid | Sync stack | Dust metal |
+
+Digital Drive's lead has a lower FM index, a smoother octave layer, gentler saturation and a lower filter cutoff. Its attack and release are rounded to reduce the sharp edge. This refinement changes only that lead SynthDef; basses, kits, other voices and the arrangement retain the favourite version's definitions and events.
+
+The bank retains four bass voices, four accent synths, four complete five-voice drum kits and three pads. Arp and stab definitions remain available for manual composition. [palette-instruments.scd](palette-instruments.scd) contains the additional definitions; [library.scd](library.scd) maps them into ensembles.
+
+The opening establishes drums/bass. An occasional quarter-bar pullback (one beat in 4/4) removes the last kick, bass and hat hits before the next bar. These pullbacks have at least sixteen bars between them. The pre-drop withdrawal also lasts just one beat; its first three beats retain kick and bass. There is no automatic noise riser. Drum-only spotlights last one bar, occur no more than once per thirty-two record bars, and wait until the section has settled. They mute pitched tails as well as new notes; the UI labels them DRUM SPOTLIGHT.
+
+Six forms range from 56 to 96 bars, with eight- or sixteen-bar handovers. Records rotate 32 profiles, 32 progressions, 20 duration templates and 12 keys, with 16 motif IDs selecting the sparse accent tags. Chord lengths are rounded to even bars to support dance phrases. The first record is C minor, with a [0,5,2,6] progression. Incoming records share the beat grid while tempo gradually moves to their target; old pitched parts and effect returns clear before the new key arrives.
+
+Each deck has its own filter, dotted-eighth echo, reverb and stutter. Delay time stays fixed in beats; changing the send allows the stored echoes to decay naturally. Ordinary playback uses restrained sends, with more space in breakdowns.
+
+Automatic stutter occasionally plays eight sixteenth-note pulses across the final half of a bar (beats three and four). It uses a gentler depth than a manual hit and leaves at least sixteen full clear bars afterward. The first half plays normally and the gate releases at the next downbeat. Automatic phrases stay inside the section, preserve drop landings and stop for a handover. FX choices use a separate seeded random stream, leaving the composition unchanged.
 
 ## Controls
 
-The four knobs set the centre of the evolving performance. **Chaos** affects omissions, fills and passing movement; **Density** controls subdivisions and arp/chord activity; **Mutation** controls phrase changes; **Tension** controls brightness and melodic adventure. Zero still gives zero for that effective macro; the engine does not silently add chaos to a zero setting.
+The knobs shape the next generated bar. Density adds bass pickups and hats; Chaos increases phrase-ending fills and automatic stutter likelihood; Mutation varies the bass answer; Tension opens the voice filters and increases bass drive, with a smaller influence on automatic FX likelihood. Section energy moves effective settings around these centres. Higher Density keeps the lead sparse, and deliberate pullbacks retain their space.
 
-**Hook** calls up four bars of the motif. **Fill** requests a drum fill for the next generated bar. **Mutate motif** requests a phrase/rhythm change unless held. **Hold record** retains the current record and freezes motif/rhythm mutations while harmony, sections and percussion continue. **NEXT record** overrides Hold and queues a handover on the next four-bar boundary.
+- **Bass hook:** request four bars of stronger bass accents and phrase-ending pickups. It does not call in a lead riff.
+- **Fill:** request a drum fill on the next generated bar.
+- **Mutate motif:** change the bass pickup unless Hold is enabled.
+- **Hold record:** keep the record and freeze motif mutations; harmony, sections and percussion continue.
+- **NEXT record:** queue a handover at the next four-bar boundary, overriding Hold.
+- **STOP / START:** fade and continue the same set at its next bar.
+- **Restart seed:** reset with the current knobs and clear Hold.
 
-**STOP / START** fades and continues the same set at its next bar, retaining deck plans, phrases and settings. **Restart seed** resets the set with the current macro settings and clears Hold.
+HOT FILTER sweeps down for one bar. HOT ECHO sends the phrase into a longer fading tail. HOT WASH rises gradually across the bar. The three STUTTER buttons select **1/4**, **1/8** or **1/16** notes: four, eight or sixteen pulses in a full four-beat bar. The duration menu offers **1/2 bar**, **1 bar**, **2 bars** or **4 bars**, defaulting to a half bar. Half-bar hits start on beat three of the next generated bar; longer hits start on beat one and continue across bars. The phase resets once at the actual entrance. These are rhythmic gates with short smoothed edges.
 
-For IDE playback, load [live.scd](live.scd), then evaluate individual lines:
+**Auto stutter** enables or disables automatic phrases independently of the manual buttons. The status line shows the active rate, source, deck and remaining bars. Hold freezes motifs and record changes while automatic FX may continue. A running stutter stays pinned to its record; another manual stutter replaces it.
 
-```supercollider
+HOT actions target the currently leading deck and are quantized to the next generated bar; the latest request before a bar replaces the previous pending HOT request. All musical/FX buttons and knobs confirm their requests in the post window.
+
+For IDE playback, load [live.scd](live.scd), then evaluate:
+
+~~~supercollider
 ~djStart.value(2600, 128);
-~djSet.value(chaos:0.25, density:0.55, mutation:0.30, tension:0.20);
+~djSet.value(0.25, 0.55, 0.30, 0.20);
 ~djFill.value;
-~djHook.value;
+~djHook.value; // four-bar bass hook
+~djHot.value(\echo);
+~djStutter.value(16, 0.5); // eight sixteenth pulses in the last half of the next bar
+~djStutter.value(4, 2);  // quarter notes for two bars
+~djStutter.value(8, 4);  // eighth notes for four bars
+~djStutter.value(16, 1); // sixteenth notes for one bar
+~djAutoStutter.value(false); // true to enable automatic FX again
 ~djNext.value;
-~djHold.value(true); // false to allow automatic record changes
+~djHold.value(true);
 ~djStop.value;
 ~djResume.value;
-```
+~~~
 
-Load [controls.scd](controls.scd) and evaluate `~djShow.value` to open the window. CLI playback uses its own server on port 57134; IDE playback uses `s` unless supplied a server. Existing local SuperCollider startup hooks still execute. All synthesis uses stock UGens and no samples.
+Load [controls.scd](controls.scd) and evaluate ~djShow.value to open the window. CLI playback uses port 57134; IDE playback uses s unless supplied a server. Existing local startup hooks still execute. Close one performance before starting another.
 
-## Listen and compare
+## Listen
 
-[112-bar AAC preview](../../../audio/dj-evolving-v2.m4a) · [listening notes](NOTES.md)
+[Digital Drive lead in context](../../../audio/digital-drive-rounded-v6d.m4a) · [Before/after lead](../../../audio/digital-drive-lead-ab-v6d.m4a) · [112-bar Infinite DJ excerpt](../../../audio/dj-groove-v6d.m4a) · [Compare all four ensembles](../../../audio/dj-groove-palettes-v6d.m4a) · [48-bar Wired House edit](../../../audio/groove-track-v6d.m4a)
 
-The preview uses the default seed and settings, follows the live tempo automation, includes an automatic handover and reaches the second record's drop. It is an excerpt of the ongoing set with an ending fade. [preview-timeline.tsv](preview-timeline.tsv) records each bar's scheduled start, tempo, section and effective macros for both decks.
+The [v6.2 groove track](../../../audio/groove-track-v6c.m4a) remains the user's **favourite so far** (2026-10-31): “pretty good.” Its original audio and a playable [source snapshot](revisions/v6c/ABOUT.md) are preserved as the listening reference. The rounded Digital Drive lead awaits listening feedback.
 
-The previous DJ is preserved as a playable [v1 snapshot](revisions/v1/ABOUT.md):
+The focused Digital Drive passage runs for four bars with a complete ending tail; its lead enters around 6.4 seconds. The isolated comparison plays four notes with the old lead first (0–4 seconds), then the same notes with the new lead (4–8 seconds), at identical note levels and brightness controls.
 
-```sh
-/Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/experiments/dj/revisions/v1/run.scd 2600 128
-```
+The first half-bar sixteenth-note stutter runs from about 53.54 to 54.48 seconds in the track and set. The earlier [v4 stutter excerpt](../../../audio/dj-auto-stutter.m4a) is retained for comparison.
 
-The original generator is also still available with the user's reference settings:
+The 64-second palette tour plays the same eight-bar bass-led section with Wired House at 0.1 seconds, Brass Circuit at 15.1, Digital Drive at 30.1 and Acid Foundry at 45.1. Automatic stutter is disabled for this timbre comparison; the track edit and live DJ include it. Restart a running DJ to load the new arrangement and Bass hook control.
 
-```sh
-/Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/infinite-run.scd edm 0.25 0.55 0.30 0.20 128 2600
-```
+The track edit is 94.1 seconds at 128 BPM, including its ending fade. Its sections are groove, hook, space, buildup, drop and outro. It has two regular one-beat pullbacks, around 27.8 and 57.8 seconds; the pre-drop pickup starts around 44.6 seconds. Each lasts about 0.47 seconds. A single drum-only bar starts around 67.6 seconds. The longer excerpt demonstrates the same style across automatic handovers and instrument changes. Timelines record the start beat of each cut, drum spotlights and bass tone/drive. Settings, timelines and checksums are recorded in [track.json](track.json), [preview.json](preview.json), [palette-tour.json](palette-tour.json) and [reproduction.json](reproduction.json).
 
-Close one performance before starting another. Compare phrase identity, groove, energy changes, hook returns and whether transitions feel too empty. Human judgments and implementation hypotheses are kept in [NOTES.md](NOTES.md).
+The lead-forward [v4 source snapshot](revisions/v4/ABOUT.md), [v2](revisions/v2/ABOUT.md) and [v1](revisions/v1/ABOUT.md) remain playable. Earlier audio files are retained separately. Human listening feedback belongs in [NOTES.md](NOTES.md); separate listening judgments for the longer set and palette tour remain pending.
 
 ## Rendering and checks
 
-[library.scd](library.scd) holds the catalog and song forms. [engine.scd](engine.scd) wraps the baseline composition engine, plans records and handovers, and supplies adapters shared by live playback and rendering. [instruments.scd](instruments.scd) defines sounds without playback. [live.scd](live.scd) owns transport/resources; [controls.scd](controls.scd) owns the window; [launch.scd](launch.scd) handles CLI setup.
+~~~sh
+# Complete first-record edit:
+sclang -D infinite/experiments/dj/render.scd track
+# Longer set excerpt, including handovers:
+sclang -D infinite/experiments/dj/render.scd
+# Same bass groove, eight bars per ensemble:
+sclang -D infinite/experiments/dj/render.scd palettes
+# Focused Digital Drive passage:
+sclang -D infinite/experiments/dj/render.scd digital
+# Isolated old/new Digital Drive lead and spectral check:
+sclang -D infinite/experiments/dj/lead-compare.scd
+python3 infinite/experiments/dj/verify_lead.py
 
-```sh
-/Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/experiments/dj/check.scd
-/Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/experiments/dj/runtime-check.scd
-/Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/experiments/dj/render.scd
+sclang -D infinite/experiments/dj/check.scd
+sclang -D infinite/experiments/dj/runtime-check.scd
+sclang -D infinite/experiments/dj/bass-check.scd /tmp/dj-bass-check.wav
+python3 infinite/experiments/dj/verify_bass.py /tmp/dj-bass-check.wav
+sclang -D infinite/experiments/dj/stutter-check.scd /tmp/dj-stutter-check.wav
+python3 infinite/experiments/dj/verify_stutter.py /tmp/dj-stutter-check.wav
 python3 verify_audio.py
 
-# Optional compact listening copy on macOS:
-afconvert -f m4af -d 'aac ' -b 192000 -q 127 audio/dj-evolving-v2.wav audio/dj-evolving-v2.m4a
-```
+# Compact listening copies on macOS:
+afconvert -f m4af -d 'aac ' -b 192000 -q 127 audio/groove-track-v6d.wav audio/groove-track-v6d.m4a
+afconvert -f m4af -d 'aac ' -b 192000 -q 127 audio/dj-groove-v6d.wav audio/dj-groove-v6d.m4a
+afconvert -f m4af -d 'aac ' -b 192000 -q 127 audio/dj-groove-palettes-v6d.wav audio/dj-groove-palettes-v6d.m4a
+afconvert -f m4af -d 'aac ' -b 192000 -q 127 audio/digital-drive-rounded-v6d.wav audio/digital-drive-rounded-v6d.m4a
+afconvert -f m4af -d 'aac ' -b 192000 -q 127 audio/digital-drive-lead-ab-v6d.wav audio/digital-drive-lead-ab-v6d.m4a
+~~~
 
-The pure check covers 8,192 seeded bars, the full catalog, six forms, varying length/intensity/macros, root/fifth bass bias, density response, valid timing and eight-track routing, key membership, continuous tempo, pitched-key isolation, Hold/NEXT/hooks and bounded voice lifetimes. Another 2,048 bars check macro extremes, including high Chaos/Tension; explicit Fill/Mutation requests and incoming intro cues are also checked. The muted runtime check covers the handover, window, all knobs, Hook/Fill/Hold, STOP/START continuation, internal signal and node/bus cleanup. It takes about 30 seconds.
+The renderer exits after writing the WAV and its timeline. WAVs and temporary scores remain ignored by Git; small AAC listening copies can be committed.
 
-The standalone renderer exits after writing a local WAV and timeline. WAV output is ignored by Git; the AAC preview is the committed listening artifact. `verify_audio.py` checks committed Quindar previews; local DJ WAVs can be inspected separately. [preview.json](preview.json) and [reproduction.json](reproduction.json) retain settings and source/audio checksums. These numerical and runtime checks are separate from human listening review of this revision, which is pending.
+The pure check covers 8,192 seeded bars and 2,048 bars at macro extremes: timing, scales, catalog rotation, palette routing and stable composition. It checks motif repetition and small answers, bounded swing, quiet ghosts, percussion entrances/exits, bass filter/drive variation, quarter-bar cut limits and coordinated returns. Automatic stutters must occupy only the final half-bar, reset at beat three and leave sixteen clear bars; manual half-bar and longer actions remain covered. The signal check measures eight pulses inside the half-bar with steady output before and after, alongside the longer gate rates. The muted runtime check exercises the half-bar menu/button against the server, handovers, other controls, transport and cleanup. Audio verification checks available v6.3 renders against their timelines, palette levels, activity, duration, finite samples, headroom and quiet boundaries; it also measures the track's cuts and limits their count. The lead comparison checks that only the FM lead SynthDef changed, and measures reduced upper-band energy at comparable RMS levels. These checks do not establish musical quality.
