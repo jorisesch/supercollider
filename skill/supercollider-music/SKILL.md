@@ -25,3 +25,14 @@ Use Score/recordNRT for reproducible offline output when possible. Put SynthDef 
 Run the actual SuperCollider code and inspect logs for parser, missing-UGen, and server errors. Verify rendered WAV sample rate, channels, duration, non-silence, finite samples, peak headroom, and start/end behavior. Check requested pitched effects against their target frequencies. Listen if audio audition tools are available; otherwise report numerical verification honestly without claiming a listening pass.
 
 Deliver editable source and clickable audio previews, with concise instructions for starting, changing, and stopping the sound. Distinguish an evolving drone from a seamless loop. Use official local help or https://doc.sccode.org for uncertain APIs. Verify historical signal specifications against sources instead of inventing authenticity.
+
+
+## User-facing README style
+
+When documenting music projects, make the main README a beginner's path to listening and running the current product.
+
+- Lead with what it does, a useful listening preview, installation and one working launch command. State the directory to run it from, what opens, and how to stop. Use sensible defaults rather than a long list of numeric arguments.
+- Explain visible controls in everyday language, including any extra action needed to activate them. Keep optional modes brief and link to their run instructions.
+- Describe the current behavior directly. Keep experiment letters, superseded versions, promotion history, comparisons, source fingerprints and test logs out of the main README. Put useful history and development details in separate linked notes.
+- Keep the top-level README focused on the main project. Give side experiments short links. Retain technical detail in scoped reference documents rather than making newcomers read it before they can start.
+- After moving documentation, repair links and anchors and verify launch paths. Do not change synthesis just to simplify its documentation.

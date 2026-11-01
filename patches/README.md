@@ -30,6 +30,6 @@ Renderers resolve their dependencies relative to their source files, write WAVs 
 
 ## Optional startup
 
-The repository's `startup.scd` is an example, not an automatically installed startup file. Infinite DJ boots its own server and does not require it. See the [startup explanation](../README.md#does-launching-sclang-start-the-audio-server) before installing it. Your existing user startup file is not changed by this folder reorganization.
+The repository's `startup.scd` is an example, not an automatically installed startup file. Infinite DJ boots its own server and does not require it. See the [startup explanation](../docs/startup.md) before installing it. Your existing user startup file is not changed by this folder reorganization.
 
 See the [sound-design guide](../docs/sound-design.md) and [pod racer research](../docs/POD_RACER_RESEARCH.md) for synthesis details and references.
