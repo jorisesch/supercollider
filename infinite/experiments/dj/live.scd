@@ -3,12 +3,37 @@
 var root=thisProcess.nowExecutingPath.dirname;
 (root +/+ "engine.scd").load;
 (root +/+ "instruments.scd").load;
+(root +/+ "recall.scd").load;
 ~djSettings=~djSettings ? (chaos:0.25,density:0.55,mutation:0.30,tension:0.20,hold:false);
 ~djSettings.autoStutter=~djSettings[\autoStutter] ? true;
 ~djStutterBars=~djStutterBars ? 0.5;
+~djSettings.channel=~djSettings[\channel] ? \edm;
 ~djLastFX=\none;
 ~djLastFXLabel="none";
+~djManualFX=nil;
+~djWithoutManual={ |point|
+    var clean=point.copy;
+    clean.fx=point.fx.collect { |fx| fx[\base] ? fx };
+    clean;
+};
+~djFXStop={ |post=true|
+    ~djManualFX=nil;
+    if(~djEngine.notNil) {~djEngine[\stopFX].value};
+    if(~djLastAutomation.notNil and: {~djDecks.notNil} and: {~djServer.notNil} and: {~djServer.serverRunning}) {
+        ~djServer.sendBundle(~djServer.latency,
+            *~djAutomation.value(~djWithoutManual.value(~djLastAutomation),~djDecks.collect(_.nodeID)));
+    };
+    if(post) {"DJ effect stopped / releasing now".postln};
+};
+~djFXStart={ |kind=\echo|
+    if(~djEngine.notNil and: {~djPlaying ? false}) {
+        ~djManualFX=kind;
+        ~djEngine[\startFX].value(kind);
+        ("DJ effect queued / " ++ kind ++ " / next bar, until Stop FX").postln;
+    } {"DJ effect ignored / music is stopped".postln};
+};
 ~djStop={
+    if(~djManualFX.notNil) {~djFXStop.value(false)};
     ~djPlaying=false; ~djGeneration=(~djGeneration ? 0) + 1;
     if(~djRoutine.notNil) { ~djRoutine.stop; ~djRoutine=nil };
     if(~djClock.notNil) { ~djClock.stop; ~djClock=nil };
@@ -31,7 +56,7 @@ var root=thisProcess.nowExecutingPath.dirname;
     ("DJ Hold record: " ++ hold).postln;
 };
 ~djNext={ if(~djEngine.notNil) { ~djEngine[\requestNext].value; "DJ NEXT queued / next four-bar boundary".postln } };
-~djHook={ if(~djEngine.notNil) { ~djEngine[\requestHook].value; "DJ Bass hook queued / four bars from next bar".postln } };
+~djHook={ if(~djEngine.notNil) { ~djEngine[\requestHook].value; if(~djSettings.channel==\pop) {"DJ Chorus queued / four bars from next bar"} {"DJ Bass hook queued / four bars from next bar"}.postln } };
 ~djMutate={ if(~djEngine.notNil) { ~djEngine[\requestMutation].value;
     if(~djSettings.hold) {"DJ Mutation ignored / record held"} {"DJ Mutation queued / next bar"}.postln } };
 ~djFill={ if(~djEngine.notNil) { ~djEngine[\requestFill].value; "DJ Fill queued / next bar".postln } };
@@ -61,12 +86,25 @@ var root=thisProcess.nowExecutingPath.dirname;
     if([4,8,16].includes(division).not) {Error("Stutter division must be 4, 8 or 16").throw};
     ~djHot.value(("stutter" ++ division.asInteger).asSymbol,bars ? ~djStutterBars);
 };
+~djChannel={ |channel=\edm|
+    if([\edm,\pop].includes(channel).not) {Error("DJ channel must be edm or pop").throw};
+    ~djSettings.channel=channel;
+    ("DJ channel: "++channel++" / restarting set with fade").postln;
+    ~djStart.value(~djSeed ? 2600,if(channel==\pop){138}{128},~djServer);
+};
 ~djResume={ ~djStart.value(~djSeed ? 2600,~djInitialBpm ? 128,~djServer,true) };
-~djStart={ |seed=2600,bpm=128,server,resume=false|
-    var engine=if(resume and: { ~djEngine.notNil }) { ~djEngine } { ~makeDJEngine.value(seed,bpm,~djSettings) };
+~djRecall={ |name|
+    var spec=~djReadRecipe.value(name),engine=~djSessionFromRecipe.value(spec);
+    ~djSettings=engine.controls.copy;~djSettings.channel=engine.channel;
+    ~djStart.value(spec[2].asInteger,spec[3].asFloat,~djServer,false,engine);
+    ("DJ recall / " ++ name ++ " / original entry").postln;
+};
+~djStart={ |seed=2600,bpm=128,server,resume=false,prepared|
+    var engine=prepared ? if(resume and: { ~djEngine.notNil }) { ~djEngine } { ~makeDJSession.value(seed,bpm,~djSettings) };
     var srv=server ? s, generation;
     ~djStop.value;
     ~djSeed=seed; ~djInitialBpm=bpm; ~djServer=srv; ~djEngine=engine;
+    ~djLastAutomation=nil;
     ~djBpm=engine.state.bpm;
     ~djSet.value;
     ~djPlaying=true; generation=~djGeneration;
@@ -95,7 +133,7 @@ var root=thisProcess.nowExecutingPath.dirname;
                         };
                         frame.decks.do { |plan|
                             if(plan.notNil and: {announced.includes(plan.serial).not}) {
-                                ("DJ record " ++ (plan.serial+1) ++ " / " ++ plan.palette.name ++
+                                ("DJ track / " ++ plan.trackName ++ " / " ++ plan.palette.name ++
                                     " / " ++ plan.palette.bassName ++ " + " ++ plan.palette.leadName ++
                                     " / " ++ plan.palette.kitName).postln;
                                 announced.add(plan.serial);
@@ -117,6 +155,12 @@ var root=thisProcess.nowExecutingPath.dirname;
                                 var a=action.automation;
                                 ~djClock.tempo=a.bpm / 60;
                                 ~djBpm=a.bpm; ~djProgress=a.progress; ~djGains=a.gains; ~djFxState=a.fx;
+                                ~djLastAutomation=a;
+                                // Stop FX also bypasses the rest of this already-generated bar.
+                                if(a.fx.any { |fx| fx[\manualKind].notNil and: {fx[\manualKind]!=~djManualFX} }) {
+                                    a=~djWithoutManual.value(a);
+                                };
+                                ~djFxState=a.fx;
                                 srv.sendBundle(srv.latency,*~djAutomation.value(a,decks.collect(_.nodeID)));
                             } {
                                 var event=action.note, deck=event.deck;

@@ -11,7 +11,7 @@ try {
     var previousBreath=Dictionary.new,previousSpotlight=Dictionary.new;
     var autoBars=0,autoBursts=0,autoLengths=Set.new,autoRates=Set.new,lastAutoEnd= -8;
     var records=Set.new, previousBpm, mixed=0, builds=0, hookBars=0, active=[], peak=0, seconds=0;
-    ["live.scd","controls.scd","launch.scd","../c-edm.scd"].do { |file|
+    ["live.scd","controls.scd","deck-view-check.scd","spectrum.scd","spectrum-check.scd","recall.scd","interaction-check.scd","launch.scd","../c-edm.scd"].do { |file|
         assert.value(File.readAllString(root +/+ file).compile.notNil,"Parse failed: " ++ file);
     };
     (root +/+ "engine.scd").load;

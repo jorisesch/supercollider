@@ -10,6 +10,47 @@ From the repository directory:
 
 Arguments: seed bpm chaos density mutation tension [nogui]. The window opens automatically. Close it to fade out and exit; Ctrl+C exits immediately. The optional nogui flag skips the window. Live playback records no audio.
 
+## Pop channel
+
+The window now has an **EDM / Pop** channel selector. EDM remains the default and retains its existing catalog, instruments and musical grammar. Switching channels fades the old performance and restarts the seed at the selected channel's factory tempo (EDM: 128 BPM; Pop: 138 BPM), preserving the knobs, Hold and automatic FX setting. STOP / START continues the current channel. Soundscape remains available through its original launcher.
+
+Start Pop directly from the repository root:
+
+~~~sh
+sclang -D infinite/experiments/pop.scd
+# Optional: seed bpm chaos density mutation tension [nogui]
+sclang -D infinite/experiments/pop.scd 2600 138 0.25 0.55 0.30 0.20
+~~~
+
+Pop develops the original [Neon Rush](../../../neon-rush/track.scd) sketch into continuously generated instrumental records: offbeat pulse bass, bright detuned saw leads, sustained chord beds, and rotating drum kits. Each record chooses a key, familiar four-chord progression and four-bar chorus motif. Verses leave melodic space; the chorus repeats its motif when it returns. Mutation changes verse/bass answers while preserving the chorus. The **Chorus** button brings that hook forward for four bars. Existing deck FX, Fill, Hold, NEXT and transport remain available.
+
+The mixer labels its Pop song sections using the shared internal names: `groove` is a verse, `hook` and `drop` are choruses, `space` and `breakdown` are bridges. Pop records have 64- or 96-bar forms with eight-bar automatic handovers. Its own catalog and voices are in [pop-style.scd](pop-style.scd) and [pop-instruments.scd](pop-instruments.scd). Loading them starts no playback. The EDM style and existing instrument definitions are unchanged.
+
+[Listen to the Pop excerpt](../../../audio/dj-pop-preview.m4a): 96 bars, around 2:53 including the ending, with a complete first record and an automatic handover. Its [manifest](pop.json) and [timeline](dj-pop-preview-timeline.tsv) describe the render. **Human listening review is pending**; numerical and muted runtime checks do not establish musical quality.
+
+For IDE playback, load `live.scd` and `controls.scd`, then evaluate:
+
+~~~supercollider
+~djSettings.channel=\pop;
+~djStart.value(2600,138);
+~djShow.value;
+~djChannel.value(\edm); // fade and restart in EDM
+~djChannel.value(\pop); // fade and restart in Pop
+~djStop.value;           // graceful stop
+~~~
+
+Render and check Pop with:
+
+~~~sh
+sclang -D infinite/experiments/dj/render.scd pop
+sclang -D infinite/experiments/dj/pop-check.scd
+sclang -D infinite/experiments/dj/pop-runtime-check.scd
+python3 verify_audio.py
+afconvert -f m4af -d aac -b 192000 -q 127 audio/dj-pop-preview.wav audio/dj-pop-preview.m4a
+~~~
+
+The Pop structural check covers 1,024 reproducible bars, returning chorus hooks, key membership, defined voices, automatic handovers and Hold/NEXT. Its muted runtime check exercises the actual channel menu and Chorus/Fill callbacks, a Pop handover, internal signal, transport continuation, return to EDM and old-bus cleanup. The unchanged EDM structural suite and UI runtime check remain available. A 256-bar before/after capture of EDM notes and automation was byte-identical when this channel was added.
+
 ## The style
 
 The bass is the hook. Each record keeps a recognizable rhythmic cell with strong offbeat roots and quieter syncopated pickups. The first three bars repeat the cell; a small change to its last beat answers in the fourth bar. Root/fifth notes and occasional octave pickups keep the low part focused. Mutation varies the answer while Hold preserves it.
@@ -43,21 +84,23 @@ Automatic stutter occasionally plays eight sixteenth-note pulses across the fina
 
 ## Controls
 
-The knobs shape the next generated bar. Density adds bass pickups and hats; Chaos increases phrase-ending fills and automatic stutter likelihood; Mutation varies the bass answer; Tension opens the voice filters and increases bass drive, with a smaller influence on automatic FX likelihood. Section energy moves effective settings around these centres. Higher Density keeps the lead sparse, and deliberate pullbacks retain their space.
+The compact window shows a generated **track name** for each deck. The leading deck is highlighted green, and a short status underneath identifies **Playing**, **fading in/out**, or **Stopped**. An empty deck has a blank name and a separate animated `waiting.` / `waiting..` / `waiting...` status. Hover over a name for the key, section, tempo, instruments, chords and energy. Knob values and explanations are also on hover. Select a name to copy it.
 
-- **Bass hook:** request four bars of stronger bass accents and phrase-ending pickups. It does not call in a lead riff.
-- **Fill:** request a drum fill on the next generated bar.
-- **Mutate motif:** change the bass pickup unless Hold is enabled.
-- **Hold record:** keep the record and freeze motif mutations; harmony, sections and percussion continue.
-- **NEXT record:** queue a handover at the next four-bar boundary, overriding Hold.
-- **STOP / START:** fade and continue the same set at its next bar.
-- **Restart seed:** reset with the current knobs and clear Hold.
+The thin slider is the **A/B mix position**: it starts left while A plays, moves right during the handover to B, stays right for B's record, then moves left during the return to A. Stopping holds its position. Hover for the mix percentages, tempo and bar.
 
-HOT FILTER sweeps down for one bar. HOT ECHO sends the phrase into a longer fading tail. HOT WASH rises gradually across the bar. The three STUTTER buttons select **1/4**, **1/8** or **1/16** notes: four, eight or sixteen pulses in a full four-beat bar. The duration menu offers **1/2 bar**, **1 bar**, **2 bars** or **4 bars**, defaulting to a half bar. Half-bar hits start on beat three of the next generated bar; longer hits start on beat one and continue across bars. The phase resets once at the actual entrance. These are rhythmic gates with short smoothed edges.
+The four knobs retain Chaos, Density, Mutation and Tension. **Next** queues a record, **Bass hook / Chorus** brings its hook forward, **Fill** requests a drum fill, and **Hold** keeps the current record and freezes motif changes. **STOP / START** fades out and continues the same set. The **More...** menu contains Mutate motif, Restart seed and Replay track. Restart seed clears Hold.
 
-**Auto stutter** enables or disables automatic phrases independently of the manual buttons. The status line shows the active rate, source, deck and remaining bars. Hold freezes motifs and record changes while automatic FX may continue. A running stutter stays pinned to its record; another manual stutter replaces it.
+Choose **Filter**, **Echo**, **Wash**, or **Stutter 1/4, 1/8, 1/16** from the effect menu. Selection alone does nothing. **Start FX** activates the selection on the next generated bar and keeps it running until **Stop FX**. Filter and wash develop over their first bar and then hold; echo keeps sending; stutter continues at the selected note division. Effects follow the leading deck through handovers. Stop releases the effect with smoothing, including the remaining automation in the current bar, while existing echo/reverb tails decay. Stop the effect before choosing another. Stopping music also clears the manual effect.
 
-HOT actions target the currently leading deck and are quantized to the next generated bar; the latest request before a bar replaces the previous pending HOT request. All musical/FX buttons and knobs confirm their requests in the post window.
+**Auto ON/OFF** controls occasional automatic half-bar stutters. Manual effects take priority. The old bounded `~djHot` and `~djStutter` calls remain available from code.
+
+The **Spectrum** panel shows separate left/right FFTs of the final output, with logarithmic Hz/kHz labels and an 80 dB range. It pauses with STOP, resumes with START, and has its own ON/OFF switch. Closing the window frees its synths and buffers; headless playback creates no analyzer.
+
+## Replay a named track
+
+Choose **More... → Replay track...**, paste the complete name, and press Play track. The name restores the record's original entry, including its handover context, from a small local JSON recipe. Recipes record the seed, channel, starting controls and earlier knob/action history; the notes and automation are generated again. Later live gestures are a new performance and are not encoded by that starting name.
+
+Recipes live in `infinite/experiments/dj/saved-tracks/`, which is ignored by Git. Copy that folder with the matching music source to move your library to another machine. A name is a lookup key in this library, not a globally published song ID. Recipes check their source version before playing. No WAV is needed. The [recall code](recall.scd) is separate from the pure composition engine and never evaluates recipe data as code.
 
 For IDE playback, load [live.scd](live.scd), then evaluate:
 
@@ -66,7 +109,10 @@ For IDE playback, load [live.scd](live.scd), then evaluate:
 ~djSet.value(0.25, 0.55, 0.30, 0.20);
 ~djFill.value;
 ~djHook.value; // four-bar bass hook
-~djHot.value(\echo);
+~djFXStart.value(\echo); // keep sending until explicitly stopped
+~djFXStop.value;
+// Replay a copied name from the local recipe library:
+// ~djRecall.value("Copper Motion at Velvet Dawn");
 ~djStutter.value(16, 0.5); // eight sixteenth pulses in the last half of the next bar
 ~djStutter.value(4, 2);  // quarter notes for two bars
 ~djStutter.value(8, 4);  // eighth notes for four bars
@@ -113,6 +159,11 @@ python3 infinite/experiments/dj/verify_lead.py
 
 sclang -D infinite/experiments/dj/check.scd
 sclang -D infinite/experiments/dj/runtime-check.scd
+sclang -D infinite/experiments/dj/spectrum-check.scd
+sclang -D infinite/experiments/dj/deck-view-check.scd
+sclang -D infinite/experiments/dj/interaction-check.scd
+sclang -D infinite/experiments/dj/manual-fx-check.scd /tmp/dj-manual-fx-check.wav
+python3 infinite/experiments/dj/verify_manual_fx.py /tmp/dj-manual-fx-check.wav
 sclang -D infinite/experiments/dj/bass-check.scd /tmp/dj-bass-check.wav
 python3 infinite/experiments/dj/verify_bass.py /tmp/dj-bass-check.wav
 sclang -D infinite/experiments/dj/stutter-check.scd /tmp/dj-stutter-check.wav
@@ -129,4 +180,4 @@ afconvert -f m4af -d 'aac ' -b 192000 -q 127 audio/digital-drive-lead-ab-v6d.wav
 
 The renderer exits after writing the WAV and its timeline. WAVs and temporary scores remain ignored by Git; small AAC listening copies can be committed.
 
-The pure check covers 8,192 seeded bars and 2,048 bars at macro extremes: timing, scales, catalog rotation, palette routing and stable composition. It checks motif repetition and small answers, bounded swing, quiet ghosts, percussion entrances/exits, bass filter/drive variation, quarter-bar cut limits and coordinated returns. Automatic stutters must occupy only the final half-bar, reset at beat three and leave sixteen clear bars; manual half-bar and longer actions remain covered. The signal check measures eight pulses inside the half-bar with steady output before and after, alongside the longer gate rates. The muted runtime check exercises the half-bar menu/button against the server, handovers, other controls, transport and cleanup. Audio verification checks available v6.3 renders against their timelines, palette levels, activity, duration, finite samples, headroom and quiet boundaries; it also measures the track's cuts and limits their count. The lead comparison checks that only the FM lead SynthDef changed, and measures reduced upper-band energy at comparable RMS levels. These checks do not establish musical quality.
+The pure check covers 8,192 seeded bars and 2,048 bars at macro extremes: timing, scales, catalog rotation, palette routing and stable composition. It checks motif repetition and small answers, bounded swing, quiet ghosts, percussion entrances/exits, bass filter/drive variation, quarter-bar cut limits and coordinated returns. Automatic stutters must occupy only the final half-bar, reset at beat three and leave sixteen clear bars; manual half-bar and longer actions remain covered. The signal check measures eight pulses inside the half-bar with steady output before and after, alongside the longer gate rates. The muted runtime check exercises the compact window, tooltips, all six menu-selected held effects and immediate release against the server, handovers, transport, track-name replay and cleanup. The interaction check compares unchanged EDM events/automation with the favourite snapshot and checks EDM/Pop recall after prior knob and action history. The offline manual-FX probe verifies a sixteenth stutter through its sixth held bar and continuous output after release. Audio verification checks available v6.3 renders against their timelines, palette levels, activity, duration, finite samples, headroom and quiet boundaries; it also measures the track's cuts and limits their count. The lead comparison checks that only the FM lead SynthDef changed, and measures reduced upper-band energy at comparable RMS levels. These checks do not establish musical quality.

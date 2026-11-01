@@ -4,12 +4,17 @@
 var root=thisProcess.nowExecutingPath.dirname;
 (root +/+ "library.scd").load;
 (root +/+ "style.scd").load;
+(root +/+ "pop-style.scd").load;
 ~makeDJEngine={ |seed=2600,bpm=128,settings|
-    var lib=~djLibrary,rng=(seed.abs%2147483646)+1,random,choose,take,makeRecord,nextBar,engine;
+    var channel=(settings ? () )[\channel] ? \edm;
+    var lib=if(channel==\pop) {~djPopLibrary.value(~djLibrary)} {~djLibrary};
+    var styleBar=if(channel==\pop) {~djPopBar} {~djStyleBar};
+    var rng=(seed.abs%2147483646)+1,random,choose,take,makeRecord,nextBar,engine;
     var bags=(variation:List.new,key:List.new,duration:List.new,hook:List.new,form:List.new,
         major:List.new,minor:List.new);
     var current,incoming,mixPosition=0,mixLength=8,bar=0,serial=0;
     var nextRequested=false,hookRequested=false,fillRequested=false,fxRequested=nil;
+    var heldFX=nil,heldRequest=nil,releaseFX=false;
     var controls=(chaos:0.25,density:0.55,mutation:0.30,tension:0.20,hold:false,autoStutter:true);
     var paletteBag=List.new,paletteRng=((seed.abs+104729)%2147483646)+1,lastPalette,choosePalette;
     var fxRng=((seed.abs+65537)%2147483646)+1,fxRandom,stutter=nil,nextAutoBar=8;
@@ -55,7 +60,7 @@ var root=thisProcess.nowExecutingPath.dirname;
         hookID=take.value(bags.hook,lib.hooks.size,nil,preferred);
         formID=take.value(bags.form,lib.forms.size,nil,preferred);
         variation=lib.variations[take.value(bags.variation,lib.variations.size,nil,preferred)].copy;
-        if(first) { variation.name="Interlock / C minor" };
+        if(first) { variation.name=if(channel==\pop) {"Neon Pop / C minor"} {"Interlock / C minor"} };
         progression=lib[mode][progressionID];
         durations=lib.durations[durationID].collect { |n| (n/2).round.asInteger.max(1)*2 }; form=lib.forms[formID];
         form.do { |part|
@@ -69,12 +74,12 @@ var root=thisProcess.nowExecutingPath.dirname;
             cursor=cursor+length; chordIndex=chordIndex+1;
         };
         // Cue the incoming intro so its groove arrives by the end of a short mix.
-        localBar=if(first) { form[0][1] } { (form[0][1]-entryBars).max(0) };
+        localBar=if(first) { if(channel==\pop) {0} {form[0][1]} } { (form[0][1]-entryBars).max(0) };
         patternID=variation.rhythm;
         energyBias=if(first) {1} {choose.value([0.85,0.94,1.0,1.08])};
         wildness=if(first) {1} {choose.value([0.75,0.9,1.1,1.35])};
         densityBias=if(first) {1} {choose.value([0.85,0.95,1.05,1.15])};
-        plan=(deck:deck,serial:index,key:key,mode:mode,scale:scale,style:\interlock,keyName:lib[\keys][key] ++ " " ++ mode,
+        plan=(deck:deck,serial:index,key:key,mode:mode,scale:scale,style:if(channel==\pop) {\pop} {\interlock},keyName:lib[\keys][key] ++ " " ++ mode,
             variation:variation,palette:choosePalette.value(index),progression:progression,progressionID:progressionID,durations:durations,
             durationID:durationID,hookID:hookID,formID:formID,sections:sections.asArray,schedule:schedule,
             length:total,mixBars:if(form.last[1] >= 16) {choose.value([8,16])} {8},
@@ -97,7 +102,7 @@ var root=thisProcess.nowExecutingPath.dirname;
             intensity=((intensity*energyBias)+phraseLift).clip(0.25,1.22);
             // One drum-only bar after the groove has settled, at most once in 32 bars.
             drumBreak=[\groove,\hook,\drop].includes(section) and: {partBar>=8}
-                and: {local%32==12};
+                and: {local%32==12} and: {channel!=\pop};
             effective=(
                 chaos:(controls.chaos.clip(0,1)*(0.45+(intensity*0.8))*wildness).clip(0,1),
                 density:(controls.density.clip(0,1)*(0.3+(intensity*0.8))*densityBias).clip(0,1),
@@ -116,7 +121,7 @@ var root=thisProcess.nowExecutingPath.dirname;
             plan.localBar=local; plan.section=section; plan.hook=hook; plan.drumBreak=drumBreak;
             plan.intensity=intensity; plan.effective=effective; plan.patternID=patternID;
             plan.mutations=mutations; plan.sectionProgress=progress;
-            events=~djStyleBar.value(plan,local,section,progress,effective,hook,drumBreak,
+            events=styleBar.value(plan,local,section,progress,effective,hook,drumBreak,
                 patternID,fill,seed,random,forcedHook>0);
             localBar=(localBar+1)%total; plan.position=localBar;
             forcedHook=(forcedHook-1).max(0);
@@ -139,6 +144,15 @@ var root=thisProcess.nowExecutingPath.dirname;
         requestedFX=fxRequested; fxRequested=nil;
         requestKind=if(requestedFX.notNil) {requestedFX.kind} {nil};
         hotDeck=if(mixing and: { mixPosition >= (mixLength/2) }) { incoming.deck } { current.deck };
+        if(releaseFX) {heldFX=nil; heldRequest=nil; releaseFX=false; nextAutoBar=bar+16};
+        if(heldRequest.notNil) {
+            heldFX=(kind:heldRequest,age:0,deck:hotDeck,reset:true);
+            heldRequest=nil; stutter=nil;
+        };
+        if(heldFX.notNil) {
+            heldFX[\reset]=heldFX.age==0 or: {heldFX.deck!=hotDeck};
+            heldFX.deck=hotDeck;
+        };
         if(hookRequested) {
             if(mixing and: { mixPosition >= (mixLength/2) }) { incoming[\hookNow].value } { current[\hookNow].value };
             hookRequested=false;
@@ -162,7 +176,7 @@ var root=thisProcess.nowExecutingPath.dirname;
                 deck:hotDeck,serial:hotPlan.serial,source:\manual,depth:0.86);
             nextAutoBar=bar+requestedFX.bars.ceil+16;
         };
-        if(stutter.isNil and: {requestKind.isNil} and: {controls.autoStutter}
+        if(stutter.isNil and: {heldFX.isNil} and: {requestKind.isNil} and: {controls.autoStutter}
             and: {mixing.not} and: {bar>=nextAutoBar} and: {hotPlan.drumBreak.not}) {
             var part=hotPlan.sections.detect { |p| hotPlan.localBar<(p.start+p.bars) };
             var partBar=hotPlan.localBar-part.start;
@@ -182,7 +196,7 @@ var root=thisProcess.nowExecutingPath.dirname;
         startBpm=current.targetBpm; endBpm=if(mixing) {incoming.targetBpm} {startBpm};
         fxFor={ |plan,t,step|
             var section=plan.section, intensity=plan.intensity.clip(0.2,1.25), wave,barT;
-            var filter,cutoff,resonance,echo,delay,reverb,stutter,stutterRate=4,reset=false;
+            var filter,cutoff,resonance,echo,delay,reverb,stutter,stutterRate=4,reset=false,values,base,phase;
             // `t` is the deck handover position and is zero outside a mix;
             // hot buttons need their own within-this-bar phase in both cases.
             barT=(step/16).clip(0,1);
@@ -218,10 +232,23 @@ var root=thisProcess.nowExecutingPath.dirname;
                     \stutter4, {}, \stutter8, {}, \stutter16, {}, \stutter, {}
                 );
             };
-            (filter:filter.clip(0,1),cutoff:cutoff.clip(500,18000),resonance:resonance.clip(0.12,0.9),
+            values=(filter:filter.clip(0,1),cutoff:cutoff.clip(500,18000),resonance:resonance.clip(0.12,0.9),
                 echo:echo.clip(0,1),delay:delay.clip(0.08,0.75),reverb:reverb.clip(0,1),
                 stutter:stutter.clip(0,1),stutterRate:stutterRate,
                 stutterReset:reset);
+            if(heldFX.notNil and: {plan.deck==heldFX.deck}) {
+                base=values.copy; phase=(heldFX.age+barT).clip(0,1);
+                switch(heldFX.kind,
+                    \filter,{values.filter=0.76+(phase*0.18);values.cutoff=10500-(phase*9300);values.resonance=0.63},
+                    \echo,{values.echo=0.88;values.reverb=0.18},
+                    \wash,{values.filter=0.22+(phase*0.25);values.cutoff=4200-(phase*1800);
+                        values.echo=0.12+(phase*0.43);values.reverb=0.18+(phase*0.72)},
+                    {values.stutter=0.86;values.stutterRate=switch(heldFX.kind,\stutter4,{1},\stutter8,{2},{4});
+                        values.stutterReset=heldFX[\reset] and: {step==0}}
+                );
+                values[\manualKind]=heldFX.kind;values[\base]=base;
+            };
+            values;
         };
         automation=Array.fill(17,{ |step|
             var t=if(mixing) { (mixPosition+(step/16))/mixLength } {0};
@@ -245,12 +272,14 @@ var root=thisProcess.nowExecutingPath.dirname;
         state.bar=bar; state.phase=mixPosition; state.bpm=automation[0].bpm;
         state.decks=deckInfo; state.mixing=mixing; state.progress=automation[0].progress;
         state.lastFX=requestKind ? \none; state.stutter=activeStutter;
+        state.manualFX=if(heldFX.notNil) {heldFX.copy} {nil};
         state.currentSerial=current.serial; state.mixBars=if(mixing) {mixLength} {current.mixBars};
         frame=(events:events.sort { |a,b| a.beat < b.beat },automation:automation,decks:deckInfo,bar:bar,stutter:activeStutter);
         if(stutter.notNil) {
             stutter.age=stutter.age+1;
             if(stutter.age>=stutter.bars) {stutter=nil};
         };
+        if(heldFX.notNil) {heldFX.age=heldFX.age+1};
         bar=bar+1;
         if(mixing) {
             mixPosition=mixPosition+1;
@@ -258,12 +287,19 @@ var root=thisProcess.nowExecutingPath.dirname;
         };
         frame;
     };
-    engine=(controls:controls,state:state,nextBar:nextBar,requestNext:{ nextRequested=true },
+    engine=(channel:channel,controls:controls,state:state,nextBar:nextBar,requestNext:{ nextRequested=true },
         requestHook:{ hookRequested=true },requestFill:{ fillRequested=true },requestMutation:{ current[\mutate].value },
         requestFX:{ |kind,bars=1|
             var length=if(bars<1) {0.5} {bars.asInteger.clip(1,4)};
             fxRequested=(kind:kind.asSymbol,bars:length)
-        });
+        },
+        startFX:{ |kind|
+            if([\filter,\echo,\wash,\stutter4,\stutter8,\stutter16].includes(kind).not) {
+                Error("Unknown DJ effect").throw
+            };
+            heldRequest=kind;releaseFX=false;
+        },
+        stopFX:{heldRequest=nil;releaseFX=true});
     engine;
 };
 // Shared adapters keep live playback and NRT previews on the same routing and controls.

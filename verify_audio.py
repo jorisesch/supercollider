@@ -12,7 +12,8 @@ study_manifest = {}
 dj_manifests = {}
 for manifest_path in (Path('infinite/experiments/dj/preview.json'), Path('infinite/experiments/dj/track.json'),
                       Path('infinite/experiments/dj/palette-tour.json'),
-                      Path('infinite/experiments/dj/digital-drive.json')):
+                      Path('infinite/experiments/dj/digital-drive.json'),
+                      Path('infinite/experiments/dj/pop.json')):
     if manifest_path.exists():
         spec = json.loads(manifest_path.read_text())
         dj_manifests[spec['file']] = spec

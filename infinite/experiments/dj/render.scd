@@ -2,6 +2,7 @@
 (
 var root=thisProcess.nowExecutingPath.dirname,repo=root.dirname.dirname.dirname;
 var track=thisProcess.argv.includesEqual("track"),tour=thisProcess.argv.includesEqual("palettes");
+var pop=thisProcess.argv.includesEqual("pop");
 var digital=thisProcess.argv.includesEqual("digital");
 var name,bars,engine,score=List.new,time=0.1,tempo=128,node=1000,timeline,osc,duration;
 var columns=["bar","seconds","bpm","mixing","record_a","record_b","section_a","section_b",
@@ -11,10 +12,11 @@ var columns=["bar","seconds","bpm","mixing","record_a","record_b","section_a","s
     "cut_from_a","cut_from_b","drum_spotlight_a","drum_spotlight_b","stutter_start_beat","stutter_bars"];
 try {
     (root +/+ "engine.scd").load; (root +/+ "instruments.scd").load;
-    name=case {digital} {"digital-drive-rounded-v6d"} {tour} {"dj-groove-palettes-v6d"}
+    name=case {pop} {"dj-pop-preview"} {digital} {"digital-drive-rounded-v6d"} {tour} {"dj-groove-palettes-v6d"}
         {track} {"groove-track-v6d"} {true} {"dj-groove-v6d"};
-    bars=case {digital} {4} {tour} {32} {track} {48} {true} {112};
-    engine=~makeDJEngine.value(2600,128,case {digital} {(hold:true,palette:2,autoStutter:false)}
+    bars=case {pop} {96} {digital} {4} {tour} {32} {track} {48} {true} {112};
+    if(pop) {tempo=138};
+    engine=~makeDJEngine.value(2600,tempo,case {pop} {(channel:\pop)} {digital} {(hold:true,palette:2,autoStutter:false)}
         {track} {(hold:true)} {true} {nil});
     if(digital) {12.do {engine[\nextBar].value}};
     TempoClock.default.tempo=1;

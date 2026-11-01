@@ -132,4 +132,5 @@ var root=thisProcess.nowExecutingPath.dirname;
     })
 ];
 (root +/+ "palette-instruments.scd").load;
+(root +/+ "pop-instruments.scd").load;
 )

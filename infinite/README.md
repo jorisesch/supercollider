@@ -58,7 +58,7 @@ No WAV previews are included with this version. Any local `audio/infinite-*.wav`
 
 The current generator remains the baseline. New prototypes live under [`experiments/`](experiments/README.md): **EDM A**, melodic/progressive EDM with new voices and a longer arrangement; **EDM B**, a harder bass and drum treatment of the same four tracks; **EDM C**, an eight-track infinite DJ with changing keys and tempo-matched handovers; **EDM D**, a syncopated, vibrato-led treatment with added texture and percussion; and **warm ambient**, with slow harmony and overlapping layers. Each has its own launch command and controls; the original commands above continue to work unchanged. See the [experiment guide](experiments/README.md) for listening and comparison instructions.
 
-The latest [infinite DJ revision](experiments/dj/README.md) reuses this baseline's composition engine, with variable song lengths, repeated answer patterns, probabilistic drums and changing intensity/chaos/density. It preserves the earlier DJ as a playable snapshot. Run `sclang -D infinite/experiments/c-edm.scd 2600 128 0.25 0.55 0.30 0.20` from the repository directory to compare at the baseline's macro settings.
+The latest [infinite DJ revision](experiments/dj/README.md) uses a shared bass-and-drums style with rotating instrument ensembles, sparse melodic phrases, variable song lengths and automatic handovers. Its compact window adds track-name recall, manual Start/Stop effects and stereo spectrum displays. Earlier DJ versions remain playable snapshots. Run `sclang -D infinite/experiments/c-edm.scd 2600 128 0.25 0.55 0.30 0.20` from the repository directory to compare at the baseline's macro settings.
 
 
 To check STOP/START in every control window, run `sclang -D infinite/transport-check.scd` from the repository directory. This real-time test mutes its own server and checks continuation, repeated clicks, Restart seed, and cleanup across both baseline modes, EDM A, EDM B, and warm ambient. It creates no audio files.
@@ -67,3 +67,9 @@ To check STOP/START in every control window, run `sclang -D infinite/transport-c
 ## Composed listening studies
 
 [32-bar studies](studies/README.md) explore warm melodic house, bright progressive, dark rolling electro, swung garage/house, and a wider melodic track. The latest addition, [**Coastal Pocket**](studies/revisions/disco-v1/README.md), explores chill disco and funk with a bass hook, warm keys and muted guitar-like chord chops. Each has a complete arrangement, a recurring hook, an AAC preview, a 48 kHz/24-bit WAV, and editable SuperCollider source. Compare groove, hook, and sound separately to guide the next DJ iteration.
+
+## Pop channel
+
+The Infinite DJ now has an instrumental **Pop** channel based on Neon Rush, with repeating choruses, verses, bridges and tempo-matched handovers. Run `sclang -D infinite/experiments/pop.scd` or select **Pop** in the DJ window. See the [Pop channel guide and listening preview](experiments/dj/README.md#pop-channel).
+
+The common launcher also accepts `pop`: `sclang -D infinite/infinite-run.scd pop 0.25 0.55 0.30 0.20 138 2600`. Existing `edm` and `soundscape` invocations retain their original engines and behavior; Pop dispatches to the two-deck DJ.

@@ -152,6 +152,77 @@
       -19.19
     ]
   },
+  "dj-pop-preview.wav": {
+    "seconds": 172.9227,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -2.45,
+    "rms_dbfs": -20.28,
+    "end_peak": 0.0,
+    "automatic_stutter_phrases": [
+      {
+        "bar": 24,
+        "seconds": 42.7087,
+        "division": 16,
+        "bars": 0.5,
+        "duration_seconds": 0.8696
+      },
+      {
+        "bar": 76,
+        "seconds": 133.9964,
+        "division": 16,
+        "bars": 0.5,
+        "duration_seconds": 0.8955
+      }
+    ],
+    "title": "Infinite DJ \u2014 Pop channel",
+    "seed": 2600,
+    "bars": 96,
+    "settings": {
+      "channel": "pop",
+      "chaos": 0.25,
+      "density": 0.55,
+      "mutation": 0.3,
+      "tension": 0.2,
+      "autoStutter": true
+    },
+    "records": [
+      0,
+      1
+    ],
+    "palettes": [
+      0,
+      2
+    ],
+    "music_seconds": 168.8218,
+    "music_rms_dbfs": -20.18,
+    "four_bar_rms_dbfs": [
+      -19.9,
+      -19.18,
+      -19.3,
+      -19.16,
+      -19.27,
+      -19.04,
+      -19.18,
+      -34.19,
+      -21.89,
+      -19.16,
+      -19.19,
+      -19.04,
+      -19.14,
+      -19.03,
+      -20.59,
+      -21.55,
+      -21.15,
+      -20.88,
+      -21.13,
+      -20.87,
+      -21.13,
+      -20.91,
+      -20.94,
+      -20.67
+    ]
+  },
   "groove-track-v6d.wav": {
     "seconds": 94.1013,
     "sample_rate": 48000,

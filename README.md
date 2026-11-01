@@ -8,13 +8,19 @@ Infinite DJ is a music generator that can keep playing indefinitely. It creates 
 
 The current direction is house and electro driven by bass and drums: recognizable grooves, small rhythmic variations and sparse melodic phrases. Four instrument ensembles give successive records different characters.
 
-A live control window lets you steer the music, hold a record, request fills and perform filter sweeps, echo throws and rhythmic stutters.
+A compact control window lets you steer the music, hold a record, request fills and start or stop an effect from one menu. Playing indicators and an A/B mix slider show which deck you hear. Hover over a track name for its details, or use the name to replay it from your local recipe library. A stereo spectrum analyzer shows the final mix.
 
-![Infinite DJ control window with deck status, channel selector, four knobs, performance effects and stereo spectrum panels](docs/images/infinite-dj-controls.png)
+![Infinite DJ control window with track names, four knobs, an effect menu and stereo spectrum panels](docs/images/infinite-dj-controls.png)
 
-*Preview of the updated control window, including the channel selector and spectrum panels; playback is stopped.*
+*The control window highlights the leading deck and identifies what is playing.*
 
 **[Listen to the current set](audio/dj-groove-v6d.m4a)** · **[Hear the favorite groove](audio/groove-track-v6c.m4a)** · **[Launch Infinite DJ](infinite/experiments/dj/README.md)**
+
+### Pop channel
+
+Infinite DJ also plays **instrumental Pop**: bright synth hooks, offbeat bass, verses, returning choruses and automatic handovers. Start it with `sclang -D infinite/experiments/pop.scd`, or choose **Pop** in the DJ window. The current EDM channel is preserved; Soundscape keeps its existing launcher.
+
+**[Listen to Pop](audio/dj-pop-preview.m4a)** · **[Pop channel guide](infinite/experiments/dj/README.md#pop-channel)**
 
 ## Other experiments
 

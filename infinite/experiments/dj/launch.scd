@@ -6,8 +6,10 @@ var root=thisProcess.nowExecutingPath.dirname;
 ~djRun={ |args|
     var seed,bpm,server,values;
     args=args ? [];
+    ~djSettings.channel=if(args.includesEqual("pop")) {\pop} {\edm};
+    args=args.reject { |item| ["pop","edm"].includesEqual(item) };
     seed=if(args.at(0).notNil) { args[0].asInteger } { 2600 };
-    bpm=if(args.at(1).notNil) { args[1].asFloat.clip(118,140) } { 128 };
+    bpm=if(args.at(1).notNil) { args[1].asFloat.clip(118,140) } { if(~djSettings.channel==\pop) {138} {128} };
     values=[0.25,0.55,0.30,0.20].collect { |fallback,i|
         if(args.at(i+2).notNil and: { args[i+2] != "nogui" }) { args[i+2].asFloat.clip(0,1) } { fallback };
     };

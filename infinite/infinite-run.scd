@@ -3,15 +3,20 @@
 (
 var root=thisProcess.nowExecutingPath.dirname, args=thisProcess.argv;
 var mode=(args.at(0) ? "edm").asSymbol, values, bpm, seed, server;
-if([\edm, \soundscape].includes(mode).not) {
-    "Usage: infinite-run.scd edm|soundscape chaos density mutation tension bpm seed [nogui]".postln;
+if([\edm, \soundscape, \pop].includes(mode).not) {
+    "Usage: infinite-run.scd edm|soundscape|pop chaos density mutation tension bpm seed [nogui]".postln;
     1.exit;
 };
 values=[0.25, 0.55, 0.30, 0.20].collect { |fallback, i|
     if(args.at(i + 1).notNil) { args[i + 1].asFloat.clip(0, 1) } { fallback };
 };
-bpm=if(args.at(5).notNil) { args[5].asFloat.clip(40, 200) } { if(mode == \edm, 128, 60) };
+bpm=if(args.at(5).notNil) { args[5].asFloat.clip(40, 200) } { if(mode == \edm, 128, if(mode==\pop,138,60)) };
 seed=if(args.at(6).notNil) { args[6].asInteger } { 2600 };
+if(mode==\pop) {
+    (root +/+ "experiments/dj/launch.scd").load;
+    ~djRun.value([seed.asString,bpm.asString]++values.collect(_.asString)++["pop"]
+        ++if(args.includesEqual("nogui")){["nogui"]}{[]});
+} {
 (root +/+ "infinite-live.scd").load;
 ~setInfinite.value(*values);
 // Own server: do not replace or reconfigure an existing IDE server.
@@ -31,4 +36,5 @@ if(args.includes("nogui").not) {
     }.defer;
 };
 "Close the control window to fade out and exit; Ctrl+C in this terminal exits immediately.".postln;
+};
 )

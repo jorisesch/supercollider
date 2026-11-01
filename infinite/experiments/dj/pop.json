@@ -1,0 +1,23 @@
+{
+  "file": "dj-pop-preview.wav",
+  "preview": "dj-pop-preview.m4a",
+  "title": "Infinite DJ \u2014 Pop channel",
+  "bars": 96,
+  "seed": 2600,
+  "initial_bpm": 138,
+  "settings": {
+    "channel": "pop",
+    "chaos": 0.25,
+    "density": 0.55,
+    "mutation": 0.3,
+    "tension": 0.2,
+    "autoStutter": true
+  },
+  "lead_in_seconds": 0.1,
+  "tail_seconds": 4,
+  "minimum_records": 2,
+  "minimum_palettes": 2,
+  "minimum_auto_stutters": 0,
+  "timeline": "infinite/experiments/dj/dj-pop-preview-timeline.tsv",
+  "human_listening_review": "pending"
+}
