@@ -7,7 +7,7 @@ var osc=Platform.defaultTempDir +/+ "dj-bass-check.osc",settings=[[0,0.35],[1,0.
 try {
     (root +/+ "engine.scd").load; (root +/+ "instruments.scd").load;
     TempoClock.default.tempo=1;
-    score.add([0] ++ ~djDefs.collect { |def| [\d_recv,def.asBytes] });
+    ~djDefs.do {|def|score.add([0,[\d_recv,def.asBytes]])};
     ~djLibrary.palettes.do { |palette,voice|
         settings.do { |control,variant|
             var event=(voice:palette.voices[\djBass],deck:0,lane:0,midinote:33,amp:0.2,

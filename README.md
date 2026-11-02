@@ -1,18 +1,23 @@
 # Infinite DJ
 
+> **[Listen to Infinite DJ — play the audio demos](https://jorisesch.github.io/supercollider/#listen)**
+>
+> Hear the grooves, hooks and evolving soundscapes right in your browser. No installation needed.
+
 ![Two decks connected by flowing sound waves](docs/images/infinite-dj-banner.png)
 
-An endless electronic set that creates and mixes new tracks as it goes. Let it play, or shape the music with a few controls.
+An endless set that creates and mixes new tracks as it goes. Let it play, or shape the music with a few controls.
 
 ## Listen
 
-Try a preview before installing anything:
+**[Visit the listening page](https://jorisesch.github.io/supercollider/#listen)** for easy audio players, or open a recording below:
 
 - **[EDM](audio/edm-e-set.m4a)** — bass, drums and warm synth grooves.
 - **[Pop](audio/dj-pop-preview.m4a)** — bright synths and returning hooks.
+- **[Rock](audio/rock-channel.m4a)** — guitar riffs, bass and a room drum kit.
 - **[Soundscapes](audio/infinite-soundscape.m4a)** — slow, evolving textures.
 
-The [companion page guide](site/README.md) covers the website with embedded audio players. These previews are recordings; the generator itself keeps playing.
+These previews are recordings; the generator itself keeps playing. The [companion page guide](site/README.md) explains how the website is built and published.
 
 ## Run it
 
@@ -28,11 +33,13 @@ On macOS, paste this command and press Return:
 
 The control window opens and music starts. No sample packs, SuperDirt setup or manual server start are needed.
 
-For Windows/Linux instructions, other music modes and help starting, follow the **[Infinite DJ run guide](infinite/experiments/dj/README.md)**.
+For Windows/Linux instructions, other channels and help starting, follow the **[Infinite DJ run guide](infinite/experiments/dj/README.md)**.
 
 ## Make it your own
 
-Move **Chaos**, **Density**, **Mutation** or **Tension** to change the music. Try **Fill**, request the **Next** track, or choose **Pop** in the channel menu. Changes may take a few seconds to enter with the music.
+Move **Chaos**, **Density**, **Mutation** or **Tension** to change the music. Try **Fill**, request the **Next** track, or choose **EDM**, **Pop** or **Rock** in the channel menu. Changes may take a few seconds to enter with the music.
+
+In EDM and Pop, leave **Mode** on **Auto / follows Tension**. Higher **Tension** adds occasional two-bar modal accents while keeping its brightness and drive. Optional **Pentatonic melodies** simplify the leads; press **Apply mode** after changing that choice.
 
 To use an effect, select it and press **Start FX**. Press **Stop FX** to release it.
 

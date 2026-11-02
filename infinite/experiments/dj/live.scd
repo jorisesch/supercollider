@@ -8,6 +8,11 @@ var root=thisProcess.nowExecutingPath.dirname;
 ~djSettings.autoStutter=~djSettings[\autoStutter] ? true;
 ~djStutterBars=~djStutterBars ? 0.5;
 ~djSettings.channel=~djSettings[\channel] ? \edme;
+~djSettings.tonality=~djSettings[\tonality] ? \original;
+~djSettings.melody=~djSettings[\melody] ? \full;
+~djSettings.modalPolicy=~djSettings[\modalPolicy] ? if([\edme,\pop].includes(~djSettings.channel)){\tension}{\fixed};
+~djSettings.rockLeadVersion=~djSettings[\rockLeadVersion] ? if(~djSettings.channel==\rock){1}{0};
+~djSettings.rockToneVersion=~djSettings[\rockToneVersion] ? if(~djSettings.channel==\rock){2}{0};
 ~djLastFX=\none;
 ~djLastFXLabel="none";
 ~djManualFX=nil;
@@ -56,7 +61,8 @@ var root=thisProcess.nowExecutingPath.dirname;
     ("DJ Hold record: " ++ hold).postln;
 };
 ~djNext={ if(~djEngine.notNil) { ~djEngine[\requestNext].value; "DJ NEXT queued / next four-bar boundary".postln } };
-~djHook={ if(~djEngine.notNil) { ~djEngine[\requestHook].value; if(~djSettings.channel==\pop) {"DJ Chorus queued / four bars from next bar"} {"DJ Bass hook queued / four bars from next bar"}.postln } };
+~djHook={ if(~djEngine.notNil) { ~djEngine[\requestHook].value;
+    ("DJ "++switch(~djSettings.channel,\pop,{"Chorus"},\rock,{"Riff"},{"Bass hook"})++" queued / four bars from next bar").postln } };
 ~djMutate={ if(~djEngine.notNil) { ~djEngine[\requestMutation].value;
     if(~djSettings.hold) {"DJ Mutation ignored / record held"} {"DJ Mutation queued / next bar"}.postln } };
 ~djFill={ if(~djEngine.notNil) { ~djEngine[\requestFill].value; "DJ Fill queued / next bar".postln } };
@@ -86,11 +92,28 @@ var root=thisProcess.nowExecutingPath.dirname;
     if([4,8,16].includes(division).not) {Error("Stutter division must be 4, 8 or 16").throw};
     ~djHot.value(("stutter" ++ division.asInteger).asSymbol,bars ? ~djStutterBars);
 };
+~djMode={ |tonality=\original,melody=\full,policy|
+    if(tonality!=\original and:{~djTonalities[tonality].isNil}){Error("Unknown musical mode").throw};
+    if([\full,\pentatonic].includes(melody).not){Error("Choose full or pentatonic melody").throw};
+    ~djSettings.tonality=tonality;~djSettings.melody=melody;
+    ~djSettings.modalPolicy=policy ? if([\edme,\pop].includes(~djSettings.channel)){\tension}{\fixed};
+    ~djSettings.rockLeadVersion=if(~djSettings.channel==\rock){1}{0};
+    ~djSettings.rockToneVersion=if(~djSettings.channel==\rock){2}{0};
+    ("DJ mode: "++tonality++" / melody "++melody++" / restarting with fade").postln;
+    ~djStart.value(~djSeed ? 2600,~djInitialBpm ? 128,~djServer);
+};
 ~djChannel={ |channel=\edme|
-    if([\edm,\pop,\edme].includes(channel).not) {Error("DJ channel must be edm, pop or edme").throw};
+    var old=~djResolveChannel.value(~djSettings.channel);
+    channel=~djResolveChannel.value(channel);
+    if(~djChannelIDs.includes(channel).not){Error("Choose EDM, Pop or Rock").throw};
     ~djSettings.channel=channel;
+    ~djSettings.modalPolicy=if([\edme,\pop].includes(channel)){\tension}{\fixed};
+    ~djSettings.rockLeadVersion=if(channel==\rock){1}{0};
+    ~djSettings.rockToneVersion=if(channel==\rock){2}{0};
+    if(channel==\rock and:{old!=\rock}){~djDanceAutoStutter=~djSettings.autoStutter;~djSettings.autoStutter=false};
+    if(old==\rock and:{channel!=\rock}){~djSettings.autoStutter=~djDanceAutoStutter ? true};
     ("DJ channel: "++channel++" / restarting set with fade").postln;
-    ~djStart.value(~djSeed ? 2600,if(channel==\pop){138}{128},~djServer);
+    ~djStart.value(~djSeed ? 2600,~djDefaultBpm.value(channel),~djServer);
 };
 ~djResume={ ~djStart.value(~djSeed ? 2600,~djInitialBpm ? 128,~djServer,true) };
 ~djRecall={ |name|
@@ -111,19 +134,19 @@ var root=thisProcess.nowExecutingPath.dirname;
     srv.waitForBoot({
         ~djDefs.do { |def| def.send(srv) }; srv.sync;
         if(generation == ~djGeneration) {
-            var bus=Bus.audio(srv,14), group=Group.new(srv), sources, decks, master;
+            var bus=Bus.audio(srv,14), group=Group.new(srv), sources, decks, master,mix=~djMixSpec.value(engine.channel,engine.controls[\rockToneVersion] ? 0);
             sources=[Group.head(group),Group.head(group)];
-            decks=Array.fill(2,{ |id| Synth.tail(group,\djDeck,[\in,bus.index+(id*6),\out,bus.index+12,
+            decks=Array.fill(2,{ |id| Synth.tail(group,mix.deck,[\in,bus.index+(id*6),\out,bus.index+12,
                 \musicGain,0,\bassGain,0,\drumsGain,0,\bpm,engine.state.bpm,\fxFilter,0,
                 \fxCutoff,12000,\fxResonance,0.35,\fxEcho,0,\fxDelay,0.33,\fxReverb,0.14,\fxStutter,0]) });
-            master=Synth.tail(group,\djMaster,[\in,bus.index+12,\attack,if(resume,3,0.1)]);
+            master=Synth.tail(group,\djMaster,[\in,bus.index+12,\attack,if(resume,3,0.1),\drive,mix.drive]);
             srv.sync;
             if(generation == ~djGeneration) {
                 ~djBus=bus; ~djGroup=group; ~djMaster=master;
                 ~djDecks=decks; ~djSources=sources;
                 ~djClock=TempoClock.new(engine.state.bpm / 60);
                 ~djRoutine=Routine {
-                    var announced=Set.new,firstBar=true;
+                    var announced=Set.new,modalAnnounced=Dictionary.new,firstBar=true;
                     loop {
                         var frame=engine[\nextBar].value, actions=List.new, previous=0;
                         if(firstBar) {
@@ -137,6 +160,17 @@ var root=thisProcess.nowExecutingPath.dirname;
                                     " / " ++ plan.palette.bassName ++ " + " ++ plan.palette.leadName ++
                                     " / " ++ plan.palette.kitName).postln;
                                 announced.add(plan.serial);
+                            };
+                            if(plan.notNil and:{plan.modalPolicy==\tension}){
+                                if(modalAnnounced[plan.serial]!=plan.activeTonality){
+                                    if(plan.modalAccent or:{modalAnnounced[plan.serial].notNil}){
+                                        ("DJ harmony / "++plan.keyName++if(plan.modalAccent){" / brief Tension accent"}{" / returned to base scale"}).postln;
+                                    };
+                                    modalAnnounced[plan.serial]=plan.activeTonality;
+                                };
+                            };
+                            if(plan.notNil and:{plan[\rockSoloActive] ? false} and:{plan.rockSoloAge==0}){
+                                ("DJ guitar / "++plan.rockSoloKind++" / "++plan.rockSoloBars++" bars / chord-tone resolution").postln;
                             };
                         };
                         if(frame.stutter.notNil and: {frame.stutter.age==0}) {

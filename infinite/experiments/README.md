@@ -1,5 +1,7 @@
 # Infinite music experiments
 
+For the current **EDM, Pop and Rock** channels, start with the [DJ run guide](dj/README.md). The experiments below are optional development material.
+
 Five EDM variants and a warm ambient prototype to compare with the existing generator. The original composition and instrument sources are preserved; the common launcher routes standard EDM to the DJ. These experiments use their own instruments, playback state, and control window. Live launchers start no recording; the DJ and EDM D/E also have explicit offline preview renderers.
 
 Run the commands below from the SuperCollider repository directory. Close one performance before starting the next so you hear each on its own.
@@ -56,13 +58,13 @@ D still uses four timing lanes (bass, musical voices, arp, drums); the added pad
 /Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/experiments/d-render.scd
 ```
 
-## Standard EDM: promoted from E
+## Standard EDM
 
 ```sh
 /Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/experiments/e-edm.scd
 ```
 
-E builds on the current bass-led Infinite DJ. Default: **128 BPM, seed 2600**, Chaos 25%, Density 55%, Mutation 30%, Tension 20%. It is now the default **EDM** in the DJ menu and behind `c-edm.scd`. The previous version is **EDM Classic**. The `e-edm.scd` launcher remains an alias.
+E builds on the current bass-led Infinite DJ. Default: **128 BPM, seed 2600**, Chaos 25%, Density 55%, Mutation 30%, Tension 20%. It is now the default **EDM** in the DJ menu and behind `c-edm.scd`. The live channels are EDM, Pop and Rock; previous track recipes remain replayable. The `e-edm.scd` launcher remains an alias.
 
 - Muted, held and short bass articulations, with occasional brief slides. The clean low fundamental stays present.
 - Warm three-note chord stabs on selected offbeats, leaving room for the bass.
@@ -71,7 +73,7 @@ E builds on the current bass-led Infinite DJ. Default: **128 BPM, seed 2600**, C
 - An alternate B bass groove in the first half of the drop, then A's return. **Bass hook** requests the B phrase for four bars.
 - A brief reverse breath before the drop. Existing quarter-bar pullbacks and occasional half-bar sixteenth stutters remain sparse.
 
-[Listen to the 94-second track edit](../../audio/edm-e-groove.m4a), or [compare individual building blocks](../../audio/edm-e-building-blocks.m4a). The comparison repeats the same eight-bar foundation: baseline at 0.1 seconds, percussion at 15.1, chord stabs at 30.1, bass articulation at 45.1. The [DJ guide](dj/README.md#standard-edm) describes the source, controls and checks.
+[Listen to the 94-second track edit](../../audio/edm-e-groove.m4a), or [compare individual building blocks](../../audio/edm-e-building-blocks.m4a). The comparison repeats the same eight-bar foundation: baseline at 0.1 seconds, percussion at 15.1, chord stabs at 30.1, bass articulation at 45.1. The [DJ guide](dj/README.md#edm) describes the source, controls and checks.
 
 Render the track, comparison or a longer set excerpt:
 
@@ -105,7 +107,7 @@ Give this one at least a minute. The pads take several seconds to open, and the 
 
 ## Controls and comparison
 
-The A/B/D/ambient panel and the C/E DJ window have Chaos, Density, Mutation, and Tension knobs. This section describes A/B/D/ambient; C and E use the [DJ controls](dj/README.md#controls). In ambient mode, Density adds cloud voices and bell opportunities, Tension adds brightness and optional diatonic extensions, Chaos widens bell placement, and Mutation changes pad placement at harmonic boundaries. Ambient **Hold** keeps the current harmony; EDM **Hold** preserves motif memory while the arrangement continues.
+The A/B/D/ambient panel and the C/E DJ window have Chaos, Density, Mutation, and Tension knobs. This section describes A/B/D/ambient; C and E use the [DJ controls](dj/README.md#use-the-controls). In ambient mode, Density adds cloud voices and bell opportunities, Tension adds brightness and optional diatonic extensions, Chaos widens bell placement, and Mutation changes pad placement at harmonic boundaries. Ambient **Hold** keeps the current harmony; EDM **Hold** preserves motif memory while the arrangement continues.
 
 **Fill next bar** adds an EDM drum fill; the ambient **Bloom** button adds three soft bell notes. **Mutate** requests a small change next bar unless held. **Restart seed** restarts the same composition with the current macro values. **STOP** fades the current session and becomes **START**. **START** continues at the next bar with the same composition, knob settings, Hold state, tempo, and experiment variant. **Restart seed** resets the composition instead. The toggle follows starts and stops issued from the IDE as well. Closing a CLI window fades out and exits: five seconds for EDM, eight for ambient. Ctrl+C exits immediately.
 
@@ -158,7 +160,7 @@ Run A/B/D/ambient composition checks without playback or audio files:
 /Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/experiments/check.scd
 ```
 
-Checks cover 128 seeded bars per mode and EDM variant, preservation of A’s bass pitches in B, D's seeded detail and control bounds, six-bus routing and extreme knob settings for B, key membership, event timing, the EDM breakdown, slow ambient harmony, bounded ambient voice lifetimes, and the experiment knob/Fill/Mutate/Hold callbacks. All SynthDefs, the window, macro updates, mode changes, and fade/stop cleanup were also exercised with real-time output muted. This validates code execution, not subjective sound quality. E has its own `dj/e-check.scd` and muted `dj/e-runtime-check.scd`; see the [DJ guide](dj/README.md#standard-edm).
+Checks cover 128 seeded bars per mode and EDM variant, preservation of A’s bass pitches in B, D's seeded detail and control bounds, six-bus routing and extreme knob settings for B, key membership, event timing, the EDM breakdown, slow ambient harmony, bounded ambient voice lifetimes, and the experiment knob/Fill/Mutate/Hold callbacks. All SynthDefs, the window, macro updates, mode changes, and fade/stop cleanup were also exercised with real-time output muted. This validates code execution, not subjective sound quality. E has its own `dj/e-check.scd` and muted `dj/e-runtime-check.scd`; see the [DJ guide](dj/README.md#edm).
 
 
 The shared [transport regression check](../transport-check.scd) exercises STOP → START → STOP, retained phrase state, rapid clicks, Restart seed, and window closure in every version. Run it from the repository directory with `sclang -D infinite/transport-check.scd`; it uses a muted server and exports no audio.

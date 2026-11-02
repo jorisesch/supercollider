@@ -9,7 +9,7 @@ try {
     (root +/+ "engine.scd").load; (root +/+ "instruments.scd").load;
     engine=~makeDJEngine.value(2600,bpm,(autoStutter:false));
     TempoClock.default.tempo=1;
-    score.add([0] ++ ~djDefs.collect { |def| [\d_recv,def.asBytes] });
+    ~djDefs.do {|def|score.add([0,[\d_recv,def.asBytes]])};
     score.add([0,[\d_recv,SynthDef(\djStutterProbe,{ |out=16|
         Out.ar(out,SinOsc.ar(440)!2 * 0.06);
     }).asBytes]]);

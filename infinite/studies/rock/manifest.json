@@ -1,0 +1,86 @@
+{
+  "seed": 731,
+  "bars": 32,
+  "beats_per_bar": 4,
+  "lead_in_seconds": 0.1,
+  "tail_seconds": 5,
+  "human_listening_review": "pending",
+  "tracks": [
+    {
+      "id": "ironwood",
+      "file": "rock-ironwood.wav",
+      "preview": "rock-ironwood.m4a",
+      "title": "Ironwood",
+      "bpm": 102,
+      "tonic": 4,
+      "scale": [
+        0,
+        3,
+        5,
+        7,
+        10
+      ],
+      "scale_name": "E minor pentatonic",
+      "notes": "E G A B D",
+      "chords": "E5 / G5 / A5 / D5",
+      "solo_start": "E minor pentatonic",
+      "selective_effects": {
+        "overdrive_answer_bar": 16,
+        "left_fuzz_answer_bar": 20,
+        "bass_grit": "selected answer/return phrase endings"
+      }
+    },
+    {
+      "id": "greenroom",
+      "file": "rock-green-room.wav",
+      "preview": "rock-green-room.m4a",
+      "title": "Green Room",
+      "bpm": 94,
+      "tonic": 9,
+      "scale": [
+        0,
+        2,
+        3,
+        5,
+        7,
+        9,
+        10
+      ],
+      "scale_name": "A Dorian",
+      "notes": "A B C D E F# G",
+      "chords": "Am7 / Dadd9, with C and G in the answer",
+      "solo_start": "A minor pentatonic; add F# for the Dorian sixth",
+      "selective_effects": {
+        "overdrive_answer_bar": 12,
+        "wah": "selected answer/return offbeat responses"
+      }
+    },
+    {
+      "id": "openroad",
+      "file": "rock-open-road.wav",
+      "preview": "rock-open-road.m4a",
+      "title": "Open Road",
+      "bpm": 112,
+      "tonic": 2,
+      "scale": [
+        0,
+        2,
+        4,
+        5,
+        7,
+        9,
+        10
+      ],
+      "scale_name": "D Mixolydian",
+      "notes": "D E F# G A B C",
+      "chords": "D / C / G / D",
+      "solo_start": "D major pentatonic; add C for the flat seventh and G for the fourth",
+      "selective_effects": {
+        "overdrive_answer_bar": 12,
+        "slapback": "selected answer/return phrase endings"
+      }
+    }
+  ],
+  "effects_default": true,
+  "effects_bypass": "nofx retains the original amp tone and all notes/timings"
+}

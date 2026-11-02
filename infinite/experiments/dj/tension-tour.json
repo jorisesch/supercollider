@@ -1,0 +1,100 @@
+{
+  "seed": 2600,
+  "tension": 1.0,
+  "autoStutter": false,
+  "bars_per_excerpt": 8,
+  "base_bars_before": 4,
+  "accent_bars": 2,
+  "base_bars_after": 2,
+  "tail_per_excerpt_seconds": 4,
+  "human_listening_review": "pending",
+  "description": "Condensed demonstrations from actual seeded sets; selected accents occur much closer together here than in continuous playback.",
+  "tracks": [
+    {
+      "file": "edm-tension.wav",
+      "preview": "edm-tension.m4a",
+      "seconds": 75.183916083916,
+      "segments": [
+        {
+          "mode": "dorian",
+          "start_seconds": 0.1,
+          "color_seconds": 7.3727272727273,
+          "return_seconds": 11.009090909091,
+          "end_seconds": 14.645454545455,
+          "source_bar": 134,
+          "source_key": "Eb Dorian"
+        },
+        {
+          "mode": "phrygian",
+          "start_seconds": 18.645454545455,
+          "color_seconds": 26.145454545455,
+          "return_seconds": 29.895454545455,
+          "end_seconds": 33.645454545455,
+          "source_bar": 6,
+          "source_key": "C Phrygian"
+        },
+        {
+          "mode": "mixolydian",
+          "start_seconds": 37.645454545455,
+          "color_seconds": 45.03006993007,
+          "return_seconds": 48.722377622378,
+          "end_seconds": 52.414685314685,
+          "source_bar": 54,
+          "source_key": "F Mixolydian"
+        },
+        {
+          "mode": "lydian",
+          "start_seconds": 56.414685314685,
+          "color_seconds": 63.799300699301,
+          "return_seconds": 67.491608391608,
+          "end_seconds": 71.183916083916,
+          "source_bar": 638,
+          "source_key": "Bb Lydian"
+        }
+      ]
+    },
+    {
+      "file": "pop-tension.wav",
+      "preview": "pop-tension.m4a",
+      "seconds": 72.582803374432,
+      "segments": [
+        {
+          "mode": "dorian",
+          "start_seconds": 0.1,
+          "color_seconds": 7.0565217391304,
+          "return_seconds": 10.534782608696,
+          "end_seconds": 14.013043478261,
+          "source_bar": 38,
+          "source_key": "C Dorian"
+        },
+        {
+          "mode": "phrygian",
+          "start_seconds": 18.013043478261,
+          "color_seconds": 24.969565217391,
+          "return_seconds": 28.447826086957,
+          "end_seconds": 31.926086956522,
+          "source_bar": 14,
+          "source_key": "C Phrygian"
+        },
+        {
+          "mode": "mixolydian",
+          "start_seconds": 35.926086956522,
+          "color_seconds": 43.090266060999,
+          "return_seconds": 46.672355613238,
+          "end_seconds": 50.254445165477,
+          "source_bar": 78,
+          "source_key": "A Mixolydian"
+        },
+        {
+          "mode": "lydian",
+          "start_seconds": 54.254445165477,
+          "color_seconds": 61.418624269955,
+          "return_seconds": 65.000713822194,
+          "end_seconds": 68.582803374432,
+          "source_bar": 638,
+          "source_key": "Db Lydian"
+        }
+      ]
+    }
+  ]
+}

@@ -5,7 +5,7 @@ var foundation=~djStyleBar;
     var lib=original.copy;
     lib.palettes=original.palettes.collect { |palette|
         var p=palette.copy;
-        p.voices=palette.voices.copy;p.name="E / " ++ palette.name;
+        p.voices=palette.voices.copy;
         if([\full,\bass].includes(mode)) {
             p.voices[\djBass]=\edmEBass;p.bassName="Articulated " ++ palette.bassName;
         };

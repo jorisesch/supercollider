@@ -11,3 +11,13 @@ These numerical checks do not replace human listening review.
 `python3 scripts/build_site.py` packages the static listening page and selected media into ignored `_site/`. See [site/README.md](../site/README.md) for preview and GitHub Pages deployment.
 
 The Pop preview also checks its rendered timeline for contrasting verse/chorus/bridge progressions and one-bar chord changes.
+
+Rock backing-track previews are checked against `infinite/studies/rock/manifest.json` for format, 32-bar duration, activity, tonic-ending onset and quiet tails. Their SuperCollider composition check separately validates pitch membership in the advertised pentatonic or modal scale.
+
+`python3 scripts/verify_rock_fx.py` compares the rock effect and `nofx` renders: clean openings must be PCM-identical, and later effect passages must differ measurably. Mode-comparison WAVs are checked using `infinite/experiments/dj/modes-tour.json`.
+
+Rock channel renders use `infinite/experiments/dj/rock-preview.json` and `rock-tones.json`, including the slower tempo range, automatic handover and ensemble comparison. `rock-check.scd` and `channels-runtime-check.scd` cover composition and live controls separately.
+
+`python3 scripts/verify_rock_guitar.py` checks the temporary waveforms exported by `infinite/experiments/dj/rock-guitar-signal-check.scd`: audible slides/bends/vibrato, stable final pitch, guitar compression and isolated bass/drum routing.
+
+For the current physical guitar, render `infinite/experiments/dj/rock-physical-render.scd`, then run `python3 scripts/verify_rock_physical.py`. It checks waveform pitch, tension/fret behavior, the diode circuit against an independent solver, antialiasing, chord interaction, compression and guitar-only routing. The one-minute public study is also included in `verify_audio.py`. [Listening guide and research](../infinite/experiments/dj/GUITAR.md).

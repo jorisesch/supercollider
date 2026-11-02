@@ -1,0 +1,40 @@
+{
+  "seed": 731,
+  "sample_rate": 48000,
+  "channels": 2,
+  "sample_format": "int24",
+  "bars": 32,
+  "human_listening_review": "pending",
+  "source_sha256": {
+    "infinite/studies/rock/check.scd": "1a90c43df4be92bf83d21b9ea97c8bc68696969aa7d95ae194b685d99d823a53",
+    "infinite/studies/rock/instruments.scd": "048909801eaed6584be1b29976b9e9f20768e577e30e3ad6b90cd37ba86037f9",
+    "infinite/studies/rock/live.scd": "c6137965b5cea842a5d60b027746cf727d6c93b6c33c6b6e2e2425cb6c6c1434",
+    "infinite/studies/rock/render.scd": "00a87f5ff9a26b14f973545d3f03aadda7b47013d2b2f0402610824a31278dc3",
+    "infinite/studies/rock/run.scd": "0a8ed91af1d7a0ca71b27f11918ddcb10deb9c9ec9be10f0b86ee4eaf39fe537",
+    "infinite/studies/rock/runtime-check.scd": "73a0cb466e9ee9f73012e763fd08c3735b65f769a2442d0c2c32caa06e1f6900",
+    "infinite/studies/rock/tracks.scd": "f7707a5280d45211cb4cef71c15fb044b78763f264381cd2cb08e101990ab860",
+    "infinite/studies/rock/manifest.json": "da86df62ad347135e69346b2e70bb2dd2bd1023386a9358b875293f22c7ae34d",
+    "scripts/verify_audio.py": "3207930d0840e797d9789f876d6c67ab53454fa0eb03a80134840f81b4b867da",
+    "scripts/verify_rock_fx.py": "e2759e33ec72b5d209787a600dbe2577d4f97a5c14d7c5f99b0af9ce7b7d7898"
+  },
+  "audio_sha256": {
+    "audio/rock-ironwood.wav": "1b0593edcd1e1c6725929a45a5fa04a410685ceb31ec51740df9c85e6e695e96",
+    "audio/rock-ironwood.m4a": "b67fc876891b1c16644d102bc187bc65900429aa680694f91b3b16a9fc2b9ad5",
+    "audio/rock-green-room.wav": "a81a8ed3e3e55c6a0a44a7fe6443d89194de7bd84d17b1645d75cecbee491621",
+    "audio/rock-green-room.m4a": "6e0fc71dfaa10940ae0347bc0a9e85d9de0ba19723e8bd36554330dcfe8d065b",
+    "audio/rock-open-road.wav": "3a6f92fde1207752e07ad321351245ea6cd2a4fcc012a225ce73748736275d0b",
+    "audio/rock-open-road.m4a": "e1916fc2cf3b8494d29d1ec6f9007d29291cff144a5fdc13e1f4ab6b20307214"
+  },
+  "validation": [
+    "Scale membership, all advertised notes represented, backbeats, bounded event timings, 32 bars and tonic endings",
+    "Actual SuperCollider NRT rendering and WAV format, duration, activity, ending and headroom verification",
+    "Muted runtime: all three studies, internal signal, level edit, repeated stop, switching, natural completion and bus cleanup",
+    "Effect bypass preserves all planned notes, timings and seeds; drums and intro remain unprocessed",
+    "48 kHz stereo PCM A/B: first eight bars identical to bypass; selected effects measured later in all three tracks"
+  ],
+  "effect_difference_to_bypass_rms": {
+    "ironwood": 0.154,
+    "greenroom": 0.11,
+    "openroad": 0.182
+  }
+}

@@ -13,11 +13,22 @@ expected = {'quindar-in.wav', 'quindar-out.wav', 'quindar-in-out.wav',
             'quindar-in-noisy.wav', 'quindar-out-noisy.wav'}
 studies = {}
 study_manifest = {}
+rock_manifest_path = Path('infinite/studies/rock/manifest.json')
+rock_manifest = json.loads(rock_manifest_path.read_text()) if rock_manifest_path.exists() else {}
+rock_specs = {spec['file']: spec for spec in rock_manifest.get('tracks', [])}
+modes_manifest_path = Path('infinite/experiments/dj/modes-tour.json')
+modes_manifest = json.loads(modes_manifest_path.read_text()) if modes_manifest_path.exists() else {}
+modes_specs = {spec['file']: spec for spec in modes_manifest.get('tracks', [])}
+tension_manifest = json.loads(Path('infinite/experiments/dj/tension-tour.json').read_text())
+tension_specs = {spec['file']: spec for spec in tension_manifest['tracks']}
 dj_manifests = {}
+guitar_study = json.loads(Path('infinite/experiments/dj/rock-guitar-study.json').read_text())
 for manifest_path in (Path('infinite/experiments/dj/preview.json'), Path('infinite/experiments/dj/track.json'),
                       Path('infinite/experiments/dj/palette-tour.json'),
                       Path('infinite/experiments/dj/digital-drive.json'),
                       Path('infinite/experiments/dj/pop.json'),
+                      Path('infinite/experiments/dj/rock-preview.json'),
+                      Path('infinite/experiments/dj/rock-tones.json'),
                       Path('infinite/experiments/dj/e-track.json'),
                       Path('infinite/experiments/dj/e-compare.json'),
                       Path('infinite/experiments/dj/e-set.json'),
@@ -33,7 +44,7 @@ assert expected <= {p.name for p in Path('audio').glob('*.wav')}, 'Missing audio
 noise_signatures = {}
 results = {}
 for path in sorted(Path('audio').glob('*.wav')):
-    if path.name not in expected and path.name not in dj_manifests and path.name not in {'neon-rush.wav', 'infinite-soundscape.wav'}:
+    if path.name not in expected and path.name not in dj_manifests and path.name not in {'neon-rush.wav', 'infinite-soundscape.wav', guitar_study['file']} and path.name not in rock_specs and path.name not in modes_specs and path.name not in tension_specs:
         continue
     dj_manifest = dj_manifests.get(path.name)
     with wave.open(str(path), 'rb') as w:
@@ -48,6 +59,18 @@ for path in sorted(Path('audio').glob('*.wav')):
     edge = max(map(abs, values[-4800:]))
     assert edge < 0.0001
     result = dict(seconds=round(frames/rate, 4), sample_rate=rate, channels=channels, peak_dbfs=round(20*math.log10(peak), 2), rms_dbfs=round(20*math.log10(rms), 2), end_peak=edge)
+    if path.name == guitar_study['file']:
+        assert abs(frames/rate-guitar_study['seconds']) < 0.003
+        assert max(map(abs, values[:int(0.08*rate)*channels])) < 0.0001
+        levels = {}
+        for segment in guitar_study['segments']:
+            start = int((segment['start_seconds']+0.04)*rate)*channels
+            end = int((segment['end_seconds']-0.15)*rate)*channels
+            level = math.sqrt(sum(v*v for v in values[start:end])/(end-start))
+            assert level > 0.002, 'Silent guitar study segment'
+            levels[segment['name']] = round(20*math.log10(level), 2)
+        result.update(title=guitar_study['title'], segment_rms_dbfs=levels,
+                      human_listening_review=guitar_study['human_listening_review'])
     if dj_manifest and path.name == dj_manifest['file']:
         with Path(dj_manifest['timeline']).open(newline='') as timeline_file:
             timeline = list(csv.DictReader(timeline_file, delimiter='\t'))
@@ -62,7 +85,7 @@ for path in sorted(Path('audio').glob('*.wav')):
         block_rms = []
         for bar, row in enumerate(timeline[:-1]):
             assert int(row['bar']) == bar and times[bar+1] > times[bar]
-            assert 118 <= float(row['bpm']) <= 140
+            assert dj_manifest.get('bpm_range', [118, 140])[0] <= float(row['bpm']) <= dj_manifest.get('bpm_range', [118, 140])[1]
             start, end = int(times[bar]*rate)*2, int(times[bar+1]*rate)*2
             assert max(map(abs, values[start:end])) > 0.002, 'Unexpected silent DJ bar'
             records.update(int(row[key]) for key in ('record_a', 'record_b') if int(row[key]) >= 0)
@@ -171,6 +194,32 @@ for path in sorted(Path('audio').glob('*.wav')):
                       settings=dj_manifest['settings'], records=sorted(records), palettes=sorted(palettes),
                       music_seconds=round(times[-1]-times[0], 4),
                       music_rms_dbfs=round(20*math.log10(level), 2), four_bar_rms_dbfs=block_rms)
+        if dj_manifest.get('rock_lead_version') == 1:
+            solo_bars = 0
+            solo_phrases = []
+            landings = []
+            for row in timeline[:-1]:
+                for deck in ('a', 'b'):
+                    if int(row[f'solo_{deck}']):
+                        solo_bars += 1
+                        if int(row[f'solo_age_{deck}']) == 0:
+                            solo_phrases.append(dict(bar=int(row['bar']), seconds=float(row['seconds']),
+                                                     bars=int(row[f'solo_bars_{deck}'])))
+                    if row[f'landing_notes_{deck}'] != 'none':
+                        notes = list(map(int, row[f'landing_notes_{deck}'].split(',')))
+                        offsets = list(map(int, row[f'landing_offsets_{deck}'].split(',')))
+                        beats = list(map(float, row[f'landing_beats_{deck}'].split(',')))
+                        assert len(notes) == len(offsets) == len(beats)
+                        for note, offset, beat in zip(notes, offsets, beats):
+                            assert offset in (0, 2, 4) and 60 <= note <= 84
+                            at = float(row['seconds']) + beat*60/float(row['bpm'])
+                            segment = values[int(at*rate)*channels:int((at+0.1)*rate)*channels]
+                            assert max(map(abs, segment)) > 0.002, 'Landing section has no audio'
+                            landings.append(dict(bar=int(row['bar']), midinote=note, chord_offset=offset))
+            assert solo_bars >= dj_manifest.get('minimum_solo_bars', 0)
+            assert len(solo_phrases) >= dj_manifest.get('minimum_solo_phrases', 0)
+            assert landings, 'Rock preview has no chord-tone resolutions'
+            result.update(solo_bars=solo_bars, solo_phrases=solo_phrases, chord_landings=landings)
         if dj_manifest.get('segments'):
             palette_levels = {}
             segments = dj_manifest['segments']
@@ -183,6 +232,55 @@ for path in sorted(Path('audio').glob('*.wav')):
                 palette_levels[spec['name']] = round(20*math.log10(level), 2)
             assert max(palette_levels.values()) - min(palette_levels.values()) < 6, 'Palette mix levels are poorly matched'
             result['segment_rms_dbfs' if dj_manifest.get('comparison_mode') else 'palette_rms_dbfs'] = palette_levels
+    if path.name in modes_specs:
+        spec = modes_specs[path.name]
+        assert abs(frames/rate - spec['seconds']) < 0.003, 'Wrong mode comparison duration'
+        assert max(map(abs, values[:int(0.08*rate)*channels])) < 0.0001
+        mode_levels = {}
+        for segment in spec['segments']:
+            start = int(segment['start_seconds']*rate)*channels
+            end = int((segment['start_seconds']+segment['music_seconds'])*rate)*channels
+            active = values[start:end]
+            level = math.sqrt(sum(v*v for v in active)/len(active))
+            assert level > 0.001, 'Silent modal segment'
+            mode_levels[segment['mode']] = round(20*math.log10(level), 2)
+        result.update(title='Modal comparison', channel=path.stem.split('-')[0],
+                      bpm=spec['bpm'], tonic=modes_manifest['tonic'],
+                      melody=modes_manifest['melody'], mode_rms_dbfs=mode_levels)
+    if path.name in tension_specs:
+        spec = tension_specs[path.name]
+        assert abs(frames/rate - spec['seconds']) < 0.003, 'Wrong Tension comparison duration'
+        assert max(map(abs, values[:int(0.08*rate)*channels])) < 0.0001
+        assert {s['mode'] for s in spec['segments']} == {'dorian', 'phrygian', 'mixolydian', 'lydian'}
+        levels = {}
+        for s in spec['segments']:
+            boundaries = [s['start_seconds'], s['color_seconds'], s['return_seconds'], s['end_seconds']]
+            assert boundaries == sorted(boundaries) and len(set(boundaries)) == 4
+            parts = []
+            for start, end in zip(boundaries, boundaries[1:]):
+                samples = values[int(start*rate)*channels:int(end*rate)*channels]
+                level = math.sqrt(sum(v*v for v in samples)/len(samples))
+                assert level > 0.001, 'Silent base, accent or return in Tension demo'
+                parts.append(round(20*math.log10(level), 2))
+            levels[s['mode']] = dict(zip(['base', 'accent', 'return'], parts))
+        result.update(title='Sparse Tension colors', tension=tension_manifest['tension'],
+                      channel=path.stem.split('-')[0], excerpt_rms_dbfs=levels)
+    if path.name in rock_specs:
+        spec = rock_specs[path.name]
+        beat_seconds = 60 / spec['bpm']
+        expected_seconds = (rock_manifest['lead_in_seconds'] +
+                            rock_manifest['bars'] * rock_manifest['beats_per_bar'] * beat_seconds +
+                            rock_manifest['tail_seconds'])
+        assert abs(frames/rate - expected_seconds) < 0.003, 'Wrong rock arrangement duration'
+        assert max(map(abs, values[:int(0.08*rate)*channels])) < 0.0001
+        for bar in range(rock_manifest['bars']):
+            start = int((0.1 + bar*4*beat_seconds)*rate)*channels
+            end = int((0.1 + (bar+1)*4*beat_seconds)*rate)*channels
+            assert max(map(abs, values[start:end])) > 0.002, 'Unexpected silent rock bar'
+        final = int((0.1 + 128*beat_seconds)*rate)*channels
+        assert max(map(abs, values[final:final+int(0.2*rate)*channels])) > 0.01, 'Missing tonic ending'
+        result.update(title=spec['title'], bpm=spec['bpm'], bars=32,
+                      scale=spec['scale_name'], solo_notes=spec['notes'], seed=rock_manifest['seed'])
     if path.name == 'neon-rush.wav':
         assert abs(frames/rate - (0.1 + 48*4*60/138 + 4)) < 0.003
         assert max(map(abs, values[:int(0.08*rate)*2])) < 0.0001

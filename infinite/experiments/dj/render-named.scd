@@ -6,7 +6,7 @@ var root=thisProcess.nowExecutingPath.dirname,args=thisProcess.argv;
 var name=args.at(0),channel=(args.at(1) ? "original").asSymbol,slug,component=args.at(3);
 try {
 if(name.isNil) {Error("Provide a complete saved track name").throw};
-if([\edm,\edme,\original].includes(channel).not) {Error("Unknown render channel").throw};
+if([\edm,\edme,\legacy,\original].includes(channel).not) {Error("Unknown render channel").throw};
 if(component.notNil) {
     component=component.asSymbol;
     if(channel!=\edme or: {[\percussion,\chords,\bass].includes(component).not}) {

@@ -52,14 +52,14 @@ server.waitForBoot {
             assert.value(~djEngine===engine,"Resume reset EDM E composition");
             oldBus=~djBus;
             ui.value {menu.valueAction_(2)};
-            waitFor.value {~djRoutine.notNil and:{~djEngine.channel==\edm}};
+            waitFor.value {~djRoutine.notNil and:{~djEngine.channel==\rock}};
             3.4.wait;
             assert.value(oldBus.index.isNil,"Channel switch leaked its old bus");
-            assert.value(~djInitialBpm==128,"EDM switch changed default tempo");
+            assert.value(~djInitialBpm==102,"Rock selector did not set its tempo");
             ui.value {~djWindow.close}; 3.4.wait;
             meter.free;output.free;server.sync;
             assert.value(failures.isEmpty,"EDM E runtime server error");
-            "PASS: actual EDM/EDM Classic selector callbacks, Bass hook/Fill, EDM E handover, internal signal, STOP/START, return to EDM Classic and fade cleanup. Hardware muted.".postln;
+            "PASS: actual EDM/Rock selector callbacks, Bass hook/Fill, EDM E handover, internal signal, STOP/START, switch to Rock and fade cleanup. Hardware muted.".postln;
             onFail.free;onLevel.free;server.quit;0.exit;
         } { |e| e.reportError;~djStop.value;server.quit;1.exit };
     }.play(SystemClock);

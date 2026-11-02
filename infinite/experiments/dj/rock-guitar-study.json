@@ -1,0 +1,22 @@
+{
+  "file": "rock-guitar-study.wav",
+  "preview": "rock-guitar-study.m4a",
+  "title": "Physical guitar techniques and circuit study",
+  "seconds": 60.5,
+  "rock_tone_version": 2,
+  "human_listening_review": "pending",
+  "segments": [
+    {"start_seconds": 0.1, "end_seconds": 4.0, "name": "picked reference"},
+    {"start_seconds": 4.1, "end_seconds": 8.0, "name": "bend and release"},
+    {"start_seconds": 8.1, "end_seconds": 12.0, "name": "bend into target"},
+    {"start_seconds": 12.1, "end_seconds": 16.0, "name": "finger vibrato"},
+    {"start_seconds": 16.1, "end_seconds": 20.0, "name": "fretted E-to-A slide"},
+    {"start_seconds": 20.1, "end_seconds": 24.0, "name": "open and palm-muted"},
+    {"start_seconds": 24.1, "end_seconds": 30.0, "name": "clean phrase"},
+    {"start_seconds": 30.1, "end_seconds": 36.0, "name": "two-stage overdrive"},
+    {"start_seconds": 36.1, "end_seconds": 42.0, "name": "feedback diode overdrive"},
+    {"start_seconds": 42.1, "end_seconds": 48.0, "name": "post-amplifier diode distortion"},
+    {"start_seconds": 48.1, "end_seconds": 54.0, "name": "two-stage fuzz"},
+    {"start_seconds": 54.1, "end_seconds": 60.1, "name": "clean chorus"}
+  ]
+}

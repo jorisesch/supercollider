@@ -1,6 +1,6 @@
 # Run the music
 
-Choose **EDM**, **Pop**, or **Soundscapes**. Each creates music continuously and opens a window with controls.
+Choose **EDM**, **Pop**, **Rock**, or **Soundscapes**. Each creates music continuously and opens a window with controls.
 
 ## Get ready
 
@@ -26,7 +26,17 @@ Bright synths, varied chord progressions and returning chorus hooks:
 /Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/experiments/pop.scd
 ```
 
-You can also switch between EDM and Pop using the DJ window's channel menu.
+You can also switch between EDM, Pop and Rock using the DJ window's channel menu.
+
+## Rock
+
+Guitar riffs, occasional solos, bass and a room drum kit, with clean, crunch and fuzz arrangements:
+
+```sh
+/Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/experiments/rock.scd
+```
+
+[Listen and see the Rock controls](experiments/dj/ROCK.md).
 
 ## Soundscapes
 
@@ -37,6 +47,10 @@ Slow, infinitely evolving textures, with their own control window:
 ```
 
 These commands are for macOS. On Windows or Linux, replace the full executable path with `sclang` if it is on your PATH, or use the path to your installed `sclang` executable.
+
+## Musical modes
+
+In EDM and Pop, leave **Mode** on **Auto / follows Tension**. Turn **Tension** up for occasional modal accents; lower settings keep normal major/minor harmony. You can also choose simpler **Pentatonic melodies**, then press **Apply mode**. Rock retains its fixed mode choices. [See the Tension ranges and hear examples](experiments/dj/MODES.md).
 
 ## Play and stop
 

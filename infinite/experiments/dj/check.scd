@@ -16,7 +16,7 @@ try {
     };
     (root +/+ "engine.scd").load;
     ~makeClassicDJEngine={ |seed=2600,bpm=128,settings|
-        ~makeDJEngine.value(seed,bpm,(settings ? ()).copy.put(\channel,\edm))
+        ~makeDJEngine.value(seed,bpm,(settings ? ()).copy.put(\channel,\legacy))
     };
     (root +/+ "instruments.scd").load;
     ~djDefs.do { |def| assert.value(def.asBytes.size > 0,"Invalid instrument") };

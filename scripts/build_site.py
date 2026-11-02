@@ -15,7 +15,7 @@ for name in ('index.html', 'style.css', 'app.js'):
     shutil.copyfile(root / 'site' / name, output / name)
 for folder, files in {
     'assets': ('infinite-dj-banner.png', 'infinite-dj-controls.png'),
-    'audio': ('edm-e-set.m4a', 'dj-pop-preview.m4a', 'infinite-soundscape.m4a'),
+    'audio': ('edm-e-set.m4a', 'dj-pop-preview.m4a', 'infinite-soundscape.m4a', 'rock-channel.m4a'),
 }.items():
     (output / folder).mkdir(exist_ok=True)
     for name in files:

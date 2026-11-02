@@ -1,0 +1,66 @@
+{
+  "seed": 2600,
+  "tonic": "C",
+  "melody": "pentatonic",
+  "bars_per_segment": 8,
+  "tail_per_segment_seconds": 4,
+  "human_listening_review": "pending",
+  "tracks": [
+    {
+      "file": "edm-modes.wav",
+      "preview": "edm-modes.m4a",
+      "bpm": 128,
+      "seconds": 76.1,
+      "segments": [
+        {
+          "mode": "aeolian",
+          "start_seconds": 0.1,
+          "music_seconds": 15.0
+        },
+        {
+          "mode": "dorian",
+          "start_seconds": 19.1,
+          "music_seconds": 15.0
+        },
+        {
+          "mode": "phrygian",
+          "start_seconds": 38.1,
+          "music_seconds": 15.0
+        },
+        {
+          "mode": "mixolydian",
+          "start_seconds": 57.1,
+          "music_seconds": 15.0
+        }
+      ]
+    },
+    {
+      "file": "pop-modes.wav",
+      "preview": "pop-modes.m4a",
+      "bpm": 138,
+      "seconds": 71.75217391304346,
+      "segments": [
+        {
+          "mode": "aeolian",
+          "start_seconds": 0.1,
+          "music_seconds": 13.91304347826087
+        },
+        {
+          "mode": "dorian",
+          "start_seconds": 18.01304347826087,
+          "music_seconds": 13.91304347826087
+        },
+        {
+          "mode": "phrygian",
+          "start_seconds": 35.926086956521736,
+          "music_seconds": 13.91304347826087
+        },
+        {
+          "mode": "mixolydian",
+          "start_seconds": 53.839130434782604,
+          "music_seconds": 13.91304347826087
+        }
+      ]
+    }
+  ]
+}

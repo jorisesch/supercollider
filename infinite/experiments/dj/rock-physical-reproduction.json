@@ -1,0 +1,183 @@
+{
+  "recipe_schema": 6,
+  "rock_tone_version": 2,
+  "sample_rate": 48000,
+  "channels": 2,
+  "sample_format": "int24",
+  "human_listening_review": "pending",
+  "previous_source_fingerprint": 2074328684,
+  "source_fingerprint": 278735445,
+  "research_notes": "GUITAR.md",
+  "scope": "Reduced physical string and circuit models; no measured hardware calibration or human listening approval claimed.",
+  "source_sha256": {
+    "infinite/experiments/dj/bass-check.scd": "aeba0e70fb9cf6ef94b46775574c3f16a5650aa05b4a1c513120b1b36d930564",
+    "infinite/experiments/dj/channels-check.scd": "67560933ecca354a562d071fd795500f29353f5686f4558dccf87af8ca599682",
+    "infinite/experiments/dj/channels-runtime-check.scd": "7d26c1857c5822add1051041e15fc0911087119a47ca12a5a31a191d2d7a81d6",
+    "infinite/experiments/dj/check.scd": "08f0dff9fce87f803af77ef1adb3a883f9c23e06029c4fa083551497099f0345",
+    "infinite/experiments/dj/controls.scd": "987be9dad93625fb2a55152d18a77d5fbd919d92212e5bbb0b33ca57fee0733d",
+    "infinite/experiments/dj/deck-view-check.scd": "29d3bebc80d122a7f826c4340a5b66d5aa4cff4d46b51dea445a23b59b7c338d",
+    "infinite/experiments/dj/e-check.scd": "362b9e1e1212b237a1f90dedacba6d29682a64de596367f1684d8a505182073b",
+    "infinite/experiments/dj/e-instruments.scd": "398cd6400dfd7d2a1f7e962faba9e8bf00cdfebfd8a39fbf6723829cb5127f9f",
+    "infinite/experiments/dj/e-runtime-check.scd": "d5c7cc6475fbe35d7b6c2257485dbe76818ecd1d803da22c74a9bcb983a8e9fc",
+    "infinite/experiments/dj/e-style.scd": "e457229339b881b5e195be1b61994dace5c0e7fb40ed6521e853e9f937e7c63e",
+    "infinite/experiments/dj/engine.scd": "81b7f280a29c3d2284059c69dbec981c40ba40cd021ef3844c1468c788081afd",
+    "infinite/experiments/dj/instruments.scd": "2e22cab9e263766bc4727d3c1f4ec5acbe3dceaaa3013f2d96e753979712785d",
+    "infinite/experiments/dj/interaction-check.scd": "8ec2abce6f837101d774b854dd230d596a4a4c2798a4232c0b7121c98411ad3e",
+    "infinite/experiments/dj/launch.scd": "9c729c9d72953c762583eaadbdececd428d4e930e0907daac5e12b418c8be474",
+    "infinite/experiments/dj/lead-compare.scd": "7ab8ef3eef9f97f505105d153fb4384f4f696597aa890d6c7d5e2ce7313f1789",
+    "infinite/experiments/dj/library.scd": "cd1cec5a0d3d33657a4791aef0bd0593ebc7a12fed16552e76a33b821044e291",
+    "infinite/experiments/dj/live.scd": "88c78a7dd8317e32fc9ce628223532135ed2d5426d95be5a7b3b348785502377",
+    "infinite/experiments/dj/manual-fx-check.scd": "5fccd31471b0d8efa068a419a66b0a47e6eab3d8404c4b190d6ef5a01528b72e",
+    "infinite/experiments/dj/modes-check.scd": "60d22f3c08bd4069e166e39732fb05710ef9ad9ac2b194c93e9692bad9d882a6",
+    "infinite/experiments/dj/modes-render.scd": "026774fb27fd92a94ead711a00132b769ac8de6d48f7fe2ada9159920df0c4dc",
+    "infinite/experiments/dj/modes-runtime-check.scd": "f868b7fe6718328611c4a11546f49335b0dd4f2bb3a083d7a0521b3c2e9bd525",
+    "infinite/experiments/dj/modes.scd": "0f0712216cbeefd9517bf491753307dc4e1ba22e6501705b9588243b0d848019",
+    "infinite/experiments/dj/palette-instruments.scd": "d727d555ec7562e8c3853930c9ee849e25fa9faeb70cc56b3dfda07217348960",
+    "infinite/experiments/dj/pop-check.scd": "a88af65cf085805b944885b455765ee84e9688abfb985dcc7558ff8141ab4739",
+    "infinite/experiments/dj/pop-instruments.scd": "06c15c4f229cf6852d6f61ec76e5aae9927c36f1dc0768d913b42315d9d79049",
+    "infinite/experiments/dj/pop-runtime-check.scd": "995fd0815a65ecfe5dad5e962bd908359729ed98b5bc98d7bd20ff3e4b0e9712",
+    "infinite/experiments/dj/pop-style.scd": "855cedbe0e4fa5c24549ab022eac0750b7add118fbe0d13349e6fb874210a87f",
+    "infinite/experiments/dj/recall.scd": "b57836b08f4fe575637817de2ce6ae871c9fdc4b82112980c755ed8eab894c72",
+    "infinite/experiments/dj/render-named.scd": "f5e647d3dc55e2008de7ac16d90dac40629bfb7519eb9cff18a613fea327f103",
+    "infinite/experiments/dj/render.scd": "ddc378bd2773f5e46fece934bddb86152d2c97a6cc0e582acd595a2da0e03218",
+    "infinite/experiments/dj/rock-check.scd": "f013e4ee2c4be5007f6c8ab5220e1462fd5046ddfe945e0de06d6b1b4140f22b",
+    "infinite/experiments/dj/rock-circuits.scd": "94046fe4fefa5a0809d9f7b6d42954ae51d02cfe2a16d395b9f43e6a2904280b",
+    "infinite/experiments/dj/rock-expression-check.scd": "0a4f29197c0259985459dc914dc2d9025f921df6e746686e4f692c5f15eab604",
+    "infinite/experiments/dj/rock-expression.scd": "5fd4d9359dab3ce76ff32aade110e7c3ae963e16b8be1bdcaaf91a312b977126",
+    "infinite/experiments/dj/rock-expressive-instruments.scd": "5f7e6d1134bd2335e5772d16dc223e834b6b2d253deb855ce9c53105c58a5292",
+    "infinite/experiments/dj/rock-guitar-signal-check.scd": "9955b2e35c3558c8118c180b109995d6c3c9d1ffc565d990243bfa20a9555640",
+    "infinite/experiments/dj/rock-guitar-study.json": "fcb623565f5b3e4cffd992528d845bd233c587fcb31653655ee4d4cd8b9fd1e0",
+    "infinite/experiments/dj/rock-instruments.scd": "150ac1d70f8c33f06c7c321bf7d6e4621b93c67212b4926103cf0761d4066503",
+    "infinite/experiments/dj/rock-physical-check.scd": "152bc360eb0521e995c1fd045b304293ca7440e0e630fec6f63b28cae74d1b90",
+    "infinite/experiments/dj/rock-physical-instruments.scd": "6aa9382a30657124b10b3d30b789b52b35a84c3da741cb069ec72359b174e6ff",
+    "infinite/experiments/dj/rock-physical-render.scd": "e9ae8e33c51bd487e4e3e1e623755d377c71289d0ef31a9d8b217263d9da3e7a",
+    "infinite/experiments/dj/rock-physical-style.scd": "02d7a8cdc6cb7ecc9d15235dad7b128129b6f4e14eadb5054185639b8a8a2425",
+    "infinite/experiments/dj/rock-preview.json": "a4e80fa98c54dbfce379a4659b54108cd32b76c1f32bfd39d80fa10c0877e3f8",
+    "infinite/experiments/dj/rock-render.scd": "2fe7dd4b6af0ddf2386f9ab8d5b3e6ee09c81ca9faf80c384bb042a76f03ebb0",
+    "infinite/experiments/dj/rock-solo-check.scd": "3537f0a4c2dad4c4fa8eaa55f8135de7e634d2861ca0fa424112ec096c5f4162",
+    "infinite/experiments/dj/rock-solo-runtime-check.scd": "19d35e4573042a2b284eb44371b222c58d18d68d3ce211317b6b7bf755dc4cda",
+    "infinite/experiments/dj/rock-style.scd": "c03a698a9d31836887674c621bf9d2027c9ada01bc1ff21dee1a43fdf66fec3e",
+    "infinite/experiments/dj/rock-tones.json": "bae0b993de3b2bad23ed814d17ec9ba246c6b563830bb90c495fc548ee98c5c4",
+    "infinite/experiments/dj/runtime-check.scd": "eb3a41f4223288d9aeaf277c737723835956449ef4421758a9af51244d3cd6d1",
+    "infinite/experiments/dj/spectrum-check.scd": "18f70f91c97a5c8945f94c2e61e32a120f6ef2e2f7400b24effb41cf8c24a6c3",
+    "infinite/experiments/dj/spectrum.scd": "e9903f3c318c4c7700b7d1a0f2efbbd4a84c30ddce420febf0109f72ac02f458",
+    "infinite/experiments/dj/stutter-check.scd": "f31c1e3edecc670fd97b10528fa49cefe442e006c46c248dcc47addc27af4ec5",
+    "infinite/experiments/dj/style.scd": "12c86ec3813a267d80393f35aba15c6bd6a6516e1b3bcedfe99e9e13a8ba99c7",
+    "infinite/experiments/dj/tension-check.scd": "3ff90a17e34e0760c37b6aa143e6564a377cc2cd97e3a5301474f630ff4d05db",
+    "infinite/experiments/dj/tension-render.scd": "aa0d309a1ed533e37332423e4f0db18619cb56633750caae512dc20a1c1b1cb6",
+    "infinite/experiments/dj/tension-runtime-check.scd": "deb8fc2430cdee338d3dabb38ed294d4090b139dfd4e7d4af50b93051efca287",
+    "scripts/verify_audio.py": "2fe7351c8cdead3cdda3c4bc2ee4adb102a9ebc4d83619a2d7f951391cf1a0c7",
+    "scripts/verify_rock_physical.py": "6f23adb08c6bb82e4dfe34dd0be10b31d169a967426e469f291571c7b0ac74a2"
+  },
+  "audio_sha256": {
+    "audio/rock-channel.wav": "d3c3e8e7bd784af4e3a5deb5fd9e13dcf2ff5f7b9868a0c9d171294dc6e9ce35",
+    "audio/rock-channel.m4a": "71e7ec0c567c110513ce32cd4c2f99150faee62e85307d4e6f13a58041ec489e",
+    "audio/rock-tones.wav": "709c58fbe5bab0a9e20492b6242026d73ce48cc3f2b87c70bfd440d61b1844d8",
+    "audio/rock-tones.m4a": "c9768ff02f405668033cafbee92384a02518e47fb60121f0cb2a5c925e27f1d2",
+    "audio/rock-guitar-study.wav": "74bbec301a0aadffdc4974ea770c80913bc220f4bb86ecc941157164072bfd68",
+    "audio/rock-guitar-study.m4a": "3445eb0e77937ad29e8faaa9c3c3a206ab72a5263d7f0b96efa25603e14635c2"
+  },
+  "signal_verification": {
+    "plain": {
+      "max_pitch_error_cents": 0.59,
+      "ending_hz": 440.01
+    },
+    "bend_return": {
+      "max_pitch_error_cents": 0.71,
+      "ending_hz": 440.01
+    },
+    "bend_arrival": {
+      "max_pitch_error_cents": 0.6,
+      "ending_hz": 439.91
+    },
+    "vibrato": {
+      "max_pitch_error_cents": 14.02,
+      "ending_hz": 440.01
+    },
+    "fretted_slide": {
+      "max_pitch_error_cents": 31.25,
+      "ending_hz": 440.02
+    },
+    "diode_root_max_error_volts": 6.667251717829004e-06,
+    "adaa_max_error_volts": 0.00032598081995782735,
+    "fifth_harmonic_alias_reduction_db": 8.46,
+    "shared_chord_interaction_relative_rms": 0.576,
+    "compressor_gain": 0.5666,
+    "bass_drums_pcm_identical": true,
+    "study_peak_dbfs": -1.25,
+    "human_listening_review": "pending"
+  },
+  "validation": [
+    "1792 physical Rock bars: playable string assignments, chord/score/rhythm preservation, bounded techniques, current and previous-source recipe recall",
+    "Previous tone-1 check: 3584 bars, all techniques and pedal colors; 14336-bar solo and 4608-bar Rock checks pass",
+    "3072-bar modes, 32768-bar Tension, channel aliases and performance-history/held-effect checks pass",
+    "128 serialized bars each: EDM/Pop unchanged; saved tone-1 Rock events/automation unchanged; six earlier instrument graphs byte-identical",
+    "Actual muted Riff GUI callback: four-bar pentatonic phrase, chord-tone landing delivered to server, internal audio and cleanup pass",
+    "Independent waveform pitch and settled endings; fixed frets/rising tension for bends; intermediate fret contacts for slides",
+    "Diode KCL vs independent bisection; ADAA vs analytical integral; high-frequency alias reduction; chord intermodulation; compression; PCM-identical bass/drums",
+    "Actual SuperCollider NRT renders checked for format, duration, segment activity, solo/chord metadata, finite headroom and quiet tails",
+    "Four-player companion-site build and local media checks pass"
+  ],
+  "listening_study_segments": [
+    {
+      "start_seconds": 0.1,
+      "end_seconds": 4.0,
+      "name": "picked reference"
+    },
+    {
+      "start_seconds": 4.1,
+      "end_seconds": 8.0,
+      "name": "bend and release"
+    },
+    {
+      "start_seconds": 8.1,
+      "end_seconds": 12.0,
+      "name": "bend into target"
+    },
+    {
+      "start_seconds": 12.1,
+      "end_seconds": 16.0,
+      "name": "finger vibrato"
+    },
+    {
+      "start_seconds": 16.1,
+      "end_seconds": 20.0,
+      "name": "fretted E-to-A slide"
+    },
+    {
+      "start_seconds": 20.1,
+      "end_seconds": 24.0,
+      "name": "open and palm-muted"
+    },
+    {
+      "start_seconds": 24.1,
+      "end_seconds": 30.0,
+      "name": "clean phrase"
+    },
+    {
+      "start_seconds": 30.1,
+      "end_seconds": 36.0,
+      "name": "two-stage overdrive"
+    },
+    {
+      "start_seconds": 36.1,
+      "end_seconds": 42.0,
+      "name": "feedback diode overdrive"
+    },
+    {
+      "start_seconds": 42.1,
+      "end_seconds": 48.0,
+      "name": "post-amplifier diode distortion"
+    },
+    {
+      "start_seconds": 48.1,
+      "end_seconds": 54.0,
+      "name": "two-stage fuzz"
+    },
+    {
+      "start_seconds": 54.1,
+      "end_seconds": 60.1,
+      "name": "clean chorus"
+    }
+  ]
+}

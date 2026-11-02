@@ -56,7 +56,7 @@
     bridge=contrast.value([verse,chorus]).atAll([0,2]);
     chorusDurations=choose.value(lib.durations.reject { |durations| durations==plan.durations });
     harmony=(verse:verse,chorus:chorus,bridge:bridge,
-        buildup:[bridge[0],4],verseDurations:plan.durations,chorusDurations:chorusDurations);
+        buildup:[bridge[0],lib[\cadenceDegree] ? 4],verseDurations:plan.durations,chorusDurations:chorusDurations);
     plan.harmony=harmony;
     plan.sections.do { |part|
         var role,progression,durations,cursor=part.start,index=0;

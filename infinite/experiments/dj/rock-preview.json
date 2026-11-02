@@ -1,0 +1,26 @@
+{
+  "file": "rock-channel.wav",
+  "preview": "rock-channel.m4a",
+  "title": "Infinite DJ \u2014 Rock",
+  "timeline": "infinite/experiments/dj/rock-channel-timeline.tsv",
+  "seed": 2600,
+  "bars": 64,
+  "initial_bpm": 102,
+  "bpm_range": [
+    78,
+    124
+  ],
+  "lead_in_seconds": 0.1,
+  "tail_seconds": 4,
+  "settings": {
+    "channel": "rock",
+    "autoStutter": false
+  },
+  "minimum_records": 2,
+  "minimum_palettes": 2,
+  "human_listening_review": "pending",
+  "rock_lead_version": 1,
+  "minimum_solo_bars": 4,
+  "minimum_solo_phrases": 1,
+  "rock_tone_version": 2
+}

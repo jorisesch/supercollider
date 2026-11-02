@@ -4,13 +4,14 @@ var root=thisProcess.nowExecutingPath.dirname;
 (root +/+ "spectrum.scd").load;
 ~djShow={
     if(~djWindow.isNil) {
-        var window=Window("Infinite DJ",Rect(0,0,860,560).center_(Window.availableBounds.center));
+        var window=Window("Infinite DJ",Rect(0,0,860,600).center_(Window.availableBounds.center));
         var titles,deckLabels,deckStatus,progress,knobs,transport,next,hook,fill,hold,more,channel,auto,fxMenu,fxButton,update,spectrum;
         var fxNames=["Filter","Echo","Wash","Stutter 1/4","Stutter 1/8","Stutter 1/16"];
         var fxKinds=[\filter,\echo,\wash,\stutter4,\stutter8,\stutter16];
         var descriptions=["Adventurous fills and rhythmic variation","Bass pickups and percussion",
-            "Small changes to the bass answer","Filter brightness, saturation and musical tension"];
-        var recallWindow,tick=0;
+            "Small changes to the bass answer","Brightness and drive; above 60%, occasional modal accents in EDM/Pop"];
+        var recallWindow,lastModeEngine,mode,pent,apply,harmonyHint,tick=0;
+        var modeChoices=[\original,\aeolian,\ionian,\dorian,\phrygian,\mixolydian,\lydian];
         ~djWindow=window;
         deckLabels=Array.newClear(2);deckStatus=Array.newClear(2);
         titles=Array.fill(2,{ |deck|
@@ -30,6 +31,7 @@ var root=thisProcess.nowExecutingPath.dirname;
             Knob(window,Rect(x,110,60,60)).mode_(\vert).value_(~djSettings[key]).action_ { |view|
                 ~djSettings[key]=view.value;~djSet.value;
                 ("DJ " ++ key ++ ": " ++ (view.value*100).round ++ "% / next bar").postln;
+                if(key==\tension){"DJ Tension harmony / occasional phrase endings above 60%; rare colors above 85%".postln};
             };
         });
         transport=Button(window,Rect(20,190,90,30)).states_([["STOP"],["START"]])
@@ -65,8 +67,8 @@ var root=thisProcess.nowExecutingPath.dirname;
                 );
                 view.value_(0);
             };
-        channel=PopUpMenu(window,Rect(665,190,175,30)).items_(["EDM","Pop","EDM Classic"])
-            .toolTip_("Change channel and restart with a fade.").action_ { |view|~djChannel.value([\edme,\pop,\edm][view.value])};
+        channel=PopUpMenu(window,Rect(665,190,175,30)).items_(~djChannelNames)
+            .toolTip_("Change channel and restart with a fade.").action_ { |view|~djChannel.value(~djChannelIDs[view.value])};
         fxMenu=PopUpMenu(window,Rect(20,240,245,30)).items_(fxNames)
             .toolTip_("Choose an effect, then press Start FX. Selection alone does not activate it.").action_ { |view|
                 ("DJ effect selected / " ++ fxNames[view.value] ++ " / press Start FX").postln;
@@ -78,11 +80,28 @@ var root=thisProcess.nowExecutingPath.dirname;
         auto=Button(window,Rect(420,240,110,30)).states_([["Auto OFF"],["Auto ON"]])
             .toolTip_("Occasional automatic half-bar stutters. Manual effects take priority.")
             .action_ { |view|~djAutoStutter.value(view.value==1)};
-        spectrum=~djAddSpectrum.value(window,~djServer ? s,180,292);
+        StaticText(window,Rect(20,285,45,24)).string_("Mode");
+        mode=PopUpMenu(window,Rect(70,282,240,28)).items_([
+            "Auto / follows Tension","Minor / Aeolian base","Major / Ionian base",
+            "Dorian accents / minor","Phrygian accents / minor","Mixolydian accents / major","Lydian accents / major"])
+            .value_(modeChoices.indexOf(~djSettings.tonality) ? 0).action_ {|view|
+                ("DJ mode selected / "++modeChoices[view.value]++" / press Apply mode").postln;
+            };
+        pent=CheckBox(window,Rect(330,282,280,28)).string_("Pentatonic melodies (five notes)")
+            .value_(~djSettings.melody==\pentatonic).action_ {|view|
+                ("DJ pentatonic melody selected / "++view.value++" / press Apply mode").postln;
+            };
+        apply=Button(window,Rect(690,282,150,28)).states_([["Apply mode"]])
+            .toolTip_("Apply these musical choices to the current channel; restart with a fade.").action_ {
+                ~djMode.value(modeChoices[mode.value],if(pent.value){\pentatonic}{\full});
+            };
+        harmonyHint=StaticText(window,Rect(70,312,770,20)).string_("Higher Tension adds brief modal accents. Apply restarts with a fade.")
+            .font_(Font("Helvetica",11)).stringColor_(Color.gray(0.4));
+        spectrum=~djAddSpectrum.value(window,~djServer ? s,180,340);
         ~djSpectrum=spectrum;
         ~djUI=(window:window,titles:titles,deckStatus:deckStatus,deckLabels:deckLabels,progress:progress,knobs:knobs,transport:transport,
             next:next,hook:hook,fill:fill,hold:hold,more:more,channel:channel,
-            fxMenu:fxMenu,fxButton:fxButton,auto:auto);
+            fxMenu:fxMenu,fxButton:fxButton,auto:auto,modeChoice:mode,pentatonicChoice:pent,modeApply:apply);
         update=Routine {
             loop {
                 var playing=~djPlaying ? false,engine=~djEngine,manual=~djManualFX;
@@ -100,8 +119,25 @@ var root=thisProcess.nowExecutingPath.dirname;
                         Array.fill(2,{ |deck|if(deck==currentDeck) {[1,1,1]} {[0,0,0]}})
                     };
                     blend=gains[1][2].clip(0,1);
-                    channel.value_([\edme,\pop,\edm].indexOf(engine.channel) ? 0);
-                    hook.states_([[if(engine.channel==\pop) {"Chorus"} {"Bass hook"}]]);
+                    channel.value_(~djChannelIDs.indexOf(engine.channel) ? 0);
+                    if(engine!==lastModeEngine){
+                        mode.items_(if(engine.channel==\rock){[
+                            "Auto / major and minor","Aeolian / natural minor","Ionian / major","Dorian / brighter minor",
+                            "Phrygian / flat second","Mixolydian / flat seventh","Lydian / raised fourth"]}{[
+                            "Auto / follows Tension","Minor / Aeolian base","Major / Ionian base","Dorian accents / minor",
+                            "Phrygian accents / minor","Mixolydian accents / major","Lydian accents / major"]});
+                        mode.value_(modeChoices.indexOf(engine.controls.tonality) ? 0);
+                        pent.value_(engine.controls.melody==\pentatonic);lastModeEngine=engine;
+                        harmonyHint.string_(if(engine.channel==\rock){
+                            "Modes color the chords. Pentatonic simplifies melodies. Apply restarts with a fade."
+                        }{
+                            "Low Tension: major/minor. Higher: occasional modal accents. Apply restarts with a fade."
+                        });
+                    };
+                    apply.enabled_(modeChoices[mode.value]!=engine.controls.tonality or:{
+                        pent.value!=(engine.controls.melody==\pentatonic)
+                    });
+                    hook.states_([[switch(engine.channel,\pop,{"Chorus"},\rock,{"Riff"},{"Bass hook"})]]);
                     hold.value_(if(engine.controls.hold) {1} {0});
                     auto.value_(if(engine.controls.autoStutter) {1} {0});
                     next.enabled_(state.mixing.not);

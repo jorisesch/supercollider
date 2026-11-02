@@ -53,7 +53,7 @@ try {
     assert.value(a[\nextBar].value.decks[0].eVariant==\a,"E Bass hook did not release after four bars");
     // Separate component comparisons retain the underlying drum/bass notes.
     [\percussion,\chords].do { |mode|
-        var original=~makeDJEngine.value(2600,128,(channel:\edm,hold:true,autoStutter:false));
+        var original=~makeDJEngine.value(2600,128,(channel:\legacy,hold:true,autoStutter:false));
         var variant=~makeDJEngine.value(2600,128,(channel:\edme,eMode:mode,hold:true,autoStutter:false));
         16.do {
             var f=original[\nextBar].value,g=variant[\nextBar].value;

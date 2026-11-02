@@ -6,24 +6,57 @@ var root=thisProcess.nowExecutingPath.dirname;
 (root +/+ "style.scd").load;
 (root +/+ "pop-style.scd").load;
 (root +/+ "e-style.scd").load;
+(root +/+ "modes.scd").load;
+(root +/+ "rock-style.scd").load;
+(root +/+ "rock-expression.scd").load;
+(root +/+ "rock-physical-style.scd").load;
+~djChannelIDs=[\edme,\pop,\rock];
+~djChannelNames=["EDM","Pop","Rock"];
+// Old command aliases now select the winning EDM. `legacy` is for saved recipes.
+~djResolveChannel={ |channel=\edme|
+    if([\edm,\classic,\edme].includes(channel)){\edme}{
+        if([\pop,\rock,\legacy].includes(channel)){channel}{Error("Choose EDM, Pop or Rock").throw};
+    };
+};
+~djDefaultBpm={|channel|switch(~djResolveChannel.value(channel),\pop,{138},\rock,{102},{128})};
+~djMixSpec={|channel,rockToneVersion=2|
+    if(channel==\rock){(deck:case {rockToneVersion>=2}{\rockPhysicalDeck} {rockToneVersion==1}{\rockGuitarDeck} {true}{\rockDeck},drive:1.8)}{(deck:\djDeck,drive:3.4)}
+};
 ~makeDJEngine={ |seed=2600,bpm=128,settings|
-    var channel=(settings ? () )[\channel] ? \edme;
+    var channel=~djResolveChannel.value((settings ? () )[\channel] ? \edme);
+    var tonality=(settings ? ())[\tonality] ? \original,melody=(settings ? ())[\melody] ? \full;
+    var modalPolicy=(settings ? ())[\modalPolicy] ? if([\edme,\pop].includes(channel)){\tension}{\fixed};
+    var rockLeadVersion=(settings ? ())[\rockLeadVersion] ? if(channel==\rock){1}{0};
+    var rockToneVersion=(settings ? ())[\rockToneVersion] ? if(channel==\rock){2}{0};
     var eMode=(settings ? ())[\eMode] ? \full;
-    var lib=case {channel==\pop} {~djPopLibrary.value(~djLibrary)}
+    var lib=case {channel==\rock} {~djRockLibrary.value(~djLibrary)} {channel==\pop} {~djPopLibrary.value(~djLibrary)}
         {channel==\edme} {~djELibrary.value(~djLibrary,eMode)} {true} {~djLibrary};
-    var styleBar=case {channel==\pop} {~djPopBar} {channel==\edme} {~djEBar} {true} {~djStyleBar};
+    var styleBar=case {channel==\rock} {~djRockBar} {channel==\pop} {~djPopBar} {channel==\edme} {~djEBar} {true} {~djStyleBar};
     var rng=(seed.abs%2147483646)+1,random,choose,take,makeRecord,nextBar,engine;
     var bags=(variation:List.new,key:List.new,duration:List.new,hook:List.new,form:List.new,
         major:List.new,minor:List.new);
     var current,incoming,mixPosition=0,mixLength=8,bar=0,serial=0;
     var nextRequested=false,hookRequested=false,fillRequested=false,fxRequested=nil;
     var heldFX=nil,heldRequest=nil,releaseFX=false;
-    var controls=(chaos:0.25,density:0.55,mutation:0.30,tension:0.20,hold:false,autoStutter:true);
+    var controls=(chaos:0.25,density:0.55,mutation:0.30,tension:0.20,hold:false,autoStutter:(channel!=\rock));
     var paletteBag=List.new,paletteRng=((seed.abs+104729)%2147483646)+1,lastPalette,choosePalette;
     var fxRng=((seed.abs+65537)%2147483646)+1,fxRandom,stutter=nil,nextAutoBar=8;
+    var nextModalBar=0;
     var state=(bar:0,bpm:bpm,mixing:false,progress:0,decks:[nil,nil],phase:0,lastFX:\none);
+    if(channel==\rock and:{rockToneVersion>=2}){
+        lib.palettes=lib.palettes.collect {|palette|var p=palette.copy;
+            p.leadName=["Shared crunch rig","Ringing strings","Shared fuzz rig"][p.id];p};
+    };
+    if(tonality!=\original and:{~djTonalities[tonality].isNil}){Error("Unknown musical mode").throw};
+    if([\full,\pentatonic].includes(melody).not){Error("Choose full or pentatonic melody").throw};
+    if([\tension,\fixed].includes(modalPolicy).not){Error("Choose tension or fixed harmony").throw};
+    if(modalPolicy==\fixed){lib=~djModalLibrary.value(lib,tonality)};
+    controls.tonality=tonality;controls.melody=melody;controls.modalPolicy=modalPolicy;
+    controls.rockLeadVersion=rockLeadVersion;
+    controls.rockToneVersion=rockToneVersion;
     if(settings.notNil) { settings.keysValuesDo { |key,value| controls[key]=value } };
-    bpm=bpm.clip(118,140); state.bpm=bpm;
+    controls.channel=channel;
+    bpm=if(channel==\rock){bpm.clip(78,124)}{bpm.clip(118,140)}; state.bpm=bpm;
     random={ rng=(rng*48271)%2147483647; rng/2147483647 };
     choose={ |items| items[(random.value*items.size).floor.asInteger] };
     fxRandom={fxRng=(fxRng*48271)%2147483647; fxRng/2147483647};
@@ -55,9 +88,12 @@ var root=thisProcess.nowExecutingPath.dirname;
         var variation,progressionID,durationID,hookID,formID,form,sections=List.new,total=0,schedule;
         var cursor=0,chordIndex=0,localBar,forcedHook=0,change=false,forcedFill=false;
         var phraseLift=0,patternID,mutations=0,energyBias,wildness,densityBias;
-        key=take.value(bags.key,12,previousKey,preferred);
+        var modalTone=nil,modalEndBar= -1;
+        key=take.value(bags.key,12,previousKey,if(first and:{channel==\rock}){4}{preferred});
         mode=if(index.even) {\minor} {\major};
+        if(tonality!=\original){mode=~djTonalities[tonality].family};
         scale=if(mode==\minor) {[0,2,3,5,7,8,10]} {[0,2,4,5,7,9,11]};
+        if(tonality!=\original and:{modalPolicy==\fixed}){scale=~djTonalities[tonality].scale};
         progressionID=take.value(bags[mode],lib[mode].size,nil,if(channel==\pop){nil}{preferred});
         durationID=take.value(bags.duration,lib.durations.size,nil,if(channel==\pop){nil}{preferred});
         hookID=take.value(bags.hook,lib.hooks.size,nil,preferred);
@@ -65,7 +101,7 @@ var root=thisProcess.nowExecutingPath.dirname;
         variation=lib.variations[take.value(bags.variation,lib.variations.size,nil,preferred)].copy;
         if(first) { variation.name=if(channel==\pop) {"Neon Pop / C minor"} {"Interlock / C minor"} };
         progression=lib[mode][progressionID];
-        durations=if(channel==\pop) {lib.durations[durationID].copy} {
+        durations=if([\pop,\rock].includes(channel)) {lib.durations[durationID].copy} {
             lib.durations[durationID].collect { |n| (n/2).round.asInteger.max(1)*2 }
         }; form=lib.forms[formID];
         form.do { |part|
@@ -88,18 +124,47 @@ var root=thisProcess.nowExecutingPath.dirname;
             variation:variation,palette:choosePalette.value(index),progression:progression,progressionID:progressionID,durations:durations,
             durationID:durationID,hookID:hookID,formID:formID,sections:sections.asArray,schedule:schedule,
             length:total,mixBars:if(form.last[1] >= 16) {choose.value([8,16])} {8},
-            targetBpm:if(first) {bpm} {(previousBpm+choose.value([-4,-2,2,4])).clip(122,136)},
+            targetBpm:if(first) {bpm} {
+                var target=previousBpm+choose.value([-4,-2,2,4]);
+                if(channel==\rock){target.clip(78,124)}{target.clip(122,136)}
+            },
             position:localBar,localBar:localBar,section:\groove,hook:false,mutations:0,
             effective:(chaos:0.25,density:0.55,mutation:0.30,tension:0.20),intensity:0.8);
         if(index > 0 and: { plan.targetBpm==previousBpm }) {
-            plan.targetBpm=previousBpm+if(previousBpm >= 130) {-2} {2};
+            plan.targetBpm=previousBpm+if(previousBpm >= if(channel==\rock){118}{130}) {-2} {2};
         };
+        plan.tonality=tonality;
+        plan.modalPolicy=modalPolicy;plan.baseScale=scale;
+        plan.baseTonality=if(mode==\minor){\aeolian}{\ionian};
+        plan.activeTonality=if(tonality==\original){plan.baseTonality}{tonality};plan.modalAccent=false;
+        if(tonality!=\original and:{modalPolicy==\fixed}){plan.keyName=lib[\keys][key]++" "++~djTonalities[tonality].label};
         if(channel==\edme) {plan.eMode=eMode;plan.style=\edme};
-        if(channel==\pop) {plan.schedule=~djPopHarmony.value(plan,lib,seed)};
+        if([\pop,\rock].includes(channel)) {plan.schedule=~djPopHarmony.value(plan,lib,seed)};
+        if(channel==\rock){
+            plan.style=\rock;plan.rockLeadVersion=rockLeadVersion;plan.rockToneVersion=rockToneVersion;
+            if(rockLeadVersion>0){plan.rockSoloPlan=~djRockSoloPlan.value(plan,seed)};
+        };
         next={
             var local=localBar,part=sections.detect { |item| local < (item.start+item.bars) };
             var section=part.name,partBar=local-part.start,progress=partBar/(part.bars-1).max(1);
             var intensity,effective,drumBreak,hook,fill,events;
+            if(modalPolicy==\tension){
+                if(bar>=modalEndBar or:{forcedHook>0}){modalTone=nil};
+                // Only phrase endings outside choruses/intros/outros and handovers.
+                // EDM breakdown pads are long-held, so leave those scales alone.
+                if(modalTone.isNil and:{local%8==6} and:{partBar+2<=part.bars}
+                    and:{incoming.isNil} and:{bar>=nextModalBar} and:{forcedHook==0}
+                    and:{[\groove,\space,\breakdown,\buildup].includes(section)}
+                    and:{channel!=\edme or:{section!=\breakdown}}){
+                    modalTone=~djTensionColor.value(mode,controls.tension.clip(0,1),seed,index,bar div:8,tonality,
+                        plan.schedule.copyRange(local,local+1).collect(_.degree));
+                    if(modalTone.notNil){modalEndBar=bar+2;nextModalBar=bar+18};
+                };
+                plan.modalAccent=modalTone.notNil;plan.modalBarsRemaining=if(modalTone.isNil){0}{modalEndBar-bar};
+                plan.activeTonality=modalTone ? plan.baseTonality;
+                plan.scale=if(modalTone.isNil){plan.baseScale}{~djTonalities[modalTone].scale};
+                plan.keyName=lib[\keys][key]++" "++if(modalTone.isNil){mode.asString}{~djTonalities[modalTone].label};
+            };
             if(local%4==0) { phraseLift=choose.value([-0.03,0,0.02,0.04]) };
             intensity=case { section==\intro } {0.5+(progress*0.2)}
                 { section==\groove } {0.78} { section==\hook } {0.92}
@@ -109,7 +174,7 @@ var root=thisProcess.nowExecutingPath.dirname;
             intensity=((intensity*energyBias)+phraseLift).clip(0.25,1.22);
             // One drum-only bar after the groove has settled, at most once in 32 bars.
             drumBreak=[\groove,\hook,\drop].includes(section) and: {partBar>=8}
-                and: {local%32==12} and: {channel!=\pop};
+                and: {local%32==12} and: {[\pop,\rock].includes(channel).not};
             effective=(
                 chaos:(controls.chaos.clip(0,1)*(0.45+(intensity*0.8))*wildness).clip(0,1),
                 density:(controls.density.clip(0,1)*(0.3+(intensity*0.8))*densityBias).clip(0,1),
@@ -128,8 +193,12 @@ var root=thisProcess.nowExecutingPath.dirname;
             plan.localBar=local; plan.section=section; plan.hook=hook; plan.drumBreak=drumBreak;
             plan.intensity=intensity; plan.effective=effective; plan.patternID=patternID;
             plan.mutations=mutations; plan.sectionProgress=progress;
+            plan.forcedHookRemaining=forcedHook;
+            plan.engineBar=bar;
             events=styleBar.value(plan,local,section,progress,effective,hook,drumBreak,
                 patternID,fill,seed,random,forcedHook>0);
+            events=~djMelodyPalette.value(events,plan,melody);
+            if(channel==\rock and:{rockToneVersion>0}){events=if(rockToneVersion>=2){~djRockPhysicalExpression.value(events,plan)}{~djRockExpression.value(events,plan)}};
             localBar=(localBar+1)%total; plan.position=localBar;
             forcedHook=(forcedHook-1).max(0);
             events;
@@ -165,6 +234,7 @@ var root=thisProcess.nowExecutingPath.dirname;
             hookRequested=false;
         };
         if(fillRequested) { current[\fill].value; fillRequested=false };
+        if(channel==\rock){current.rockLeaving=mixing};
         events.addAll(current[\nextBar].value); deckInfo[current.deck]=current;
         if(mixing) { events.addAll(incoming[\nextBar].value); deckInfo[incoming.deck]=incoming };
         hotPlan=deckInfo[hotDeck];
@@ -220,6 +290,11 @@ var root=thisProcess.nowExecutingPath.dirname;
             delay=0.75;
             reverb=(0.08+if([\space,\breakdown].includes(section)) {0.22} {0.03}
                 +(wave*0.05)).clip(0,0.48);
+            if(channel==\rock){
+                filter=if([\space,\breakdown].includes(section)){0.10}{0.015};
+                cutoff=9000;resonance=0.6;echo=if(section==\space){0.08}{0.01};
+                reverb=if([\space,\breakdown].includes(section)){0.17}{0.07};
+            };
             stutter=0;
             if(activeStutter.notNil and: {plan.serial==activeStutter.serial}) {
                 var elapsed=(activeStutter.age*4)+(step*0.25)-activeStutter.startBeat;
@@ -243,6 +318,7 @@ var root=thisProcess.nowExecutingPath.dirname;
                 echo:echo.clip(0,1),delay:delay.clip(0.08,0.75),reverb:reverb.clip(0,1),
                 stutter:stutter.clip(0,1),stutterRate:stutterRate,
                 stutterReset:reset);
+            if(channel==\rock and:{rockToneVersion>0}){values.putAll(if(rockToneVersion>=2){~djRockPhysicalFX.value(plan)}{~djRockGuitarFX.value(plan)})};
             if(heldFX.notNil and: {plan.deck==heldFX.deck}) {
                 base=values.copy; phase=(heldFX.age+barT).clip(0,1);
                 switch(heldFX.kind,
@@ -317,15 +393,30 @@ var root=thisProcess.nowExecutingPath.dirname;
         \color,event.color,\tone,event.tone,\seed,event.seed];
     if(event.lane==0) {message=message++[\drive,event.drive ? 0.35]};
     if(event[\glide].notNil) {message=message++[\fromFreq,event[\fromNote].midicps,\glide,event[\glide]]};
+    [\mute,\fuzz,\wah,\slap].do {|key|if(event[key].notNil){message=message++[key,event[key]]}};
+    if(event.voice==\rockGuitar){message=message++[\drive,event.drive]};
+    if(event.voice==\rockExpressiveGuitar){
+        message=message++[\fromFreq,event.fromNote.midicps,\slideTime,event.slideBeats*60/bpm,
+            \bendSemis,event.bendSemis,\bendMode,event.bendMode,\vibrato,event.vibrato,\vibratoRate,event.vibratoRate,
+            \pedal,event.pedal,\pedalGain,event.pedalGain,\pick,event.pick];
+    };
+    if(event.voice==\rockPhysicalGuitar){
+        message=message++[\fromFreq,event.fromNote.midicps,\slideTime,event.slideBeats*60/bpm,
+            \bendSemis,event.bendSemis,\bendMode,event.bendMode,\vibrato,event.vibrato,\vibratoRate,event.vibratoRate,
+            \stringIndex,event.stringIndex,\pickPosition,event.pickPosition,\articulation,event.articulation];
+    };
     message;
 };
 ~djAutomation={ |point,decks|
     Array.fill(2,{ |id|
-        var fx=point.fx[id];
-        [\n_set,decks[id],\musicGain,point.gains[id][0],\bassGain,point.gains[id][1],
+        var fx=point.fx[id],message;
+        message=[\n_set,decks[id],\musicGain,point.gains[id][0],\bassGain,point.gains[id][1],
             \drumsGain,point.gains[id][2],\bpm,point.bpm,\fxFilter,fx.filter,\fxCutoff,fx.cutoff,
             \fxResonance,fx.resonance,\fxEcho,fx.echo,\fxDelay,fx.delay,\fxReverb,fx.reverb,\fxStutter,fx.stutter,
             \fxStutterRate,fx.stutterRate,\t_stutter,if(fx.stutterReset) {1} {0}];
+        if(fx[\guitarComp].notNil){message=message++[\guitarComp,fx.guitarComp,\guitarChorus,fx.guitarChorus]};
+        [\guitarPedal,\guitarDrive,\guitarTone,\guitarFuzz].do {|key|if(fx[key].notNil){message=message++[key,fx[key]]}};
+        message;
     });
 };
 )

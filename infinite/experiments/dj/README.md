@@ -10,7 +10,7 @@ Music that keeps playing, creating and mixing new tracks as it goes. Start it, l
 
 You only need to install SuperCollider once. You do not need SuperDirt or any sample packs.
 
-## Standard EDM
+## EDM
 
 On macOS, paste this into Terminal and press Return:
 
@@ -35,9 +35,9 @@ Start with the default settings. Try moving one knob at a time:
 | **Chaos** | Adds rhythmic variation and fills. |
 | **Density** | Adds more notes and percussion. |
 | **Mutation** | Lets musical patterns change more often. |
-| **Tension** | Makes the sound brighter and more intense. |
+| **Tension** | Adds brightness and drive; high settings add brief modal accents in EDM/Pop. |
 | **Next** | Requests the next track. |
-| **Bass hook / Chorus** | Brings the current track's hook forward. |
+| **Bass hook / Chorus / Riff** | Brings the current track's hook forward. |
 | **Fill** | Requests a drum fill. |
 | **Hold** | Keeps the current track playing. |
 | **STOP / START** | Fades out, then lets you continue the same set. |
@@ -58,6 +58,16 @@ Pop chooses from a broad range of chord progressions and timings. Verses, chorus
 
 Switching channels starts a new set with a fade. Close your current session before launching another from Terminal.
 
+## Rock channel
+
+Choose **Rock** in the channel menu, or start it directly:
+
+```sh
+/Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/experiments/rock.scd
+```
+
+Rock creates guitar riffs, bass and drum arrangements with clean, crunch and fuzz sounds. Occasional longer solos resolve onto the current chord. [Listen and try it](ROCK.md).
+
 ## Soundscapes
 
 For infinitely evolving soundscapes, use this separate launcher:
@@ -67,6 +77,12 @@ For infinitely evolving soundscapes, use this separate launcher:
 ```
 
 It opens its own control window. Close the DJ window before starting it if you only want to hear soundscapes.
+
+## Try musical modes
+
+In EDM and Pop, leave **Mode** on **Auto / follows Tension**. Above 60%, Tension can add brief modal accents; above 85%, rarer colors become possible. Normal major/minor harmony remains the foundation, and Pop choruses keep their returning harmony. Moving Tension keeps the set playing.
+
+Optional **Pentatonic melodies** use five-note lead phrases. Press **Apply mode** after changing the Mode or Pentatonic choices; that restarts with a fade. Rock keeps fixed mode choices. [Listen to the examples and see the choices](MODES.md).
 
 ## Stop
 

@@ -487,6 +487,58 @@
       -19.36
     ]
   },
+  "edm-modes.wav": {
+    "seconds": 76.1013,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -2.48,
+    "rms_dbfs": -19.78,
+    "end_peak": 0.0,
+    "title": "Modal comparison",
+    "channel": "edm",
+    "bpm": 128,
+    "tonic": "C",
+    "melody": "pentatonic",
+    "mode_rms_dbfs": {
+      "aeolian": -18.64,
+      "dorian": -18.76,
+      "phrygian": -18.85,
+      "mixolydian": -18.73
+    }
+  },
+  "edm-tension.wav": {
+    "seconds": 75.184,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -2.45,
+    "rms_dbfs": -20.17,
+    "end_peak": 0.0,
+    "title": "Sparse Tension colors",
+    "tension": 1.0,
+    "channel": "edm",
+    "excerpt_rms_dbfs": {
+      "dorian": {
+        "base": -19.92,
+        "accent": -20.77,
+        "return": -19.0
+      },
+      "phrygian": {
+        "base": -18.78,
+        "accent": -18.52,
+        "return": -18.87
+      },
+      "mixolydian": {
+        "base": -18.92,
+        "accent": -20.08,
+        "return": -18.2
+      },
+      "lydian": {
+        "base": -19.43,
+        "accent": -18.78,
+        "return": -18.51
+      }
+    }
+  },
   "groove-track-v6d.wav": {
     "seconds": 94.1013,
     "sample_rate": 48000,
@@ -875,6 +927,58 @@
     "bpm": 138,
     "bars": 48
   },
+  "pop-modes.wav": {
+    "seconds": 71.7533,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -2.45,
+    "rms_dbfs": -20.36,
+    "end_peak": 0.0,
+    "title": "Modal comparison",
+    "channel": "pop",
+    "bpm": 138,
+    "tonic": "C",
+    "melody": "pentatonic",
+    "mode_rms_dbfs": {
+      "aeolian": -19.17,
+      "dorian": -19.32,
+      "phrygian": -19.31,
+      "mixolydian": -19.2
+    }
+  },
+  "pop-tension.wav": {
+    "seconds": 72.584,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -2.45,
+    "rms_dbfs": -20.65,
+    "end_peak": 0.0,
+    "title": "Sparse Tension colors",
+    "tension": 1.0,
+    "channel": "pop",
+    "excerpt_rms_dbfs": {
+      "dorian": {
+        "base": -19.28,
+        "accent": -19.09,
+        "return": -19.39
+      },
+      "phrygian": {
+        "base": -19.39,
+        "accent": -19.02,
+        "return": -19.07
+      },
+      "mixolydian": {
+        "base": -20.8,
+        "accent": -20.59,
+        "return": -20.56
+      },
+      "lydian": {
+        "base": -19.22,
+        "accent": -19.13,
+        "return": -19.46
+      }
+    }
+  },
   "quindar-in-noisy.wav": {
     "seconds": 0.9013,
     "sample_rate": 48000,
@@ -926,5 +1030,231 @@
     "end_peak": 0.0,
     "measured_hz": 2475.0,
     "tone_seconds": 0.24996
+  },
+  "rock-channel.wav": {
+    "seconds": 156.6013,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -2.48,
+    "rms_dbfs": -18.83,
+    "end_peak": 0.0,
+    "automatic_stutter_phrases": [],
+    "title": "Infinite DJ \u2014 Rock",
+    "seed": 2600,
+    "bars": 64,
+    "settings": {
+      "channel": "rock",
+      "autoStutter": false
+    },
+    "records": [
+      0,
+      1
+    ],
+    "palettes": [
+      0,
+      2
+    ],
+    "music_seconds": 152.5009,
+    "music_rms_dbfs": -18.72,
+    "four_bar_rms_dbfs": [
+      -19.5,
+      -19.37,
+      -16.96,
+      -17.97,
+      -25.44,
+      -19.08,
+      -16.68,
+      -16.24,
+      -16.89,
+      -17.87,
+      -23.72,
+      -24.34,
+      -18.12,
+      -20.82,
+      -18.07,
+      -19.18
+    ],
+    "solo_bars": 8,
+    "solo_phrases": [
+      {
+        "bar": 24,
+        "seconds": 56.570588235,
+        "bars": 8
+      }
+    ],
+    "chord_landings": [
+      {
+        "bar": 15,
+        "midinote": 76,
+        "chord_offset": 0
+      },
+      {
+        "bar": 31,
+        "midinote": 79,
+        "chord_offset": 2
+      },
+      {
+        "bar": 39,
+        "midinote": 76,
+        "chord_offset": 0
+      }
+    ]
+  },
+  "rock-green-room.wav": {
+    "seconds": 86.8027,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -3.23,
+    "rms_dbfs": -22.4,
+    "end_peak": 0.0,
+    "title": "Green Room",
+    "bpm": 94,
+    "bars": 32,
+    "scale": "A Dorian",
+    "solo_notes": "A B C D E F# G",
+    "seed": 731
+  },
+  "rock-guitar-study.wav": {
+    "seconds": 60.5013,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -1.25,
+    "rms_dbfs": -21.69,
+    "end_peak": 0.0,
+    "title": "Physical guitar techniques and circuit study",
+    "segment_rms_dbfs": {
+      "picked reference": -19.57,
+      "bend and release": -19.23,
+      "bend into target": -19.96,
+      "finger vibrato": -19.55,
+      "fretted E-to-A slide": -20.28,
+      "open and palm-muted": -22.5,
+      "clean phrase": -21.61,
+      "two-stage overdrive": -22.94,
+      "feedback diode overdrive": -23.74,
+      "post-amplifier diode distortion": -21.94,
+      "two-stage fuzz": -27.07,
+      "clean chorus": -22.52
+    },
+    "human_listening_review": "pending"
+  },
+  "rock-ironwood.wav": {
+    "seconds": 80.3947,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -3.63,
+    "rms_dbfs": -21.63,
+    "end_peak": 0.0,
+    "title": "Ironwood",
+    "bpm": 102,
+    "bars": 32,
+    "scale": "E minor pentatonic",
+    "solo_notes": "E G A B D",
+    "seed": 731
+  },
+  "rock-open-road.wav": {
+    "seconds": 73.672,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -4.15,
+    "rms_dbfs": -22.37,
+    "end_peak": 0.0,
+    "title": "Open Road",
+    "bpm": 112,
+    "bars": 32,
+    "scale": "D Mixolydian",
+    "solo_notes": "D E F# G A B C",
+    "seed": 731
+  },
+  "rock-tones.wav": {
+    "seconds": 68.5707,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -2.46,
+    "rms_dbfs": -18.05,
+    "end_peak": 0.0,
+    "automatic_stutter_phrases": [],
+    "title": "Rock guitar ensembles",
+    "seed": 2600,
+    "bars": 24,
+    "settings": {
+      "channel": "rock",
+      "tonality": "aeolian",
+      "autoStutter": false,
+      "hold": true
+    },
+    "records": [
+      0
+    ],
+    "palettes": [
+      0,
+      1,
+      2
+    ],
+    "music_seconds": 68.4706,
+    "music_rms_dbfs": -18.05,
+    "four_bar_rms_dbfs": [
+      -16.59,
+      -19.5,
+      -15.79,
+      -21.15,
+      -20.2,
+      -16.88
+    ],
+    "solo_bars": 12,
+    "solo_phrases": [
+      {
+        "bar": 0,
+        "seconds": 0.1,
+        "bars": 4
+      },
+      {
+        "bar": 8,
+        "seconds": 22.923529412,
+        "bars": 4
+      },
+      {
+        "bar": 16,
+        "seconds": 45.747058824,
+        "bars": 4
+      }
+    ],
+    "chord_landings": [
+      {
+        "bar": 3,
+        "midinote": 72,
+        "chord_offset": 2
+      },
+      {
+        "bar": 7,
+        "midinote": 76,
+        "chord_offset": 0
+      },
+      {
+        "bar": 11,
+        "midinote": 72,
+        "chord_offset": 2
+      },
+      {
+        "bar": 15,
+        "midinote": 76,
+        "chord_offset": 0
+      },
+      {
+        "bar": 19,
+        "midinote": 72,
+        "chord_offset": 2
+      },
+      {
+        "bar": 23,
+        "midinote": 76,
+        "chord_offset": 0
+      }
+    ],
+    "segment_rms_dbfs": {
+      "Garage": -18.05,
+      "Jangle": -18.12,
+      "Fuzz room": -17.92
+    }
   }
 }

@@ -2,20 +2,25 @@
 // From repository root: sclang -D infinite/infinite-run.scd edm 0.25 0.55 0.30 0.20 128 2600
 (
 var root=thisProcess.nowExecutingPath.dirname, args=thisProcess.argv;
-var mode=(args.at(0) ? "edm").asSymbol, values, bpm, seed, server;
-if([\edm, \soundscape, \pop, \baseline].includes(mode).not) {
-    "Usage: infinite-run.scd edm|soundscape|pop|baseline chaos density mutation tension bpm seed [nogui]".postln;
+var mode,values,bpm,seed,server,options;
+options=args.select {|item|item=="nogui" or:{item.beginsWith("mode=")} or:{item.beginsWith("melody=")}};
+args=args.reject {|item|options.includesEqual(item)};
+mode=(args.at(0) ? "edm").asSymbol;
+if([\edm, \soundscape, \pop, \rock, \baseline].includes(mode).not) {
+    "Usage: infinite-run.scd edm|soundscape|pop|rock|baseline chaos density mutation tension bpm seed [nogui]".postln;
     1.exit;
 };
 values=[0.25, 0.55, 0.30, 0.20].collect { |fallback, i|
     if(args.at(i + 1).notNil) { args[i + 1].asFloat.clip(0, 1) } { fallback };
 };
-bpm=if(args.at(5).notNil) { args[5].asFloat.clip(40, 200) } { if([\edm,\baseline].includes(mode), 128, if(mode==\pop,138,60)) };
+bpm=if(args.at(5).notNil) { args[5].asFloat.clip(40, 200) } {
+    switch(mode,\edm,{128},\baseline,{128},\pop,{138},\rock,{102},{60})
+};
 seed=if(args.at(6).notNil) { args[6].asInteger } { 2600 };
-if([\edm,\pop].includes(mode)) {
+if([\edm,\pop,\rock].includes(mode)) {
     (root +/+ "experiments/dj/launch.scd").load;
     ~djRun.value([seed.asString,bpm.asString]++values.collect(_.asString)++[mode.asString]
-        ++if(args.includesEqual("nogui")){["nogui"]}{[]});
+        ++options);
 } {
 (root +/+ "infinite-live.scd").load;
 ~setInfinite.value(*values);
@@ -23,7 +28,7 @@ if([\edm,\pop].includes(mode)) {
 server=Server(\infiniteMusic, NetAddr("127.0.0.1", 57130),
     ServerOptions.new.numInputBusChannels_(0).numOutputBusChannels_(2));
 ~startInfinite.value(if(mode==\baseline){\edm}{mode}, seed, bpm, server);
-if(args.includes("nogui").not) {
+if(options.includesEqual("nogui").not) {
     (root +/+ "infinite-controls.scd").load;
     {
         var close;

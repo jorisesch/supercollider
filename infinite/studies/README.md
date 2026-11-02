@@ -4,6 +4,10 @@ Original, composed SuperCollider pieces for choosing the musical direction of th
 
 Each is 32 bars in 4/4, approximately one minute of music, with a 100 ms lead-in and six seconds for release and effects tails. AAC previews are the committed listening copies; local WAV renders are stereo 48 kHz / 24-bit masters and are ignored by Git.
 
+## Rock backing tracks
+
+Three [rock practice tracks](rock/README.md) pair rhythm guitar, bass and drums with **E minor pentatonic**, **A Dorian** and **D Mixolydian**. Listen, choose a scale and play over them; the guide includes launch commands and simple five-note starting shapes.
+
 ## New: Coastal Pocket
 
 [Listen](../../audio/study-06-coastal-pocket-v1.m4a) · [Source and commands](revisions/disco-v1/README.md)

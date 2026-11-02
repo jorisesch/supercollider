@@ -5,8 +5,8 @@ var recipeName=~djRenderRecipe,recipeSpec,reference;
 var component=~djRenderComponent;
 var classic=thisProcess.argv.includesEqual("classic") or: {
     ["palettes","digital"].any { |flag| thisProcess.argv.includesEqual(flag) }
-} or: {~djRenderChannel==\edm};
-var e=(~djRenderChannel==\edme) or: {thisProcess.argv.includesEqual("edme")} or: {
+} or: {~djRenderChannel==\legacy};
+var e=(~djRenderChannel==\legacye) or: {thisProcess.argv.includesEqual("edme")} or: {
     classic.not and: {thisProcess.argv.includesEqual("pop").not} and: {~djRenderRecipe.isNil}
 };
 var eCompare=e and: {thisProcess.argv.includesEqual("compare")};
@@ -16,7 +16,7 @@ var track=thisProcess.argv.includesEqual("track") or: {e and: {eCompare.not} and
 var tour=thisProcess.argv.includesEqual("palettes");
 var pop=thisProcess.argv.includesEqual("pop");
 var digital=thisProcess.argv.includesEqual("digital");
-var name,bars,engine,score=List.new,time=0.1,tempo=128,node=1000,timeline,osc,duration;
+var name,bars,engine,score=List.new,time=0.1,tempo=128,node=1000,timeline,osc,duration,mix;
 var columns=["bar","seconds","bpm","mixing","record_a","record_b","section_a","section_b",
     "intensity_a","intensity_b","chaos_a","chaos_b","density_a","density_b","palette_a","palette_b",
     "stutter_division","stutter_remaining","stutter_source","stutter_deck",
@@ -33,8 +33,8 @@ try {
     bars=case {eCompare} {32} {eSet} {112} {e} {48} {pop} {96} {digital} {4} {tour} {32} {track} {48} {true} {112};
     if(pop) {tempo=138};
     engine=~makeDJEngine.value(2600,tempo,case
-        {e} {(channel:\edme,eMode:eMode.asSymbol,hold:eSet.not)} {pop} {(channel:\pop)} {digital} {(channel:\edm,hold:true,palette:2,autoStutter:false)}
-        {track} {(channel:\edm,hold:true)} {true} {(channel:\edm)});
+        {e} {(channel:\edme,eMode:eMode.asSymbol,hold:eSet.not)} {pop} {(channel:\pop)} {digital} {(channel:\legacy,hold:true,palette:2,autoStutter:false)}
+        {track} {(channel:\legacy,hold:true)} {true} {(channel:\legacy)});
     if(recipeName.notNil) {
         (root +/+ "recall.scd").load;
         recipeSpec=~djReadRecipe.value(recipeName);
@@ -43,11 +43,11 @@ try {
         };
         reference=~djSessionFromRecipe.value(recipeSpec);reference.persistRecipes=false;
         if(~djRenderChannel.notNil) {
-            if([0,2].includes(recipeSpec[4].asInteger).not or: {[\edm,\edme].includes(~djRenderChannel).not}) {
+            if([0,2].includes(recipeSpec[4].asInteger).not or: {[\legacy,\edme,\edm].includes(~djRenderChannel).not}) {
                 Error("Channel comparisons require an EDM or EDM E recipe").throw;
             };
             recipeSpec=recipeSpec.deepCopy;
-            recipeSpec[4]=[\edm,\pop,\edme].indexOf(~djRenderChannel);
+            recipeSpec[4]=[\legacy,\pop,\edme,\rock].indexOf(~djResolveChannel.value(~djRenderChannel));
         };
         engine=~djSessionFromRecipe.value(recipeSpec);engine.persistRecipes=false;
         tempo=engine.state.bpm;
@@ -57,14 +57,15 @@ try {
         ("Recipe / " ++ recipeName ++ " / " ++ engine.channel ++ " / " ++ engine.controls).postln;
     };
     if(digital) {12.do {engine[\nextBar].value}};
+    mix=~djMixSpec.value(engine.channel,engine.controls[\rockToneVersion] ? 0);
     TempoClock.default.tempo=1;
-    score.add([0] ++ ~djDefs.collect { |def| [\d_recv,def.asBytes] });
+    ~djDefs.do {|def|score.add([0,[\d_recv,def.asBytes]])};
     score.add([0.01,[\g_new,100,0,1],[\g_new,110,0,100],[\g_new,111,0,100],
-        [\s_new,\djDeck,800,1,100,\in,16,\out,28,\musicGain,0,\bassGain,0,\drumsGain,0,\bpm,128,
+        [\s_new,mix.deck,800,1,100,\in,16,\out,28,\musicGain,0,\bassGain,0,\drumsGain,0,\bpm,128,
             \fxFilter,0,\fxCutoff,12000,\fxResonance,0.35,\fxEcho,0,\fxDelay,0.33,\fxReverb,0.14,\fxStutter,0],
-        [\s_new,\djDeck,801,1,100,\in,22,\out,28,\musicGain,0,\bassGain,0,\drumsGain,0,\bpm,128,
+        [\s_new,mix.deck,801,1,100,\in,22,\out,28,\musicGain,0,\bassGain,0,\drumsGain,0,\bpm,128,
             \fxFilter,0,\fxCutoff,12000,\fxResonance,0.35,\fxEcho,0,\fxDelay,0.33,\fxReverb,0.14,\fxStutter,0],
-        [\s_new,\djMaster,999,1,100,\in,28]]);
+        [\s_new,\djMaster,999,1,100,\in,28,\drive,mix.drive]]);
     timeline=File(root +/+ (name ++ "-timeline.tsv"),"w");
     timeline.write(columns.join("\t") ++ "\n");
     bars.do { |bar|
@@ -73,10 +74,10 @@ try {
         if(eCompare and: {bar%8==0}) {
             eMode=["baseline","percussion","chords","bass"][bar div:8];
             engine=~makeDJEngine.value(2600,128,(hold:true,palette:0,autoStutter:false,
-                channel:if(bar==0) {\edm} {\edme},eMode:eMode.asSymbol));
+                channel:if(bar==0) {\legacy} {\edme},eMode:eMode.asSymbol));
         };
         if(tour and: {bar%8==0}) {
-            engine=~makeDJEngine.value(2600,128,(channel:\edm,hold:true,palette:bar div:8,autoStutter:false));
+            engine=~makeDJEngine.value(2600,128,(channel:\legacy,hold:true,palette:bar div:8,autoStutter:false));
             // All ensembles play the same bass-led eight-bar hook section.
             8.do {engine[\nextBar].value};
         };

@@ -1,0 +1,43 @@
+{
+  "file": "rock-tones.wav",
+  "preview": "rock-tones.m4a",
+  "title": "Rock guitar ensembles",
+  "timeline": "infinite/experiments/dj/rock-tones-timeline.tsv",
+  "seed": 2600,
+  "bars": 24,
+  "initial_bpm": 102,
+  "bpm_range": [
+    78,
+    124
+  ],
+  "lead_in_seconds": 0.1,
+  "tail_seconds": 0,
+  "settings": {
+    "channel": "rock",
+    "tonality": "aeolian",
+    "autoStutter": false,
+    "hold": true
+  },
+  "minimum_records": 1,
+  "minimum_palettes": 3,
+  "comparison_mode": true,
+  "segments": [
+    {
+      "name": "Garage",
+      "start_seconds": 0.1
+    },
+    {
+      "name": "Jangle",
+      "start_seconds": 22.923529411764708
+    },
+    {
+      "name": "Fuzz room",
+      "start_seconds": 45.747058823529414
+    }
+  ],
+  "human_listening_review": "pending",
+  "rock_lead_version": 1,
+  "rock_tone_version": 2,
+  "minimum_solo_bars": 12,
+  "minimum_solo_phrases": 3
+}
