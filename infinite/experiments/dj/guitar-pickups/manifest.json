@@ -1,0 +1,64 @@
+{
+  "human_listening_review": "pending",
+  "live_dj_changed": false,
+  "tracks": [
+    {
+      "file": "rock-humbucker-clean.wav",
+      "preview": "rock-humbucker-clean.m4a",
+      "seconds": 50.501333333333335,
+      "title": "Clean level-matched pickups"
+    },
+    {
+      "file": "rock-humbucker-drive.wav",
+      "preview": "rock-humbucker-drive.m4a",
+      "seconds": 50.501333333333335,
+      "title": "Same overdrive, natural pickup levels"
+    },
+    {
+      "file": "rock-humbucker-comparison.wav",
+      "preview": "rock-humbucker-comparison.m4a",
+      "seconds": 101.00266666666667,
+      "title": "Clean then overdriven comparison"
+    }
+  ],
+  "clean_start_seconds": 0,
+  "drive_start_seconds": 50.501333333333335,
+  "drive_gain": 2.3372927473765523,
+  "sections": [
+    {
+      "pickup": "Single coil",
+      "start_seconds": 0,
+      "clean_gain": 2.563848403368525,
+      "unmatched_clean_rms_dbfs": -32.178,
+      "unmatched_drive_rms_dbfs": -31.726
+    },
+    {
+      "pickup": "Vintage series",
+      "start_seconds": 10,
+      "clean_gain": 1.8520420354330127,
+      "unmatched_clean_rms_dbfs": -29.353,
+      "unmatched_drive_rms_dbfs": -30.646
+    },
+    {
+      "pickup": "Vintage parallel",
+      "start_seconds": 20,
+      "clean_gain": 3.555740660945058,
+      "unmatched_clean_rms_dbfs": -35.019,
+      "unmatched_drive_rms_dbfs": -32.517
+    },
+    {
+      "pickup": "Vintage split",
+      "start_seconds": 30,
+      "clean_gain": 4.142998877023785,
+      "unmatched_clean_rms_dbfs": -36.346,
+      "unmatched_drive_rms_dbfs": -33.272
+    },
+    {
+      "pickup": "Hot series",
+      "start_seconds": 40,
+      "clean_gain": 1.3821868030943667,
+      "unmatched_clean_rms_dbfs": -26.811,
+      "unmatched_drive_rms_dbfs": -29.525
+    }
+  ]
+}

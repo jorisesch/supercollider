@@ -1,0 +1,153 @@
+{
+  "date": "2026-11-02",
+  "finding": "No timing/control regression reproduced; user-reported sonic change remains to be identified.",
+  "production_stutter_or_music_changed": false,
+  "edm_waveform_probe": {
+    "bpm": 120,
+    "divisions": [
+      4,
+      8,
+      16
+    ],
+    "bounded_multi_bar_and_half_bar_release": "passed"
+  },
+  "held_waveform_probe": {
+    "bpm": 128,
+    "sixth_held_bar_pulses": 16,
+    "maximum_gap_to_open_rms_ratio": 0.14,
+    "release": "passed"
+  },
+  "rock_waveform_probe": {
+    "status": "passed",
+    "cases": [
+      {
+        "bpm": 78,
+        "division": 4,
+        "pulses": 4,
+        "period_seconds": 0.769231,
+        "maximum_spacing_error_ms": 1.231
+      },
+      {
+        "bpm": 78,
+        "division": 8,
+        "pulses": 8,
+        "period_seconds": 0.384615,
+        "maximum_spacing_error_ms": 1.385
+      },
+      {
+        "bpm": 78,
+        "division": 16,
+        "pulses": 16,
+        "period_seconds": 0.192308,
+        "maximum_spacing_error_ms": 1.692
+      },
+      {
+        "bpm": 102,
+        "division": 4,
+        "pulses": 4,
+        "period_seconds": 0.588235,
+        "maximum_spacing_error_ms": 0.235
+      },
+      {
+        "bpm": 102,
+        "division": 8,
+        "pulses": 8,
+        "period_seconds": 0.294118,
+        "maximum_spacing_error_ms": 0.118
+      },
+      {
+        "bpm": 102,
+        "division": 16,
+        "pulses": 16,
+        "period_seconds": 0.147059,
+        "maximum_spacing_error_ms": 1.059
+      },
+      {
+        "bpm": 124,
+        "division": 4,
+        "pulses": 4,
+        "period_seconds": 0.483871,
+        "maximum_spacing_error_ms": 1.871
+      },
+      {
+        "bpm": 124,
+        "division": 8,
+        "pulses": 8,
+        "period_seconds": 0.241935,
+        "maximum_spacing_error_ms": 2.065
+      },
+      {
+        "bpm": 124,
+        "division": 16,
+        "pulses": 16,
+        "period_seconds": 0.120968,
+        "maximum_spacing_error_ms": 1.032
+      }
+    ],
+    "following_bypass_bars": 9,
+    "human_listening_review": "not assessed by this test"
+  },
+  "native_ui": {
+    "status": "passed",
+    "hardware_output": "muted",
+    "all_six_effects": "passed",
+    "three_stutter_rates_reached_server": [
+      1,
+      2,
+      4
+    ],
+    "stop_release": "passed",
+    "handover_replay_and_cleanup": "passed"
+  },
+  "deck_source_byte_identical_to_fa608b9": [
+    "instruments.scd",
+    "rock-instruments.scd",
+    "rock-expressive-instruments.scd",
+    "rock-physical-instruments.scd"
+  ],
+  "test_harness_repairs": [
+    "Send each SynthDef in its own OSC packet in manual-fx-check.scd.",
+    "Update obsolete native-window height expectation from 560 to current 600."
+  ],
+  "human_listening": "The user identified EDM as the affected channel. The reported change in sound has not been identified by the numerical tests.",
+  "source_sha256": {
+    "infinite/experiments/dj/engine.scd": "b19351eb8491a42f3cb9df6c50cdf8872b243a0aa6266287cc252eb27ea0127c",
+    "infinite/experiments/dj/live.scd": "4bbe596b0156bf549d071f11cd47cbe1645d7a79dac946985f9e34ccd70bf10e",
+    "infinite/experiments/dj/controls.scd": "e21840bcfe28f3d590903fc5a585fa959f297650549045c6e59c481c37761b13",
+    "infinite/experiments/dj/instruments.scd": "2e22cab9e263766bc4727d3c1f4ec5acbe3dceaaa3013f2d96e753979712785d",
+    "infinite/experiments/dj/rock-physical-instruments.scd": "6aa9382a30657124b10b3d30b789b52b35a84c3da741cb069ec72359b174e6ff",
+    "infinite/experiments/dj/stutter-check.scd": "f31c1e3edecc670fd97b10528fa49cefe442e006c46c248dcc47addc27af4ec5",
+    "infinite/experiments/dj/verify_stutter.py": "ec1eb46a8f7a548383c80300b28490129a8fc9e0180ef6f3a62d3a8df9bc81d1",
+    "infinite/experiments/dj/manual-fx-check.scd": "69c2f302cfc68c5868d161b72022d327f6b6376d48e121a21bfda48f6d73761f",
+    "infinite/experiments/dj/verify_manual_fx.py": "cedb17d344d0223f235437096d024f80e1bb038c4328c41620d61b510fd20ba2",
+    "infinite/experiments/dj/runtime-check.scd": "150bface0b3d8f222f47834b61a03b593ccc232864653c7044f01e8891ea41d0",
+    "infinite/experiments/dj/rock-stutter-check.scd": "5959899d5cb87294eb309e2e1629918c4789b3fc6d1d838ea2b577b6819bf339",
+    "infinite/experiments/dj/verify_rock_stutter.py": "9927ccd291436276b5035344c1483d6a66ab19217cabf348e284ffea7780ba09"
+  },
+  "edm_full_mix_followup": {
+    "bpm": 128,
+    "same_four_bar_groove": true,
+    "divisions": [
+      4,
+      8,
+      16
+    ],
+    "dry_and_held_stutter_clip_starts_seconds": [
+      0,
+      9,
+      18,
+      27
+    ],
+    "measured_closed_windows": [
+      16,
+      19,
+      37
+    ],
+    "median_closed_window_rms_ratio_vs_dry": [
+      0.14,
+      0.14,
+      0.142
+    ],
+    "scope": "Held effects on a steady EDM groove, measured after the master, omitting low-energy reference windows. Local audition only; no production changes."
+  }
+}

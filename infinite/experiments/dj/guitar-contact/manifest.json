@@ -1,0 +1,95 @@
+{
+  "reference_commit": "fa608b9",
+  "human_listening_review": "pending",
+  "live_dj_changed": false,
+  "tracks": [
+    {
+      "file": "rock-strum-study.wav",
+      "preview": "rock-strum-study.m4a",
+      "seconds": 40.501333333333335,
+      "study": "strumming"
+    },
+    {
+      "file": "rock-contact-study.wav",
+      "preview": "rock-contact-study.m4a",
+      "seconds": 60.5,
+      "study": "contact"
+    },
+    {
+      "file": "rock-double-stops.wav",
+      "preview": "rock-double-stops.m4a",
+      "seconds": 32.501333333333335,
+      "study": "double stops"
+    },
+    {
+      "file": "rock-hand-comparison.wav",
+      "preview": "rock-hand-comparison.m4a",
+      "seconds": 133.50266666666667,
+      "study": "combined"
+    },
+    {
+      "file": "rock-strum-raw.wav",
+      "seconds": 40.501333333333335,
+      "study": "raw render source"
+    },
+    {
+      "file": "rock-contact-raw.wav",
+      "seconds": 30.501333333333335,
+      "study": "raw render source"
+    },
+    {
+      "file": "rock-double-stops-raw.wav",
+      "seconds": 32.501333333333335,
+      "study": "raw render source"
+    }
+  ],
+  "comparison_segments": [
+    {
+      "study": "strumming",
+      "start_seconds": 0.0,
+      "end_seconds": 40.501333333333335
+    },
+    {
+      "study": "contact",
+      "start_seconds": 40.501333333333335,
+      "end_seconds": 101.00133333333333
+    },
+    {
+      "study": "double stops",
+      "start_seconds": 101.00133333333333,
+      "end_seconds": 133.50266666666667
+    }
+  ],
+  "contact_matched_gains": {
+    "hard": 1.0,
+    "angled": 1.321087343793626,
+    "flexible": 1.671015195236831,
+    "flesh": 6.015345388740244,
+    "nail": 1.1575369170648828
+  },
+  "post_rig_listening_gains": {
+    "contact": 1.8543438099425473,
+    "strumming": 1.2066652538527962,
+    "double stops": 2.174069062379822
+  },
+  "strum_sections": [
+    "simultaneous control",
+    "full downstrokes",
+    "full upstrokes",
+    "full down / treble up",
+    "slow rake / fast upstroke"
+  ],
+  "contact_sections": [
+    "hard",
+    "angled",
+    "flexible",
+    "flesh",
+    "nail"
+  ],
+  "double_stop_sections": [
+    "picked thirds",
+    "finger-pinched sixths",
+    "one string bends against held partner",
+    "short chops and ringing pairs"
+  ]
+}

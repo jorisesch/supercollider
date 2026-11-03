@@ -1,0 +1,62 @@
+{
+  "human_listening_review": "pending",
+  "player_bars": 3456,
+  "guitar_notes": 127368,
+  "player_check_chord_landings": 396,
+  "historical_edm_pop_legacy_rock_frames_unchanged": 1440,
+  "song_profiles_stable": true,
+  "rhythm_repetition_and_phrase_answers": "passed",
+  "personal_gesture_and_rig_bounds": "passed",
+  "bass_drums_events_and_seeds_unchanged": true,
+  "old_and_new_recipe_handover_recall": "passed",
+  "other_score_checks": {
+    "rock_bars": 4608,
+    "physical_legacy_bars": 1792,
+    "earlier_expression_bars": 3584,
+    "solo_bars_checked": 14336,
+    "modal_bars": 3072,
+    "tension_bars": 32768
+  },
+  "native_ui": {
+    "result": "passed",
+    "hardware_output": "muted",
+    "player_names_and_tooltips": "passed",
+    "labels_clear_on_edm": "passed",
+    "riff_effects_handover_resume_switch_cleanup": "passed"
+  },
+  "synthesis_and_pedal_source_match_reference": true,
+  "earlier_study_audio_unchanged": true,
+  "audio": {
+    "rock-player-set.wav": {
+      "seconds": 156.6013,
+      "sample_rate": 48000,
+      "channels": 2,
+      "peak_dbfs": -2.45,
+      "rms_dbfs": -19.03,
+      "end_peak": 0.0,
+      "title": "Rock guitarists",
+      "players": [
+        "Flint",
+        "Rook"
+      ],
+      "song_identities": 2,
+      "human_listening_review": "pending"
+    },
+    "rock-player-comparison.wav": {
+      "seconds": 68.5707,
+      "sample_rate": 48000,
+      "channels": 2,
+      "peak_dbfs": -2.72,
+      "rms_dbfs": -19.49,
+      "end_peak": 0.0,
+      "title": "Rock guitarists",
+      "players": [
+        "Flint",
+        "June",
+        "Rook"
+      ],
+      "song_identities": 3,
+      "human_listening_review": "pending"
+    }
+  }
+}

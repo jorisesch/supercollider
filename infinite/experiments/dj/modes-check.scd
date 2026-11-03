@@ -38,7 +38,7 @@ try {
         var session=~makeDJSession.value(7429,128,(channel:channel,modalPolicy:\fixed,tonality:\dorian,melody:\pentatonic));
         var first=session[\nextBar].value,name=first.decks[0].trackName,spec=~djReadRecipe.value(name),replay;
         var expected=List.new;
-        assert.value(spec.size==15 and:{spec[0]==6},"Modal recipe does not store its choices");
+        assert.value(spec.size==16 and:{spec[0]==7},"Modal recipe does not store its choices");
         expected.add([first.events,first.automation]);
         15.do {var f=session[\nextBar].value;expected.add([f.events,f.automation])};
         replay=~djSessionFromRecipe.value(spec);replay.persistRecipes=false;

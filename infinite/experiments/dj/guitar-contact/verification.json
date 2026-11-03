@@ -1,0 +1,171 @@
+{
+  "human_listening_review": "pending",
+  "strums": {
+    "down": {
+      "string_order": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "sweep_ms": 34.687,
+      "onset_seconds": [
+        0.100021,
+        0.106708,
+        0.113375,
+        0.120042,
+        0.128042,
+        0.134708
+      ]
+    },
+    "up": {
+      "string_order": [
+        5,
+        4,
+        3,
+        2,
+        1,
+        0
+      ],
+      "sweep_ms": 34.667,
+      "onset_seconds": [
+        2.134708,
+        2.128042,
+        2.120042,
+        2.113375,
+        2.106708,
+        2.100042
+      ]
+    },
+    "simultaneous": {
+      "string_order": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "sweep_ms": 0.021,
+      "onset_seconds": [
+        4.100021,
+        4.100042,
+        4.100042,
+        4.100042,
+        4.100042,
+        4.100042
+      ]
+    }
+  },
+  "materials": {
+    "hard": {
+      "actual_fundamental_hz": 392.681,
+      "modal_power_centroid_hz": 816.8,
+      "release_kernel_ms": 0.023502308142619
+    },
+    "angled": {
+      "actual_fundamental_hz": 392.22,
+      "modal_power_centroid_hz": 638.1,
+      "release_kernel_ms": 0.18164039333844,
+      "upper_partial_change_db_vs_hard": {
+        "5": -6.67,
+        "8": -9.8,
+        "12": -12.3
+      }
+    },
+    "flexible": {
+      "actual_fundamental_hz": 392.209,
+      "modal_power_centroid_hz": 634.2,
+      "release_kernel_ms": 0.18801846514095,
+      "upper_partial_change_db_vs_hard": {
+        "5": -6.86,
+        "8": -10.03,
+        "12": -12.54
+      }
+    },
+    "flesh": {
+      "actual_fundamental_hz": 392.115,
+      "modal_power_centroid_hz": 523.1,
+      "release_kernel_ms": 0.83358658729668,
+      "upper_partial_change_db_vs_hard": {
+        "5": -12.8,
+        "8": -16.41,
+        "12": -19.16
+      }
+    },
+    "nail": {
+      "actual_fundamental_hz": 392.296,
+      "modal_power_centroid_hz": 693.6,
+      "release_kernel_ms": 0.11169788766323,
+      "upper_partial_change_db_vs_hard": {
+        "5": -3.97,
+        "8": -6.54,
+        "12": -8.78
+      }
+    }
+  },
+  "double_stop": {
+    "held_partner_pitch_span_cents": 0.2574,
+    "waveform_pitch": [
+      {
+        "seconds": 0.1,
+        "bending_string_hz": 444.28,
+        "held_partner_hz": 495.31
+      },
+      {
+        "seconds": 0.4,
+        "bending_string_hz": 487.18,
+        "held_partner_hz": 494.72
+      },
+      {
+        "seconds": 0.8,
+        "bending_string_hz": 496.13,
+        "held_partner_hz": 494.29
+      },
+      {
+        "seconds": 1.25,
+        "bending_string_hz": 492.28,
+        "held_partner_hz": 494.01
+      },
+      {
+        "seconds": 1.47,
+        "bending_string_hz": 494.14,
+        "held_partner_hz": 493.97
+      }
+    ]
+  },
+  "audio": {
+    "rock-strum-study.wav": {
+      "peak_dbfs": -3.88,
+      "rms_dbfs": -23.0
+    },
+    "rock-contact-study.wav": {
+      "peak_dbfs": -2.47,
+      "rms_dbfs": -23.0
+    },
+    "rock-double-stops.wav": {
+      "peak_dbfs": -11.43,
+      "rms_dbfs": -23.0
+    },
+    "rock-hand-comparison.wav": {
+      "peak_dbfs": -2.47,
+      "rms_dbfs": -23.0
+    },
+    "rock-strum-raw.wav": {
+      "peak_dbfs": -5.51,
+      "rms_dbfs": -24.63
+    },
+    "rock-contact-raw.wav": {
+      "peak_dbfs": -7.83,
+      "rms_dbfs": -29.94
+    },
+    "rock-double-stops-raw.wav": {
+      "peak_dbfs": -18.18,
+      "rms_dbfs": -29.75
+    }
+  },
+  "maximum_release_spectrum_error_db": 0.04,
+  "matched_contact_level_spread_db": 0.0
+}

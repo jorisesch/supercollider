@@ -1,0 +1,111 @@
+{
+  "reference_commit": "fa608b9",
+  "human_listening_review": "pending",
+  "live_dj_changed": false,
+  "tracks": [
+    {
+      "file": "rock-triad-voicings.wav",
+      "preview": "rock-triad-voicings.m4a",
+      "seconds": 32.501333333333335,
+      "study": "triads"
+    },
+    {
+      "file": "rock-triad-voicings-raw.wav",
+      "seconds": 32.501333333333335,
+      "study": "raw render source"
+    },
+    {
+      "file": "rock-chord-colors.wav",
+      "preview": "rock-chord-colors.m4a",
+      "seconds": 36.501333333333335,
+      "study": "extensions"
+    },
+    {
+      "file": "rock-chord-colors-raw.wav",
+      "seconds": 36.501333333333335,
+      "study": "raw render source"
+    },
+    {
+      "file": "rock-slash-chords.wav",
+      "preview": "rock-slash-chords.m4a",
+      "seconds": 32.501333333333335,
+      "study": "slash chords"
+    },
+    {
+      "file": "rock-slash-chords-raw.wav",
+      "seconds": 32.501333333333335,
+      "study": "raw render source"
+    },
+    {
+      "file": "rock-chord-phrasing.wav",
+      "preview": "rock-chord-phrasing.m4a",
+      "seconds": 40.501333333333335,
+      "study": "phrasing"
+    },
+    {
+      "file": "rock-chord-phrasing-raw.wav",
+      "seconds": 40.501333333333335,
+      "study": "raw render source"
+    },
+    {
+      "file": "rock-harmony-comparison.wav",
+      "preview": "rock-harmony-comparison.m4a",
+      "seconds": 142.00533333333334,
+      "study": "combined"
+    }
+  ],
+  "comparison_segments": [
+    {
+      "study": "triads",
+      "start_seconds": 0.0,
+      "end_seconds": 32.501333333333335
+    },
+    {
+      "study": "extensions",
+      "start_seconds": 32.501333333333335,
+      "end_seconds": 69.00266666666667
+    },
+    {
+      "study": "slash chords",
+      "start_seconds": 69.00266666666667,
+      "end_seconds": 101.504
+    },
+    {
+      "study": "phrasing",
+      "start_seconds": 101.504,
+      "end_seconds": 142.00533333333334
+    }
+  ],
+  "listening_gains": {
+    "triads": 1.2870802308658125,
+    "extensions": 1.455486082288258,
+    "slash chords": 1.559478359421383,
+    "phrasing": 1.330311188755779
+  },
+  "triad_sections": [
+    "A inversions",
+    "F#m inversions",
+    "root-position progression",
+    "voice-led progression"
+  ],
+  "color_sections": [
+    "A",
+    "Amaj7",
+    "A7",
+    "Am7",
+    "Aadd9",
+    "A9"
+  ],
+  "slash_sections": [
+    "A / A-C# / A-E",
+    "E pedal",
+    "descending bass",
+    "A-E resolving riff"
+  ],
+  "phrasing_sections": [
+    "block strums",
+    "syncopated stabs",
+    "bass and treble answers",
+    "arpeggios with anticipations"
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "reference_commit": "fa608b9",
+  "bpm": 96,
+  "seed": 731,
+  "phrase_beats": 32,
+  "common_listening_gain": 2.5,
+  "human_listening_review": "pending",
+  "live_dj_changed": false,
+  "tracks": [
+    {
+      "file": "rock-phrasing-reference.wav",
+      "preview": "rock-phrasing-reference.m4a",
+      "seconds": 22.101333333333333,
+      "profile": "reference"
+    },
+    {
+      "file": "rock-phrasing-restrained.wav",
+      "preview": "rock-phrasing-restrained.m4a",
+      "seconds": 22.101333333333333,
+      "profile": "restrained"
+    },
+    {
+      "file": "rock-phrasing-loose.wav",
+      "preview": "rock-phrasing-loose.m4a",
+      "seconds": 22.101333333333333,
+      "profile": "loose"
+    },
+    {
+      "file": "rock-phrasing-urgent.wav",
+      "preview": "rock-phrasing-urgent.m4a",
+      "seconds": 22.101333333333333,
+      "profile": "urgent"
+    },
+    {
+      "file": "rock-phrasing-comparison.wav",
+      "preview": "rock-phrasing-comparison.m4a",
+      "seconds": 88.40533333333333,
+      "profile": "comparison"
+    }
+  ],
+  "comparison_segments": [
+    {
+      "profile": "reference",
+      "start_seconds": 0.0,
+      "end_seconds": 22.101333333333333
+    },
+    {
+      "profile": "restrained",
+      "start_seconds": 22.101333333333333,
+      "end_seconds": 44.202666666666666
+    },
+    {
+      "profile": "loose",
+      "start_seconds": 44.202666666666666,
+      "end_seconds": 66.304
+    },
+    {
+      "profile": "urgent",
+      "start_seconds": 66.304,
+      "end_seconds": 88.40533333333333
+    }
+  ]
+}

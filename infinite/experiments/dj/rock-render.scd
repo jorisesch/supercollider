@@ -1,32 +1,42 @@
 // Render the evolving Rock set and a short three-tone comparison, from repo root.
 (
 var root=thisProcess.nowExecutingPath.dirname,repo=root.dirname.dirname.dirname;
-var pending=2,failed=false,render;
+var blues=~djRockBluesPreview ? false;
+var pending=if(blues){1}{2},failed=false,render;
+var mix;
+var timelineRoot=~djRockTimelineDir ? root;
 try {
     (root+/+"engine.scd").load;(root+/+"instruments.scd").load;
     TempoClock.default.tempo=1;
+    mix=~djMixSpec.value(\rock,if(blues){3}{2});
     render={|tones=false|
-        var score=List.new,time=0.1,tempo=102,node=1000,name=if(tones){"rock-tones"}{"rock-channel"};
-        var bars=if(tones){24}{64},engine,timeline,duration,osc,records=Set.new,palettes=Set.new;
+        var score=List.new,time=0.1,tempo=102,node=1000;
+        var name=if(blues){"rock-blues"}{(~djRockRenderNames ? ["rock-channel","rock-tones"])[if(tones){1}{0}]};
+        var bars=if(tones or:{blues}){24}{64},engine,timeline,duration,osc,records=Set.new,palettes=Set.new;
         var master=999,decks=[800,801],sources=[110,111],group=100;
         var makeMix={|at|
             score.add([at,[\g_new,group,0,1],[\g_new,sources[0],0,group],[\g_new,sources[1],0,group],
-                [\s_new,~djMixSpec.value(\rock).deck,decks[0],1,group,\in,16,\out,28,\musicGain,0,\bassGain,0,\drumsGain,0,\bpm,tempo],
-                [\s_new,~djMixSpec.value(\rock).deck,decks[1],1,group,\in,22,\out,28,\musicGain,0,\bassGain,0,\drumsGain,0,\bpm,tempo],
-                [\s_new,\djMaster,master,1,group,\in,28,\drive,~djMixSpec.value(\rock).drive]]);
+                [\s_new,mix.deck,decks[0],1,group,\in,16,\out,28,\musicGain,0,\bassGain,0,\drumsGain,0,\bpm,tempo],
+                [\s_new,mix.deck,decks[1],1,group,\in,22,\out,28,\musicGain,0,\bassGain,0,\drumsGain,0,\bpm,tempo],
+                [\s_new,\djMaster,master,1,group,\in,28,\drive,mix.drive]]);
         };
         ~djDefs.do {|def|score.add([0,[\d_recv,def.asBytes]])};
         if(tones.not){makeMix.value(0.01)};
-        timeline=File(root+/+(name++"-timeline.tsv"),"w");
-        timeline.write("bar\tseconds\tbpm\tmixing\trecord_a\trecord_b\tsection_a\tsection_b\tpalette_a\tpalette_b\tstutter_division\tstutter_remaining\tstutter_source\tstutter_deck\tstutter_start_beat\tstutter_bars\tsolo_a\tsolo_b\tsolo_kind_a\tsolo_kind_b\tsolo_age_a\tsolo_age_b\tsolo_bars_a\tsolo_bars_b\tlanding_notes_a\tlanding_notes_b\tlanding_degrees_a\tlanding_degrees_b\tlanding_offsets_a\tlanding_offsets_b\tlanding_beats_a\tlanding_beats_b\n");
-        engine=~makeDJEngine.value(2600,tempo,(channel:\rock));
+        timeline=File(timelineRoot+/+(name++"-timeline.tsv"),"w");
+        timeline.write("bar\tseconds\tbpm\tmixing\trecord_a\trecord_b\tsection_a\tsection_b\tpalette_a\tpalette_b\tstutter_division\tstutter_remaining\tstutter_source\tstutter_deck\tstutter_start_beat\tstutter_bars\tsolo_a\tsolo_b\tsolo_kind_a\tsolo_kind_b\tsolo_age_a\tsolo_age_b\tsolo_bars_a\tsolo_bars_b\tlanding_notes_a\tlanding_notes_b\tlanding_degrees_a\tlanding_degrees_b\tlanding_offsets_a\tlanding_offsets_b\tlanding_beats_a\tlanding_beats_b\tguitarist_a\tguitarist_b\tpedal_a\tpedal_b\n");
+        engine=~makeDJEngine.value(if(blues){2601}{2600},tempo,
+            (channel:\rock,rockLeadVersion:if(blues){3}{2},rockToneVersion:if(blues){3}{2},hold:blues));
         bars.do {|bar|
             var frame,actions=List.new,previous=0,field,row,landing;
             if(tones and:{bar%8==0}){
-                engine=~makeDJEngine.value(2600,102,(channel:\rock,palette:bar div:8,hold:true,tonality:\aeolian));
+                engine=~makeDJEngine.value(2600,102,(channel:\rock,palette:bar div:8,hold:true,tonality:\aeolian,rockLeadVersion:2,rockToneVersion:2));
                 8.do {engine[\nextBar].value};engine[\requestHook].value;makeMix.value(time-0.03);
             };
+            if(blues and:{bar==16}){engine[\requestHook].value};
             frame=engine[\nextBar].value;
+            if(blues and:{frame.decks[0].schedule[frame.decks[0].localBar].harmonyRole!=\blues}){
+                Error("Expected a blues record").throw;
+            };
             field={|id,key,fallback|if(frame.decks[id].isNil){fallback}{frame.decks[id][key]}};
             row=[bar,time.round(0.000000001),tempo,if(engine.state.mixing){1}{0},
                 field.value(0,\serial,-1),field.value(1,\serial,-1),field.value(0,\section,\waiting),field.value(1,\section,\waiting),
@@ -42,7 +52,11 @@ try {
                 field.value(0,\rockSoloBars,0),field.value(1,\rockSoloBars,0),
                 landing.value(0,\midinote),landing.value(1,\midinote),
                 landing.value(0,\landingChordDegree),landing.value(1,\landingChordDegree),
-                landing.value(0,\landingOffset),landing.value(1,\landingOffset),landing.value(0,\beat),landing.value(1,\beat)];
+                landing.value(0,\landingOffset),landing.value(1,\landingOffset),landing.value(0,\beat),landing.value(1,\beat),
+                if(frame.decks[0].isNil){"none"}{frame.decks[0].rockPlayer.name},
+                if(frame.decks[1].isNil){"none"}{frame.decks[1].rockPlayer.name},
+                if(frame.decks[0].isNil){-1}{frame.decks[0].rockPlayer.pedal},
+                if(frame.decks[1].isNil){-1}{frame.decks[1].rockPlayer.pedal}];
             timeline.write(row.collect(_.asString).join("\t")++"\n");
             frame.decks.do {|plan|if(plan.notNil){records.add(plan.serial);palettes.add(plan.palette.id)}};
             frame.automation.do {|point|actions.add((beat:point.beat,automation:point))};
@@ -61,9 +75,9 @@ try {
                 score.add([time,[\n_set,master,\gate,0]]);score.add([time+3.8,[\n_free,group]]);time=time+4;
             };
         };
-        timeline.write([bars,time.round(0.000000001),tempo,0,-1,-1,\end,\end,-1,-1,0,0,\none,-1,0,0,0,0,\none,\none,0,0,0,0,"none","none","none","none","none","none","none","none"].collect(_.asString).join("\t")++"\n");timeline.close;
+        timeline.write([bars,time.round(0.000000001),tempo,0,-1,-1,\end,\end,-1,-1,0,0,\none,-1,0,0,0,0,\none,\none,0,0,0,0,"none","none","none","none","none","none","none","none","none","none",-1,-1].collect(_.asString).join("\t")++"\n");timeline.close;
         if(tones.not){
-            if(records.size<2 or:{palettes.size<2}){Error("Rock preview must include a record/ensemble handover").throw};
+            if(blues.not and:{records.size<2 or:{palettes.size<2}}){Error("Rock preview must include a record/ensemble handover").throw};
             score.add([time,[\n_set,master,\gate,0]]);
         };
         duration=time+if(tones){0}{4};score.add([duration,[\c_set,0,0]]);
@@ -78,6 +92,6 @@ try {
                 if(pending==0){if(failed){1.exit}{0.exit}};
             });
     };
-    render.value(false);render.value(true);
+    render.value(false);if(blues.not){render.value(true)};
 } {|error|error.reportError;1.exit};
 )

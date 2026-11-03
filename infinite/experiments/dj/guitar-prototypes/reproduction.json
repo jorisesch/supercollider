@@ -1,0 +1,73 @@
+{
+  "reference_commit": "fa608b9",
+  "research_date": "2026-11-02",
+  "human_listening_review": "pending",
+  "default_channels_changed": false,
+  "sample_rate": 48000,
+  "channels": 2,
+  "sample_format": "int24",
+  "seed": 731,
+  "bpm": 96,
+  "source_sha256": {
+    "infinite/experiments/dj/guitar-prototypes/check.scd": "6b897a5a52f265cfa75021af3a4613cf150af537a94edb4a3863199f0dc01e4d",
+    "infinite/experiments/dj/guitar-prototypes/gestures.scd": "9993587be89c4d93bb198e4d4df697ae3c76a7357a87148133e93ba499fac0c1",
+    "infinite/experiments/dj/guitar-prototypes/instruments.scd": "5cc61daf6f6c63167714dab2e9f4c66d9451b71022c9e57bbba0637716525005",
+    "infinite/experiments/dj/guitar-prototypes/package.py": "c9e7841d00f5c8b61b44303f7a0c53ae07bbfcc2b3d8cdc884c5c36633ba6910",
+    "infinite/experiments/dj/guitar-prototypes/render.scd": "f5cab7ed2858ded7657c0d2062f10cd49990cf1623ad5c9ffa37c7263fdc9fb0",
+    "scripts/verify_audio.py": "967af7ddbf31ed43bdf2a76cb4637e55c256f1df018b317860a4c4264a08c576",
+    "scripts/verify_guitar_prototypes.py": "2f623ebd49ff1b417491f0633ab2b6467859436b0caf351ec48af9a58fce5a36"
+  },
+  "notes_and_data_sha256": {
+    "infinite/experiments/dj/GUITAR-REVIEW.md": "318536591abadbb5cad1fc655ca2b11afd0e89f1588fe562040cdb3d57dd5130",
+    "infinite/experiments/dj/guitar-prototypes/README.md": "b4b41fff89b7d1d40e9334cfe8ca22056a6963eaa1776ad03a4c4ef1a96615df",
+    "infinite/experiments/dj/guitar-prototypes/RESEARCH.md": "d51d1acf7e371ba1317b5d914b6856dd3159b1ccb26002004ff44ba75ebfb329",
+    "infinite/experiments/dj/guitar-prototypes/events.tsv": "ea36101e691d05fe4a9ec544b4ce0f29086167f82321321450eb9e46df97f551",
+    "infinite/experiments/dj/guitar-prototypes/manifest.json": "b7696aa701afe65c3e7abf09b3cda92aa9f68bb237071e0a6c372452825021a3",
+    "infinite/experiments/dj/guitar-prototypes/probes.tsv": "fe32f78797a7bfee861e331dca46e53e7bdaa2a8cd6ad1692df1b417dc74a9f4",
+    "infinite/experiments/dj/guitar-prototypes/verification.json": "129e5ad5999c4663d8dbcb0d2165f9ef22730e946642480155d8125f64e2684f"
+  },
+  "accepted_source_sha256": {
+    "infinite/experiments/dj/engine.scd": "81b7f280a29c3d2284059c69dbec981c40ba40cd021ef3844c1468c788081afd",
+    "infinite/experiments/dj/rock-physical-instruments.scd": "6aa9382a30657124b10b3d30b789b52b35a84c3da741cb069ec72359b174e6ff",
+    "infinite/experiments/dj/rock-physical-style.scd": "02d7a8cdc6cb7ecc9d15235dad7b128129b6f4e14eadb5054185639b8a8a2425",
+    "infinite/experiments/dj/rock-circuits.scd": "94046fe4fefa5a0809d9f7b6d42954ae51d02cfe2a16d395b9f43e6a2904280b",
+    "infinite/experiments/dj/live.scd": "88c78a7dd8317e32fc9ce628223532135ed2d5426d95be5a7b3b348785502377",
+    "infinite/experiments/dj/recall.scd": "b57836b08f4fe575637817de2ce6ae871c9fdc4b82112980c755ed8eab894c72"
+  },
+  "audio_sha256": {
+    "audio/rock-phrasing-reference.wav": "09c5ecdea7c008754cb71d343a06b6277980c817b9eb6b1a60c4bb6bf5f44a0e",
+    "audio/rock-phrasing-reference.m4a": "67681886a77717dade5c0b62c8f69d4b697cfae50b438d5c3a175d3f4bfbc47c",
+    "audio/rock-phrasing-restrained.wav": "775bd1260692f5314c6f62c57d27564e0b3d64c99304e055e787236d4764a8de",
+    "audio/rock-phrasing-restrained.m4a": "faa3c0f96a5204e71f03040264ac70ee159ddf24d8c4ea716b93132ab6d7dcb8",
+    "audio/rock-phrasing-loose.wav": "32528f7bf246dd3f52836a65fb840007c92e86ac1a28f8657131b9bbe6d200f7",
+    "audio/rock-phrasing-loose.m4a": "0e924a37fdbe820169f4c02dac06047488ff281337302332fe762b2bb4c78d6a",
+    "audio/rock-phrasing-urgent.wav": "fc0a2be0624311af2cd894b6604086246f014a5f3f4daf98ad84a8ce48750488",
+    "audio/rock-phrasing-urgent.m4a": "83e774d60349ff01b3a2a7abace522c4505b24bfee2e06f0b31eafb6957507a4",
+    "audio/rock-phrasing-comparison.wav": "48f7854d412d508c749d5e481358d6a4db6608c112cb53e9308c468cf588b6b1",
+    "audio/rock-phrasing-comparison.m4a": "263745593b5fbbba4ce7b00706b2279f15419633fd84b959ecff6c22e5dd0fcf"
+  },
+  "checks": {
+    "seeded_notes": 3648,
+    "distinct_onset_delays_across_seed_check": 72,
+    "waveform_pitch_measurements": 93,
+    "maximum_waveform_pitch_error_cents": 2.77,
+    "body_relative_error": [
+      2.99235701733817e-05,
+      2.99235701733817e-05
+    ],
+    "profile_level_spread_db": 0.02,
+    "under_bend_ending_cents": -13.94,
+    "accepted_motion_and_synthdefs_unchanged": true,
+    "accepted_source_and_three_audio_previews_match_reference_commit": true,
+    "general_audio_verifier": "passed",
+    "manual_listening": "pending"
+  },
+  "remaining_limitations": [
+    "Designed hand trajectories, not a fitted neuromotor model",
+    "No continuous modal-state transfer across separately synthesized notes",
+    "Existing reduced pedal/cabinet model retained",
+    "Technique-focused comparison density has not been adopted as a DJ policy"
+  ],
+  "contact_followup": "../guitar-contact/README.md; accepted and phrasing-study synthesis/audio retained.",
+  "harmony_followup": "../guitar-harmony/README.md; shared verifier/review index extended; synthesis and audio retained."
+}

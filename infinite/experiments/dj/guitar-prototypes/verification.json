@@ -1,0 +1,234 @@
+{
+  "human_listening_review": "pending",
+  "profiles": {
+    "reference": {
+      "notes": 19,
+      "notes_without_finger_bend": 13,
+      "notes_with_vibrato": 13,
+      "vibrato_delay_seconds": []
+    },
+    "restrained": {
+      "notes": 19,
+      "notes_without_finger_bend": 15,
+      "notes_with_vibrato": 6,
+      "vibrato_delay_seconds": [
+        0.455,
+        0.506,
+        0.473,
+        0.287,
+        0.507,
+        0.326
+      ]
+    },
+    "loose": {
+      "notes": 19,
+      "notes_without_finger_bend": 10,
+      "notes_with_vibrato": 9,
+      "vibrato_delay_seconds": [
+        0.38,
+        0.506,
+        0.432,
+        0.327,
+        0.338,
+        0.09,
+        0.432,
+        0.507,
+        0.141
+      ]
+    },
+    "urgent": {
+      "notes": 19,
+      "notes_without_finger_bend": 13,
+      "notes_with_vibrato": 9,
+      "vibrato_delay_seconds": [
+        0.38,
+        0.506,
+        0.132,
+        0.351,
+        0.101,
+        0.018,
+        0.375,
+        0.507,
+        0.035
+      ]
+    }
+  },
+  "probes": [
+    {
+      "profile": "restrained",
+      "index": 2,
+      "kind": "arrival",
+      "vibrato_onset_seconds": 0.49,
+      "end_cents_from_written_note": -0.62
+    },
+    {
+      "profile": "restrained",
+      "index": 3,
+      "kind": "preRelease",
+      "vibrato_onset_seconds": 0.555,
+      "end_cents_from_written_note": 0.76
+    },
+    {
+      "profile": "restrained",
+      "index": 6,
+      "kind": "hold",
+      "vibrato_onset_seconds": null,
+      "end_cents_from_written_note": 0.0
+    },
+    {
+      "profile": "restrained",
+      "index": 8,
+      "kind": "plain",
+      "vibrato_onset_seconds": null,
+      "end_cents_from_written_note": 0.01
+    },
+    {
+      "profile": "restrained",
+      "index": 9,
+      "kind": "double",
+      "vibrato_onset_seconds": 0.535,
+      "end_cents_from_written_note": 42.87
+    },
+    {
+      "profile": "restrained",
+      "index": 10,
+      "kind": "hold",
+      "vibrato_onset_seconds": 0.36,
+      "end_cents_from_written_note": 2.14
+    },
+    {
+      "profile": "restrained",
+      "index": 18,
+      "kind": "anchor",
+      "vibrato_onset_seconds": 0.39,
+      "end_cents_from_written_note": 0.71
+    },
+    {
+      "profile": "loose",
+      "index": 2,
+      "kind": "arrival",
+      "vibrato_onset_seconds": 0.4,
+      "end_cents_from_written_note": -0.65
+    },
+    {
+      "profile": "loose",
+      "index": 3,
+      "kind": "preRelease",
+      "vibrato_onset_seconds": 0.58,
+      "end_cents_from_written_note": 4.26
+    },
+    {
+      "profile": "loose",
+      "index": 6,
+      "kind": "hold",
+      "vibrato_onset_seconds": 0.47,
+      "end_cents_from_written_note": 0.67
+    },
+    {
+      "profile": "loose",
+      "index": 8,
+      "kind": "arrival",
+      "vibrato_onset_seconds": 0.36,
+      "end_cents_from_written_note": -13.94
+    },
+    {
+      "profile": "loose",
+      "index": 9,
+      "kind": "double",
+      "vibrato_onset_seconds": 0.375,
+      "end_cents_from_written_note": 42.66
+    },
+    {
+      "profile": "loose",
+      "index": 10,
+      "kind": "hold",
+      "vibrato_onset_seconds": 0.135,
+      "end_cents_from_written_note": 3.81
+    },
+    {
+      "profile": "loose",
+      "index": 18,
+      "kind": "anchor",
+      "vibrato_onset_seconds": 0.185,
+      "end_cents_from_written_note": 1.57
+    },
+    {
+      "profile": "urgent",
+      "index": 2,
+      "kind": "arrival",
+      "vibrato_onset_seconds": 0.39,
+      "end_cents_from_written_note": -2.38
+    },
+    {
+      "profile": "urgent",
+      "index": 3,
+      "kind": "preRelease",
+      "vibrato_onset_seconds": 0.515,
+      "end_cents_from_written_note": 1.82
+    },
+    {
+      "profile": "urgent",
+      "index": 6,
+      "kind": "hold",
+      "vibrato_onset_seconds": 0.145,
+      "end_cents_from_written_note": 2.88
+    },
+    {
+      "profile": "urgent",
+      "index": 8,
+      "kind": "arrival",
+      "vibrato_onset_seconds": 0.36,
+      "end_cents_from_written_note": 0.32
+    },
+    {
+      "profile": "urgent",
+      "index": 9,
+      "kind": "double",
+      "vibrato_onset_seconds": 0.115,
+      "end_cents_from_written_note": 45.01
+    },
+    {
+      "profile": "urgent",
+      "index": 10,
+      "kind": "hold",
+      "vibrato_onset_seconds": 0.04,
+      "end_cents_from_written_note": 0.07
+    },
+    {
+      "profile": "urgent",
+      "index": 18,
+      "kind": "anchor",
+      "vibrato_onset_seconds": 0.05,
+      "end_cents_from_written_note": 1.46
+    }
+  ],
+  "body_relative_error": [
+    2.99235701733817e-05,
+    2.99235701733817e-05
+  ],
+  "max_waveform_pitch_error_cents": 2.77,
+  "waveform_pitch_measurements": 93,
+  "audio": {
+    "rock-phrasing-reference.wav": {
+      "peak_dbfs": -6.51,
+      "rms_dbfs": -18.42
+    },
+    "rock-phrasing-restrained.wav": {
+      "peak_dbfs": -6.51,
+      "rms_dbfs": -18.4
+    },
+    "rock-phrasing-loose.wav": {
+      "peak_dbfs": -6.51,
+      "rms_dbfs": -18.42
+    },
+    "rock-phrasing-urgent.wav": {
+      "peak_dbfs": -6.51,
+      "rms_dbfs": -18.42
+    },
+    "rock-phrasing-comparison.wav": {
+      "peak_dbfs": -6.51,
+      "rms_dbfs": -18.42
+    }
+  },
+  "profile_level_spread_db": 0.02
+}

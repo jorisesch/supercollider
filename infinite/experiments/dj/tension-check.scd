@@ -65,7 +65,7 @@ try {
             if(bar==20){spec=~djReadRecipe.value(frame.decks[1].trackName)};
             if(bar>=20){expected.add([frame.events.deepCopy,frame.automation.deepCopy])};
         };
-        assert.value(spec.size==15 and:{spec[0]==6} and:{spec[12]=="tension"},"Recipe does not retain its harmony policy");
+        assert.value(spec.size==16 and:{spec[0]==7} and:{spec[12]=="tension"},"Recipe does not retain its harmony policy");
         replay=~djSessionFromRecipe.value(spec);replay.persistRecipes=false;
         expected.do {|old|var f=replay[\nextBar].value;assert.value([f.events,f.automation]==old,"Tension history/phase differs on recall")};
     };

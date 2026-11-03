@@ -14,7 +14,7 @@ An endless set that creates and mixes new tracks as it goes. Let it play, or sha
 
 - **[EDM](audio/edm-e-set.m4a)** — bass, drums and warm synth grooves.
 - **[Pop](audio/dj-pop-preview.m4a)** — bright synths and returning hooks.
-- **[Rock](audio/rock-channel.m4a)** — guitar riffs, bass and a room drum kit.
+- **[Rock](audio/rock-blues.m4a)** — humbucker riffs, blues grooves, bass and a room drum kit.
 - **[Soundscapes](audio/infinite-soundscape.m4a)** — slow, evolving textures.
 
 These previews are recordings; the generator itself keeps playing. The [companion page guide](site/README.md) explains how the website is built and published.

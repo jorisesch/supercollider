@@ -27,7 +27,7 @@ try {
                 soloBars=soloBars+1;lengths.add(plan.rockSoloBars);
                 assert.value(frame.automation[0].progress==0,"Automatic solo starts during a handover");
                 assert.value([\hook,\drop].includes(plan.section),"Automatic solo outside a release section");
-                assert.value(lead.size>=4,"Long riff has no melodic phrase");
+                assert.value(lead.size==[3,3,5,2][plan.rockSoloAge%4],"Long riff has no melodic phrase");
                 if(plan.rockSoloAge==(plan.rockSoloBars-1)){
                     assert.value(lead.last[\rockLanding] ? false,"Long solo has no resolving note");
                 };
@@ -70,6 +70,15 @@ try {
             var f=engine[\nextBar].value,plan=f.decks[0];
             assert.value(plan.rockSoloActive and:{plan.rockSoloKind==\riff} and:{plan.rockSoloAge==i},"Riff did not request a four-bar answer");
             checkLanding.value(f);
+            {
+                var lead=f.events.select {|e|e.role==\djHook};
+                assert.value(lead.size==[3,3,5,2][i],"Requested riff lost its call, answer, climb or arrival");
+                assert.value(lead.every {|e|e.slideBeats==0 and:{e.articulation==0}},"Melodic lead lost its picked attacks");
+                if(i==3){
+                    assert.value(lead.last.bendSemis==1 and:{lead.last.bendMode==2}
+                        and:{lead.last.duration==2.45},"Requested riff lost its held semitone bend");
+                };
+            }.value;
         };
         assert.value(engine[\nextBar].value.decks[0].rockSoloActive.not,"Requested riff did not finish");
     };
@@ -91,7 +100,7 @@ try {
             if(bar==20){spec=~djReadRecipe.value(f.decks[1].trackName)};
             if(bar>=20){expected.add([f.events.deepCopy,f.automation.deepCopy])};
         };
-        assert.value(spec[0]==6 and:{spec.size==15} and:{spec[13]==1},"Recipe lost the solo grammar version");
+        assert.value(spec[0]==7 and:{spec.size==16} and:{spec[13]==3},"Recipe lost the solo grammar version");
         replay=~djSessionFromRecipe.value(spec);replay.persistRecipes=false;
         expected.do {|old|var f=replay[\nextBar].value;assert.value([f.events,f.automation]==old,"Solos differ after performance-history recall")};
     };

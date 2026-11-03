@@ -1031,6 +1031,17 @@
     "measured_hz": 2475.0,
     "tone_seconds": 0.24996
   },
+  "rock-blues.wav": {
+    "seconds": 60.5707,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -2.45,
+    "rms_dbfs": -18.07,
+    "end_peak": 0.0,
+    "title": "Rock blues with vintage series humbuckers",
+    "bars": 24,
+    "human_listening_review": "pending"
+  },
   "rock-channel.wav": {
     "seconds": 156.6013,
     "sample_rate": 48000,
@@ -1100,6 +1111,94 @@
       }
     ]
   },
+  "rock-chord-colors-raw.wav": {
+    "seconds": 36.5013,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -7.38,
+    "rms_dbfs": -26.26,
+    "end_peak": 0.0,
+    "title": "Guitar voicing and chord phrasing study",
+    "study": "raw render source",
+    "human_listening_review": "pending"
+  },
+  "rock-chord-colors.wav": {
+    "seconds": 36.5013,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -4.12,
+    "rms_dbfs": -23.0,
+    "end_peak": 0.0,
+    "title": "Guitar voicing and chord phrasing study",
+    "study": "extensions",
+    "human_listening_review": "pending"
+  },
+  "rock-chord-phrasing-raw.wav": {
+    "seconds": 40.5013,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -4.61,
+    "rms_dbfs": -25.48,
+    "end_peak": 0.0,
+    "title": "Guitar voicing and chord phrasing study",
+    "study": "raw render source",
+    "human_listening_review": "pending"
+  },
+  "rock-chord-phrasing.wav": {
+    "seconds": 40.5013,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -2.13,
+    "rms_dbfs": -23.0,
+    "end_peak": 0.0,
+    "title": "Guitar voicing and chord phrasing study",
+    "study": "phrasing",
+    "human_listening_review": "pending"
+  },
+  "rock-contact-raw.wav": {
+    "seconds": 30.5013,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -7.83,
+    "rms_dbfs": -29.94,
+    "end_peak": 0.0,
+    "title": "Guitar contact and double-stop study",
+    "study": "raw render source",
+    "human_listening_review": "pending"
+  },
+  "rock-contact-study.wav": {
+    "seconds": 60.5,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -2.47,
+    "rms_dbfs": -23.0,
+    "end_peak": 0.0,
+    "title": "Guitar contact and double-stop study",
+    "study": "contact",
+    "human_listening_review": "pending"
+  },
+  "rock-double-stops-raw.wav": {
+    "seconds": 32.5013,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -18.18,
+    "rms_dbfs": -29.75,
+    "end_peak": 0.0,
+    "title": "Guitar contact and double-stop study",
+    "study": "raw render source",
+    "human_listening_review": "pending"
+  },
+  "rock-double-stops.wav": {
+    "seconds": 32.5013,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -11.43,
+    "rms_dbfs": -23.0,
+    "end_peak": 0.0,
+    "title": "Guitar contact and double-stop study",
+    "study": "double stops",
+    "human_listening_review": "pending"
+  },
   "rock-green-room.wav": {
     "seconds": 86.8027,
     "sample_rate": 48000,
@@ -1138,6 +1237,58 @@
     },
     "human_listening_review": "pending"
   },
+  "rock-hand-comparison.wav": {
+    "seconds": 133.5027,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -2.47,
+    "rms_dbfs": -23.0,
+    "end_peak": 0.0,
+    "title": "Guitar contact and double-stop study",
+    "study": "combined",
+    "human_listening_review": "pending"
+  },
+  "rock-harmony-comparison.wav": {
+    "seconds": 142.0053,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -2.13,
+    "rms_dbfs": -23.0,
+    "end_peak": 0.0,
+    "title": "Guitar voicing and chord phrasing study",
+    "study": "combined",
+    "human_listening_review": "pending"
+  },
+  "rock-humbucker-clean.wav": {
+    "seconds": 50.5013,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -2.26,
+    "rms_dbfs": -24.04,
+    "end_peak": 0.0,
+    "title": "Clean level-matched pickups",
+    "human_listening_review": "pending"
+  },
+  "rock-humbucker-comparison.wav": {
+    "seconds": 101.0027,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -2.26,
+    "rms_dbfs": -24.02,
+    "end_peak": 0.0,
+    "title": "Clean then overdriven comparison",
+    "human_listening_review": "pending"
+  },
+  "rock-humbucker-drive.wav": {
+    "seconds": 50.5013,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -8.08,
+    "rms_dbfs": -24.0,
+    "end_peak": 0.0,
+    "title": "Same overdrive, natural pickup levels",
+    "human_listening_review": "pending"
+  },
   "rock-ironwood.wav": {
     "seconds": 80.3947,
     "sample_rate": 48000,
@@ -1165,6 +1316,147 @@
     "scale": "D Mixolydian",
     "solo_notes": "D E F# G A B C",
     "seed": 731
+  },
+  "rock-phrasing-comparison.wav": {
+    "seconds": 88.4053,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -6.51,
+    "rms_dbfs": -18.42,
+    "end_peak": 0.0,
+    "title": "Guitar phrasing study",
+    "profile": "comparison",
+    "human_listening_review": "pending"
+  },
+  "rock-phrasing-loose.wav": {
+    "seconds": 22.1013,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -6.51,
+    "rms_dbfs": -18.42,
+    "end_peak": 0.0,
+    "title": "Guitar phrasing study",
+    "profile": "loose",
+    "human_listening_review": "pending"
+  },
+  "rock-phrasing-reference.wav": {
+    "seconds": 22.1013,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -6.51,
+    "rms_dbfs": -18.42,
+    "end_peak": 0.0,
+    "title": "Guitar phrasing study",
+    "profile": "reference",
+    "human_listening_review": "pending"
+  },
+  "rock-phrasing-restrained.wav": {
+    "seconds": 22.1013,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -6.51,
+    "rms_dbfs": -18.4,
+    "end_peak": 0.0,
+    "title": "Guitar phrasing study",
+    "profile": "restrained",
+    "human_listening_review": "pending"
+  },
+  "rock-phrasing-urgent.wav": {
+    "seconds": 22.1013,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -6.51,
+    "rms_dbfs": -18.42,
+    "end_peak": 0.0,
+    "title": "Guitar phrasing study",
+    "profile": "urgent",
+    "human_listening_review": "pending"
+  },
+  "rock-player-comparison.wav": {
+    "seconds": 68.5707,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -2.72,
+    "rms_dbfs": -19.49,
+    "end_peak": 0.0,
+    "title": "Rock guitarists",
+    "players": [
+      "Flint",
+      "June",
+      "Rook"
+    ],
+    "song_identities": 3,
+    "human_listening_review": "pending"
+  },
+  "rock-player-set.wav": {
+    "seconds": 156.6013,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -2.45,
+    "rms_dbfs": -19.03,
+    "end_peak": 0.0,
+    "title": "Rock guitarists",
+    "players": [
+      "Flint",
+      "Rook"
+    ],
+    "song_identities": 2,
+    "human_listening_review": "pending"
+  },
+  "rock-riff-study.wav": {
+    "seconds": 28.0013,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -2.45,
+    "rms_dbfs": -20.31,
+    "end_peak": 0.0,
+    "title": "Rock riff phrasing A/B",
+    "comparison_start_seconds": 14,
+    "human_listening_review": "pending"
+  },
+  "rock-slash-chords-raw.wav": {
+    "seconds": 32.5013,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -7.58,
+    "rms_dbfs": -26.86,
+    "end_peak": 0.0,
+    "title": "Guitar voicing and chord phrasing study",
+    "study": "raw render source",
+    "human_listening_review": "pending"
+  },
+  "rock-slash-chords.wav": {
+    "seconds": 32.5013,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -3.72,
+    "rms_dbfs": -23.0,
+    "end_peak": 0.0,
+    "title": "Guitar voicing and chord phrasing study",
+    "study": "slash chords",
+    "human_listening_review": "pending"
+  },
+  "rock-strum-raw.wav": {
+    "seconds": 40.5013,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -5.51,
+    "rms_dbfs": -24.63,
+    "end_peak": 0.0,
+    "title": "Guitar contact and double-stop study",
+    "study": "raw render source",
+    "human_listening_review": "pending"
+  },
+  "rock-strum-study.wav": {
+    "seconds": 40.5013,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -3.88,
+    "rms_dbfs": -23.0,
+    "end_peak": 0.0,
+    "title": "Guitar contact and double-stop study",
+    "study": "strumming",
+    "human_listening_review": "pending"
   },
   "rock-tones.wav": {
     "seconds": 68.5707,
@@ -1256,5 +1548,27 @@
       "Jangle": -18.12,
       "Fuzz room": -17.92
     }
+  },
+  "rock-triad-voicings-raw.wav": {
+    "seconds": 32.5013,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -8.04,
+    "rms_dbfs": -25.19,
+    "end_peak": 0.0,
+    "title": "Guitar voicing and chord phrasing study",
+    "study": "raw render source",
+    "human_listening_review": "pending"
+  },
+  "rock-triad-voicings.wav": {
+    "seconds": 32.5013,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -5.85,
+    "rms_dbfs": -23.0,
+    "end_peak": 0.0,
+    "title": "Guitar voicing and chord phrasing study",
+    "study": "triads",
+    "human_listening_review": "pending"
   }
 }

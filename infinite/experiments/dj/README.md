@@ -66,7 +66,7 @@ Choose **Rock** in the channel menu, or start it directly:
 /Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/experiments/rock.scd
 ```
 
-Rock creates guitar riffs, bass and drum arrangements with clean, crunch and fuzz sounds. Occasional longer solos resolve onto the current chord. [Listen and try it](ROCK.md).
+Rock creates guitar riffs, blues grooves, bass and drum arrangements with clean, crunch and fuzz sounds. Each song keeps a named guitarist and a consistent playing character. Occasional longer solos resolve onto the current chord. [Listen and try it](ROCK.md).
 
 ## Soundscapes
 

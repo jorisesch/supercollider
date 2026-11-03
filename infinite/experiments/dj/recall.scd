@@ -11,7 +11,7 @@ fingerprint=hash.value(["engine.scd","style.scd","pop-style.scd","library.scd",
     "instruments.scd","palette-instruments.scd","pop-instruments.scd","recall.scd",
     "e-style.scd","e-instruments.scd","modes.scd","rock-style.scd","rock-instruments.scd",
     "rock-expression.scd","rock-expressive-instruments.scd",
-    "rock-physical-style.scd","rock-physical-instruments.scd","rock-circuits.scd"]
+    "rock-physical-style.scd","rock-physical-instruments.scd","rock-circuits.scd","rock-players.scd","guitar-pickups/model.scd"]
     .collect { |file| File.readAllString(root +/+ file) }.join("\n"));
 ~djRecallVector={ |controls|
     keys.collect { |key,i|
@@ -79,10 +79,10 @@ fingerprint=hash.value(["engine.scd","style.scd","pop-style.scd","library.scd",
         frame.decks.do { |plan|
             if(plan.notNil) {
                 if(names[plan.serial].isNil) {
-                    var spec=[6,fingerprint,seed,bpm,[\legacy,\pop,\edme,\rock].indexOf(base.channel),
+                    var spec=[7,fingerprint,seed,bpm,[\legacy,\pop,\edme,\rock].indexOf(base.channel),
                         initial,plan.serial,bar,journal.asArray.deepCopy,0,
                         base.controls.tonality.asString,base.controls.melody.asString,base.controls.modalPolicy.asString,
-                        base.controls.rockLeadVersion,base.controls.rockToneVersion];
+                        base.controls.rockLeadVersion,base.controls.rockToneVersion,base.controls.rockPlayerVersion];
                     var name=~djRecipeName.value(spec),path;
                     path=~djRecipeDir +/+ (name ++ ".json");
                     while {File.exists(path) and: {~djParseRecipe.value(File.readAllString(path))!=spec}} {
@@ -115,8 +115,8 @@ fingerprint=hash.value(["engine.scd","style.scd","pop-style.scd","library.scd",
     spec=~djParseRecipe.value(File.readAllString(~djRecipeDir +/+ (name ++ ".json")));
     if(((spec.size==10 and:{spec[0]==2}) or:{spec.size==12 and:{spec[0]==3}}
         or:{spec.size==13 and:{spec[0]==4}} or:{spec.size==14 and:{spec[0]==5}}
-        or:{spec.size==15 and:{spec[0]==6}}).not or: {
-        (spec[1]!=fingerprint) and:{[2112806582,588589464,122551949,96742884,2133735198,2074328684].includes(spec[1].asInteger).not} and: {
+        or:{spec.size==15 and:{spec[0]==6}} or:{spec.size==16 and:{spec[0]==7}}).not or: {
+        (spec[1]!=fingerprint) and:{[2112806582,588589464,122551949,96742884,2133735198,2074328684,2014457403,1822520365,210581853].includes(spec[1].asInteger).not} and: {
         // Old Pop harmony changed; only unchanged EDM/Classic recipes are compatible.
         spec[4]==1 or: {[506492780,1646806499].includes(spec[1].asInteger).not}
     }}) {
@@ -134,6 +134,7 @@ fingerprint=hash.value(["engine.scd","style.scd","pop-style.scd","library.scd",
     settings.modalPolicy=if(spec.size>12){spec[12].asSymbol}{\fixed};
     settings.rockLeadVersion=if(spec.size>13){spec[13].asInteger}{0};
     settings.rockToneVersion=if(spec.size>14){spec[14].asInteger}{0};
+    settings.rockPlayerVersion=if(spec.size>15){spec[15].asInteger}{0};
     session=~makeDJSession.value(spec[2].asInteger,spec[3].asFloat,settings,false);
     session.recallNames[spec[6].asInteger]=~djRecipeName.value(spec);
     (spec[7].asInteger+1).do { |bar|

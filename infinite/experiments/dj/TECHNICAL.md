@@ -132,6 +132,8 @@ The four knobs retain Chaos, Density, Mutation and Tension. **Next** queues a re
 
 Choose **Filter**, **Echo**, **Wash**, or **Stutter 1/4, 1/8, 1/16** from the effect menu. Selection alone does nothing. **Start FX** activates the selection on the next generated bar and keeps it running until **Stop FX**. Filter and wash develop over their first bar and then hold; echo keeps sending; stutter continues at the selected note division. Effects follow the leading deck through handovers. Stop releases the effect with smoothing, including the remaining automation in the current bar, while existing echo/reverb tails decay. Stop the effect before choosing another. Stopping music also clears the manual effect.
 
+Stutter applies a smoothed rhythmic volume gate to the deck's ongoing mix. The notes and their envelopes keep progressing beneath that gate. Its apparent strength therefore depends on the music and, during a handover, on the other deck's contribution.
+
 **Auto ON/OFF** controls occasional automatic half-bar stutters. Manual effects take priority. The old bounded `~djHot` and `~djStutter` calls remain available from code.
 
 The **Spectrum** panel shows separate left/right FFTs of the final output, with logarithmic Hz/kHz labels and an 80 dB range. It pauses with STOP, resumes with START, and has its own ON/OFF switch. Closing the window frees its synths and buffers; headless playback creates no analyzer.
@@ -225,6 +227,8 @@ sclang -D infinite/experiments/dj/bass-check.scd /tmp/dj-bass-check.wav
 python3 infinite/experiments/dj/verify_bass.py /tmp/dj-bass-check.wav
 sclang -D infinite/experiments/dj/stutter-check.scd /tmp/dj-stutter-check.wav
 python3 infinite/experiments/dj/verify_stutter.py /tmp/dj-stutter-check.wav
+sclang -D infinite/experiments/dj/rock-stutter-check.scd /tmp/dj-rock-stutter-check.wav
+python3 infinite/experiments/dj/verify_rock_stutter.py /tmp/dj-rock-stutter-check.wav
 python3 scripts/verify_audio.py
 
 # Compact listening copies on macOS:
@@ -238,6 +242,8 @@ afconvert -f m4af -d aac -b 192000 -q 127 audio/digital-drive-lead-ab-v6d.wav au
 The renderer exits after writing the WAV and its timeline. WAVs and temporary scores remain ignored by Git; small AAC listening copies can be committed.
 
 The pure check covers 8,192 seeded bars and 2,048 bars at macro extremes: timing, scales, catalog rotation, palette routing and stable composition. It checks motif repetition and small answers, bounded swing, quiet ghosts, percussion entrances/exits, bass filter/drive variation, quarter-bar cut limits and coordinated returns. Automatic stutters must occupy only the final half-bar, reset at beat three and leave sixteen clear bars; manual half-bar and longer actions remain covered. The signal check measures eight pulses inside the half-bar with steady output before and after, alongside the longer gate rates. The muted runtime check exercises the compact window, tooltips, all six menu-selected held effects and immediate release against the server, handovers, transport, track-name replay and cleanup. The interaction check compares unchanged EDM events/automation with the favourite snapshot and checks EDM/Pop/EDM E recall after prior knob and action history. The offline manual-FX probe verifies a sixteenth stutter through its sixth held bar and continuous output after release. Audio verification checks available v6.3 renders against their timelines, palette levels, activity, duration, finite samples, headroom and quiet boundaries; it also measures the track's cuts and limits their count. The lead comparison checks that only the FM lead SynthDef changed, and measures reduced upper-band energy at comparable RMS levels. These checks do not establish musical quality.
+
+`rock-stutter-check.scd` and `verify_rock_stutter.py` add actual waveform pulse counts/spacing and bypass checks for all three divisions at 78, 102 and 124 BPM. The measurement excludes a narrow end-boundary window so a control-block-quantized return to bypass is not counted as another pulse. [Stutter investigation results](stutter-verification.json) record the checks separately from the user's listening report.
 
 ## Channel routing and saved-track compatibility
 
@@ -279,11 +285,11 @@ Run `rock-check.scd` for 4,608 bars across six mode choices, three ensembles and
 
 ## Rock lead phrasing and cadences
 
-`rock-style.scd` selects at most one automatic solo window per record form, in a hook/drop section. Four- and eight-bar phrases use repeated motifs, call/answer contours, register movement and rests. Density changes note detail; rhythm guitars drop to 82% during the lead. The existing Riff action requests four bars. A departing deck cadences immediately rather than letting a solo disappear into a handover.
+`rock-style.scd` selects at most one automatic solo window per record form, in a hook/drop section. Each four-bar phrase has a player-specific call, an answer adapted to the next chord, a five-note climb and a held semitone bend. Eight-bar solos use a second phrase with a higher register target. Rhythm guitars drop to 82% during the lead. Riff requests four bars. A departing deck cadences immediately rather than letting a solo disappear into a handover.
 
 Lead notes are appended after backing events so solo length does not change the backing's random stream, drum velocities or timing. All new lead phrases, including short replies, end on the active schedule's chord root, third or fifth. Roots are preferred. The pentatonic transform intersects the chord tones with its five-note set for marked landing notes; a generic nearest-scale snap cannot override that cadence. The final held note and its instrument release fit inside the current chord bar.
 
-Recipe schema 5 appends `rockLeadVersion`. Earlier recipes decode with version 0 and keep their original short replies; new Rock sets use version 1. Other channels keep the same notes/automation. `rock-solo-check.scd` covers 14,336 bars across seven scale choices and both melody palettes, phrase lengths, sparse placement, final-note chord membership, root preference, pentatonic intersections, Riff/Next behavior and old/new recall. `rock-solo-runtime-check.scd` exercises the actual Riff button and verifies landing notes delivered to the server with hardware output muted. Rock preview timelines include solo spans and landing-note/chord-degree information for audio checks.
+Recipe schema 5 appends `rockLeadVersion`. New Rock sets use lead version 3, which adds standard and quick-change 12-bar blues forms to the default mode. Tone version 3 routes the 20-mode two-coil string through a shared vintage series load before the pedal rig. Saved recipes keep their recorded phrase version. Recipes from before schema 5 use version 0 and play short replies. `rock-solo-check.scd` covers 14,336 bars across seven scale choices and both melody palettes, phrase lengths, sparse placement, final-note chord membership, root preference, pentatonic intersections, Riff/Next behavior and old/new recall. `rock-solo-runtime-check.scd` exercises the actual Riff button and verifies landing notes delivered to the server with hardware output muted. Rock preview timelines include solo spans and landing-note/chord-degree information for audio checks.
 
 ## Earlier expressive guitar and saved-tone processing
 
@@ -303,3 +309,9 @@ Render the set and three-tone comparison with `rock-render.scd`. The comparison 
 Current Rock sessions use `rockToneVersion: 2`; the schema 6 tone field already supports it. Tone 0 and 1 keep their earlier event streams and SynthDefs for saved-track playback. The immediately previous source fingerprint is accepted. New synthesis is in `rock-physical-instruments.scd`, circuit reductions in `rock-circuits.scd`, and playable gestures/rig selection in `rock-physical-style.scd`.
 
 The guitar bus now owns the nonlinear rig, so simultaneous notes interact before bass and drums are added. The new voice sends a modal string/pickup signal into it. The [guitar research and listening notes](GUITAR.md) document equations, original research/schematics, approximation boundaries and the one-minute isolated study. `rock-physical-render.scd` renders that study and temporary pitch/circuit/routing probes; `verify_rock_physical.py` verifies the actual PCM. `rock-physical-check.scd` checks score preservation, playable strings and tone-version recall. Numerical checks do not constitute human listening review.
+
+## Rock player identity
+
+Current Rock songs assign Rook, June or Flint once per record. `rock-players.scd` defines their small rhythm/lead vocabularies, pick/vibrato ranges and fixed pedal setups. Guitar rhythm replacement follows backing-score construction, preserving bass/drum events and the composition RNG. Lead contours repeat with related fourth-bar answers; phrase endings keep their chord-tone rules. [Player design, limits and checks](PLAYERS.md).
+
+Recipe schema 7 appends `rockPlayerVersion`: current physical Rock uses 1, previous schemas decode as 0. Compatible older recipes retain their earlier guitar event/FX policy. Other channels retain their events and automation. `rock-players-check.scd` covers identity, bounds, repetition, rhythm-section preservation and old/new handover recall. `channels-runtime-check.scd` additionally checks visible guitarist labels and their removal after switching to EDM. Render the current previews with `guitar-players/render.scd`, index them with `guitar-players/package.py`, and run the general audio verifier. The earlier guitar-study previews remain available as listening references.

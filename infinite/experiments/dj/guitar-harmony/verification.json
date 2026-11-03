@@ -1,0 +1,589 @@
+{
+  "human_listening_review": "pending",
+  "chord_shapes_checked": 70,
+  "performed_string_events": 538,
+  "root_position_movement_semitones": 103,
+  "inverted_movement_semitones": 21,
+  "descending_bass_midi": [
+    57,
+    56,
+    54,
+    52,
+    50,
+    49,
+    47,
+    52
+  ],
+  "rhythm_onsets_beats": {
+    "block": [
+      [
+        0.0,
+        2.0
+      ],
+      [
+        0.0,
+        2.0
+      ],
+      [
+        0.0,
+        2.0
+      ],
+      [
+        0.0,
+        2.0
+      ]
+    ],
+    "syncopation": [
+      [
+        0.5,
+        1.75,
+        2.5,
+        3.5
+      ],
+      [
+        0.5,
+        1.75,
+        2.5,
+        3.5
+      ],
+      [
+        0.5,
+        1.75,
+        2.5,
+        3.5
+      ],
+      [
+        0.5,
+        1.75,
+        2.5,
+        3.5
+      ]
+    ],
+    "bass_answer": [
+      [
+        0.0,
+        0.5,
+        2.0,
+        2.5
+      ],
+      [
+        0.0,
+        0.5,
+        2.0,
+        2.5
+      ],
+      [
+        -0.0,
+        0.5,
+        2.0,
+        2.5
+      ],
+      [
+        0.0,
+        0.5,
+        2.0,
+        2.5
+      ]
+    ],
+    "arpeggio": [
+      [
+        0.0,
+        0.5,
+        1.0,
+        1.5,
+        2.0,
+        2.5,
+        3.0,
+        3.5
+      ],
+      [
+        -0.25,
+        0.5,
+        1.0,
+        1.5,
+        2.0,
+        2.5,
+        3.0,
+        3.5
+      ],
+      [
+        -0.25,
+        0.5,
+        1.0,
+        1.5,
+        2.0,
+        2.5,
+        3.0,
+        3.5
+      ],
+      [
+        -0.25,
+        0.5,
+        1.0,
+        1.5,
+        2.0,
+        2.5,
+        3.0,
+        3.5
+      ]
+    ]
+  },
+  "waveform_pitch_checks": 52,
+  "maximum_waveform_pitch_error_cents": 11.864,
+  "dry_string_measurements": [
+    {
+      "case": 0,
+      "label": "A",
+      "string": 2,
+      "midi": 57,
+      "waveform_hz": 220.47,
+      "error_cents": 3.694
+    },
+    {
+      "case": 0,
+      "label": "A",
+      "string": 3,
+      "midi": 61,
+      "waveform_hz": 278.058,
+      "error_cents": 5.46
+    },
+    {
+      "case": 0,
+      "label": "A",
+      "string": 4,
+      "midi": 64,
+      "waveform_hz": 330.027,
+      "error_cents": 2.095
+    },
+    {
+      "case": 1,
+      "label": "A/C#",
+      "string": 2,
+      "midi": 61,
+      "waveform_hz": 278.087,
+      "error_cents": 5.641
+    },
+    {
+      "case": 1,
+      "label": "A/C#",
+      "string": 3,
+      "midi": 64,
+      "waveform_hz": 331.088,
+      "error_cents": 7.653
+    },
+    {
+      "case": 1,
+      "label": "A/C#",
+      "string": 4,
+      "midi": 69,
+      "waveform_hz": 440.751,
+      "error_cents": 2.953
+    },
+    {
+      "case": 2,
+      "label": "A/E",
+      "string": 2,
+      "midi": 64,
+      "waveform_hz": 330.92,
+      "error_cents": 6.777
+    },
+    {
+      "case": 2,
+      "label": "A/E",
+      "string": 3,
+      "midi": 69,
+      "waveform_hz": 443.026,
+      "error_cents": 11.864
+    },
+    {
+      "case": 2,
+      "label": "A/E",
+      "string": 4,
+      "midi": 73,
+      "waveform_hz": 555.553,
+      "error_cents": 3.704
+    },
+    {
+      "case": 3,
+      "label": "A",
+      "string": 2,
+      "midi": 57,
+      "waveform_hz": 220.47,
+      "error_cents": 3.694
+    },
+    {
+      "case": 3,
+      "label": "A",
+      "string": 3,
+      "midi": 61,
+      "waveform_hz": 278.058,
+      "error_cents": 5.46
+    },
+    {
+      "case": 3,
+      "label": "A",
+      "string": 4,
+      "midi": 64,
+      "waveform_hz": 330.027,
+      "error_cents": 2.095
+    },
+    {
+      "case": 4,
+      "label": "A",
+      "string": 1,
+      "midi": 45,
+      "waveform_hz": 110.175,
+      "error_cents": 2.755
+    },
+    {
+      "case": 4,
+      "label": "A",
+      "string": 2,
+      "midi": 52,
+      "waveform_hz": 165.001,
+      "error_cents": 1.97
+    },
+    {
+      "case": 4,
+      "label": "A",
+      "string": 3,
+      "midi": 57,
+      "waveform_hz": 220.48,
+      "error_cents": 3.769
+    },
+    {
+      "case": 4,
+      "label": "A",
+      "string": 4,
+      "midi": 61,
+      "waveform_hz": 277.439,
+      "error_cents": 1.603
+    },
+    {
+      "case": 4,
+      "label": "A",
+      "string": 5,
+      "midi": 64,
+      "waveform_hz": 329.704,
+      "error_cents": 0.4
+    },
+    {
+      "case": 5,
+      "label": "Amaj7",
+      "string": 1,
+      "midi": 45,
+      "waveform_hz": 110.175,
+      "error_cents": 2.755
+    },
+    {
+      "case": 5,
+      "label": "Amaj7",
+      "string": 2,
+      "midi": 52,
+      "waveform_hz": 165.001,
+      "error_cents": 1.97
+    },
+    {
+      "case": 5,
+      "label": "Amaj7",
+      "string": 3,
+      "midi": 56,
+      "waveform_hz": 208.074,
+      "error_cents": 3.509
+    },
+    {
+      "case": 5,
+      "label": "Amaj7",
+      "string": 4,
+      "midi": 61,
+      "waveform_hz": 277.439,
+      "error_cents": 1.603
+    },
+    {
+      "case": 5,
+      "label": "Amaj7",
+      "string": 5,
+      "midi": 64,
+      "waveform_hz": 329.704,
+      "error_cents": 0.4
+    },
+    {
+      "case": 6,
+      "label": "A7",
+      "string": 1,
+      "midi": 45,
+      "waveform_hz": 110.175,
+      "error_cents": 2.755
+    },
+    {
+      "case": 6,
+      "label": "A7",
+      "string": 2,
+      "midi": 52,
+      "waveform_hz": 165.001,
+      "error_cents": 1.97
+    },
+    {
+      "case": 6,
+      "label": "A7",
+      "string": 3,
+      "midi": 55,
+      "waveform_hz": 196.376,
+      "error_cents": 3.343
+    },
+    {
+      "case": 6,
+      "label": "A7",
+      "string": 4,
+      "midi": 61,
+      "waveform_hz": 277.439,
+      "error_cents": 1.603
+    },
+    {
+      "case": 6,
+      "label": "A7",
+      "string": 5,
+      "midi": 64,
+      "waveform_hz": 329.704,
+      "error_cents": 0.4
+    },
+    {
+      "case": 7,
+      "label": "Am7",
+      "string": 1,
+      "midi": 45,
+      "waveform_hz": 110.175,
+      "error_cents": 2.755
+    },
+    {
+      "case": 7,
+      "label": "Am7",
+      "string": 2,
+      "midi": 52,
+      "waveform_hz": 165.001,
+      "error_cents": 1.97
+    },
+    {
+      "case": 7,
+      "label": "Am7",
+      "string": 3,
+      "midi": 55,
+      "waveform_hz": 196.376,
+      "error_cents": 3.343
+    },
+    {
+      "case": 7,
+      "label": "Am7",
+      "string": 4,
+      "midi": 60,
+      "waveform_hz": 261.851,
+      "error_cents": 1.488
+    },
+    {
+      "case": 7,
+      "label": "Am7",
+      "string": 5,
+      "midi": 64,
+      "waveform_hz": 329.704,
+      "error_cents": 0.4
+    },
+    {
+      "case": 8,
+      "label": "Aadd9",
+      "string": 1,
+      "midi": 45,
+      "waveform_hz": 110.175,
+      "error_cents": 2.755
+    },
+    {
+      "case": 8,
+      "label": "Aadd9",
+      "string": 2,
+      "midi": 52,
+      "waveform_hz": 165.001,
+      "error_cents": 1.97
+    },
+    {
+      "case": 8,
+      "label": "Aadd9",
+      "string": 3,
+      "midi": 59,
+      "waveform_hz": 247.582,
+      "error_cents": 4.48
+    },
+    {
+      "case": 8,
+      "label": "Aadd9",
+      "string": 4,
+      "midi": 61,
+      "waveform_hz": 277.439,
+      "error_cents": 1.603
+    },
+    {
+      "case": 8,
+      "label": "Aadd9",
+      "string": 5,
+      "midi": 64,
+      "waveform_hz": 329.704,
+      "error_cents": 0.4
+    },
+    {
+      "case": 9,
+      "label": "A9",
+      "string": 1,
+      "midi": 45,
+      "waveform_hz": 110.175,
+      "error_cents": 2.755
+    },
+    {
+      "case": 9,
+      "label": "A9",
+      "string": 2,
+      "midi": 52,
+      "waveform_hz": 165.001,
+      "error_cents": 1.97
+    },
+    {
+      "case": 9,
+      "label": "A9",
+      "string": 3,
+      "midi": 59,
+      "waveform_hz": 247.582,
+      "error_cents": 4.48
+    },
+    {
+      "case": 9,
+      "label": "A9",
+      "string": 4,
+      "midi": 61,
+      "waveform_hz": 277.439,
+      "error_cents": 1.603
+    },
+    {
+      "case": 9,
+      "label": "A9",
+      "string": 5,
+      "midi": 67,
+      "waveform_hz": 392.103,
+      "error_cents": 0.476
+    },
+    {
+      "case": 10,
+      "label": "A/E",
+      "string": 0,
+      "midi": 40,
+      "waveform_hz": 82.586,
+      "error_cents": 3.75
+    },
+    {
+      "case": 10,
+      "label": "A/E",
+      "string": 1,
+      "midi": 45,
+      "waveform_hz": 110.184,
+      "error_cents": 2.898
+    },
+    {
+      "case": 10,
+      "label": "A/E",
+      "string": 2,
+      "midi": 52,
+      "waveform_hz": 165.009,
+      "error_cents": 2.05
+    },
+    {
+      "case": 10,
+      "label": "A/E",
+      "string": 3,
+      "midi": 57,
+      "waveform_hz": 220.484,
+      "error_cents": 3.802
+    },
+    {
+      "case": 10,
+      "label": "A/E",
+      "string": 4,
+      "midi": 61,
+      "waveform_hz": 277.445,
+      "error_cents": 1.637
+    },
+    {
+      "case": 10,
+      "label": "A/E",
+      "string": 5,
+      "midi": 64,
+      "waveform_hz": 329.704,
+      "error_cents": 0.404
+    },
+    {
+      "case": 11,
+      "label": "D/E",
+      "string": 0,
+      "midi": 40,
+      "waveform_hz": 82.586,
+      "error_cents": 3.75
+    },
+    {
+      "case": 11,
+      "label": "D/E",
+      "string": 2,
+      "midi": 54,
+      "waveform_hz": 185.281,
+      "error_cents": 2.658
+    },
+    {
+      "case": 11,
+      "label": "D/E",
+      "string": 3,
+      "midi": 57,
+      "waveform_hz": 220.484,
+      "error_cents": 3.802
+    },
+    {
+      "case": 11,
+      "label": "D/E",
+      "string": 4,
+      "midi": 62,
+      "waveform_hz": 293.968,
+      "error_cents": 1.789
+    }
+  ],
+  "audio": {
+    "rock-triad-voicings.wav": {
+      "peak_dbfs": -5.85,
+      "rms_dbfs": -23.0
+    },
+    "rock-triad-voicings-raw.wav": {
+      "peak_dbfs": -8.04,
+      "rms_dbfs": -25.19
+    },
+    "rock-chord-colors.wav": {
+      "peak_dbfs": -4.12,
+      "rms_dbfs": -23.0
+    },
+    "rock-chord-colors-raw.wav": {
+      "peak_dbfs": -7.38,
+      "rms_dbfs": -26.26
+    },
+    "rock-slash-chords.wav": {
+      "peak_dbfs": -3.72,
+      "rms_dbfs": -23.0
+    },
+    "rock-slash-chords-raw.wav": {
+      "peak_dbfs": -7.58,
+      "rms_dbfs": -26.86
+    },
+    "rock-chord-phrasing.wav": {
+      "peak_dbfs": -2.13,
+      "rms_dbfs": -23.0
+    },
+    "rock-chord-phrasing-raw.wav": {
+      "peak_dbfs": -4.61,
+      "rms_dbfs": -25.48
+    },
+    "rock-harmony-comparison.wav": {
+      "peak_dbfs": -2.13,
+      "rms_dbfs": -23.0
+    }
+  }
+}

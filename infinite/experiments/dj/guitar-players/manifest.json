@@ -1,0 +1,44 @@
+{
+  "human_listening_review": "pending",
+  "player_policy": 1,
+  "players": [
+    "Rook",
+    "June",
+    "Flint"
+  ],
+  "tracks": [
+    {
+      "file": "rock-player-set.wav",
+      "preview": "rock-player-set.m4a",
+      "seconds": 156.60133333333334,
+      "bars": 64,
+      "timeline": "infinite/experiments/dj/guitar-players/rock-player-set-timeline.tsv",
+      "tour": false,
+      "tail_seconds": 4,
+      "segments": []
+    },
+    {
+      "file": "rock-player-comparison.wav",
+      "preview": "rock-player-comparison.m4a",
+      "seconds": 68.57066666666667,
+      "bars": 24,
+      "timeline": "infinite/experiments/dj/guitar-players/rock-player-comparison-timeline.tsv",
+      "tour": true,
+      "tail_seconds": 0,
+      "segments": [
+        {
+          "player": "Rook",
+          "start_seconds": 0.1
+        },
+        {
+          "player": "June",
+          "start_seconds": 22.923529412
+        },
+        {
+          "player": "Flint",
+          "start_seconds": 45.747058824
+        }
+      ]
+    }
+  ]
+}

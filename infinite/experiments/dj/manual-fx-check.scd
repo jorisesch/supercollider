@@ -9,7 +9,8 @@ try {
     engine=~makeDJEngine.value(2600,128,(hold:true,autoStutter:false));
     probe=SynthDef(\djFXProbe,{Out.ar(16,SinOsc.ar(997,0,0.12)!2)});
     TempoClock.default.tempo=1;
-    score.add([0] ++ (~djDefs ++ [probe]).collect { |def| [\d_recv,def.asBytes] });
+    // Keep each definition in its own portable OSC packet.
+    (~djDefs ++ [probe]).do { |def| score.add([0,[\d_recv,def.asBytes]]) };
     score.add([0.01,[\g_new,100,0,1],[\s_new,\djFXProbe,700,0,100],
         [\s_new,\djDeck,800,1,100,\in,16,\out,28,\musicGain,1,\bassGain,0,\drumsGain,0],
         [\s_new,\djDeck,801,1,100,\in,22,\out,28,\musicGain,0,\bassGain,0,\drumsGain,0],

@@ -1,0 +1,118 @@
+{
+  "date": "2026-11-02",
+  "status": "preliminary",
+  "cpu": "Apple M4",
+  "cpu_cores": 10,
+  "memory_gib": 16,
+  "supercollider": "3.13.0",
+  "sample_rate": 48000,
+  "control_block_samples": 64,
+  "driver_buffer_samples": 512,
+  "hardware_audio_output": "muted",
+  "includes_gui_spectrum": false,
+  "metric_reference": "https://doc.sccode.org/Reference/Server-Command-Reference.html#%2Fstatus",
+  "cases": {
+    "idle": {
+      "samples": 22,
+      "median_reported_average_cpu_percent": 0.09,
+      "maximum_observed_reported_peak_cpu_percent": 0.18,
+      "maximum_synths": 1,
+      "maximum_ugens": 7
+    },
+    "two-decks-idle": {
+      "samples": 22,
+      "median_reported_average_cpu_percent": 22.63,
+      "maximum_observed_reported_peak_cpu_percent": 27.86,
+      "maximum_synths": 4,
+      "maximum_ugens": 3242
+    },
+    "song-Rook": {
+      "samples": 62,
+      "median_reported_average_cpu_percent": 33.17,
+      "maximum_observed_reported_peak_cpu_percent": 53.42,
+      "maximum_synths": 20,
+      "maximum_ugens": 23102
+    },
+    "song-June": {
+      "samples": 64,
+      "median_reported_average_cpu_percent": 33.24,
+      "maximum_observed_reported_peak_cpu_percent": 54.19,
+      "maximum_synths": 19,
+      "maximum_ugens": 23073
+    },
+    "song-Flint": {
+      "samples": 64,
+      "median_reported_average_cpu_percent": 33.47,
+      "maximum_observed_reported_peak_cpu_percent": 52.61,
+      "maximum_synths": 21,
+      "maximum_ugens": 23119
+    },
+    "song-handover": {
+      "samples": 86,
+      "median_reported_average_cpu_percent": 32.8,
+      "maximum_observed_reported_peak_cpu_percent": 58.28,
+      "maximum_synths": 30,
+      "maximum_ugens": 30818
+    },
+    "live-6-voices": {
+      "samples": 30,
+      "median_reported_average_cpu_percent": 25.8,
+      "maximum_observed_reported_peak_cpu_percent": 38.51,
+      "maximum_synths": 9,
+      "maximum_ugens": 10767
+    },
+    "live-12-voices": {
+      "samples": 30,
+      "median_reported_average_cpu_percent": 36.09,
+      "maximum_observed_reported_peak_cpu_percent": 48.04,
+      "maximum_synths": 15,
+      "maximum_ugens": 19899
+    },
+    "live-24-voices": {
+      "samples": 29,
+      "median_reported_average_cpu_percent": 38.14,
+      "maximum_observed_reported_peak_cpu_percent": 62.94,
+      "maximum_synths": 28,
+      "maximum_ugens": 39770
+    },
+    "contact-6-voices": {
+      "samples": 28,
+      "median_reported_average_cpu_percent": 29.05,
+      "maximum_observed_reported_peak_cpu_percent": 43.94,
+      "maximum_synths": 9,
+      "maximum_ugens": 11235
+    },
+    "contact-12-voices": {
+      "samples": 28,
+      "median_reported_average_cpu_percent": 37.69,
+      "maximum_observed_reported_peak_cpu_percent": 52.31,
+      "maximum_synths": 15,
+      "maximum_ugens": 20835
+    },
+    "contact-24-voices": {
+      "samples": 30,
+      "median_reported_average_cpu_percent": 40.96,
+      "maximum_observed_reported_peak_cpu_percent": 65.42,
+      "maximum_synths": 28,
+      "maximum_ugens": 41642
+    }
+  },
+  "initial_run": {
+    "completed_measurement_cases": 18,
+    "late_osc_messages": 0,
+    "teardown_errors": 8,
+    "note": "Queued end-of-bar automation reached freed deck nodes after the musical measurement windows. Static chord measurements completed. The retained harness now waits for queued automation before freeing nodes."
+  },
+  "confirmation_run": {
+    "status": "incomplete",
+    "note": "Repeated idle and Rook measurements, then the dedicated server stopped replying during June. It exited at the benchmark timeout. Do not treat this as a validated stress/stability test."
+  },
+  "sources_sha256": {
+    "rock-physical-instruments.scd": "6aa9382a30657124b10b3d30b789b52b35a84c3da741cb069ec72359b174e6ff",
+    "rock-circuits.scd": "94046fe4fefa5a0809d9f7b6d42954ae51d02cfe2a16d395b9f43e6a2904280b",
+    "instruments.scd": "a06925790310ce1323c96aea4c48828f6e954283422754da4ee0fa60a1884d43",
+    "rock-players.scd": "e6b4916b71b242d30528863775ea2884fdce834d5f7e573df7bff05d052422ea"
+  },
+  "samples_sha256": "3bb1762704358db510db5ef809bea1b28f1fe360f15f4bc093302cad59043469",
+  "scope": "Server DSP timing in short muted tests with other applications open. Chord tests sample after 1.2 seconds of attack/warm-up and before four-second notes release; attack-allocation spikes are not exhaustively measured."
+}

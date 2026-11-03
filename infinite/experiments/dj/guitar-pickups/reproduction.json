@@ -1,0 +1,65 @@
+{
+  "date": "2026-11-02",
+  "reference_commit": "fa608b9",
+  "human_listening_review": "pending",
+  "live_dj_changed": false,
+  "sample_rate": 48000,
+  "sample_format": "int24",
+  "source_sha256": {
+    "infinite/experiments/dj/e-instruments.scd": "398cd6400dfd7d2a1f7e962faba9e8bf00cdfebfd8a39fbf6723829cb5127f9f",
+    "infinite/experiments/dj/guitar-contact/contact.scd": "cb825297a893bbcb210791a15e716e244a22660f315d03e80e8aa4f69901d169",
+    "infinite/experiments/dj/guitar-contact/performance.scd": "cba03e25478ee7805091e98630be0ce1a54bd31144bc1f747d39e10a010b5f5c",
+    "infinite/experiments/dj/guitar-pickups/audition.scd": "0ba091234020b5837e560ac6522cd4e167d5e08c5c3297fa78fd5818f56d9bea",
+    "infinite/experiments/dj/guitar-pickups/instruments.scd": "9670466c62ec299dd7ef84ddf8eb158abba62f9c72d0d44023b6e31d2b23eccf",
+    "infinite/experiments/dj/guitar-pickups/model.scd": "5fe28343c075ff1a942e0e89239e01a8733456afe8c5b68d5d82c5343ea8c753",
+    "infinite/experiments/dj/guitar-pickups/package.py": "1ec8dc298cf3d8c2f45c4ba7dda77a44830f7f720677e231f3a61272cced6c18",
+    "infinite/experiments/dj/guitar-pickups/render.scd": "7212876148b064795fbf5ccd9049a07e738a6e9c73b3e6925c6cde5dfa9daa65",
+    "infinite/experiments/dj/guitar-pickups/verify.py": "51dd18d7dd2d2537321c09dfe6818af22dd6862c2cabf7ed286c670f919b5773",
+    "infinite/experiments/dj/instruments.scd": "2e22cab9e263766bc4727d3c1f4ec5acbe3dceaaa3013f2d96e753979712785d",
+    "infinite/experiments/dj/palette-instruments.scd": "d727d555ec7562e8c3853930c9ee849e25fa9faeb70cc56b3dfda07217348960",
+    "infinite/experiments/dj/pop-instruments.scd": "06c15c4f229cf6852d6f61ec76e5aae9927c36f1dc0768d913b42315d9d79049",
+    "infinite/experiments/dj/rock-circuits.scd": "94046fe4fefa5a0809d9f7b6d42954ae51d02cfe2a16d395b9f43e6a2904280b",
+    "infinite/experiments/dj/rock-expressive-instruments.scd": "5f7e6d1134bd2335e5772d16dc223e834b6b2d253deb855ce9c53105c58a5292",
+    "infinite/experiments/dj/rock-instruments.scd": "150ac1d70f8c33f06c7c321bf7d6e4621b93c67212b4926103cf0761d4066503",
+    "infinite/experiments/dj/rock-physical-instruments.scd": "6aa9382a30657124b10b3d30b789b52b35a84c3da741cb069ec72359b174e6ff",
+    "scripts/verify_audio.py": "cdc5afe06780066079cbac90e3afc0f26df977d87a2e40b02ab3c6d9bada03ab"
+  },
+  "notes_and_data_sha256": {
+    "infinite/experiments/dj/guitar-pickups/README.md": "a78020b219ec7d4f174361fd5b032d723b7a9734f627732ec3c028fac24c28ac",
+    "infinite/experiments/dj/guitar-pickups/RESEARCH.md": "a50608fc7d91fea6502c15e6b68ca17fe9253df6c789bb570db115f972797467",
+    "infinite/experiments/dj/guitar-pickups/events.tsv": "15a06842072f8b6a32879e0149f126ac528b60f1fcede46eb8e514cd5976a648",
+    "infinite/experiments/dj/guitar-pickups/manifest.json": "98440618953546c5f63beb091a800ad663f297deaf6a4d83ae2634c1104fbef5",
+    "infinite/experiments/dj/guitar-pickups/presets.tsv": "e37f9a52348741701e0aaf08c30c756daebe8c10349dad9df42b64da72a82b74",
+    "infinite/experiments/dj/guitar-pickups/verification.json": "e9f77fb77d927860687497357847abbb2fa9e3aaf02d35e6ef21bc699f000c2a"
+  },
+  "audio_sha256": {
+    "audio/rock-humbucker-clean.wav": "41aa67c7a31c5a263f4a2c728ff4ec8bc46a6316d18034f6ad4848e48c16245e",
+    "audio/rock-humbucker-clean.m4a": "1626d8fe2f949dd0a2e6a87393962b2f9ce69c5fe410f720f636a0e88712ab14",
+    "audio/rock-humbucker-drive.wav": "8e27b9988bbdfd2b6ec090af5c47cb83f5b12336f26b8136b5e8515a38035f3b",
+    "audio/rock-humbucker-drive.m4a": "e24511476d5d496487998e8fb52d08ec8dc5208defc11980d1edc047c9001566",
+    "audio/rock-humbucker-comparison.wav": "95e97252cb6a680ecc17c7040cc7d8da550ab332f7d11c7c14effac7c5125eab",
+    "audio/rock-humbucker-comparison.m4a": "92b322475dc3b1b87693f87ea653bcb703163d993c8c36b8449683b59dfe4523"
+  },
+  "temporary_diagnostic_sha256": {
+    "rock-humbucker-raw.wav": "12f3a0f7cbd78603ab036eb8beb1fe54594f7881f4b0f4394d2f6c0bc885c032",
+    "rock-humbucker-spatial.wav": "754971e0cb2d40e675a85996ef0bd5fba270e0cb14e32e30dd7aa0ca5f2058cc",
+    "rock-humbucker-circuit.wav": "2a940cb2afdf351014882cc8af0888d9748ea8b4764f0bfe4fbc7d4969c7b2c3",
+    "rock-humbucker-hum.wav": "c030fe9b6c5f7f2836ca55f9c6a0d56940f53a9fc6b440b966cd38c5b18f31a3"
+  },
+  "verification": {
+    "circuit_points": 50,
+    "modal_ratios": 28,
+    "fundamental_pitch_cases": 5,
+    "mains_frequencies_hz": [
+      50,
+      60
+    ],
+    "maximum_circuit_error_db": 0.0001,
+    "maximum_spatial_error_db": 0.0004,
+    "audio_rate_string_oscillators": 52,
+    "muted_live_audition_and_cleanup": "passed",
+    "earlier_audio_preserved": 42,
+    "general_audio_verifier": "passed"
+  },
+  "scope": "Linear finite-aperture sensing and lumped electrical loading. Illustrative presets; no hardware or CPU calibration."
+}

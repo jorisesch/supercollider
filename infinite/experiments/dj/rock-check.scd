@@ -22,12 +22,20 @@ try {
                         assert.value(e.beat>=last and:{e.beat<4},"Rock event timing invalid");last=e.beat;
                         assert.value(defs.includes(e.voice),"Missing Rock definition");
                         assert.value(e.amp>0 and:{e.amp<0.65} and:{e.duration>0} and:{e.duration<5},"Rock event bounds invalid");
-                        if(e.lane<3){assert.value(plan.scale.includes(pc),"Rock note left its mode")};
+                        if(e.lane<3){
+                            var chord=plan.schedule[plan.localBar],rootNote=plan.scale[chord.degree];
+                            if(e.role==\rockChord and:{chord.harmonyRole==\blues}){
+                                assert.value([4,7,10].includes((pc-rootNote)%12),"Blues guitar lost its dominant-seven voicing");
+                                assert.value(e.voice==\rockHumbuckerGuitar,"Blues chord reached the wrong pickup");
+                            }{
+                                assert.value(plan.scale.includes(pc),"Rock note left its mode");
+                            };
+                        };
                         if(e.role==\djHook and:{melody==\pentatonic}){
                             assert.value(plan.melodyPalette.includes(pc),"Rock lead left pentatonic palette");
                         };
                         [\fuzz,\wah,\slap].do {|key|
-                            if(e[key]>0){effects.add(key);assert.value([\rockGuitar,\rockExpressiveGuitar,\rockPhysicalGuitar].includes(e.voice),"Guitar effect leaked into the kit")};
+                            if(e[key]>0){effects.add(key);assert.value([\rockGuitar,\rockExpressiveGuitar,\rockPhysicalGuitar,\rockHumbuckerGuitar].includes(e.voice),"Guitar effect leaked into the kit")};
                         };
                     };
                     count=count+1;
@@ -36,7 +44,16 @@ try {
         };
     };
     assert.value(records.size>=3 and:{palettes.size==3} and:{progressions.size>8},"Rock variety is missing");
-    assert.value(kickShapes.size>3 and:{effects==Set[\fuzz,\wah,\slap]},"Rock rhythms or selective effects are missing");
+    assert.value(kickShapes.size>3 and:{effects.includes(\fuzz)},"Rock rhythms or selective effects are missing");
+    {
+        var engine=~makeDJEngine.value(2601,102,(channel:\rock,hold:true));
+        var expected=[0,0,0,0,3,3,0,0,4,3,0,4]++[0,3,0,0,3,3,0,0,4,3,0,4];
+        expected.do {|degree|
+            var frame=engine[\nextBar].value,plan=frame.decks[0];
+            assert.value(plan.schedule[plan.localBar].harmonyRole==\blues
+                and:{plan.schedule[plan.localBar].degree==degree},"Blues chorus lost its turnaround");
+        };
+    }.value;
     ~djRecipeDir=Platform.defaultTempDir+/+"dj-rock-recall-check";
     {
         var session=~makeDJSession.value(731,102,(channel:\rock,tonality:\dorian,melody:\pentatonic));

@@ -27,7 +27,7 @@ server.waitForBoot({
             ~djStart.value(2600,128,server);
             ui.value {
                 ~djShow.value;view=~djUI;view[\next].valueAction_(0);view[\auto].valueAction_(0);
-                assert.value(~djWindow.bounds.height==560,"Compact window height changed");
+                assert.value(~djWindow.bounds.height==600,"Compact window height changed");
                 assert.value(view.fxMenu.items.size==6,"An effect choice was lost");
             };
             waitFor.value {~djRoutine.notNil};buses.add(~djBus);

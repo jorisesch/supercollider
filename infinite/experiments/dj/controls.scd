@@ -163,7 +163,7 @@ var root=thisProcess.nowExecutingPath.dirname;
                             {audible} {"Playing"}
                             {plan.serial>state.currentSerial} {"Cued"}
                             {true} {"Finished"};
-                        deckStatus[deck].string_(label).stringColor_(ink);
+                        deckStatus[deck].string_(label++~djRockPlayerLabel.value(plan)).stringColor_(ink);
                         deckLabels[deck].stringColor_(ink);
                         titles[deck].background_(background);
                         if(plan.notNil) {
@@ -175,6 +175,7 @@ var root=thisProcess.nowExecutingPath.dirname;
                                 plan.keyName ++ " / " ++ plan.section ++ " / " ++ plan.targetBpm ++ " BPM\n"
                                 ++ plan.palette.name ++ " / " ++ plan.palette.kitName ++ "\n"
                                 ++ plan.palette.bassName ++ " + " ++ plan.palette.leadName ++ "\n"
+                                ++ if(plan[\rockPlayer].notNil){"Guitar: "++plan.rockPlayer.name++" / "++plan.rockPlayer.description++"\n"}{""}
                                 ++ "Chords " ++ ((plan[\currentProgression] ? plan.progression)+1).asString ++ if(plan.style==\pop) {" / current chord " ++ plan.schedule[plan.localBar].bars ++ " bars"} {" / lengths " ++ plan.durations.asString}
                                 ++ " / " ++ plan.length ++ " bars\n"
                                 ++ "Intensity " ++ (plan.intensity*100).round ++ "% / Chaos "

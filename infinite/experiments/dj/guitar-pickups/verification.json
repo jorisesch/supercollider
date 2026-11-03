@@ -1,0 +1,550 @@
+{
+  "human_listening_review": "pending",
+  "circuit": {
+    "Single coil": [
+      {
+        "hz": 60,
+        "measured_db": -0.427,
+        "expected_db": -0.427,
+        "phase_error_degrees": 0.0
+      },
+      {
+        "hz": 110,
+        "measured_db": -0.428,
+        "expected_db": -0.428,
+        "phase_error_degrees": 0.0
+      },
+      {
+        "hz": 400,
+        "measured_db": -0.377,
+        "expected_db": -0.377,
+        "phase_error_degrees": 0.0
+      },
+      {
+        "hz": 1000,
+        "measured_db": -0.073,
+        "expected_db": -0.073,
+        "phase_error_degrees": 0.0
+      },
+      {
+        "hz": 1800,
+        "measured_db": 0.761,
+        "expected_db": 0.761,
+        "phase_error_degrees": 0.0
+      },
+      {
+        "hz": 2400,
+        "measured_db": 1.715,
+        "expected_db": 1.715,
+        "phase_error_degrees": 0.0
+      },
+      {
+        "hz": 3300,
+        "measured_db": 3.416,
+        "expected_db": 3.416,
+        "phase_error_degrees": 0.0
+      },
+      {
+        "hz": 4400,
+        "measured_db": 3.197,
+        "expected_db": 3.197,
+        "phase_error_degrees": 0.0
+      },
+      {
+        "hz": 6000,
+        "measured_db": -3.405,
+        "expected_db": -3.405,
+        "phase_error_degrees": 0.0
+      },
+      {
+        "hz": 10000,
+        "measured_db": -16.462,
+        "expected_db": -16.462,
+        "phase_error_degrees": 0.0
+      }
+    ],
+    "Vintage series": [
+      {
+        "hz": 60,
+        "measured_db": -0.595,
+        "expected_db": -0.595,
+        "phase_error_degrees": 0.0
+      },
+      {
+        "hz": 110,
+        "measured_db": -0.596,
+        "expected_db": -0.596,
+        "phase_error_degrees": 0.0
+      },
+      {
+        "hz": 400,
+        "measured_db": -0.54,
+        "expected_db": -0.54,
+        "phase_error_degrees": 0.0
+      },
+      {
+        "hz": 1000,
+        "measured_db": -0.212,
+        "expected_db": -0.212,
+        "phase_error_degrees": 0.0
+      },
+      {
+        "hz": 1800,
+        "measured_db": 0.593,
+        "expected_db": 0.593,
+        "phase_error_degrees": 0.0
+      },
+      {
+        "hz": 2400,
+        "measured_db": 1.262,
+        "expected_db": 1.262,
+        "phase_error_degrees": 0.0
+      },
+      {
+        "hz": 3300,
+        "measured_db": 1.225,
+        "expected_db": 1.225,
+        "phase_error_degrees": 0.0
+      },
+      {
+        "hz": 4400,
+        "measured_db": -2.052,
+        "expected_db": -2.052,
+        "phase_error_degrees": 0.0
+      },
+      {
+        "hz": 6000,
+        "measured_db": -8.389,
+        "expected_db": -8.389,
+        "phase_error_degrees": 0.0
+      },
+      {
+        "hz": 10000,
+        "measured_db": -20.167,
+        "expected_db": -20.167,
+        "phase_error_degrees": 0.0
+      }
+    ],
+    "Vintage parallel": [
+      {
+        "hz": 60,
+        "measured_db": -0.152,
+        "expected_db": -0.152,
+        "phase_error_degrees": 0.0
+      },
+      {
+        "hz": 110,
+        "measured_db": -0.152,
+        "expected_db": -0.152,
+        "phase_error_degrees": 0.0
+      },
+      {
+        "hz": 400,
+        "measured_db": -0.122,
+        "expected_db": -0.122,
+        "phase_error_degrees": 0.0
+      },
+      {
+        "hz": 1000,
+        "measured_db": 0.051,
+        "expected_db": 0.051,
+        "phase_error_degrees": 0.0
+      },
+      {
+        "hz": 1800,
+        "measured_db": 0.53,
+        "expected_db": 0.53,
+        "phase_error_degrees": 0.0
+      },
+      {
+        "hz": 2400,
+        "measured_db": 1.104,
+        "expected_db": 1.104,
+        "phase_error_degrees": 0.0
+      },
+      {
+        "hz": 3300,
+        "measured_db": 2.392,
+        "expected_db": 2.392,
+        "phase_error_degrees": 0.0
+      },
+      {
+        "hz": 4400,
+        "measured_db": 4.879,
+        "expected_db": 4.879,
+        "phase_error_degrees": 0.0
+      },
+      {
+        "hz": 6000,
+        "measured_db": 7.678,
+        "expected_db": 7.678,
+        "phase_error_degrees": 0.0
+      },
+      {
+        "hz": 10000,
+        "measured_db": -8.47,
+        "expected_db": -8.47,
+        "phase_error_degrees": 0.0
+      }
+    ],
+    "Vintage split": [
+      {
+        "hz": 60,
+        "measured_db": -0.302,
+        "expected_db": -0.302,
+        "phase_error_degrees": 0.0
+      },
+      {
+        "hz": 110,
+        "measured_db": -0.302,
+        "expected_db": -0.302,
+        "phase_error_degrees": 0.0
+      },
+      {
+        "hz": 400,
+        "measured_db": -0.259,
+        "expected_db": -0.259,
+        "phase_error_degrees": 0.0
+      },
+      {
+        "hz": 1000,
+        "measured_db": -0.005,
+        "expected_db": -0.005,
+        "phase_error_degrees": 0.0
+      },
+      {
+        "hz": 1800,
+        "measured_db": 0.695,
+        "expected_db": 0.695,
+        "phase_error_degrees": 0.0
+      },
+      {
+        "hz": 2400,
+        "measured_db": 1.513,
+        "expected_db": 1.513,
+        "phase_error_degrees": 0.0
+      },
+      {
+        "hz": 3300,
+        "measured_db": 3.162,
+        "expected_db": 3.162,
+        "phase_error_degrees": 0.0
+      },
+      {
+        "hz": 4400,
+        "measured_db": 4.491,
+        "expected_db": 4.491,
+        "phase_error_degrees": 0.0
+      },
+      {
+        "hz": 6000,
+        "measured_db": -0.62,
+        "expected_db": -0.62,
+        "phase_error_degrees": 0.0
+      },
+      {
+        "hz": 10000,
+        "measured_db": -14.263,
+        "expected_db": -14.263,
+        "phase_error_degrees": 0.0
+      }
+    ],
+    "Hot series": [
+      {
+        "hz": 60,
+        "measured_db": -1.05,
+        "expected_db": -1.05,
+        "phase_error_degrees": 0.001
+      },
+      {
+        "hz": 110,
+        "measured_db": -1.054,
+        "expected_db": -1.054,
+        "phase_error_degrees": 0.0
+      },
+      {
+        "hz": 400,
+        "measured_db": -1.02,
+        "expected_db": -1.02,
+        "phase_error_degrees": 0.0
+      },
+      {
+        "hz": 1000,
+        "measured_db": -0.883,
+        "expected_db": -0.883,
+        "phase_error_degrees": 0.0
+      },
+      {
+        "hz": 1800,
+        "measured_db": -1.166,
+        "expected_db": -1.166,
+        "phase_error_degrees": 0.0
+      },
+      {
+        "hz": 2400,
+        "measured_db": -2.4,
+        "expected_db": -2.4,
+        "phase_error_degrees": 0.0
+      },
+      {
+        "hz": 3300,
+        "measured_db": -5.773,
+        "expected_db": -5.773,
+        "phase_error_degrees": 0.0
+      },
+      {
+        "hz": 4400,
+        "measured_db": -10.375,
+        "expected_db": -10.375,
+        "phase_error_degrees": 0.0
+      },
+      {
+        "hz": 6000,
+        "measured_db": -16.134,
+        "expected_db": -16.134,
+        "phase_error_degrees": 0.0
+      },
+      {
+        "hz": 10000,
+        "measured_db": -26.953,
+        "expected_db": -26.953,
+        "phase_error_degrees": 0.0
+      }
+    ]
+  },
+  "geometry": {
+    "Vintage series": [
+      {
+        "mode": 1,
+        "hz": 392.0,
+        "relative_level_db": 3.146,
+        "predicted_db": 3.146
+      },
+      {
+        "mode": 2,
+        "hz": 784.11,
+        "relative_level_db": 3.084,
+        "predicted_db": 3.084
+      },
+      {
+        "mode": 5,
+        "hz": 1962.3,
+        "relative_level_db": 2.636,
+        "predicted_db": 2.636
+      },
+      {
+        "mode": 10,
+        "hz": 3939.12,
+        "relative_level_db": 0.892,
+        "predicted_db": 0.892
+      },
+      {
+        "mode": 17,
+        "hz": 6758.26,
+        "relative_level_db": -5.163,
+        "predicted_db": -5.163
+      },
+      {
+        "mode": 22,
+        "hz": 8827.69,
+        "relative_level_db": -23.394,
+        "predicted_db": -23.394
+      },
+      {
+        "mode": 23,
+        "hz": 9248.55,
+        "relative_level_db": -29.882,
+        "predicted_db": -29.882
+      }
+    ],
+    "Vintage parallel": [
+      {
+        "mode": 1,
+        "hz": 392.0,
+        "relative_level_db": -2.874,
+        "predicted_db": -2.874
+      },
+      {
+        "mode": 2,
+        "hz": 784.11,
+        "relative_level_db": -2.937,
+        "predicted_db": -2.937
+      },
+      {
+        "mode": 5,
+        "hz": 1962.3,
+        "relative_level_db": -3.385,
+        "predicted_db": -3.385
+      },
+      {
+        "mode": 10,
+        "hz": 3939.12,
+        "relative_level_db": -5.128,
+        "predicted_db": -5.128
+      },
+      {
+        "mode": 17,
+        "hz": 6758.26,
+        "relative_level_db": -11.184,
+        "predicted_db": -11.184
+      },
+      {
+        "mode": 22,
+        "hz": 8827.69,
+        "relative_level_db": -29.414,
+        "predicted_db": -29.414
+      },
+      {
+        "mode": 23,
+        "hz": 9248.55,
+        "relative_level_db": -35.903,
+        "predicted_db": -35.902
+      }
+    ],
+    "Vintage split": [
+      {
+        "mode": 1,
+        "hz": 392.0,
+        "relative_level_db": -4.729,
+        "predicted_db": -4.729
+      },
+      {
+        "mode": 2,
+        "hz": 784.11,
+        "relative_level_db": -4.535,
+        "predicted_db": -4.535
+      },
+      {
+        "mode": 5,
+        "hz": 1962.3,
+        "relative_level_db": -2.891,
+        "predicted_db": -2.891
+      },
+      {
+        "mode": 10,
+        "hz": 3939.12,
+        "relative_level_db": -1.66,
+        "predicted_db": -1.66
+      },
+      {
+        "mode": 17,
+        "hz": 6758.26,
+        "relative_level_db": 5.425,
+        "predicted_db": 5.425
+      },
+      {
+        "mode": 22,
+        "hz": 8827.69,
+        "relative_level_db": -17.179,
+        "predicted_db": -17.179
+      },
+      {
+        "mode": 23,
+        "hz": 9248.55,
+        "relative_level_db": -23.818,
+        "predicted_db": -23.818
+      }
+    ],
+    "Hot series": [
+      {
+        "mode": 1,
+        "hz": 392.0,
+        "relative_level_db": 6.424,
+        "predicted_db": 6.424
+      },
+      {
+        "mode": 2,
+        "hz": 784.11,
+        "relative_level_db": 6.361,
+        "predicted_db": 6.361
+      },
+      {
+        "mode": 5,
+        "hz": 1962.3,
+        "relative_level_db": 5.913,
+        "predicted_db": 5.913
+      },
+      {
+        "mode": 10,
+        "hz": 3939.12,
+        "relative_level_db": 4.169,
+        "predicted_db": 4.169
+      },
+      {
+        "mode": 17,
+        "hz": 6758.26,
+        "relative_level_db": -1.886,
+        "predicted_db": -1.886
+      },
+      {
+        "mode": 22,
+        "hz": 8827.69,
+        "relative_level_db": -20.117,
+        "predicted_db": -20.117
+      },
+      {
+        "mode": 23,
+        "hz": 9248.55,
+        "relative_level_db": -26.605,
+        "predicted_db": -26.605
+      }
+    ]
+  },
+  "hum": {
+    "60": {
+      "balanced_series_parallel_and_hot_below_pcm_floor": true,
+      "three_percent_mismatch_db_relative_to_split": -30.458
+    },
+    "50": {
+      "balanced_series_parallel_and_hot_below_pcm_floor": true,
+      "three_percent_mismatch_db_relative_to_split": -30.458
+    }
+  },
+  "audio": {
+    "rock-humbucker-clean.wav": {
+      "peak_dbfs": -2.26,
+      "rms_dbfs": -24.04
+    },
+    "rock-humbucker-drive.wav": {
+      "peak_dbfs": -8.08,
+      "rms_dbfs": -24.0
+    },
+    "rock-humbucker-comparison.wav": {
+      "peak_dbfs": -2.26,
+      "rms_dbfs": -24.02
+    }
+  },
+  "maximum_circuit_error_db": 0.0001,
+  "maximum_circuit_phase_error_degrees": 0.0008,
+  "maximum_spatial_error_db": 0.0004,
+  "fundamental_hz": {
+    "Single coil": 391.9954,
+    "Vintage series": 391.9954,
+    "Vintage parallel": 391.9954,
+    "Vintage split": 391.9954,
+    "Hot series": 391.9954
+  },
+  "clean_rms_spread_db": 0.0,
+  "natural_level_change_db_vs_single": {
+    "Single coil": {
+      "clean": 0.0,
+      "drive": 0.0
+    },
+    "Vintage series": {
+      "clean": 2.825,
+      "drive": 1.08
+    },
+    "Vintage parallel": {
+      "clean": -2.841,
+      "drive": -0.791
+    },
+    "Vintage split": {
+      "clean": -4.168,
+      "drive": -1.546
+    },
+    "Hot series": {
+      "clean": 5.367,
+      "drive": 2.201
+    }
+  }
+}

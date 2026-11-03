@@ -11,8 +11,8 @@ var root=thisProcess.nowExecutingPath.dirname;
 ~djSettings.tonality=~djSettings[\tonality] ? \original;
 ~djSettings.melody=~djSettings[\melody] ? \full;
 ~djSettings.modalPolicy=~djSettings[\modalPolicy] ? if([\edme,\pop].includes(~djSettings.channel)){\tension}{\fixed};
-~djSettings.rockLeadVersion=~djSettings[\rockLeadVersion] ? if(~djSettings.channel==\rock){1}{0};
-~djSettings.rockToneVersion=~djSettings[\rockToneVersion] ? if(~djSettings.channel==\rock){2}{0};
+~djSettings.rockLeadVersion=~djSettings[\rockLeadVersion] ? if(~djSettings.channel==\rock){3}{0};
+~djSettings.rockToneVersion=~djSettings[\rockToneVersion] ? if(~djSettings.channel==\rock){3}{0};
 ~djLastFX=\none;
 ~djLastFXLabel="none";
 ~djManualFX=nil;
@@ -97,8 +97,8 @@ var root=thisProcess.nowExecutingPath.dirname;
     if([\full,\pentatonic].includes(melody).not){Error("Choose full or pentatonic melody").throw};
     ~djSettings.tonality=tonality;~djSettings.melody=melody;
     ~djSettings.modalPolicy=policy ? if([\edme,\pop].includes(~djSettings.channel)){\tension}{\fixed};
-    ~djSettings.rockLeadVersion=if(~djSettings.channel==\rock){1}{0};
-    ~djSettings.rockToneVersion=if(~djSettings.channel==\rock){2}{0};
+    ~djSettings.rockLeadVersion=if(~djSettings.channel==\rock){3}{0};
+    ~djSettings.rockToneVersion=if(~djSettings.channel==\rock){3}{0};
     ("DJ mode: "++tonality++" / melody "++melody++" / restarting with fade").postln;
     ~djStart.value(~djSeed ? 2600,~djInitialBpm ? 128,~djServer);
 };
@@ -108,8 +108,8 @@ var root=thisProcess.nowExecutingPath.dirname;
     if(~djChannelIDs.includes(channel).not){Error("Choose EDM, Pop or Rock").throw};
     ~djSettings.channel=channel;
     ~djSettings.modalPolicy=if([\edme,\pop].includes(channel)){\tension}{\fixed};
-    ~djSettings.rockLeadVersion=if(channel==\rock){1}{0};
-    ~djSettings.rockToneVersion=if(channel==\rock){2}{0};
+    ~djSettings.rockLeadVersion=if(channel==\rock){3}{0};
+    ~djSettings.rockToneVersion=if(channel==\rock){3}{0};
     if(channel==\rock and:{old!=\rock}){~djDanceAutoStutter=~djSettings.autoStutter;~djSettings.autoStutter=false};
     if(old==\rock and:{channel!=\rock}){~djSettings.autoStutter=~djDanceAutoStutter ? true};
     ("DJ channel: "++channel++" / restarting set with fade").postln;
@@ -158,7 +158,7 @@ var root=thisProcess.nowExecutingPath.dirname;
                             if(plan.notNil and: {announced.includes(plan.serial).not}) {
                                 ("DJ track / " ++ plan.trackName ++ " / " ++ plan.palette.name ++
                                     " / " ++ plan.palette.bassName ++ " + " ++ plan.palette.leadName ++
-                                    " / " ++ plan.palette.kitName).postln;
+                                    " / " ++ plan.palette.kitName++~djRockPlayerLabel.value(plan)).postln;
                                 announced.add(plan.serial);
                             };
                             if(plan.notNil and:{plan.modalPolicy==\tension}){

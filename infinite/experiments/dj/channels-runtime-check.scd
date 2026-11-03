@@ -40,6 +40,11 @@ server.waitForBoot {
             ui.value {~djSpectrum.scopes.do {|scope,i|scope.inBus_(output.index+i)}};
             "ROCK UI READY / spectrum reads the internal stereo mix / hardware muted".postln;
             3.4.wait;levels.clear;
+            ui.value {
+                var player=~djEngine.state.decks[0].rockPlayer;
+                assert.value(~djUI.deckStatus[0].string.contains("Guitar: "++player.name),"Player name missing from live status");
+                assert.value(~djUI.titles[0].toolTip.contains(player.description),"Player character missing from tooltip");
+            };
             ui.value {~djUI.hook.valueAction_(0);~djUI[\next].valueAction_(0)};
             waitFor.value {~djEngine.state.mixing};
             ui.value {~djUI.fxMenu.valueAction_(1);~djUI.fxButton.valueAction_(1)};
@@ -55,6 +60,7 @@ server.waitForBoot {
             ui.value {~djUI.channel.valueAction_(0)};
             waitFor.value {~djRoutine.notNil and:{~djEngine.channel==\edme}};
             3.4.wait;assert.value(oldBus.index.isNil,"Rock-to-EDM switch leaked its bus");
+            ui.value {assert.value(~djUI.deckStatus.every {|label|label.string.contains("Guitar:").not},"Rock player label remained on EDM")};
             ui.value {~djUI.modeChoice.valueAction_(0);~djUI.pentatonicChoice.valueAction_(false);~djUI.modeApply.valueAction_(0)};
             waitFor.value {~djRoutine.notNil and:{~djEngine.controls.tonality==\original}};
             ui.value {~djWindow.close};3.5.wait;meter.free;output.free;server.sync;

@@ -23,6 +23,21 @@ tension_manifest = json.loads(Path('infinite/experiments/dj/tension-tour.json').
 tension_specs = {spec['file']: spec for spec in tension_manifest['tracks']}
 dj_manifests = {}
 guitar_study = json.loads(Path('infinite/experiments/dj/rock-guitar-study.json').read_text())
+phrasing_manifest_path = Path('infinite/experiments/dj/guitar-prototypes/manifest.json')
+phrasing_manifest = json.loads(phrasing_manifest_path.read_text()) if phrasing_manifest_path.exists() else {}
+phrasing_specs = {spec['file']: spec for spec in phrasing_manifest.get('tracks', [])}
+contact_manifest_path = Path('infinite/experiments/dj/guitar-contact/manifest.json')
+contact_manifest = json.loads(contact_manifest_path.read_text()) if contact_manifest_path.exists() else {}
+contact_specs = {spec['file']: spec for spec in contact_manifest.get('tracks', [])}
+harmony_manifest_path = Path('infinite/experiments/dj/guitar-harmony/manifest.json')
+harmony_manifest = json.loads(harmony_manifest_path.read_text()) if harmony_manifest_path.exists() else {}
+harmony_specs = {spec['file']: spec for spec in harmony_manifest.get('tracks', [])}
+player_manifest_path = Path('infinite/experiments/dj/guitar-players/manifest.json')
+player_manifest = json.loads(player_manifest_path.read_text()) if player_manifest_path.exists() else {}
+player_specs = {spec['file']: spec for spec in player_manifest.get('tracks', [])}
+pickup_manifest_path = Path('infinite/experiments/dj/guitar-pickups/manifest.json')
+pickup_manifest = json.loads(pickup_manifest_path.read_text()) if pickup_manifest_path.exists() else {}
+pickup_specs = {spec['file']: spec for spec in pickup_manifest.get('tracks', [])}
 for manifest_path in (Path('infinite/experiments/dj/preview.json'), Path('infinite/experiments/dj/track.json'),
                       Path('infinite/experiments/dj/palette-tour.json'),
                       Path('infinite/experiments/dj/digital-drive.json'),
@@ -41,10 +56,13 @@ for manifest_path in (Path('infinite/experiments/dj/preview.json'), Path('infini
         spec = json.loads(manifest_path.read_text())
         dj_manifests[spec['file']] = spec
 assert expected <= {p.name for p in Path('audio').glob('*.wav')}, 'Missing audio renders'
+supported = (expected | set(dj_manifests) | {'neon-rush.wav', 'infinite-soundscape.wav', guitar_study['file'], 'rock-riff-study.wav', 'rock-blues.wav'}
+             | set(rock_specs) | set(modes_specs) | set(tension_specs) | set(phrasing_specs) | set(contact_specs)
+             | set(harmony_specs) | set(player_specs) | set(pickup_specs))
 noise_signatures = {}
 results = {}
 for path in sorted(Path('audio').glob('*.wav')):
-    if path.name not in expected and path.name not in dj_manifests and path.name not in {'neon-rush.wav', 'infinite-soundscape.wav', guitar_study['file']} and path.name not in rock_specs and path.name not in modes_specs and path.name not in tension_specs:
+    if path.name not in supported:
         continue
     dj_manifest = dj_manifests.get(path.name)
     with wave.open(str(path), 'rb') as w:
@@ -59,6 +77,72 @@ for path in sorted(Path('audio').glob('*.wav')):
     edge = max(map(abs, values[-4800:]))
     assert edge < 0.0001
     result = dict(seconds=round(frames/rate, 4), sample_rate=rate, channels=channels, peak_dbfs=round(20*math.log10(peak), 2), rms_dbfs=round(20*math.log10(rms), 2), end_peak=edge)
+    if path.name == 'rock-blues.wav':
+        assert abs(frames/rate-(0.1+24*4*60/102+4)) < 0.003
+        for bar in range(24):
+            begin = round((0.1+bar*4*60/102)*rate)*channels
+            end = round((0.1+(bar+1)*4*60/102)*rate)*channels
+            assert max(map(abs, values[begin:end])) > 0.002, 'Silent blues bar'
+        result.update(title='Rock blues with vintage series humbuckers', bars=24,
+                      human_listening_review='pending')
+    if path.name == 'rock-riff-study.wav':
+        assert abs(frames/rate-28) < 0.003
+        for start in (0, 14):
+            section = values[start*rate*channels:(start+14)*rate*channels]
+            assert max(map(abs, section[:int(0.08*rate)*channels])) < 0.0001
+            assert max(map(abs, section[-4800:])) < 0.0001
+            assert math.sqrt(sum(v*v for v in section) / len(section)) > 0.001
+        result.update(title='Rock riff phrasing A/B', comparison_start_seconds=14,
+                      human_listening_review='pending')
+    if path.name in pickup_specs:
+        spec = pickup_specs[path.name]
+        assert abs(frames/rate-spec['seconds']) < 0.003, 'Wrong pickup study duration'
+        assert max(map(abs, values[:int(0.08*rate)*channels])) < 0.0001
+        result.update(title=spec['title'], human_listening_review=pickup_manifest['human_listening_review'])
+    if path.name in player_specs:
+        spec = player_specs[path.name]
+        assert abs(frames/rate-spec['seconds']) < 0.003, 'Wrong Rock player duration'
+        with Path(spec['timeline']).open() as f:
+            timeline = list(csv.DictReader(f, delimiter='\t'))
+        assert len(timeline) == spec['bars']+1
+        assert abs(float(timeline[-1]['seconds'])+spec['tail_seconds']-frames/rate) < 0.003
+        identities, players = {}, set()
+        for i, row in enumerate(timeline[:-1]):
+            assert int(row['bar']) == i and 78 <= float(row['bpm']) <= 124
+            for deck in ['a', 'b']:
+                serial = int(row['record_'+deck])
+                if serial < 0:
+                    continue
+                palette = int(row['palette_'+deck])
+                player, pedal = row['guitarist_'+deck], int(row['pedal_'+deck])
+                assert player == ['Rook', 'June', 'Flint'][palette]
+                assert pedal == [2, 1, 3][palette]
+                identity = (i//8 if spec['tour'] else 0, serial)
+                assert identities.setdefault(identity, (player, pedal)) == (player, pedal), 'Guitarist changed during song'
+                players.add(player)
+            begin = round(float(row['seconds'])*rate)*channels
+            end = round(float(timeline[i+1]['seconds'])*rate)*channels
+            assert max(map(abs, values[begin:end])) > 0.002, 'Silent Rock player bar'
+        assert len(players) >= (3 if spec['tour'] else 2)
+        result.update(title='Rock guitarists', players=sorted(players), song_identities=len(identities),
+                      human_listening_review=player_manifest['human_listening_review'])
+    if path.name in harmony_specs:
+        spec = harmony_specs[path.name]
+        assert abs(frames/rate-spec['seconds']) < 0.003, 'Wrong guitar harmony-study duration'
+        assert max(map(abs, values[:int(0.08*rate)*channels])) < 0.0001
+        result.update(title='Guitar voicing and chord phrasing study', study=spec['study'],
+                      human_listening_review=harmony_manifest['human_listening_review'])
+    if path.name in contact_specs:
+        spec = contact_specs[path.name]
+        assert abs(frames/rate-spec['seconds']) < 0.003, 'Wrong guitar hand-study duration'
+        result.update(title='Guitar contact and double-stop study', study=spec['study'],
+                      human_listening_review=contact_manifest['human_listening_review'])
+    if path.name in phrasing_specs:
+        spec = phrasing_specs[path.name]
+        assert abs(frames/rate-spec['seconds']) < 0.003, 'Wrong guitar phrasing duration'
+        assert max(map(abs, values[:int(0.08*rate)*channels])) < 0.0001
+        result.update(title='Guitar phrasing study', profile=spec['profile'],
+                      human_listening_review=phrasing_manifest['human_listening_review'])
     if path.name == guitar_study['file']:
         assert abs(frames/rate-guitar_study['seconds']) < 0.003
         assert max(map(abs, values[:int(0.08*rate)*channels])) < 0.0001

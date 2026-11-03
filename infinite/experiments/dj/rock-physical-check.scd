@@ -7,12 +7,12 @@ try {
     var fxKeys=[\guitarComp,\guitarChorus,\guitarPedal,\guitarDrive,\guitarTone,\guitarFuzz];
     (root+/+"engine.scd").load;(root+/+"instruments.scd").load;(root+/+"recall.scd").load;
     [\original,\aeolian,\ionian,\dorian,\phrygian,\mixolydian,\lydian].do {|mode|[\full,\pentatonic].do {|melody|
-        var a=~makeDJEngine.value(2600,102,(channel:\rock,tonality:mode,melody:melody));
+        var a=~makeDJEngine.value(2600,102,(channel:\rock,tonality:mode,melody:melody,rockPlayerVersion:0));
         var b=~makeDJEngine.value(2600,102,(channel:\rock,tonality:mode,melody:melody,rockToneVersion:0));
         128.do {
             var f=a[\nextBar].value,g=b[\nextBar].value,plain,automation;
             plain=f.events.collect {|event|var e=event.copy;
-                if(e.voice==\rockPhysicalGuitar){
+                if([\rockPhysicalGuitar,\rockHumbuckerGuitar].includes(e.voice)){
                     var open=[40,45,50,55,59,64][e.stringIndex];
                     assert.value((e.midinote-open).inclusivelyBetween(0,22),"Unplayable fret/string assignment");
                     assert.value(e.slideBeats.inclusivelyBetween(0,0.18),"Unbounded slide");
@@ -32,7 +32,7 @@ try {
     }};
     gestures.values.do {|n|assert.value(n>10,"Missing technique")};assert.value(pedals==Set[0,1,2,3],"Missing rig topology");
     ~djRecipeDir=Platform.defaultTempDir+/+"dj-rock-physical-recipes";
-    [1,2].do {|tone|
+    [1,2,3].do {|tone|
         var session=~makeDJSession.value(2600,102,(channel:\rock,hold:true,rockToneVersion:tone)),spec,expected=List.new,replay;
         40.do {|i|var f=session[\nextBar].value;if(i==0){spec=~djReadRecipe.value(f.decks[0].trackName)};
             expected.add([f.events.deepCopy,f.automation.deepCopy])};
@@ -45,7 +45,7 @@ try {
         var name=~djRecipeName.value(spec),replay,reference;
         File.use(~djRecipeDir+/+(name++".json"),"w",{|file|file.write(spec.asCompileString)});
         replay=~djSessionFromRecipe.value(~djReadRecipe.value(name));replay.persistRecipes=false;
-        reference=~makeDJEngine.value(2600,102,(channel:\rock,tension:1,rockToneVersion:1));
+        reference=~makeDJEngine.value(2600,102,(channel:\rock,tension:1,rockToneVersion:1,rockLeadVersion:1));
         64.do {var a=replay[\nextBar].value,b=reference[\nextBar].value;
             assert.value(a.events==b.events and:{a.automation==b.automation},"Previous source recipe changed its sound")};
     }.value;
