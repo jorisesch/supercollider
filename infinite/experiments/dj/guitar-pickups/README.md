@@ -1,6 +1,6 @@
 # Humbucker pickup study
 
-Listen to the [combined comparison](../../../../audio/rock-humbucker-comparison.m4a) (1:41). It plays the same notes and picking through five pickups, first [clean and level matched](../../../../audio/rock-humbucker-clean.m4a), then through [one fixed overdrive](../../../../audio/rock-humbucker-drive.m4a). The drive pass preserves how hard each pickup hits the pedal. The studio comparison uses the full pickup prototype. Rock uses its vintage series pickup in a lighter live string model.
+Listen to the [combined comparison](../../../../audio/rock-humbucker-comparison.m4a) (1:41). It plays the same notes and picking through five pickups, first [clean and level matched](../../../../audio/rock-humbucker-clean.m4a), then through [one fixed overdrive](../../../../audio/rock-humbucker-drive.m4a). The drive pass preserves how hard each pickup hits the pedal. The studio comparison uses the full pickup prototype. Rock uses a lighter 20-mode string model. June plays a single coil, and Rook and Flint play vintage series humbuckers.
 
 | Pickup | Clean | Overdrive |
 | --- | ---: | ---: |
@@ -11,6 +11,10 @@ Listen to the [combined comparison](../../../../audio/rock-humbucker-comparison.
 | Hot humbucker, series | 0:40 | 1:31 |
 
 The phrase includes an Eadd9 strum, treble upstroke, short lead, a double stop and Em7. Start with **0:00 → 0:10** to hear the change in clean tone, then **1:01 → 1:31** to compare the two series pickups into the same pedal.
+
+## Single-coil decay
+
+[Hear how the overtones decay](DECAY.md) in a matched clean and driven comparison.
 
 ## Blues in Rock
 

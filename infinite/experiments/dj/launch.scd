@@ -15,7 +15,7 @@ var root=thisProcess.nowExecutingPath.dirname;
     ~djSettings.channel=case {args.includesEqual("rock")} {\rock} {args.includesEqual("pop")} {\pop} {true} {\edme};
     ~djSettings.modalPolicy=if(~djSettings.channel==\rock){\fixed}{\tension};
     ~djSettings.rockLeadVersion=if(~djSettings.channel==\rock){3}{0};
-    ~djSettings.rockToneVersion=if(~djSettings.channel==\rock){3}{0};
+    ~djSettings.rockToneVersion=if(~djSettings.channel==\rock){6}{0};
     ~djSettings.autoStutter=~djSettings.channel!=\rock;
     args=args.reject { |item| ["pop","rock","edm","edme","classic"].includesEqual(item) };
     seed=if(args.at(0).notNil) { args[0].asInteger } { 2600 };

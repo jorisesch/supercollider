@@ -28,7 +28,7 @@ try {
                 names.add(p.name);records[[id,plan.serial]]=true;
             }};
             frame.events.do {|e|
-                if([\rockPhysicalGuitar,\rockHumbuckerGuitar].includes(e.voice)){
+                if([\rockPhysicalGuitar,\rockHumbuckerGuitar,\rockSingleCoilDecay,\rockHumbuckerDecay].includes(e.voice)){
                     var plan=frame.decks[e.deck],p=plan.rockPlayer;
                     assert.value((e.pickPosition-p.pick).abs<=(p.pickSpread+1e-9),"Picking hand left character range");
                     assert.value((e.vibratoRate-p.rate).abs<=(p.rateSpread+1e-9),"Vibrato speed left character range");

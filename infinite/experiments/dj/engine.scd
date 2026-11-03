@@ -20,15 +20,15 @@ var root=thisProcess.nowExecutingPath.dirname;
     };
 };
 ~djDefaultBpm={|channel|switch(~djResolveChannel.value(channel),\pop,{138},\rock,{102},{128})};
-~djMixSpec={|channel,rockToneVersion=3|
-    if(channel==\rock){(deck:case {rockToneVersion>=3}{\rockHumbuckerDeck} {rockToneVersion>=2}{\rockPhysicalDeck} {rockToneVersion==1}{\rockGuitarDeck} {true}{\rockDeck},drive:1.8)}{(deck:\djDeck,drive:3.4)}
+~djMixSpec={|channel,rockToneVersion=6|
+    if(channel==\rock){(deck:case {rockToneVersion>=6}{\rockPhysicalDeck} {rockToneVersion>=3}{\rockHumbuckerDeck} {rockToneVersion>=2}{\rockPhysicalDeck} {rockToneVersion==1}{\rockGuitarDeck} {true}{\rockDeck},drive:1.8,inputEQ:rockToneVersion>=5)}{(deck:\djDeck,drive:3.4)}
 };
 ~makeDJEngine={ |seed=2600,bpm=128,settings|
     var channel=~djResolveChannel.value((settings ? () )[\channel] ? \edme);
     var tonality=(settings ? ())[\tonality] ? \original,melody=(settings ? ())[\melody] ? \full;
     var modalPolicy=(settings ? ())[\modalPolicy] ? if([\edme,\pop].includes(channel)){\tension}{\fixed};
     var rockLeadVersion=(settings ? ())[\rockLeadVersion] ? if(channel==\rock){3}{0};
-    var rockToneVersion=(settings ? ())[\rockToneVersion] ? if(channel==\rock){3}{0};
+    var rockToneVersion=(settings ? ())[\rockToneVersion] ? if(channel==\rock){6}{0};
     var rockPlayerVersion=(settings ? ())[\rockPlayerVersion] ? if(channel==\rock and:{rockToneVersion>=2}){1}{0};
     var eMode=(settings ? ())[\eMode] ? \full;
     var lib=case {channel==\rock} {~djRockLibrary.value(~djLibrary)} {channel==\pop} {~djPopLibrary.value(~djLibrary)}
@@ -150,9 +150,11 @@ var root=thisProcess.nowExecutingPath.dirname;
             if(blues){
                 plan.keyName=lib[\keys][key]++" blues";
                 plan.schedule=~djRockBluesHarmony.value(plan);
+                if(rockToneVersion==4){plan.rockBassGain=0.45};
             };
             plan.style=\rock;plan.rockLeadVersion=rockLeadVersion;plan.rockToneVersion=rockToneVersion;
             if(rockPlayerVersion>0 and:{rockToneVersion>=2}){plan.rockPlayer=~djRockPlayerFor.value(plan,seed)};
+            if(rockToneVersion>=6){plan.rockPickup=if(plan.palette.id==1){\singleCoil}{\humbucker}};
             if(rockLeadVersion>0){plan.rockSoloPlan=~djRockSoloPlan.value(plan,seed)};
         };
         next={
@@ -332,6 +334,10 @@ var root=thisProcess.nowExecutingPath.dirname;
                 stutter:stutter.clip(0,1),stutterRate:stutterRate,
                 stutterReset:reset);
             if(channel==\rock and:{rockToneVersion>0}){values.putAll(if(rockToneVersion>=2){~djRockPhysicalFX.value(plan)}{~djRockGuitarFX.value(plan)})};
+            if(channel==\rock and:{rockToneVersion>=5}){
+                values.bluesMix=if(plan.schedule[plan.localBar].harmonyRole==\blues){1}{0};
+            };
+            if(plan[\rockPickup].notNil){values.humbuckerMix=if(plan.rockPickup==\humbucker){1}{0}};
             if(heldFX.notNil and: {plan.deck==heldFX.deck}) {
                 base=values.copy; phase=(heldFX.age+barT).clip(0,1);
                 switch(heldFX.kind,
@@ -361,7 +367,10 @@ var root=thisProcess.nowExecutingPath.dirname;
             };
             // Clear lingering pitched voices and their returns during drum spotlights too.
             deckInfo.do { |plan,id|
-                if(plan.notNil and: {plan.drumBreak}) {gains[id][0]=0; gains[id][1]=0};
+                if(plan.notNil){
+                    if(plan.drumBreak){gains[id][0]=0;gains[id][1]=0};
+                    if(plan[\rockBassGain].notNil){gains[id][1]=gains[id][1]*plan.rockBassGain};
+                };
             };
             (beat:step*0.25,bpm:startBpm+((endBpm-startBpm)*t),gains:gains,fx:fx,progress:t,hotFX:requestKind ? \none)
         });
@@ -413,14 +422,14 @@ var root=thisProcess.nowExecutingPath.dirname;
             \bendSemis,event.bendSemis,\bendMode,event.bendMode,\vibrato,event.vibrato,\vibratoRate,event.vibratoRate,
             \pedal,event.pedal,\pedalGain,event.pedalGain,\pick,event.pick];
     };
-    if([\rockPhysicalGuitar,\rockHumbuckerGuitar].includes(event.voice)){
+    if([\rockPhysicalGuitar,\rockHumbuckerGuitar,\rockSingleCoilDecay,\rockHumbuckerDecay].includes(event.voice)){
         message=message++[\fromFreq,event.fromNote.midicps,\slideTime,event.slideBeats*60/bpm,
             \bendSemis,event.bendSemis,\bendMode,event.bendMode,\vibrato,event.vibrato,\vibratoRate,event.vibratoRate,
             \stringIndex,event.stringIndex,\pickPosition,event.pickPosition,\articulation,event.articulation];
     };
     message;
 };
-~djAutomation={ |point,decks|
+~djAutomation={ |point,decks,eqNodes|
     Array.fill(2,{ |id|
         var fx=point.fx[id],message;
         message=[\n_set,decks[id],\musicGain,point.gains[id][0],\bassGain,point.gains[id][1],
@@ -430,6 +439,8 @@ var root=thisProcess.nowExecutingPath.dirname;
         if(fx[\guitarComp].notNil){message=message++[\guitarComp,fx.guitarComp,\guitarChorus,fx.guitarChorus]};
         [\guitarPedal,\guitarDrive,\guitarTone,\guitarFuzz].do {|key|if(fx[key].notNil){message=message++[key,fx[key]]}};
         message;
-    });
+    }) ++ if(eqNodes.isNil){[]}{
+        eqNodes.collect {|node,id|[\n_set,node,\bluesMix,point.fx[id][\bluesMix] ? 0,\humbuckerMix,point.fx[id][\humbuckerMix] ? 0]};
+    };
 };
 )

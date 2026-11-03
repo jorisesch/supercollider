@@ -7,7 +7,7 @@ try {
     var fxKeys=[\guitarComp,\guitarChorus,\guitarPedal,\guitarDrive,\guitarTone,\guitarFuzz];
     (root+/+"engine.scd").load;(root+/+"instruments.scd").load;(root+/+"recall.scd").load;
     [\original,\aeolian,\ionian,\dorian,\phrygian,\mixolydian,\lydian].do {|mode|[\full,\pentatonic].do {|melody|
-        var a=~makeDJEngine.value(2600,102,(channel:\rock,tonality:mode,melody:melody,rockPlayerVersion:0));
+        var a=~makeDJEngine.value(2600,102,(channel:\rock,tonality:mode,melody:melody,rockPlayerVersion:0,rockToneVersion:3));
         var b=~makeDJEngine.value(2600,102,(channel:\rock,tonality:mode,melody:melody,rockToneVersion:0));
         128.do {
             var f=a[\nextBar].value,g=b[\nextBar].value,plain,automation;
@@ -32,7 +32,7 @@ try {
     }};
     gestures.values.do {|n|assert.value(n>10,"Missing technique")};assert.value(pedals==Set[0,1,2,3],"Missing rig topology");
     ~djRecipeDir=Platform.defaultTempDir+/+"dj-rock-physical-recipes";
-    [1,2,3].do {|tone|
+    [1,2,3,4,5,6].do {|tone|
         var session=~makeDJSession.value(2600,102,(channel:\rock,hold:true,rockToneVersion:tone)),spec,expected=List.new,replay;
         40.do {|i|var f=session[\nextBar].value;if(i==0){spec=~djReadRecipe.value(f.decks[0].trackName)};
             expected.add([f.events.deepCopy,f.automation.deepCopy])};
@@ -51,7 +51,7 @@ try {
     }.value;
     assert.value(~djMixSpec.value(\rock,1).deck==\rockGuitarDeck and:{~djMixSpec.value(\rock,2).deck==\rockPhysicalDeck},"Recall routed to wrong guitar rig");
     ~djDefs.do {|d|assert.value(d.asBytes.size<65000,"SynthDef exceeds a portable OSC packet: "++d.name)};
-    ("PASS: "++bars++" physical Rock bars; "++gestures.asCompileString++"; playable strings, unchanged score/rhythm section, rig isolation and tone 1/2 recall").postln;
+    ("PASS: "++bars++" physical Rock bars; "++gestures.asCompileString++"; playable strings, unchanged score/rhythm section, rig isolation and tone 1–6 recall").postln;
     0.exit;
 } {|e|e.reportError;1.exit};
 )

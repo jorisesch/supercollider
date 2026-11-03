@@ -6,7 +6,7 @@ Listen to the [three-player comparison](../../../audio/rock-player-comparison.m4
 
 The aim is a recognizable player throughout a song. GarageBand's Drummer is a useful product reference for virtual performers with their own styles and a small set of performance controls; [Apple describes its session-player approach here](https://www.apple.com/mac/garageband/). Our three fictional guitarists are original score policies, with no attempt to imitate a particular person or reproduce Apple's engine.
 
-Each Rock record selects its player when the ensemble is chosen. Garage gets Rook, Jangle gets June, and Fuzz room gets Flint. The profile is copied into the record once; the verse, chorus, solo, Hold, knob movements and deck handover do not select a different player. Different songs can share a player while having different keys, progressions, forms and lead motifs.
+Each Rock record selects its player when the ensemble is chosen. Garage gets Rook, Jangle gets June, and Fuzz room gets Flint. The profile is copied into the record once; the verse, chorus, solo, Hold, knob movements and deck handover do not select a different player. Different songs can share a player while having different keys, progressions, forms and lead motifs. June uses a single coil. Rook and Flint use vintage series humbuckers. A song keeps the player’s pickup across both rhythm takes and the lead.
 
 | Habit | Rook | June | Flint |
 | --- | --- | --- | --- |
@@ -17,7 +17,7 @@ Each Rock record selects its player when the ensemble is chosen. Garage gets Roo
 | Preferred bend | Semitone | Occasional semitone | Whole tone |
 | Rig | Feedback overdrive | Two-stage overdrive, compression and chorus | Diode distortion with a fixed fuzz blend |
 
-These are authored musical choices, not measurements of real players. Vibrato remains conditional on a sufficiently long note, and chord-ending notes retain their settling rule. Connecting slides require a nearby note on the same playable string. The earlier physical string, pickup, pedal and cabinet models are unchanged.
+These are authored musical choices, not measurements of real players. Vibrato remains conditional on a sufficiently long note, and chord-ending notes retain their settling rule. Connecting slides require a nearby note on the same playable string. Both pickups use the same 20-mode string decay model. [Pickup and decay study](guitar-pickups/DECAY.md)
 
 ## What varies within a song
 
@@ -31,7 +31,7 @@ Bass and drum events are preserved exactly, including timing, velocities and see
 
 ## Scope and listening
 
-The current model is one guitarist double-tracking rhythm and overdubbing lead through a shared rig. It does not assign two independent personalities to the stereo sides. The experimental picking-hand, variable-gesture and extended-harmony studies remain separate; their complete technique catalogs have not been added to every song. These player rules use the existing Rock instrument.
+The current model is one guitarist double-tracking rhythm and overdubbing lead through a shared rig. It does not assign two independent personalities to the stereo sides. The experimental picking-hand, variable-gesture and extended-harmony studies remain separate; their complete technique catalogs have not been added to every song. The player’s pickup and pedal are applied on that song’s deck.
 
 The recorded comparison predates the new solo phrasing. It plays eight bars per player at the same tempo and key, with a requested four-bar solo followed by backing. It demonstrates both rig and score differences and is not a level-matched tone comparison. Human listening review is pending: check that repetition establishes identity without becoming static, that the phrase-ending answers feel related, and that Flint's quieter passages retain useful dynamics.
 

@@ -16,7 +16,7 @@ The audio server starts automatically. On other platforms, replace the executabl
 
 ## Hear a blues track
 
-Some tracks in Rock’s default mode play a 12-bar blues with swung eighth notes and I7, IV7 and V7 chords. Each guitarist keeps their own pedal and playing style, with a vintage series humbucker feeding the rig. To start on the blues track from the preview, add `2601` after `rock.scd` in the launch command. Press **Riff** to bring in the lead.
+Some tracks in Rock’s default mode play a 12-bar blues with swung eighth notes and I7, IV7 and V7 chords. Each guitarist keeps their own pickup, pedal and playing style throughout the track. The blues preview features Rook’s vintage series humbucker. To start on the blues track from the preview, add `2601` after `rock.scd` in the launch command. Press **Riff** to bring in the lead.
 
 [Pickup design and listening comparisons](guitar-pickups/README.md)
 
@@ -32,7 +32,7 @@ The guitars are doubled with separate picking and small timing differences. Quie
 
 ## Meet the guitarists
 
-The player's name appears below the track title. Hover over the title for more detail. A player stays with the song through verses, choruses, solos and the fade into the next track.
+The player's name appears below the track title. Hover over the title for more detail. A player stays with the song through verses, choruses, solos and the fade into the next track. June plays a single-coil guitar. Rook and Flint play vintage series humbuckers. The doubled rhythm and lead parts use the same pickup for that song.
 
 | Guitarist | Ensemble | Playing character |
 | --- | --- | --- |

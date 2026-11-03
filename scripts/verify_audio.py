@@ -56,7 +56,8 @@ for manifest_path in (Path('infinite/experiments/dj/preview.json'), Path('infini
         spec = json.loads(manifest_path.read_text())
         dj_manifests[spec['file']] = spec
 assert expected <= {p.name for p in Path('audio').glob('*.wav')}, 'Missing audio renders'
-supported = (expected | set(dj_manifests) | {'neon-rush.wav', 'infinite-soundscape.wav', guitar_study['file'], 'rock-riff-study.wav', 'rock-blues.wav'}
+supported = (expected | set(dj_manifests) | {'neon-rush.wav', 'infinite-soundscape.wav', guitar_study['file'], 'rock-riff-study.wav', 'rock-blues.wav', 'rock-single-coil-decay.wav',
+                                                       'rock-single-coil-power-chords.wav', 'rock-humbucker-power-chords.wav'}
              | set(rock_specs) | set(modes_specs) | set(tension_specs) | set(phrasing_specs) | set(contact_specs)
              | set(harmony_specs) | set(player_specs) | set(pickup_specs))
 noise_signatures = {}
@@ -77,6 +78,23 @@ for path in sorted(Path('audio').glob('*.wav')):
     edge = max(map(abs, values[-4800:]))
     assert edge < 0.0001
     result = dict(seconds=round(frames/rate, 4), sample_rate=rate, channels=channels, peak_dbfs=round(20*math.log10(peak), 2), rms_dbfs=round(20*math.log10(rms), 2), end_peak=edge)
+    if path.name in {'rock-single-coil-power-chords.wav', 'rock-humbucker-power-chords.wav'}:
+        assert abs(frames/rate-22) < 0.003
+        for bar in range(9):
+            start = round((0.1+bar*4*60/112)*rate)*channels
+            end = round((0.1+(bar+1)*4*60/112)*rate)*channels
+            assert max(map(abs, values[start:end])) > 0.01, 'Silent power chord bar'
+        pickup = 'Humbucker' if 'humbucker' in path.name else 'Single-coil'
+        result.update(title=f'{pickup} power chords through overdrive',
+                      human_listening_review='pending')
+    if path.name == 'rock-single-coil-decay.wav':
+        assert abs(frames/rate-36) < 0.003
+        for offset in (0, 18):
+            for start, stop in ((0.15, 5.5), (6, 15.5)):
+                segment = values[round((offset+start)*rate)*channels:round((offset+stop)*rate)*channels]
+                assert max(map(abs, segment)) > 0.01, 'Silent decay study section'
+        result.update(title='Single-coil string decay A/B', comparison_start_seconds=18,
+                      human_listening_review='pending')
     if path.name == 'rock-blues.wav':
         assert abs(frames/rate-(0.1+24*4*60/102+4)) < 0.003
         for bar in range(24):

@@ -8,24 +8,27 @@ var timelineRoot=~djRockTimelineDir ? root;
 try {
     (root+/+"engine.scd").load;(root+/+"instruments.scd").load;
     TempoClock.default.tempo=1;
-    mix=~djMixSpec.value(\rock,if(blues){3}{2});
+    mix=~djMixSpec.value(\rock,if(blues){6}{2});
     render={|tones=false|
         var score=List.new,time=0.1,tempo=102,node=1000;
         var name=if(blues){"rock-blues"}{(~djRockRenderNames ? ["rock-channel","rock-tones"])[if(tones){1}{0}]};
         var bars=if(tones or:{blues}){24}{64},engine,timeline,duration,osc,records=Set.new,palettes=Set.new;
-        var master=999,decks=[800,801],sources=[110,111],group=100;
+        var master=999,decks=[800,801],sources=[110,111],group=100,eqNodes=if(blues){[810,811]};
         var makeMix={|at|
             score.add([at,[\g_new,group,0,1],[\g_new,sources[0],0,group],[\g_new,sources[1],0,group],
                 [\s_new,mix.deck,decks[0],1,group,\in,16,\out,28,\musicGain,0,\bassGain,0,\drumsGain,0,\bpm,tempo],
                 [\s_new,mix.deck,decks[1],1,group,\in,22,\out,28,\musicGain,0,\bassGain,0,\drumsGain,0,\bpm,tempo],
                 [\s_new,\djMaster,master,1,group,\in,28,\drive,mix.drive]]);
+            if(eqNodes.notNil){
+                eqNodes.do {|id,i|score.add([at+0.001,[\s_new,\rockBluesEQ,id,2,decks[i],\in,16+(i*6)]])};
+            };
         };
         ~djDefs.do {|def|score.add([0,[\d_recv,def.asBytes]])};
         if(tones.not){makeMix.value(0.01)};
         timeline=File(timelineRoot+/+(name++"-timeline.tsv"),"w");
         timeline.write("bar\tseconds\tbpm\tmixing\trecord_a\trecord_b\tsection_a\tsection_b\tpalette_a\tpalette_b\tstutter_division\tstutter_remaining\tstutter_source\tstutter_deck\tstutter_start_beat\tstutter_bars\tsolo_a\tsolo_b\tsolo_kind_a\tsolo_kind_b\tsolo_age_a\tsolo_age_b\tsolo_bars_a\tsolo_bars_b\tlanding_notes_a\tlanding_notes_b\tlanding_degrees_a\tlanding_degrees_b\tlanding_offsets_a\tlanding_offsets_b\tlanding_beats_a\tlanding_beats_b\tguitarist_a\tguitarist_b\tpedal_a\tpedal_b\n");
         engine=~makeDJEngine.value(if(blues){2601}{2600},tempo,
-            (channel:\rock,rockLeadVersion:if(blues){3}{2},rockToneVersion:if(blues){3}{2},hold:blues));
+            (channel:\rock,rockLeadVersion:if(blues){3}{2},rockToneVersion:if(blues){6}{2},hold:blues));
         bars.do {|bar|
             var frame,actions=List.new,previous=0,field,row,landing;
             if(tones and:{bar%8==0}){
@@ -65,7 +68,7 @@ try {
             actions.do {|action|
                 time=time+((action.beat-previous)*60/tempo);previous=action.beat;
                 if(action[\automation].notNil){
-                    tempo=action.automation.bpm;score.add([time]++~djAutomation.value(action.automation,decks));
+                    tempo=action.automation.bpm;score.add([time]++~djAutomation.value(action.automation,decks,eqNodes));
                 }{
                     score.add([time,~djMessage.value(action.note,node,sources[action.note.deck],16,tempo)]);node=node+1;
                 };

@@ -116,7 +116,7 @@ fingerprint=hash.value(["engine.scd","style.scd","pop-style.scd","library.scd",
     if(((spec.size==10 and:{spec[0]==2}) or:{spec.size==12 and:{spec[0]==3}}
         or:{spec.size==13 and:{spec[0]==4}} or:{spec.size==14 and:{spec[0]==5}}
         or:{spec.size==15 and:{spec[0]==6}} or:{spec.size==16 and:{spec[0]==7}}).not or: {
-        (spec[1]!=fingerprint) and:{[2112806582,588589464,122551949,96742884,2133735198,2074328684,2014457403,1822520365,210581853].includes(spec[1].asInteger).not} and: {
+        (spec[1]!=fingerprint) and:{[2112806582,588589464,122551949,96742884,2133735198,2074328684,2014457403,1822520365,210581853,1858730134,1874145526,2014952595,1745543930,1995479297].includes(spec[1].asInteger).not} and: {
         // Old Pop harmony changed; only unchanged EDM/Classic recipes are compatible.
         spec[4]==1 or: {[506492780,1646806499].includes(spec[1].asInteger).not}
     }}) {

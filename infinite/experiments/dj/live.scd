@@ -12,7 +12,7 @@ var root=thisProcess.nowExecutingPath.dirname;
 ~djSettings.melody=~djSettings[\melody] ? \full;
 ~djSettings.modalPolicy=~djSettings[\modalPolicy] ? if([\edme,\pop].includes(~djSettings.channel)){\tension}{\fixed};
 ~djSettings.rockLeadVersion=~djSettings[\rockLeadVersion] ? if(~djSettings.channel==\rock){3}{0};
-~djSettings.rockToneVersion=~djSettings[\rockToneVersion] ? if(~djSettings.channel==\rock){3}{0};
+~djSettings.rockToneVersion=~djSettings[\rockToneVersion] ? if(~djSettings.channel==\rock){6}{0};
 ~djLastFX=\none;
 ~djLastFXLabel="none";
 ~djManualFX=nil;
@@ -98,7 +98,7 @@ var root=thisProcess.nowExecutingPath.dirname;
     ~djSettings.tonality=tonality;~djSettings.melody=melody;
     ~djSettings.modalPolicy=policy ? if([\edme,\pop].includes(~djSettings.channel)){\tension}{\fixed};
     ~djSettings.rockLeadVersion=if(~djSettings.channel==\rock){3}{0};
-    ~djSettings.rockToneVersion=if(~djSettings.channel==\rock){3}{0};
+    ~djSettings.rockToneVersion=if(~djSettings.channel==\rock){6}{0};
     ("DJ mode: "++tonality++" / melody "++melody++" / restarting with fade").postln;
     ~djStart.value(~djSeed ? 2600,~djInitialBpm ? 128,~djServer);
 };
@@ -109,7 +109,7 @@ var root=thisProcess.nowExecutingPath.dirname;
     ~djSettings.channel=channel;
     ~djSettings.modalPolicy=if([\edme,\pop].includes(channel)){\tension}{\fixed};
     ~djSettings.rockLeadVersion=if(channel==\rock){3}{0};
-    ~djSettings.rockToneVersion=if(channel==\rock){3}{0};
+    ~djSettings.rockToneVersion=if(channel==\rock){6}{0};
     if(channel==\rock and:{old!=\rock}){~djDanceAutoStutter=~djSettings.autoStutter;~djSettings.autoStutter=false};
     if(old==\rock and:{channel!=\rock}){~djSettings.autoStutter=~djDanceAutoStutter ? true};
     ("DJ channel: "++channel++" / restarting set with fade").postln;
@@ -134,11 +134,14 @@ var root=thisProcess.nowExecutingPath.dirname;
     srv.waitForBoot({
         ~djDefs.do { |def| def.send(srv) }; srv.sync;
         if(generation == ~djGeneration) {
-            var bus=Bus.audio(srv,14), group=Group.new(srv), sources, decks, master,mix=~djMixSpec.value(engine.channel,engine.controls[\rockToneVersion] ? 0);
+            var bus=Bus.audio(srv,14), group=Group.new(srv), sources, decks, master, eqNodes, mix=~djMixSpec.value(engine.channel,engine.controls[\rockToneVersion] ? 0);
             sources=[Group.head(group),Group.head(group)];
             decks=Array.fill(2,{ |id| Synth.tail(group,mix.deck,[\in,bus.index+(id*6),\out,bus.index+12,
                 \musicGain,0,\bassGain,0,\drumsGain,0,\bpm,engine.state.bpm,\fxFilter,0,
                 \fxCutoff,12000,\fxResonance,0.35,\fxEcho,0,\fxDelay,0.33,\fxReverb,0.14,\fxStutter,0]) });
+            if(mix.inputEQ ? false){
+                eqNodes=decks.collect {|deck,id|Synth.before(deck,\rockBluesEQ,[\in,bus.index+(id*6)]).nodeID};
+            };
             master=Synth.tail(group,\djMaster,[\in,bus.index+12,\attack,if(resume,3,0.1),\drive,mix.drive]);
             srv.sync;
             if(generation == ~djGeneration) {
@@ -195,7 +198,7 @@ var root=thisProcess.nowExecutingPath.dirname;
                                     a=~djWithoutManual.value(a);
                                 };
                                 ~djFxState=a.fx;
-                                srv.sendBundle(srv.latency,*~djAutomation.value(a,decks.collect(_.nodeID)));
+                                srv.sendBundle(srv.latency,*~djAutomation.value(a,decks.collect(_.nodeID),eqNodes));
                             } {
                                 var event=action.note, deck=event.deck;
                                 srv.sendBundle(srv.latency,~djMessage.value(event,-1,sources[deck].nodeID,bus.index,~djBpm ? bpm));

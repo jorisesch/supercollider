@@ -1035,8 +1035,8 @@
     "seconds": 60.5707,
     "sample_rate": 48000,
     "channels": 2,
-    "peak_dbfs": -2.45,
-    "rms_dbfs": -18.07,
+    "peak_dbfs": -2.74,
+    "rms_dbfs": -18.94,
     "end_peak": 0.0,
     "title": "Rock blues with vintage series humbuckers",
     "bars": 24,
@@ -1289,6 +1289,16 @@
     "title": "Same overdrive, natural pickup levels",
     "human_listening_review": "pending"
   },
+  "rock-humbucker-power-chords.wav": {
+    "seconds": 22.0013,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -2.45,
+    "rms_dbfs": -15.69,
+    "end_peak": 0.0,
+    "title": "Humbucker power chords through overdrive",
+    "human_listening_review": "pending"
+  },
   "rock-ironwood.wav": {
     "seconds": 80.3947,
     "sample_rate": 48000,
@@ -1412,6 +1422,27 @@
     "end_peak": 0.0,
     "title": "Rock riff phrasing A/B",
     "comparison_start_seconds": 14,
+    "human_listening_review": "pending"
+  },
+  "rock-single-coil-decay.wav": {
+    "seconds": 36.0013,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -5.23,
+    "rms_dbfs": -22.97,
+    "end_peak": 0.0,
+    "title": "Single-coil string decay A/B",
+    "comparison_start_seconds": 18,
+    "human_listening_review": "pending"
+  },
+  "rock-single-coil-power-chords.wav": {
+    "seconds": 22.0013,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -3.3,
+    "rms_dbfs": -16.49,
+    "end_peak": 0.0,
+    "title": "Single-coil power chords through overdrive",
     "human_listening_review": "pending"
   },
   "rock-slash-chords-raw.wav": {

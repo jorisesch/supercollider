@@ -14,7 +14,10 @@
             near=lead and:{previous.notNil} and:{(at-previous.end).abs<0.22}
                 and:{(e.midinote-previous.note).abs.inclusivelyBetween(1,5)};
             if(near and:{strings.includes(previous.string)}){string=previous.string}{near=false};
-            e.voice=if((plan[\rockToneVersion] ? 2)>=3){\rockHumbuckerGuitar}{\rockPhysicalGuitar};e.stringIndex=string;e.fromNote=e.midinote;
+            e.voice=switch(plan[\rockPickup],
+                \singleCoil,{\rockSingleCoilDecay},\humbucker,{\rockHumbuckerDecay},
+                {if((plan[\rockToneVersion] ? 2)>=3){\rockHumbuckerGuitar}{\rockPhysicalGuitar}});
+            e.stringIndex=string;e.fromNote=e.midinote;
             e.slideBeats=0;e.bendSemis=0;e.bendMode=0;e.vibrato=0;e.vibratoRate=4.7+(random.value*1.0);
             e.pickPosition=0.105+(random.value*0.045); // metres from bridge, not an arbitrary comb fraction
             if(p.notNil){
