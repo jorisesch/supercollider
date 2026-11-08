@@ -101,6 +101,8 @@ Kick anchors remain on the grid. Odd sixteenths in the bass, hats, ghost snares 
 
 EDM keeps its lead phrases sparse, with short chord stabs and percussion around the bass/drum foundation. Occasional quiet phrases range from a short tag to a fuller melodic gesture, with repeated notes, syncopation and a resolving answer. Their rhythms and contours vary by record and mutation; the drop can develop the earlier phrase. Each entrance occupies one bar, separated by long bass/drum passages. In the first 48-bar edit, only two bars contain lead notes. Breakdowns keep a reduced kick, hats and sub pulse, with one quiet two-voice atmosphere at the entrance. Space sections remove extra percussion. One kick envelope ducks bass, accents and effect returns together. Bass and kick stay centred.
 
+Some EDM records use an anthem arrangement inspired by [Voltage Heart](../../studies/voltage-heart/README.md). A syncopated motif starts in a lower register, then returns an octave up after an accelerating snare build. The motif follows each record's scale and chords.
+
 Four ensembles rotate through a seeded shuffle bag. Each is stable for its whole record, including Hold and motif mutations. Consecutive records choose different ensembles; the display and post window identify the instruments. Palette selection has its own random stream, so changing the ensemble preserves the composed notes and rhythms.
 
 | Ensemble | Bass | Lead | Drum kit |

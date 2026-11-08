@@ -2,7 +2,7 @@
 (
 var root=thisProcess.nowExecutingPath.dirname,assert={ |ok,message|if(ok.not) {Error(message).throw} };
 try {
-    var a,b,defs,counts=Dictionary.new,variants=Set.new,signatureBars=0,chordBars=0,deckBars=0;
+    var a,b,defs,counts=Dictionary.new,variants=Set.new,signatureBars=0,chordBars=0,deckBars=0,anthemBars=0;
     (root +/+ "engine.scd").load;(root +/+ "instruments.scd").load;
     defs=~djDefs.collect(_.name);
     ["e-style.scd","e-instruments.scd","../e-edm.scd","../e-render.scd"].do { |file|
@@ -19,6 +19,8 @@ try {
             if(plan.notNil) {
                 var own=f.events.select { |e|e.deck==plan.deck };
                 deckBars=deckBars+1;variants.add(plan.eVariant);
+                if(plan.edmAnthem and: {own.any { |e|e.voice==\edmAnthemLead}}
+                    and: {own.any { |e|e.voice==\edmAnthemBass}}) {anthemBars=anthemBars+1};
                 if(own.any { |e|e.role==\eSignature}) {signatureBars=signatureBars+1};
                 if(own.any { |e|e.role==\eChord}) {chordBars=chordBars+1};
                 if(plan.drumBreak) {assert.value(own.every { |e|e.lane==3},"E filled a drum spotlight with pitched parts")};
@@ -47,6 +49,7 @@ try {
         assert.value((counts[role] ? 0)>10,"Missing E building block: " ++ role)
     };
     assert.value(variants==Set[\a,\b],"E has no A/B development");
+    assert.value(anthemBars>0,"Default EDM set never played an anthem hook over its bass");
     assert.value(signatureBars/deckBars<0.1 and: {chordBars/deckBars<0.4},"E supporting parts became continuous");
     a=~makeDJEngine.value(2600,128,(channel:\edme,hold:true));a[\requestHook].value;
     4.do {assert.value(a[\nextBar].value.decks[0].eVariant==\b,"E Bass hook did not request B")};

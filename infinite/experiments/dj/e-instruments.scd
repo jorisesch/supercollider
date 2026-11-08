@@ -1,6 +1,33 @@
 // EDM E instruments. Stock UGens; loading definitions starts no playback.
 (
 ~djEDefs=[
+    SynthDef(\edmAnthemLead,{ |out=0,freq=440,amp=0.23,seed=1,sustain=0.18,tone=0.65,pan=0|
+        var pitch,env,attack,center,sides,sig,cutoff;
+        RandSeed.ir(1,seed);
+        pitch=freq.clip(120,2400)*(1+(SinOsc.kr(5.4)*Line.kr(0,0.004,0.28)));
+        env=EnvGen.kr(Env([0,1,0.81,0],[0.008,sustain.max(0.02),0.084],[-2,-2,-4]),doneAction:2);
+        attack=EnvGen.kr(Env.perc(0.008,0.095,curve:-3));
+        center=(VarSaw.ar(pitch,0,0.31)*0.62)+(SinOsc.ar(pitch)*0.21)+(SinOsc.ar(pitch*2)*attack*0.09);
+        sides=VarSaw.ar(pitch*[0.988,1.007,0.995,1.014],
+            [Rand(0,1),Rand(0,1),Rand(0,1),Rand(0,1)],0.44);
+        sig=(Pan2.ar(center,pan)*0.82)+Splay.ar(sides,0.88,0.51,pan);
+        cutoff=tone.clip(0,1).linexp(0,1,950,6700)*(1+(attack*0.24));
+        sig=HPF.ar(LPF.ar(sig,cutoff),210);
+        Out.ar(out,LeakDC.ar((sig*1.14).tanh)*env*amp);
+    }),
+    SynthDef(\edmAnthemBass,{ |out=0,freq=55,amp=0.24,seed=1,sustain=0.18,tone=0.55|
+        var pitch=freq.clip(25,180),duration=sustain.clip(0.025,2),brightness=tone.clip(0,1);
+        var subEnv,octaveEnv,sub,octave,pulseWidth;
+        RandSeed.ir(1,seed);
+        pulseWidth=Rand(0.35,0.41);
+        subEnv=EnvGen.kr(Env([0,1,0.86,0],[0.006,duration-0.006,0.042],[-2,-1,-4]),doneAction:2);
+        octaveEnv=EnvGen.kr(Env([0,1,0.34,0],[0.006,(duration*0.56).clip(0.02,0.15),0.033],[-2,-4,-4]));
+        sub=SinOsc.ar(pitch)*subEnv*0.82;
+        octave=HPF.ar(Pulse.ar(pitch*2,pulseWidth),105);
+        octave=LPF.ar(octave,brightness.linexp(0,1,420,1450));
+        octave=octave*octaveEnv*brightness.linlin(0,1,0.07,0.30);
+        Out.ar(out,Pan2.ar(LeakDC.ar(sub+octave),0,amp));
+    }),
     SynthDef(\edmEBass,{ |out=0,freq=65,fromFreq=65,glide=0,amp=0.19,sustain=0.25,tone=0.4,drive=0.35,color=0,pan=0|
         var target=freq.clip(25,400),pitch,env,harmonic,grit=drive.clip(0,1),sig;
         pitch=Select.kr(glide>0,[target,XLine.kr(fromFreq.clip(25,400),target,glide.clip(0.001,0.16))]);

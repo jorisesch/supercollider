@@ -1,6 +1,105 @@
 // EDM E: preserve the bass/drum foundation; develop a few complementary parts.
 (
-var foundation=~djStyleBar;
+var foundation=~djStyleBar,anthemBar;
+anthemBar={ |source,plan,local,section,part,partBar,seed,forced|
+    var events,add,noteAt,leadNote,leadPhrase,bassLine,buildSteps;
+    var scale=plan.scale,degree=plan.schedule[local].degree,phraseBar=partBar%4;
+    var tonic=67+((plan.key-7)%12),root=34+((plan.key+scale.wrapAt(degree)-34)%12);
+    var motif=[[4,4,6,7],[2,2,4,5],[0,0,2,4],[2,2,3,4]].wrapAt(plan.hookID);
+    var release=[\hook,\drop].includes(section),full=release or:{forced};
+    var partIndex=plan.sections.indexOf(part),nextPart=plan.sections.at(partIndex+1);
+    var previousPart=if(partIndex>0){plan.sections[partIndex-1]}{nil};
+    var building=section==\buildup and:{nextPart.notNil and:{[\hook,\drop].includes(nextPart.name)}};
+    var buildBar=partBar-(part.bars-4),lastBuild=building and:{buildBar==3};
+    var launch=release and:{partBar==0 and:{previousPart.notNil and:{previousPart.name==\buildup}}};
+    var quiet=[\breakdown,\space].includes(section);
+    var limit=if(lastBuild){2.72}{plan.cutFrom};
+    var leadAmp=if(full){0.23}{if(building){0.12+(buildBar.max(0)*0.013)}{0.107}};
+    var leadTone=if(full){0.83}{if(building){0.42+(buildBar.max(0)*0.085)}{0.37}};
+
+    events=source.reject { |e|
+        [\djHook,\djBass,\djPad,\eChord,\eSignature].includes(e.role)
+            or:{building and:{buildBar>=0 and:{[\djSnare,\eTurnaround].includes(e.role)}}}
+            or:{lastBuild and:{e.beat>=3}}
+    }.as(List);
+    add={ |lane,role,voice,step,note,duration,amp,tone=0.5,pan=0|
+        events.add((deck:plan.deck,track:(plan.deck*4)+lane,lane:lane,role:role,voice:voice,
+            beat:step*0.25,step:step,swing:0,ghost:false,midinote:note,duration:duration,
+            amp:amp,pan:pan,color:plan.palette.color,tone:tone,drive:0,
+            seed:seed+500009+(plan.serial*100003)+(local*101)+events.size));
+    };
+    noteAt={ |offset| tonic+scale.wrapAt(offset)+(12*(offset div:7)) };
+    leadNote={ |offset,landing|
+        var target=noteAt.value(offset);
+        if(landing){
+            var chordTones=[0,2,4].collect {|i|scale.wrapAt(degree+i)};
+            var pentatonic=scale.atAll(if(plan.mode==\major){[0,1,2,4,5]}{[0,2,3,4,6]});
+            var shared=chordTones.select {|pitch|pentatonic.includes(pitch)};
+            if(shared.notEmpty){chordTones=shared};
+            target=((target-8)..(target+8)).select {|note|chordTones.includes((note-plan.key)%12)}
+                .minItem {|note|(note-target).abs};
+        };
+        target+if(full){0}{-12};
+    };
+    // Two calls share the 3+3+2 pickup. The answers fall and leave space for the next call.
+    leadPhrase=[
+        [[0,motif[0],0.39],[3,motif[1],0.25],[6,motif[2],0.32],[8,motif[3],0.79,true],
+            [12,motif[2],0.21],[14,motif[0],0.30]],
+        [[0,motif[2],0.62],[4,motif[0],0.30],[6,motif[0]-2,0.34],[10,motif[1],1.11,true]],
+        [[0,motif[0],0.39],[3,motif[1],0.25],[6,motif[2],0.32],[8,motif[3]+2,0.73,true],
+            [12,motif[3]+1,0.19],[14,motif[3],0.31]],
+        [[0,motif[3],0.53],[3,motif[2],0.27],[6,motif[1],0.30],[8,motif[0],0.92,true]]
+    ][phraseBar];
+    if(full or:{building or:{quiet or:{(section==\groove) and:{partBar%8<2}}}}){
+        if(quiet){leadPhrase=leadPhrase.select {|note|[0,6,8,10].includes(note[0])}};
+        leadPhrase.do { |note,i|
+            var span=limit-(note[0]*0.25);
+            if(span>0.08){
+                add.value(1,\djHook,\edmAnthemLead,note[0],leadNote.value(note[1],note[3] ? false),
+                    note[2].min(span),leadAmp*[1,0.83,0.93,1].wrapAt(i),leadTone);
+            };
+        };
+    };
+
+    if(quiet.not and:{source.any {|e|e.role==\djBass}}){
+        bassLine=if((full and:{phraseBar.odd}) or:{forced}) {
+            [[2,0,0.35],[6,0,0.29],[10,0,0.35],[13,0,0.19],[15,12,0.12]]
+        } {[[2,0,0.35],[6,0,0.31],[10,0,0.35],[14,0,0.32]]};
+        bassLine.do { |note|
+            var span=limit-(note[0]*0.25),gain=if(full){0.31}{0.24};
+            if(span>0.08){
+                add.value(0,\djBass,\edmAnthemBass,note[0],root+note[1],note[2].min(span),
+                    gain*if(note[0]%4==2){1}{0.64},if(full){0.76}{0.38});
+            };
+        };
+    };
+
+    if(lastBuild.not and:{[\intro,\outro].includes(section).not}){
+        [0,4,6,9].do {|offset,i|
+            var floor=[51,55,60,64][i],pitch=floor+((plan.key+scale.wrapAt(degree+offset)-floor)%12);
+            var pan=[-0.34,0.30,-0.16,0.20][i];
+            add.value(2,\djPad,\djPad,0,pitch,(limit-0.25).min(3.4),if(quiet){0.048}{0.030},0.46,pan);
+            if(full){
+                (if(launch){[0,10]}{[2,10]}).do {|step|
+                    if((step*0.25)<limit){
+                        add.value(2,\eChord,\edmEStab,step,pitch+12,0.26,
+                            if(launch and:{step==0}){0.047}{0.030},0.74,pan);
+                    };
+                };
+            };
+        };
+    };
+    if(building and:{buildBar>=0}){
+        buildSteps=[[4,12],[0,4,8,12,14],[0,2,4,6,8,10,12,14],[0,2,4,6,8,9,10,11]][buildBar];
+        buildSteps.do { |step,i|
+            add.value(3,\djSnare,plan.palette.voices[\djSnare] ? \djSnare,step,50,0.14,
+                0.05+(buildBar*0.021)+(i*0.005),0.5,[-0.10,0.10].wrapAt(i));
+        };
+        if(buildBar==2){add.value(3,\djRise,\djRise,0,60,6.35,0.12)};
+    };
+    if(launch and:{section==\hook}){add.value(3,\djImpact,\djImpact,0,60,2,0.12)};
+    events;
+};
 ~djELibrary={ |original,mode=\full|
     var lib=original.copy;
     lib.palettes=original.palettes.collect { |palette|
@@ -23,6 +122,16 @@ var foundation=~djStyleBar;
     var thin=[\intro,\space,\breakdown,\buildup,\outro].includes(section);
     var cut=plan.cutFrom<4,bass,root,fifth,add,noteAt,variantB;
     var detailState=(seed.abs+(plan.serial*3331)+(local*101)+15485863)%2147483646+1,detail;
+    if(plan.edmAnthem.isNil) {
+        var phase=((((seed.abs%2147483646)+6151)*48271)%2147483647)%5;
+        // Stagger the one-in-five rotation by seed; keep the form's existing sections.
+        plan.edmAnthem=full and:{(plan.serial%5)==phase} and:{
+            plan.sections.any {|item,i|
+                var next=plan.sections.at(i+1);
+                item.name==\buildup and:{next.notNil and:{[\hook,\drop].includes(next.name)}};
+            };
+        };
+    };
     // Additional parts have their own deterministic stream, leaving foundation events intact.
     detail={detailState=(detailState*48271)%2147483647;detailState/2147483647};
     noteAt={ |offset,base=48|
@@ -127,6 +236,9 @@ var foundation=~djStyleBar;
     if(full and: {section==\buildup} and: {partBar==(part.bars-1)} and: {drumBreak.not}) {
         // A brief inhalation before the one-beat pickup, never a continuous riser.
         add.value(1,\eTurnaround,\edmEReverse,10,60,0.48,0.035,0.15);
+    };
+    if(plan.edmAnthem and:{drumBreak.not}) {
+        events=anthemBar.value(events,plan,local,section,part,partBar,seed,forced);
     };
     events.asArray.sort { |a,b|a.beat<b.beat };
 };
