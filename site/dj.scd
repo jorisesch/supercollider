@@ -2,7 +2,7 @@
 (
 var root = ~webSourceRoot ? "/infinite";
 var server = Server.default, ready = false, generation = 0;
-var graph, engine, clock, player, mode, volume = 0.75, energy = 0.5;
+var graph, engine, clock, player, mode, energy = 0.5;
 var close, reportError, applyEnergy, playDJ, playSoundscape, loadError, failureListener;
 
 reportError = { |message| ("WEB_DJ error " ++ message).postln };
@@ -90,10 +90,6 @@ playSoundscape = { |session, currentGraph|
     };
 };
 ~webEnergy = { |value| energy = value.clip(0, 1); applyEnergy.value };
-~webVolume = { |value|
-    volume = value.clip(0, 1);
-    if(graph.notNil and: { graph[\output].notNil }) { graph[\output].set(\gain, volume) };
-};
 ~webStart = { |seed, channel = \edm|
     var token;
     if(ready.not) {
@@ -113,8 +109,8 @@ playSoundscape = { |session, currentGraph|
                         bpm = engine.bpm;
                     } {
                         mode = ~djResolveChannel.value(mode);
-                        bpm = ~djDefaultBpm.value(mode);
-                        engine = ~makeDJEngine.value(actualSeed, bpm, (channel: mode));
+                        bpm = if(mode == \edme) { 134 } { ~djDefaultBpm.value(mode) };
+                        engine = ~makeDJEngine.value(actualSeed, bpm, (channel: mode, openWithHook: true));
                     };
                     applyEnergy.value;
                     currentGraph = (bus: Bus.audio(server, if(soundscape) { 4 } { 16 }), group: Group.new(server));
@@ -146,7 +142,7 @@ playSoundscape = { |session, currentGraph|
                     if(token == generation) {
                         var session = engine, beatClock = TempoClock.new(bpm / 60);
                         clock = beatClock;
-                        currentGraph[\output].set(\gain, volume);
+                        currentGraph[\output].set(\gain, 0.55);
                         "WEB_DJ playing".postln;
                         player = Routine {
                             try {

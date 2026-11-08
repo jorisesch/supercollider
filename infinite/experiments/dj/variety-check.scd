@@ -37,6 +37,17 @@ try {
         assert.value(modes.size>=5 and:{orders.size>=4} and:{lengths.size>=5} and:{keys.size>=6},"Songs still repeat too few musical choices");
     };
     assert.value(signatures.size>=10,"Different seeds repeat the opening record");
+    [\edme,\pop].do {|channel|
+        (1..24).do {|seed|
+            var session=~makeDJEngine.value(seed,134,(channel:channel,openWithHook:true));
+            var first=session[\nextBar].value;
+            assert.value([\hook,\drop].includes(first.decks[0].section),"Web set opened before the hook");
+            assert.value(first.events.any {|e|e.role==\djHook},"Web opening is missing its lead");
+            if(channel==\edme) {
+                assert.value(first.events.any {|e|e.voice==\edmAnthemLead},"EDM web opening is missing its anthem lead");
+            };
+        };
+    };
     [\edme,\pop,\rock].do {|channel|~djTonalities.keys.do {|tone|[\full,\pentatonic].do {|melody|
         var engine=~makeDJEngine.value(439,128,(channel:channel,tonality:tone,modalPolicy:\fixed,melody:melody));
         engine[\requestHook].value;

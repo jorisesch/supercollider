@@ -62,13 +62,13 @@ h1 {
   margin-top: clamp(120px, 30vh, 300px);
   animation: arrive 460ms 100ms ease-out both;
 }
-.transport, .sliders {
+.transport {
   display: grid;
   gap: 12px;
   align-items: end;
 }
 .transport { grid-template-columns: 1.1fr 1.25fr .8fr; }
-.sliders { grid-template-columns: 1fr 1fr; gap: 26px; margin-top: 16px; }
+.energy { width: min(100%, 260px); margin: 16px auto 0; }
 button, select, input { font: inherit; }
 button, select {
   width: 100%;

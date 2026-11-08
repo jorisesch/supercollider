@@ -2,11 +2,11 @@ const play = document.querySelector("#play");
 const channel = document.querySelector("#channel");
 const next = document.querySelector("#next");
 const energy = document.querySelector("#energy");
-const volume = document.querySelector("#volume");
 const status = document.querySelector("#status");
 const engineEvents = new EventTarget();
 const runtime = new URL("./runtime/", import.meta.url);
-const sources = new URL("./dj/", import.meta.url);
+const manifestURL = new URL("./dj/manifest.json", import.meta.url);
+manifestURL.search = new URL(import.meta.url).search;
 let language, audioContext, initialized, unlockAudio, latestTrack;
 let state = "loading";
 
@@ -31,10 +31,21 @@ function show(nextState, message) {
   if (!playing) delete status.dataset.track;
 }
 
-async function response(url) {
-  const result = await fetch(url);
-  if (!result.ok) throw new Error(`Could not load ${url.pathname} (${result.status})`);
-  return result;
+async function download(url, read) {
+  for (let attempt = 0; ; attempt += 1) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 45000);
+    try {
+      const result = await fetch(url, { signal: controller.signal });
+      if (!result.ok) throw new Error(`Could not load ${url.pathname} (${result.status})`);
+      return await read(result);
+    } catch (error) {
+      if (attempt === 1) throw error;
+    } finally {
+      clearTimeout(timer);
+    }
+    await new Promise((resolve) => setTimeout(resolve, 600));
+  }
 }
 
 function awaitEngine(name, timeout = 12000) {
@@ -85,29 +96,37 @@ function onLanguagePrint(message) {
 }
 
 async function initialize() {
-  const manifest = await (await response(new URL("manifest.json", sources))).json();
+  const binary = (name) => download(new URL(name, runtime), (result) => result.arrayBuffer());
   const load = async (name) => {
-    const { default: create } = await import(new URL(name, runtime));
-    return create({ locateFile: (file) => new URL(file, runtime).href });
+    const [{ default: create }, wasm, data] = await Promise.all([
+      import(new URL(`${name}.js`, runtime)),
+      binary(`${name}.wasm`),
+      name === "sclang" ? binary("sclang.data") : null,
+    ]);
+    return create({
+      locateFile: (file) => new URL(file, runtime).href,
+      wasmBinary: new Uint8Array(wasm),
+      ...(data ? { getPreloadedPackage: () => data } : {}),
+    });
   };
-  const [synth, lang, files] = await Promise.all([
-    load("scsynth.js"),
-    load("sclang.js"),
-    Promise.all([...manifest.files, manifest.entry].map(async (name) => [
-      name, new Uint8Array(await (await response(new URL(name, sources))).arrayBuffer()),
-    ])),
+  const [synth, lang, manifest] = await Promise.all([
+    load("scsynth"),
+    load("sclang"),
+    download(manifestURL, (result) => result.json()),
   ]);
+  status.textContent = "Starting SuperCollider…";
   language = lang;
 
   const directories = new Set();
-  for (const [name, contents] of files) {
+  const encoder = new TextEncoder();
+  for (const [name, contents] of Object.entries(manifest.sources)) {
     const separator = name.lastIndexOf("/");
     const folder = name.slice(0, separator);
     if (!directories.has(folder)) {
       lang.FS_createPath("/", folder, true, true);
       directories.add(folder);
     }
-    lang.FS_createDataFile(`/${folder}`, name.slice(separator + 1), contents, true, false, true);
+    lang.FS_createDataFile(`/${folder}`, name.slice(separator + 1), encoder.encode(contents), true, false, true);
   }
 
   const pending = [];
@@ -171,13 +190,13 @@ async function initialize() {
   await ready;
 }
 
-function control(name, slider) {
-  language?.runCode(`~${name}.value(${(Number(slider.value) / 100).toFixed(3)});`);
+function setEnergy() {
+  language.runCode(`~webEnergy.value(${(Number(energy.value) / 100).toFixed(3)});`);
 }
 
 async function start() {
   const selected = channel.value;
-  show("loading", initialized ? "Starting set…" : "Loading SuperCollider…");
+  show("loading", initialized ? "Starting set…" : "Downloading SuperCollider…");
   try {
     initialized ??= initialize();
     await initialized;
@@ -190,8 +209,7 @@ async function start() {
         return;
       }
     }
-    control("webEnergy", energy);
-    control("webVolume", volume);
+    setEnergy();
     const seed = (crypto.getRandomValues(new Uint32Array(1))[0] % 2147483646) + 1;
     latestTrack = null;
     const playing = awaitEngine("playing");
@@ -241,11 +259,9 @@ next.addEventListener("click", () => {
     language.runCode("~webNext.value;");
   }
 });
-for (const [name, slider] of [["webEnergy", energy], ["webVolume", volume]]) {
-  slider.addEventListener("input", () => {
-    if (state === "playing") control(name, slider);
-  });
-}
+energy.addEventListener("input", () => {
+  if (state === "playing") setEnergy();
+});
 
 async function enablePlayer() {
   if (crossOriginIsolated && typeof AudioWorkletNode !== "undefined") {

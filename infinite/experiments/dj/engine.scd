@@ -92,6 +92,7 @@ var root=thisProcess.nowExecutingPath.dirname;
         var cursor=0,chordIndex=0,localBar,forcedHook=0,change=false,forcedFill=false;
         var phraseLift=0,patternID,mutations=0,energyBias,wildness,densityBias;
         var modalTone=nil,modalEndBar= -1,recordTonality,recordLib,tones,harmonyBag;
+        var openWithHook=first and:{controls[\openWithHook]==true and:{[\edme,\pop].includes(channel)}};
         var blues=channel==\rock and:{rockLeadVersion>=3} and:{tonality==\original}
             and:{modalPolicy==\fixed} and:{(seed+index)%4==1};
         tones=[\aeolian,\aeolian,\ionian,\ionian,\dorian,\mixolydian];
@@ -133,6 +134,9 @@ var root=thisProcess.nowExecutingPath.dirname;
         };
         // Cue the incoming intro so its groove arrives by the end of a short mix.
         localBar=if(first) { if(channel==\pop) {0} {form[0][1]} } { (form[0][1]-entryBars).max(0) };
+        if(openWithHook) {
+            localBar=sections.detect { |part| [\hook,\drop].includes(part.name) }.start;
+        };
         patternID=variation.rhythm;
         energyBias=choose.value([0.85,0.94,1.0,1.08]);
         wildness=choose.value([0.75,0.9,1.1,1.35]);
@@ -155,7 +159,10 @@ var root=thisProcess.nowExecutingPath.dirname;
         plan.baseTonality=recordTonality;
         plan.activeTonality=recordTonality;plan.modalAccent=false;
         plan.keyName=lib[\keys][key]++" "++~djTonalities[recordTonality].label;
-        if(channel==\edme) {plan.eMode=eMode;plan.style=\edme};
+        if(channel==\edme) {
+            plan.eMode=eMode;plan.style=\edme;
+            if(openWithHook and:{eMode==\full}) {plan.edmAnthem=true};
+        };
         if([\pop,\rock].includes(channel)) {plan.schedule=~djPopHarmony.value(plan,recordLib,seed)};
         if(channel==\rock){
             if(blues){

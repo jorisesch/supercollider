@@ -16,7 +16,7 @@
       <p class="eyebrow">Live generative music</p>
       <h1>Infinite DJ</h1>
     </header>
-    <img class="deck-art" src="assets/infinite-dj-banner.png" alt="" fetchpriority="high" width="2172" height="724">
+    <img class="deck-art" src="assets/infinite-dj-banner.webp" alt="" fetchpriority="high" width="2172" height="724">
     <section class="player" aria-label="Infinite DJ controls">
       <div class="transport">
         <button class="play" id="play" type="button" disabled><span id="play-icon" aria-hidden="true">▶</span><span id="play-label">Play</span></button>
@@ -30,10 +30,7 @@
         </label>
         <button id="next" type="button" disabled>Next</button>
       </div>
-      <div class="sliders">
-        <label for="energy">Energy<input id="energy" type="range" min="0" max="100" value="38"></label>
-        <label for="volume">Volume<input id="volume" type="range" min="0" max="100" value="55"></label>
-      </div>
+      <label class="energy" for="energy">Energy<input id="energy" type="range" min="0" max="100" value="38"></label>
       <p id="status" class="status" role="status">Preparing local audio…</p>
       <noscript>Enable JavaScript to play Infinite DJ.</noscript>
     </section>

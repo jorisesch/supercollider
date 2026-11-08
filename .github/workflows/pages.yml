@@ -5,7 +5,7 @@ on:
     paths:
       - 'site/**'
       - 'scripts/build_site.py'
-      - 'docs/images/infinite-dj-banner.png'
+      - 'docs/images/infinite-dj-banner.webp'
       - 'infinite/experiments/dj/**'
       - 'infinite/infinite-engine.scd'
       - 'infinite/infinite-instruments.scd'

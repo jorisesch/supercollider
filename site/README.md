@@ -1,8 +1,8 @@
 # Infinite DJ in the browser
 
-Press **Play** and choose **EDM**, **Pop**, **Soundscape** or **Rock**. **Next** starts a transition to another song or a fresh soundscape. **Energy** shapes the arrangement, and **Volume** sets the output level.
+Press **Play** and choose **EDM**, **Pop**, **Soundscape** or **Rock**. **Next** starts a transition to another song or a fresh soundscape. **Energy** shapes the arrangement. Use your device’s volume controls to set the listening level.
 
-The page loads the same SuperCollider composition and synthesis sources as the desktop app. The browser runs both `sclang` and `scsynth` in WebAssembly and routes their OSC messages through JavaScript. The site serves the files and each visitor's device generates its own audio. [Runtime source and licenses](runtime/SOURCE.txt).
+EDM opens on a generated 134 BPM anthem hook, and Pop opens on a chorus. Each set still starts with a fresh seed. The page loads the same SuperCollider composition and synthesis sources as the desktop app. The browser runs both `sclang` and `scsynth` in WebAssembly and routes their OSC messages through JavaScript. The player downloads a single bundle of music sources alongside the runtime. The browser generates the audio locally. [Runtime source and licenses](runtime/SOURCE.txt).
 
 ## Preview locally
 
