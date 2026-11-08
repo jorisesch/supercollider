@@ -25,8 +25,8 @@ The earlier Tension study contains four short excerpts at full Tension: **Dorian
 From the repository folder, with SuperCollider on your PATH:
 
 ```sh
-sclang -D infinite/experiments/c-edm.scd
-sclang -D infinite/experiments/pop.scd
+sclang -D infinite/infinite-edm.scd
+sclang -D infinite/infinite-pop.scd
 ```
 
 On macOS, replace `sclang` with `/Applications/SuperCollider.app/Contents/MacOS/sclang` if needed. Close the control window to fade out and exit. To start with simpler melodies, append `melody=pentatonic`.

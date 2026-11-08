@@ -32,14 +32,14 @@ Two decks play an ongoing house/electro set at 118–140 BPM. Bass and drums car
 From the repository directory:
 
 ~~~sh
-/Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/experiments/c-edm.scd 2600 128 0.25 0.55 0.30 0.20
+/Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/infinite-edm.scd 2600 128 0.25 0.55 0.30 0.20
 ~~~
 
 Arguments: seed bpm chaos density mutation tension [nogui]. The window opens automatically. Close it to fade out and exit; Ctrl+C exits immediately. The optional nogui flag skips the window. Live playback records no audio.
 
 ## Standard EDM
 
-**EDM** is the default for `c-edm.scd`, `infinite-run.scd edm`, IDE starts and unqualified set renders. The live menu contains **EDM**, **Pop** and **Rock**. EDM retains the winning arrangement and synthesis.
+**EDM** is the default for `infinite-edm.scd`, `infinite-run.scd edm`, IDE starts and unqualified set renders. The live menu contains **EDM**, **Pop** and **Rock**. EDM retains the winning arrangement and synthesis.
 
 The normal launcher starts standard EDM. The `e-edm.scd` command below remains a compatible alias:
 
@@ -80,9 +80,9 @@ The window has an **EDM / Pop / Rock** channel selector. Switching fades and res
 Start Pop directly from the repository root:
 
 ~~~sh
-sclang -D infinite/experiments/pop.scd
+sclang -D infinite/infinite-pop.scd
 # Optional: seed bpm chaos density mutation tension [nogui]
-sclang -D infinite/experiments/pop.scd 2600 138 0.25 0.55 0.30 0.20
+sclang -D infinite/infinite-pop.scd 2600 138 0.25 0.55 0.30 0.20
 ~~~
 
 Pop develops the original [Neon Rush](../../../neon-rush/track.scd) sketch into continuously generated instrumental records: offbeat pulse bass, bright detuned saw leads, sustained chord beds, and rotating drum kits. Each record chooses a key, separate verse/chorus/bridge progressions and a four-bar chorus motif. Verses leave melodic space; the chorus repeats its motif when it returns. Mutation changes verse/bass answers while preserving the chorus. The **Chorus** button brings that hook forward for four bars. Existing deck FX, Fill, Hold, NEXT and transport remain available.

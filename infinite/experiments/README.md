@@ -88,7 +88,7 @@ The original melodic D remains [d-edm.scd](d-edm.scd), with its preview renderer
 ## EDM C: infinite DJ
 
 ```sh
-/Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/experiments/c-edm.scd
+/Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/infinite-edm.scd
 ```
 
 Two four-track decks automatically hand over between records. The v6.3 style puts bass and drums first: recognizable bass cells with small answers, evolving filter/drive, subtle shared swing and quiet ghost hits. Percussion enters and leaves; occasional quarter-bar pullbacks and shorter drum spotlights leave longer stretches of groove. Half-bar sixteenth-note stutters occasionally punctuate a phrase. Melodic phrases remain sparse. Four instrument ensembles rotate bass synths, complete drum kits and accent voices; Digital Drive now has a rounder FM lead. Six forms (56–96 bars), changing keys, tempo matching and deck effects shape the set. The compact window shows generated track names with details on hover, a single effect selector with Start/Stop, stereo spectrum displays and track-name recall from a local recipe library. Transport continuation and playable earlier snapshots remain available.

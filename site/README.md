@@ -1,26 +1,22 @@
-# Infinite DJ companion page
+# Infinite DJ in the browser
 
-A buildless, responsive introduction to Infinite DJ with embedded EDM, Pop, Rock and Soundscape demos, the real control-window screenshot, technical notes and launch instructions. No frameworks, third-party fonts, tracking or browser synthesis. Players load no audio until requested, and starting one pauses the other.
+Press **Play** and choose **EDM**, **Pop**, **Soundscape** or **Rock**. **Next** starts a transition to another song or a fresh soundscape. **Energy** shapes the arrangement, and **Volume** sets the output level.
 
-## Preview
+The page loads the same SuperCollider composition and synthesis sources as the desktop app. The browser runs both `sclang` and `scsynth` in WebAssembly and routes their OSC messages through JavaScript. The site serves the files and each visitor's device generates its own audio. [Runtime source and licenses](runtime/SOURCE.txt).
 
-From the repository root:
+## Preview locally
+
+Run these commands from the repository root.
 
 ```sh
 python3 scripts/build_site.py
 python3 -m http.server 8000 --bind 127.0.0.1
 ```
 
-Open `http://127.0.0.1:8000/_site/`. Serving from the repository root also makes the fallback guide and repository links accessible. Press Ctrl+C to stop the preview server.
+Open `http://127.0.0.1:8000/_site/` and press **Play**. The page may reload once while its service worker enables cross-origin isolation for WebAssembly audio. Use a current browser on HTTPS or localhost. Press Ctrl+C to stop the preview server.
 
-## GitHub Pages
+## Publish
 
-Choose **Settings → Pages → Source → GitHub Actions** once in the repository. After committing and pushing these files to `main`, `.github/workflows/pages.yml` packages and publishes the site. It can also be run manually from Actions. The deployment reports the public URL; project pages normally live at `https://<owner>.github.io/<repository>/`.
+In the repository's **Settings → Pages**, set **Source** to **GitHub Actions**. The Pages workflow packages the player, background artwork, SuperCollider sources and pinned WebAssembly runtime. It publishes automatically when the player or music sources change on `main`. The workflow injects the repository URL for the footer links.
 
-The build copies only the page, two screenshots/artwork assets and four selected M4A previews into `_site/`. Its repository links are injected from GitHub's workflow context, so no account name is stored in source. Optional local equivalent: `python3 scripts/build_site.py --repository-url https://github.com/OWNER/REPOSITORY`.
-
-Recorded demos run in the browser. The infinite generator itself requires a local SuperCollider installation. This page does not promise a browser port of the synthesis engine.
-
-The Soundscape preview is generated from the current baseline with `sclang -D infinite/infinite-render.scd soundscape`, checked with `python3 scripts/verify_audio.py`, then encoded with `afconvert -f m4af -d aac -b 192000 audio/infinite-soundscape.wav audio/infinite-soundscape.m4a`. It is an excerpt of the separate Soundscape engine, not a two-deck DJ channel.
-
-The players demonstrate the current EDM, Pop, Rock and Soundscape generators. The refreshed Pop preview includes contrasting verse, chorus and bridge harmony.
+For terminal launch commands, see the [desktop guide](../infinite/README.md).

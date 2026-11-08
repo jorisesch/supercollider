@@ -9,7 +9,7 @@ An evolving band of rhythm guitar, picked bass and drums. Each song has a named 
 Choose **Rock** in the DJ window, or run this from the repository folder on macOS:
 
 ```sh
-/Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/experiments/rock.scd
+/Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/infinite-rock.scd
 ```
 
 The audio server starts automatically. On other platforms, replace the executable path with your installed `sclang`. **Close the window to fade out and exit**, or press **Ctrl+C** in Terminal to stop immediately.

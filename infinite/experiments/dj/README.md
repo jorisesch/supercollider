@@ -15,7 +15,7 @@ You only need to install SuperCollider once. You do not need SuperDirt or any sa
 On macOS, paste this into Terminal and press Return:
 
 ```sh
-/Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/experiments/c-edm.scd
+/Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/infinite-edm.scd
 ```
 
 The control window opens and music starts. The audio server starts automatically—there is nothing else to launch.
@@ -23,7 +23,7 @@ The control window opens and music starts. The audio server starts automatically
 On Windows or Linux, open a terminal in the repository folder and run the same command with your SuperCollider installation's `sclang` executable. If it is on your PATH, use:
 
 ```sh
-sclang -D infinite/experiments/c-edm.scd
+sclang -D infinite/infinite-edm.scd
 ```
 
 ## Use the controls
@@ -52,7 +52,7 @@ To try an effect, choose **Filter**, **Echo**, **Wash** or **Stutter** from the 
 Choose **Pop** in the window's channel menu, or start it directly on macOS:
 
 ```sh
-/Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/experiments/pop.scd
+/Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/infinite-pop.scd
 ```
 
 Pop chooses from a broad range of chord progressions and timings. Verses, choruses and bridges have different harmony, while the chorus keeps a recognizable melody.
@@ -64,7 +64,7 @@ Switching channels starts a new set with a fade. Close your current session befo
 Choose **Rock** in the channel menu, or start it directly:
 
 ```sh
-/Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/experiments/rock.scd
+/Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/infinite-rock.scd
 ```
 
 Rock creates guitar riffs, blues grooves, bass and drum arrangements with clean, crunch and fuzz sounds. Each song keeps a named guitarist, one pickup type, and a consistent playing character. Occasional longer solos resolve onto the current chord. [Listen and try it](ROCK.md).
@@ -74,7 +74,7 @@ Rock creates guitar riffs, blues grooves, bass and drum arrangements with clean,
 For infinitely evolving soundscapes, use this separate launcher:
 
 ```sh
-/Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/infinite-run.scd soundscape
+/Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/infinite-soundscape.scd
 ```
 
 It opens its own control window. Close the DJ window before starting it if you only want to hear soundscapes.

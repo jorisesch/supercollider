@@ -2,7 +2,14 @@ name: Publish Infinite DJ page
 on:
   push:
     branches: [main]
-    paths: ['site/**', 'scripts/build_site.py', 'docs/images/**', 'audio/*.m4a', '.github/workflows/pages.yml']
+    paths:
+      - 'site/**'
+      - 'scripts/build_site.py'
+      - 'docs/images/infinite-dj-banner.png'
+      - 'infinite/experiments/dj/**'
+      - 'infinite/infinite-engine.scd'
+      - 'infinite/infinite-instruments.scd'
+      - '.github/workflows/pages.yml'
   workflow_dispatch:
 permissions:
   contents: read

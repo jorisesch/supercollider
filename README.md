@@ -1,8 +1,8 @@
 # Infinite DJ
 
-> **[Listen to Infinite DJ — play the audio demos](https://jorisesch.github.io/supercollider/#listen)**
+> **[Play Infinite DJ in your browser](https://jorisesch.github.io/supercollider/)**
 >
-> Hear the grooves, hooks and evolving soundscapes right in your browser. No installation needed.
+> Choose EDM, Pop, Soundscape or Rock. The music is generated live on your device.
 
 ![Two decks connected by flowing sound waves](docs/images/infinite-dj-banner.png)
 
@@ -10,7 +10,7 @@ An endless set that creates and mixes new tracks as it goes. Let it play, or sha
 
 ## Listen
 
-**[Visit the listening page](https://jorisesch.github.io/supercollider/#listen)** for easy audio players, or open a recording below:
+Try the [live browser player](https://jorisesch.github.io/supercollider/) or open a recording below.
 
 - **[EDM](audio/edm-e-set.m4a)** — bass, drums and warm synth grooves.
 - **[Pop](audio/dj-pop-preview.m4a)** — bright synths and returning hooks.
@@ -28,8 +28,10 @@ These previews are recordings; the generator itself keeps playing. The [companio
 On macOS, paste this command and press Return:
 
 ```sh
-/Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/experiments/c-edm.scd
+/Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/infinite-edm.scd
 ```
+
+You can also run `./bin/mobius.sh` from the repository folder. Add `pop`, `soundscape` or `rock` to start in that channel.
 
 The control window opens and music starts. No sample packs, SuperDirt setup or manual server start are needed.
 

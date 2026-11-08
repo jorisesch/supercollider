@@ -15,7 +15,7 @@ Run the commands below from the **repository folder**, not from inside `infinite
 Bass, drums and synth grooves, with new tracks mixed in automatically:
 
 ```sh
-/Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/experiments/c-edm.scd
+/Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/infinite-edm.scd
 ```
 
 ## Pop
@@ -23,7 +23,7 @@ Bass, drums and synth grooves, with new tracks mixed in automatically:
 Bright synths, varied chord progressions and returning chorus hooks:
 
 ```sh
-/Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/experiments/pop.scd
+/Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/infinite-pop.scd
 ```
 
 You can also switch between EDM, Pop and Rock using the DJ window's channel menu.
@@ -33,7 +33,7 @@ You can also switch between EDM, Pop and Rock using the DJ window's channel menu
 Guitar riffs, occasional solos, bass and a room drum kit, with clean, crunch and fuzz arrangements:
 
 ```sh
-/Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/experiments/rock.scd
+/Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/infinite-rock.scd
 ```
 
 [Listen and see the Rock controls](experiments/dj/ROCK.md).
@@ -43,7 +43,7 @@ Guitar riffs, occasional solos, bass and a room drum kit, with clean, crunch and
 Slow, infinitely evolving textures, with their own control window:
 
 ```sh
-/Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/infinite-run.scd soundscape
+/Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/infinite-soundscape.scd
 ```
 
 These commands are for macOS. On Windows or Linux, replace the full executable path with `sclang` if it is on your PATH, or use the path to your installed `sclang` executable.

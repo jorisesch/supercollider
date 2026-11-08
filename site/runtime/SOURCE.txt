@@ -1,0 +1,24 @@
+SuperCollider WebAssembly
+
+These unmodified files come from the SuperCollider project’s WebAssembly
+build at commit 97e4952bfbc435855527a352fee1ad7ba2ff73d0.
+The build uses Emscripten 4.0.18. The artifact's editor directory contains
+sclang.js, sclang.data, sclang.wasm, scsynth.js, and scsynth.wasm.
+
+Corresponding source and build instructions
+https://github.com/supercollider/supercollider/tree/97e4952bfbc435855527a352fee1ad7ba2ff73d0
+https://github.com/supercollider/supercollider/blob/97e4952bfbc435855527a352fee1ad7ba2ff73d0/README_WASM.md
+https://github.com/supercollider/supercollider/blob/97e4952bfbc435855527a352fee1ad7ba2ff73d0/.github/workflows/build_wasm.yml
+
+To obtain the source, clone https://github.com/supercollider/supercollider.git,
+check out the commit above and run `git submodule update --init --recursive`.
+
+The SuperCollider language and server are licensed under GPL-3.0 (COPYING).
+The WebAssembly bindings are licensed under AGPL-3.0 (LICENSE). The pinned
+upstream source includes the individual copyright notices and license terms.
+
+Build record
+https://github.com/supercollider/supercollider/actions/runs/42371511578
+Artifact ID 13574456082
+Artifact SHA-256 a5dd79adf9562ec8d8a70a56ab7d04b8a5b35c7a8a45dc14465ade14ef30867e
+Individual file hashes are in SHA256SUMS.

@@ -1,0 +1,4 @@
+# Keep the pinned runtime byte-for-byte across checkouts.
+*.data binary
+*.js binary
+*.wasm binary

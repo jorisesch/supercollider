@@ -13,7 +13,7 @@ These numerical checks do not replace human listening review.
 
 ## Companion page
 
-`python3 scripts/build_site.py` packages the static listening page and selected media into ignored `_site/`. See [site/README.md](../site/README.md) for preview and GitHub Pages deployment.
+`python3 scripts/build_site.py` packages the browser player, artwork, SuperCollider sources and WebAssembly runtime into ignored `_site/`. See [site/README.md](../site/README.md) for local playback and GitHub Pages deployment.
 
 The Pop preview also checks its rendered timeline for contrasting verse/chorus/bridge progressions and one-bar chord changes.
 
