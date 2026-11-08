@@ -51,8 +51,20 @@ def build_site(output, repository_url):
 
     for name in ('index.html', 'style.css', 'app.js', 'isolation-sw.js'):
         copy_file(SITE / name, output / name)
-    for name in (*RUNTIME_FILES, 'COPYING', 'LICENSE', 'SOURCE.txt', 'SHA256SUMS'):
+    for name in (*RUNTIME_FILES, 'COPYING', 'LICENSE', 'SOURCE.txt'):
         copy_file(runtime / name, output / 'runtime' / name)
+    synth = output / 'runtime/scsynth.js'
+    glue = synth.read_bytes()
+    # Keep the native AudioContext accessor separate from the numeric Embind handle.
+    upstream = b'Module["getAudioContext"]=()=>EmAudio[Module["_getAudioContext"]()];'
+    if glue.count(upstream) != 1:
+        raise SystemExit('Unexpected SuperCollider audio context binding')
+    glue = glue.replace(upstream, b'Module["getWebAudioContext"]=()=>EmAudio[Module["getAudioContext"]()];')
+    synth.write_bytes(glue)
+    checksums[synth.name] = hashlib.sha256(glue).hexdigest()
+    (output / 'runtime/SHA256SUMS').write_text(
+        ''.join(f'{digest}  {name}\n' for name, digest in checksums.items()), encoding='ascii'
+    )
     copy_file(ROOT / 'docs/images/infinite-dj-banner.webp', output / 'assets/infinite-dj-banner.webp')
 
     # Select only synthesis code. Local recipes, feedback, and desktop UI are never packaged.
@@ -73,7 +85,7 @@ def build_site(output, repository_url):
 
     index = output / 'index.html'
     version = hashlib.sha256(
-        (SITE / 'app.js').read_bytes() + (SITE / 'style.css').read_bytes() + bundle
+        (SITE / 'app.js').read_bytes() + (SITE / 'style.css').read_bytes() + bundle + glue
     ).hexdigest()[:12]
     page = index.read_text(encoding='utf-8')
     page = page.replace('src="app.js"', f'src="app.js?v={version}"')

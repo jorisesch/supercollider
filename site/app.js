@@ -10,6 +10,8 @@ manifestURL.search = new URL(import.meta.url).search;
 let language, audioContext, initialized, unlockAudio, latestTrack;
 let state = "loading";
 
+class StartupError extends Error {}
+
 const repository = document.querySelector('meta[name="repository-url"]')?.content;
 if (repository) {
   document.querySelectorAll("[data-repo-path]").forEach((link) => {
@@ -24,10 +26,11 @@ function show(nextState, message) {
   status.textContent = message;
   const playing = state === "playing";
   play.disabled = state === "loading" || state === "unavailable";
-  channel.disabled = state === "loading";
+  channel.disabled = state === "loading" || state === "unlock";
   next.disabled = !playing;
   document.querySelector("#play-icon").textContent = playing ? "■" : "▶";
-  document.querySelector("#play-label").textContent = playing ? "Stop" : state === "error" ? "Retry" : "Play";
+  const label = { playing: "Stop", error: "Retry", unlock: "Enable audio" };
+  document.querySelector("#play-label").textContent = label[state] ?? "Play";
   if (!playing) delete status.dataset.track;
 }
 
@@ -71,7 +74,55 @@ function awaitEngine(name, timeout = 12000) {
 
 function reportError(error) {
   console.error(error);
-  show("error", "Local audio couldn’t start. Retry to reload the player.");
+  const message = error instanceof StartupError ? error.message : "The set couldn’t start or respond.";
+  show("error", `${message} Tap Retry to reload.`);
+}
+
+async function startupStep(message, action) {
+  try {
+    return await action();
+  } catch (error) {
+    throw new StartupError(message, { cause: error });
+  }
+}
+
+async function loadWithTimeout(promise) {
+  let timer;
+  try {
+    return await Promise.race([
+      promise,
+      new Promise((_, reject) => {
+        timer = setTimeout(() => reject(new Error("The runtime did not respond in time.")), 45000);
+      }),
+    ]);
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+async function resumeAudio() {
+  const context = audioContext;
+  let timer;
+  try {
+    await Promise.race([
+      context.resume(),
+      new Promise((resolve) => { timer = setTimeout(resolve, 500); }),
+    ]);
+  } catch (error) {
+    if (context.state === "closed") throw error;
+  } finally {
+    clearTimeout(timer);
+  }
+  return context.state === "running";
+}
+
+function promptForAudio(onRunning) {
+  unlockAudio = async () => {
+    // Call resume from the tap itself so Safari can use the user activation.
+    if (await resumeAudio()) await onRunning();
+    else promptForAudio(onRunning);
+  };
+  show("unlock", "Tap Enable audio to start playback.");
 }
 
 function onLanguagePrint(message) {
@@ -98,21 +149,24 @@ function onLanguagePrint(message) {
 async function initialize() {
   const binary = (name) => download(new URL(name, runtime), (result) => result.arrayBuffer());
   const load = async (name) => {
+    const moduleURL = new URL(`${name}.js`, runtime);
+    if (name === "scsynth") moduleURL.search = manifestURL.search;
     const [{ default: create }, wasm, data] = await Promise.all([
-      import(new URL(`${name}.js`, runtime)),
+      loadWithTimeout(import(moduleURL)),
       binary(`${name}.wasm`),
       name === "sclang" ? binary("sclang.data") : null,
     ]);
-    return create({
-      locateFile: (file) => new URL(file, runtime).href,
+    return loadWithTimeout(create({
+      locateFile: (file) => file === "scsynth.js" ? moduleURL.href : new URL(file, runtime).href,
+      mainScriptUrlOrBlob: moduleURL.href,
       wasmBinary: new Uint8Array(wasm),
       ...(data ? { getPreloadedPackage: () => data } : {}),
-    });
+    }));
   };
   const [synth, lang, manifest] = await Promise.all([
-    load("scsynth"),
-    load("sclang"),
-    download(manifestURL, (result) => result.json()),
+    startupStep("Couldn’t load the SuperCollider audio engine.", () => load("scsynth")),
+    startupStep("Couldn’t load the SuperCollider language runtime.", () => load("sclang")),
+    startupStep("Couldn’t load the music sources.", () => download(manifestURL, (result) => result.json())),
   ]);
   status.textContent = "Starting SuperCollider…";
   language = lang;
@@ -147,15 +201,14 @@ async function initialize() {
         synth.boot(options);
         const started = performance.now();
         const check = setInterval(() => {
-          const context = synth.getAudioContext();
+          const context = synth.getWebAudioContext();
           if (context && context !== audioContext) {
             audioContext = context;
-            if (context.state === "suspended") {
+            if (context.state !== "running") {
               context.resume().catch(() => {});
               setTimeout(() => {
-                if (context.state === "suspended" && state === "loading") {
-                  unlockAudio = () => context.resume();
-                  show("unlock", "Press Play to enable audio.");
+                if (context.state !== "running" && state === "loading") {
+                  promptForAudio(() => {});
                 }
               }, 500);
             }
@@ -175,19 +228,24 @@ async function initialize() {
     }, 0);
   };
 
-  const welcome = awaitEngine("welcome", 25000);
-  lang.bootInterpreter();
-  await welcome;
-  const interpreter = awaitEngine("interpreter", 10000);
-  const probe = setInterval(() => lang.runCode('"WEB_DJ interpreter".postln;'), 125);
-  try {
-    await interpreter;
-  } finally {
-    clearInterval(probe);
-  }
-  const ready = awaitEngine("ready", 35000);
-  lang.runCode(`"/${manifest.entry}".load;`);
-  await ready;
+  await startupStep("The SuperCollider language runtime didn’t start.", async () => {
+    const welcome = awaitEngine("welcome", 25000);
+    lang.bootInterpreter();
+    await welcome;
+    const interpreter = awaitEngine("interpreter", 10000);
+    const probe = setInterval(() => lang.runCode('"WEB_DJ interpreter".postln;'), 125);
+    try {
+      await interpreter;
+    } finally {
+      clearInterval(probe);
+    }
+  });
+  status.textContent = "Connecting to browser audio…";
+  await startupStep("SuperCollider couldn’t connect to browser audio.", async () => {
+    const ready = awaitEngine("ready", 35000);
+    lang.runCode(`"/${manifest.entry}".load;`);
+    await ready;
+  });
 }
 
 function setEnergy() {
@@ -200,14 +258,9 @@ async function start() {
   try {
     initialized ??= initialize();
     await initialized;
-    if (audioContext?.state === "suspended") {
-      const resume = audioContext.resume();
-      const resumed = await Promise.race([resume.then(() => true), new Promise((resolve) => setTimeout(() => resolve(false), 400))]);
-      if (!resumed) {
-        unlockAudio = start;
-        show("unlock", "Press Play to enable audio.");
-        return;
-      }
+    if (audioContext && audioContext.state !== "running" && !await resumeAudio()) {
+      promptForAudio(start);
+      return;
     }
     setEnergy();
     const seed = (crypto.getRandomValues(new Uint32Array(1))[0] % 2147483646) + 1;
