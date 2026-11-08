@@ -6,23 +6,24 @@ var root=thisProcess.nowExecutingPath.dirname;
 (root +/+ "style.scd").load;
 (root +/+ "pop-style.scd").load;
 (root +/+ "e-style.scd").load;
+(root +/+ "dubstep-style.scd").load;
 (root +/+ "modes.scd").load;
 (root +/+ "variety.scd").load;
 (root +/+ "rock-style.scd").load;
 (root +/+ "rock-expression.scd").load;
 (root +/+ "rock-players.scd").load;
 (root +/+ "rock-physical-style.scd").load;
-~djChannelIDs=[\edme,\pop,\rock];
-~djChannelNames=["EDM","Pop","Rock"];
+~djChannelIDs=[\edme,\pop,\rock,\dubstep];
+~djChannelNames=["EDM","Pop","Rock","London Dubstep"];
 // Old command aliases now select the winning EDM. `legacy` is for saved recipes.
 ~djResolveChannel={ |channel=\edme|
     if([\edm,\classic,\edme].includes(channel)){\edme}{
-        if([\pop,\rock,\legacy].includes(channel)){channel}{Error("Choose EDM, Pop or Rock").throw};
+        if((~djChannelIDs++[\legacy]).includes(channel)){channel}{Error("Unknown DJ channel").throw};
     };
 };
-~djDefaultBpm={|channel|switch(~djResolveChannel.value(channel),\pop,{138},\rock,{102},{128})};
+~djDefaultBpm={|channel|switch(~djResolveChannel.value(channel),\pop,{138},\rock,{102},\dubstep,{140},{128})};
 ~djMixSpec={|channel,rockToneVersion=6|
-    if(channel==\rock){(deck:case {rockToneVersion>=6}{\rockPhysicalDeck} {rockToneVersion>=3}{\rockHumbuckerDeck} {rockToneVersion>=2}{\rockPhysicalDeck} {rockToneVersion==1}{\rockGuitarDeck} {true}{\rockDeck},drive:1.8,inputEQ:rockToneVersion>=5)}{(deck:\djDeck,drive:3.4)}
+    if(channel==\rock){(deck:case {rockToneVersion>=6}{\rockPhysicalDeck} {rockToneVersion>=3}{\rockHumbuckerDeck} {rockToneVersion>=2}{\rockPhysicalDeck} {rockToneVersion==1}{\rockGuitarDeck} {true}{\rockDeck},drive:1.8,inputEQ:rockToneVersion>=5)}{(deck:\djDeck,drive:if(channel==\dubstep){2.2}{3.4})}
 };
 ~makeDJEngine={ |seed=2600,bpm=128,settings|
     var channel=~djResolveChannel.value((settings ? () )[\channel] ? \edme);
@@ -33,16 +34,18 @@ var root=thisProcess.nowExecutingPath.dirname;
     var rockPlayerVersion=(settings ? ())[\rockPlayerVersion] ? if(channel==\rock and:{rockToneVersion>=2}){1}{0};
     var eMode=(settings ? ())[\eMode] ? \full;
     var lib=case {channel==\rock} {~djRockLibrary.value(~djLibrary)} {channel==\pop} {~djPopLibrary.value(~djLibrary)}
-        {channel==\edme} {~djELibrary.value(~djLibrary,eMode)} {true} {~djLibrary};
-    var styleBar=case {channel==\rock} {~djRockBar} {channel==\pop} {~djPopBar} {channel==\edme} {~djEBar} {true} {~djStyleBar};
+        {channel==\edme} {~djELibrary.value(~djLibrary,eMode)} {channel==\dubstep} {~djDubstepLibrary.value(~djLibrary)} {true} {~djLibrary};
+    var styleBar=case {channel==\rock} {~djRockBar} {channel==\pop} {~djPopBar} {channel==\edme} {~djEBar}
+        {channel==\dubstep} {~djDubstepBar} {true} {~djStyleBar};
     var rng=(seed.abs%2147483646)+1,random,choose,take,makeRecord,nextBar,engine;
     var bags=(variation:List.new,key:List.new,duration:List.new,hook:List.new,form:List.new);
     var harmonyBags=Dictionary.new;
     var current,incoming,mixPosition=0,mixLength=8,bar=0,serial=0;
     var nextRequested=false,hookRequested=false,fillRequested=false,fxRequested=nil;
     var heldFX=nil,heldRequest=nil,releaseFX=false;
-    var controls=(chaos:0.25,density:0.55,mutation:0.30,tension:0.20,hold:false,autoStutter:(channel!=\rock));
-    var paletteBag=List.new,lastPalette,choosePalette;
+    var controls=(chaos:0.25,density:0.55,mutation:0.30,tension:0.20,hold:false,
+        autoStutter:([\rock,\dubstep].includes(channel).not));
+    var paletteBag=List.new,lastPalette,choosePalette,tempoRange;
     var fxRng=((seed.abs+65537)%2147483646)+1,fxRandom,stutter=nil,nextAutoBar=8;
     var nextModalBar=0,lastTonality,lastForm;
     var state=(bar:0,bpm:bpm,mixing:false,progress:0,decks:[nil,nil],phase:0,lastFX:\none);
@@ -60,7 +63,8 @@ var root=thisProcess.nowExecutingPath.dirname;
     controls.rockPlayerVersion=rockPlayerVersion;
     if(settings.notNil) { settings.keysValuesDo { |key,value| controls[key]=value } };
     controls.channel=channel;
-    bpm=if(channel==\rock){bpm.clip(78,124)}{bpm.clip(118,140)}; state.bpm=bpm;
+    tempoRange=switch(channel,\rock,{[78,124]},\dubstep,{[136,146]},{[118,140]});
+    bpm=bpm.clip(*tempoRange); state.bpm=bpm;
     random={ rng=(rng*48271)%2147483647; rng/2147483647 };
     choose={ |items| items[(random.value*items.size).floor.asInteger] };
     fxRandom={fxRng=(fxRng*48271)%2147483647; fxRng/2147483647};
@@ -78,8 +82,13 @@ var root=thisProcess.nowExecutingPath.dirname;
         if(controls[\palette].notNil) {
             id=controls[\palette].asInteger.clip(0,lib.palettes.size-1);
         } {
-            if(paletteBag.isEmpty) {lib.palettes.size.do { |i| paletteBag.add(i)}};
+            if(paletteBag.isEmpty) {
+                lib.palettes.do {|palette,i|if(palette.auditionOnly!=true){paletteBag.add(i)}};
+            };
             choices=paletteBag.asArray.reject { |i| i==lastPalette };
+            if(channel==\dubstep and:{index==0}){
+                choices=choices.select {|i|i==0 or:{lib.palettes[i].relay==true}};
+            };
             id=choose.value(choices);
             paletteBag.removeAt(paletteBag.indexOf(id));
         };
@@ -98,6 +107,8 @@ var root=thisProcess.nowExecutingPath.dirname;
         tones=[\aeolian,\aeolian,\ionian,\ionian,\dorian,\mixolydian];
         if(controls.tension>0.60){tones=tones++[\harmonicMinor,\melodicMinor]};
         if(controls.tension>0.85){tones=tones++[\phrygian,\lydian]};
+        if(channel==\dubstep){tones=[\phrygian,\aeolian,\dorian,\harmonicMinor]};
+        if(channel==\dubstep and:{first}){tones=[\phrygian]};
         recordTonality=if(tonality==\original){
             choose.value(tones.reject {|tone|tone==lastTonality})
         }{tonality};
@@ -147,12 +158,12 @@ var root=thisProcess.nowExecutingPath.dirname;
             length:total,mixBars:if(form.last[1] >= 16) {choose.value([8,16])} {8},
             targetBpm:if(first) {bpm} {
                 var target=previousBpm+choose.value([-8,-6,-4,-2,2,4,6,8]);
-                if(channel==\rock){target.clip(78,124)}{target.clip(122,136)}
+                switch(channel,\rock,{target.clip(78,124)},\dubstep,{target.clip(136,146)},{target.clip(122,136)})
             },
             position:localBar,localBar:localBar,section:\groove,hook:false,mutations:0,
             effective:(chaos:0.25,density:0.55,mutation:0.30,tension:0.20),intensity:0.8);
         if(index > 0 and: { plan.targetBpm==previousBpm }) {
-            plan.targetBpm=previousBpm+if(previousBpm >= if(channel==\rock){118}{130}) {-2} {2};
+            plan.targetBpm=previousBpm+if(previousBpm >= switch(channel,\rock,{118},\dubstep,{140},{130})) {-2} {2};
         };
         plan.tonality=tonality;
         plan.modalPolicy=modalPolicy;plan.baseScale=scale;
@@ -205,7 +216,7 @@ var root=thisProcess.nowExecutingPath.dirname;
             intensity=((intensity*energyBias)+phraseLift).clip(0.25,1.22);
             // One drum-only bar after the groove has settled, at most once in 32 bars.
             drumBreak=[\groove,\hook,\drop].includes(section) and: {partBar>=8}
-                and: {local%32==12} and: {[\pop,\rock].includes(channel).not};
+                and: {local%32==12} and: {[\pop,\rock,\dubstep].includes(channel).not};
             effective=(
                 chaos:(controls.chaos.clip(0,1)*(0.45+(intensity*0.8))*wildness).clip(0,1),
                 density:(controls.density.clip(0,1)*(0.3+(intensity*0.8))*densityBias).clip(0,1),

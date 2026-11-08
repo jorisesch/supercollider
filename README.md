@@ -2,7 +2,7 @@
 
 > **[Play Infinite DJ in your browser](https://jorisesch.github.io/supercollider/)**
 >
-> Choose EDM, Pop, Soundscape or Rock. The music is generated live on your device.
+> Choose EDM, Pop, Soundscape, Rock or London Dubstep. The music is generated live on your device.
 
 ![Two decks connected by flowing sound waves](docs/images/infinite-dj-banner.png)
 
@@ -31,7 +31,7 @@ On macOS, paste this command and press Return:
 /Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/infinite-edm.scd
 ```
 
-You can also run `./bin/mobius.sh` from the repository folder. Add `pop`, `soundscape` or `rock` to start in that channel.
+You can also run `./bin/mobius.sh` from the repository folder. Add `pop`, `soundscape`, `rock` or `dubstep` to start in that channel.
 
 The control window opens and music starts. No sample packs, SuperDirt setup or manual server start are needed.
 
@@ -39,7 +39,7 @@ For Windows/Linux instructions, other channels and help starting, follow the **[
 
 ## Make it your own
 
-Move **Chaos**, **Density**, **Mutation** or **Tension** to change the music. Try **Fill**, request the **Next** track, or choose **EDM**, **Pop** or **Rock** in the channel menu. Changes may take a few seconds to enter with the music.
+Move **Chaos**, **Density**, **Mutation** or **Tension** to change the music. Try **Fill**, request the **Next** track, or switch channels from the DJ window. Changes may take a few seconds to enter with the music.
 
 Each launch starts a freshly seeded set. **Auto / varied songs** changes scales between songs, with rarer modes available at higher **Tension**. Choose a named mode to keep one scale, then press **Apply mode**. The **👍 / 👎** buttons under each deck save your ratings for later training.
 

@@ -22,6 +22,11 @@
         [\intro,\hook,\space,\groove,\buildup,\hook,\drop,\outro],
         [\intro,\groove,\buildup,\hook,\breakdown,\drop,\outro]
     ],
+    dubstep:[
+        [\intro,\groove,\space,\drop,\outro],
+        [\intro,\drop,\breakdown,\groove,\drop,\outro],
+        [\intro,\groove,\breakdown,\drop,\space,\drop,\outro]
+    ],
     rock:[
         [\intro,\groove,\hook,\groove,\hook,\space,\drop,\outro],
         [\intro,\hook,\groove,\hook,\breakdown,\drop,\outro],

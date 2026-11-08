@@ -12,12 +12,13 @@ var root=thisProcess.nowExecutingPath.dirname;
     ~djSettings.tonality=if(modeArg.isNil){\original}{modeArg.copyRange(5,modeArg.size-1).asSymbol};
     ~djSettings.melody=if(melodyArg.isNil){\full}{melodyArg.copyRange(7,melodyArg.size-1).asSymbol};
     args=args.reject {|item|item.beginsWith("mode=") or:{item.beginsWith("melody=")}};
-    ~djSettings.channel=case {args.includesEqual("rock")} {\rock} {args.includesEqual("pop")} {\pop} {true} {\edme};
-    ~djSettings.modalPolicy=if(~djSettings.channel==\rock or:{~djSettings.tonality!=\original}){\fixed}{\tension};
+    ~djSettings.channel=case {args.includesEqual("rock")} {\rock} {args.includesEqual("pop")} {\pop}
+        {args.includesEqual("dubstep")} {\dubstep} {true} {\edme};
+    ~djSettings.modalPolicy=if([\edme,\pop].includes(~djSettings.channel) and:{~djSettings.tonality==\original}){\tension}{\fixed};
     ~djSettings.rockLeadVersion=if(~djSettings.channel==\rock){3}{0};
     ~djSettings.rockToneVersion=if(~djSettings.channel==\rock){6}{0};
-    ~djSettings.autoStutter=~djSettings.channel!=\rock;
-    args=args.reject { |item| ["pop","rock","edm","edme","classic"].includesEqual(item) };
+    ~djSettings.autoStutter=[\rock,\dubstep].includes(~djSettings.channel).not;
+    args=args.reject { |item| ["pop","rock","edm","edme","classic","dubstep"].includesEqual(item) };
     seed=if(args.at(0).notNil) { args[0].asInteger } { ~djFreshSeed.value };
     bpm=if(args.at(1).notNil) { args[1].asFloat } { ~djDefaultBpm.value(~djSettings.channel) };
     values=[0.25,0.55,0.30,0.20].collect { |fallback,i|

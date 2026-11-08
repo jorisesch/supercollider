@@ -107,14 +107,18 @@ var root=thisProcess.nowExecutingPath.dirname;
 };
 ~djChannel={ |channel=\edme|
     var old=~djResolveChannel.value(~djSettings.channel);
+    var noAutoStutter=[\rock,\dubstep];
     channel=~djResolveChannel.value(channel);
-    if(~djChannelIDs.includes(channel).not){Error("Choose EDM, Pop or Rock").throw};
+    if(~djChannelIDs.includes(channel).not){Error("Unknown DJ channel").throw};
     ~djSettings.channel=channel;
     ~djSettings.modalPolicy=if(~djSettings.tonality==\original and:{[\edme,\pop].includes(channel)}){\tension}{\fixed};
     ~djSettings.rockLeadVersion=if(channel==\rock){3}{0};
     ~djSettings.rockToneVersion=if(channel==\rock){6}{0};
-    if(channel==\rock and:{old!=\rock}){~djDanceAutoStutter=~djSettings.autoStutter;~djSettings.autoStutter=false};
-    if(old==\rock and:{channel!=\rock}){~djSettings.autoStutter=~djDanceAutoStutter ? true};
+    if(noAutoStutter.includes(channel) and:{old!=channel}){
+        if(noAutoStutter.includes(old).not){~djDanceAutoStutter=~djSettings.autoStutter};
+        ~djSettings.autoStutter=false;
+    };
+    if(noAutoStutter.includes(old) and:{noAutoStutter.includes(channel).not}){~djSettings.autoStutter=~djDanceAutoStutter ? true};
     ("DJ channel: "++channel++" / restarting set with fade").postln;
     ~djStart.value(nil,~djDefaultBpm.value(channel),~djServer);
 };

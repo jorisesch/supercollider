@@ -20,7 +20,7 @@ try {
     }.value;
     (root+/+"launch.scd").load;
     ~djStart={|seed,bpm,server|captured=(seed:seed,bpm:bpm,settings:~djSettings.copy)};
-    ["edm","edme","classic","pop","rock"].do {|name|
+    ["edm","edme","classic","pop","rock","dubstep"].do {|name|
         ~djRun.value([name,"mode=harmonicMinor","melody=pentatonic","nogui"]);
         assert.value(captured.seed>0 and:{captured.seed<=2147483646},"Invalid generated seed");
         seeds.add(captured.seed);
@@ -29,7 +29,28 @@ try {
         assert.value(captured.settings.tonality==\harmonicMinor and:{captured.settings.melody==\pentatonic}
             and:{captured.settings.modalPolicy==\fixed},"CLI lost a pinned mode");
     };
-    assert.value(seeds.size==5,"Normal launches reused their seed");
+    assert.value(seeds.size==6,"Normal launches reused their seed");
+    {
+        var session=~makeDJSession.value(140207,140,(channel:\dubstep),false), frame=session[\nextBar].value;
+        var replay=~djSessionFromRecipe.value(session.recipeSpecs[0]);
+        var palettes=Set[frame.decks[0].palette.id], relay;
+        assert.value(frame.events.any {|e|e.voice==\djDubAcid},"London Dubstep did not open with acid");
+        assert.value([0,3].includes(frame.decks[0].palette.id),"London Dubstep should open with an acid palette");
+        assert.value(replay.channel==\dubstep and:{replay[\nextBar].value.events==frame.events},"London Dubstep recipe did not round-trip");
+        320.do {
+            frame=session[\nextBar].value;
+            frame.decks.do {|deck|if(deck.notNil){palettes.add(deck.palette.id)}};
+        };
+        assert.value(palettes.size==3 and:{palettes.includes(0) and:{palettes.includes(1) and:{palettes.includes(3)}}},
+            "London Dubstep rotation should include Acid Relay and exclude the swung audition");
+        relay=~makeDJEngine.value(140207,140,(channel:\dubstep,palette:3,hold:true));
+        frame=relay[\nextBar].value;
+        assert.value(frame.events.select {|e|e.role==\djKick}.collect(_.step)==[0,4,8,12],"Acid Relay lost its straight opening");
+        8.do {frame=relay[\nextBar].value};
+        assert.value(frame.events.any {|e|e.role==\djSnare and:{e.step==8}},"Acid Relay did not return to half-step");
+        frame=~makeDJEngine.value(140207,140,(channel:\dubstep,palette:2))[\nextBar].value;
+        assert.value(frame.decks[0].palette.id==2,"The swung audition palette should remain available when pinned");
+    }.value;
     ~djRun.value(["rock","731","96","0.1","0.6","0.2","0.3","nogui"]);
     assert.value(captured.seed==731 and:{captured.bpm==96} and:{captured.settings.density==0.6},"Explicit rehearsal options broke");
     "PASS: channel aliases, new seed per launch, fixed new modes, numeric options and clean rejection of older names".postln;

@@ -135,6 +135,7 @@ a:hover { color: var(--cyan); }
 }
 @media (max-width: 570px) {
   main { min-height: calc(100svh - 100px); }
+  .transport { grid-template-columns: 1fr 1.55fr .75fr; }
   .deck-art { object-fit: contain; object-position: 50% 42%; }
   main::after { background: linear-gradient(180deg, #0a0e10 3%, #0a0e1000 28%, #0a0e1000 54%, #0a0e10 77%); }
   footer { justify-content: center; }

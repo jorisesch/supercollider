@@ -6,8 +6,8 @@
         options=args.select {|item|item=="nogui" or:{item.beginsWith("mode=")} or:{item.beginsWith("melody=")}};
         args=args.reject {|item|options.includesEqual(item)};
         mode=channel ? (args.at(0) ? "edm").asSymbol;
-        if([\edm, \soundscape, \pop, \rock, \baseline].includes(mode).not) {
-            "Usage: infinite-run.scd edm|soundscape|pop|rock|baseline chaos density mutation tension bpm seed [nogui]".postln;
+        if([\edm, \soundscape, \pop, \rock, \dubstep, \baseline].includes(mode).not) {
+            "Usage: infinite-run.scd edm|soundscape|pop|rock|dubstep|baseline chaos density mutation tension bpm seed [nogui]".postln;
             1.exit;
         };
         values=[0.25, 0.55, 0.30, 0.20].collect { |fallback, i|
@@ -16,10 +16,10 @@
         };
         bpm=args.at(if(named) {1} {5}).tryPerform(\asFloat);
         bpm=if(bpm.notNil) { bpm.clip(40, 200) } {
-            switch(mode,\edm,{128},\baseline,{128},\pop,{138},\rock,{102},{60})
+            switch(mode,\edm,{128},\baseline,{128},\pop,{138},\rock,{102},\dubstep,{140},{60})
         };
         seed=args.at(if(named) {0} {6}).tryPerform(\asInteger);
-        if([\edm,\pop,\rock].includes(mode)) {
+        if([\edm,\pop,\rock,\dubstep].includes(mode)) {
             (root +/+ "experiments/dj/launch.scd").load;
             if(seed.isNil) { seed=~djFreshSeed.value };
             ~djRun.value([seed.asString,bpm.asString]++values.collect(_.asString)++[mode.asString]

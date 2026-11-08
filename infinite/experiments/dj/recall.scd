@@ -3,13 +3,14 @@
 (
 var root=thisProcess.nowExecutingPath.dirname;
 var keys=[\chaos,\density,\mutation,\tension,\hold,\autoStutter,\palette];
+var recipeChannels=[\legacy,\pop,\edme,\rock,\dubstep];
 var methods=[\requestNext,\requestHook,\requestFill,\requestMutation,\requestFX,\startFX,\stopFX];
 var hash={ |text,start=1| var n=start; text.do { |c| n=((n*131)+c.ascii)%2147483647 }; n };
 var fingerprint;
 ~djRecipeDir=~djRecipeDir ? (root +/+ "saved-tracks");
 fingerprint=hash.value(["engine.scd","style.scd","pop-style.scd","library.scd",
     "instruments.scd","palette-instruments.scd","pop-instruments.scd","recall.scd",
-    "e-style.scd","e-instruments.scd","modes.scd","variety.scd","rock-style.scd","rock-instruments.scd",
+    "e-style.scd","e-instruments.scd","dubstep-style.scd","dubstep-instruments.scd","modes.scd","variety.scd","rock-style.scd","rock-instruments.scd",
     "rock-expression.scd","rock-expressive-instruments.scd",
     "rock-physical-style.scd","rock-physical-instruments.scd","rock-circuits.scd","rock-players.scd","guitar-pickups/model.scd"]
     .collect { |file| File.readAllString(root +/+ file) }.join("\n"));
@@ -86,7 +87,7 @@ fingerprint=hash.value(["engine.scd","style.scd","pop-style.scd","library.scd",
         frame.decks.do { |plan|
             if(plan.notNil) {
                 if(names[plan.serial].isNil) {
-                    var spec=[8,fingerprint,actualSeed,bpm,[\legacy,\pop,\edme,\rock].indexOf(base.channel),
+                    var spec=[8,fingerprint,actualSeed,bpm,recipeChannels.indexOf(base.channel),
                         initial,plan.serial,bar,journal.asArray.deepCopy,0,
                         base.controls.tonality.asString,base.controls.melody.asString,base.controls.modalPolicy.asString,
                         base.controls.rockLeadVersion,base.controls.rockToneVersion,base.controls.rockPlayerVersion];
@@ -127,7 +128,7 @@ fingerprint=hash.value(["engine.scd","style.scd","pop-style.scd","library.scd",
     spec;
 };
 ~djSessionFromRecipe={ |spec|
-    var channel=[\legacy,\pop,\edme,\rock].at(spec[4].asInteger);
+    var channel=recipeChannels.at(spec[4].asInteger);
     var settings=~djRecallSettings.value(spec[5],channel);
     var session;
     var commands=spec[8],cursor=0;

@@ -1,6 +1,6 @@
 # Run the music
 
-Choose **EDM**, **Pop**, **Rock**, or **Soundscapes**. Each creates music continuously and opens a window with controls.
+Choose **EDM**, **Pop**, **Rock**, **London Dubstep** or **Soundscapes**. Each creates music continuously and opens a window with controls.
 
 ## Get ready
 
@@ -26,7 +26,7 @@ Bright synths, varied chord progressions and returning chorus hooks:
 /Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/infinite-pop.scd
 ```
 
-You can also switch between EDM, Pop and Rock using the DJ window's channel menu.
+You can switch between EDM, Pop, Rock and London Dubstep from the DJ window's channel menu.
 
 ## Rock
 
@@ -37,6 +37,14 @@ Guitar riffs, occasional solos, bass and a room drum kit, with clean, crunch and
 ```
 
 [Listen and see the Rock controls](experiments/dj/ROCK.md).
+
+## London Dubstep
+
+Half-step drums, deep mono sub, sliding acid and short dub echoes. Acid Relay brings in a straight kick pattern before returning to half-step. Start it from the repository folder.
+
+```sh
+./bin/mobius.sh dubstep
+```
 
 ## Soundscapes
 
