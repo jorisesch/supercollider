@@ -4,6 +4,7 @@ var root=thisProcess.nowExecutingPath.dirname;
 (root +/+ "engine.scd").load;
 (root +/+ "instruments.scd").load;
 (root +/+ "recall.scd").load;
+(root +/+ "feedback.scd").load;
 ~djSettings=~djSettings ? (chaos:0.25,density:0.55,mutation:0.30,tension:0.20,hold:false);
 ~djSettings.autoStutter=~djSettings[\autoStutter] ? true;
 ~djStutterBars=~djStutterBars ? 0.5;
@@ -25,8 +26,10 @@ var root=thisProcess.nowExecutingPath.dirname;
     ~djManualFX=nil;
     if(~djEngine.notNil) {~djEngine[\stopFX].value};
     if(~djLastAutomation.notNil and: {~djDecks.notNil} and: {~djServer.notNil} and: {~djServer.serverRunning}) {
+        ~djLastAutomation=~djWithoutManual.value(~djLastAutomation);
+        ~djFxState=~djLastAutomation.fx;
         ~djServer.sendBundle(~djServer.latency,
-            *~djAutomation.value(~djWithoutManual.value(~djLastAutomation),~djDecks.collect(_.nodeID)));
+            *~djAutomation.value(~djLastAutomation,~djDecks.collect(_.nodeID)));
     };
     if(post) {"DJ effect stopped / releasing now".postln};
 };
@@ -96,38 +99,39 @@ var root=thisProcess.nowExecutingPath.dirname;
     if(tonality!=\original and:{~djTonalities[tonality].isNil}){Error("Unknown musical mode").throw};
     if([\full,\pentatonic].includes(melody).not){Error("Choose full or pentatonic melody").throw};
     ~djSettings.tonality=tonality;~djSettings.melody=melody;
-    ~djSettings.modalPolicy=policy ? if([\edme,\pop].includes(~djSettings.channel)){\tension}{\fixed};
+    ~djSettings.modalPolicy=policy ? if(tonality==\original and:{[\edme,\pop].includes(~djSettings.channel)}){\tension}{\fixed};
     ~djSettings.rockLeadVersion=if(~djSettings.channel==\rock){3}{0};
     ~djSettings.rockToneVersion=if(~djSettings.channel==\rock){6}{0};
     ("DJ mode: "++tonality++" / melody "++melody++" / restarting with fade").postln;
-    ~djStart.value(~djSeed ? 2600,~djInitialBpm ? 128,~djServer);
+    ~djStart.value(nil,~djInitialBpm ? 128,~djServer);
 };
 ~djChannel={ |channel=\edme|
     var old=~djResolveChannel.value(~djSettings.channel);
     channel=~djResolveChannel.value(channel);
     if(~djChannelIDs.includes(channel).not){Error("Choose EDM, Pop or Rock").throw};
     ~djSettings.channel=channel;
-    ~djSettings.modalPolicy=if([\edme,\pop].includes(channel)){\tension}{\fixed};
+    ~djSettings.modalPolicy=if(~djSettings.tonality==\original and:{[\edme,\pop].includes(channel)}){\tension}{\fixed};
     ~djSettings.rockLeadVersion=if(channel==\rock){3}{0};
     ~djSettings.rockToneVersion=if(channel==\rock){6}{0};
     if(channel==\rock and:{old!=\rock}){~djDanceAutoStutter=~djSettings.autoStutter;~djSettings.autoStutter=false};
     if(old==\rock and:{channel!=\rock}){~djSettings.autoStutter=~djDanceAutoStutter ? true};
     ("DJ channel: "++channel++" / restarting set with fade").postln;
-    ~djStart.value(~djSeed ? 2600,~djDefaultBpm.value(channel),~djServer);
+    ~djStart.value(nil,~djDefaultBpm.value(channel),~djServer);
 };
-~djResume={ ~djStart.value(~djSeed ? 2600,~djInitialBpm ? 128,~djServer,true) };
+~djResume={ ~djStart.value(~djSeed,~djInitialBpm ? 128,~djServer,true) };
 ~djRecall={ |name|
     var spec=~djReadRecipe.value(name),engine=~djSessionFromRecipe.value(spec);
     ~djSettings=engine.controls.copy;~djSettings.channel=engine.channel;
     ~djStart.value(spec[2].asInteger,spec[3].asFloat,~djServer,false,engine);
     ("DJ recall / " ++ name ++ " / original entry").postln;
 };
-~djStart={ |seed=2600,bpm=128,server,resume=false,prepared|
-    var engine=prepared ? if(resume and: { ~djEngine.notNil }) { ~djEngine } { ~makeDJSession.value(seed,bpm,~djSettings) };
+~djStart={ |seed,bpm=128,server,resume=false,prepared|
+    var actualSeed=if(seed.isNil) {~djFreshSeed.value} {seed};
+    var engine=prepared ? if(resume and: { ~djEngine.notNil }) { ~djEngine } { ~makeDJSession.value(actualSeed,bpm,~djSettings) };
     var srv=server ? s, generation;
     ~djStop.value;
-    ~djSeed=seed; ~djInitialBpm=bpm; ~djServer=srv; ~djEngine=engine;
-    ~djLastAutomation=nil;
+    ~djSeed=engine.seed; ~djInitialBpm=bpm; ~djServer=srv; ~djEngine=engine;
+    ~djLastAutomation=nil;~djHeardTracks=nil;
     ~djBpm=engine.state.bpm;
     ~djSet.value;
     ~djPlaying=true; generation=~djGeneration;
@@ -152,6 +156,7 @@ var root=thisProcess.nowExecutingPath.dirname;
                     var announced=Set.new,modalAnnounced=Dictionary.new,firstBar=true;
                     loop {
                         var frame=engine[\nextBar].value, actions=List.new, previous=0;
+                        var heardTracks=~djFeedbackTracks.value(engine,frame);
                         if(firstBar) {
                             // Resume a running long gate once; half-bar hits reset at beat two.
                             frame.automation[0].fx.do { |fx| if(fx.stutter>0) {fx.stutterReset=true} };
@@ -191,13 +196,13 @@ var root=thisProcess.nowExecutingPath.dirname;
                             if(action[\automation].notNil) {
                                 var a=action.automation;
                                 ~djClock.tempo=a.bpm / 60;
-                                ~djBpm=a.bpm; ~djProgress=a.progress; ~djGains=a.gains; ~djFxState=a.fx;
-                                ~djLastAutomation=a;
                                 // Stop FX also bypasses the rest of this already-generated bar.
                                 if(a.fx.any { |fx| fx[\manualKind].notNil and: {fx[\manualKind]!=~djManualFX} }) {
                                     a=~djWithoutManual.value(a);
                                 };
-                                ~djFxState=a.fx;
+                                ~djBpm=a.bpm; ~djProgress=a.progress; ~djGains=a.gains; ~djFxState=a.fx;
+                                ~djLastAutomation=a;
+                                ~djHeardTracks=heardTracks;
                                 srv.sendBundle(srv.latency,*~djAutomation.value(a,decks.collect(_.nodeID),eqNodes));
                             } {
                                 var event=action.note, deck=event.deck;

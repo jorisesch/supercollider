@@ -5,7 +5,7 @@ var assert={ |condition,message| if(condition.not) {Error(message).throw} };
 try {
     var a,b,records=Set.new,sections=Set.new,hooks=Dictionary.new,mixes=0,defs;
     var progressions=(major:Set.new,minor:Set.new),rhythms=Set.new,firstChoices=Set.new;
-    var sawOneBar=false,returns=0,lib;
+    var sawOneBar=false,sawShortBridge=false,returns=0,lib;
     (root+/+"engine.scd").load; (root+/+"instruments.scd").load;
     defs=~djDefs.collect(_.name);
     lib=~djPopLibrary.value(~djLibrary);
@@ -33,16 +33,23 @@ try {
                 var chord=plan.schedule[plan.localBar];
                 if(records.includes(plan.serial).not) {
                     var harmony=plan.harmony;
-                    progressions[plan.mode].add(harmony.verse.asCompileString);
+                    if([\aeolian,\ionian].includes(plan.baseTonality)){
+                        progressions[plan.mode].add(harmony.verse.asCompileString);
+                    };
                     rhythms.add(plan.durations.asCompileString);
                     [harmony.chorus,harmony.bridge].do { |other|
                         assert.value((0..3).every { |n| other!=harmony.verse.rotate(n) },
                             "Section harmony is just a rotated verse");
                     };
                     assert.value(harmony.chorus!=harmony.bridge,"Bridge repeated chorus harmony");
-                    assert.value(harmony.bridge.every { |degree|
-                        plan.schedule.any { |chord| chord.harmonyRole==\bridge and:{chord.degree==degree} }
-                    },"Planned bridge harmony never reaches the sound");
+                    plan.sections.select {|part|[\space,\breakdown].includes(part.name)}.do {|part|
+                        var half=part.bars div:2,first=plan.schedule[part.start],second=plan.schedule[part.start+half];
+                        assert.value(first.harmonyRole==\bridge and:{second.harmonyRole==\bridge}
+                            and:{[first.degree,second.degree]==harmony.bridge}
+                            and:{[first.bars,second.bars]==[half,part.bars-half]},
+                            "Both bridge chords should be heard for half the section");
+                        sawShortBridge=sawShortBridge or:{part.bars==4};
+                    };
                     assert.value(plan.schedule.every { |c| c.notNil and:{c.bars>0} and:{(0..6).includes(c.degree)} },
                         "Incomplete or out-of-key harmonic schedule");
                 };
@@ -76,6 +83,7 @@ try {
     assert.value([\groove,\hook,\breakdown,\drop].every { |s| sections.includes(s) },"Missing Pop song sections");
     assert.value(progressions.major.size==24 and:{progressions.minor.size==24},"Progression bag did not cover the catalog");
     assert.value(rhythms.size==8 and:{sawOneBar},"Pop chord durations still repeat the old two-bar grid");
+    assert.value(sawShortBridge,"Four-bar bridge was not exercised");
     assert.value(returns>100,"Returning chorus hooks were not checked");
     // Hold retains a record, NEXT releases it, and forced chorus / fill reach the next bar.
     a=~makeDJEngine.value(99,138,(channel:\pop,hold:true));

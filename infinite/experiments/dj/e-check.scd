@@ -21,6 +21,9 @@ try {
                 deckBars=deckBars+1;variants.add(plan.eVariant);
                 if(plan.edmAnthem and: {own.any { |e|e.voice==\edmAnthemLead}}
                     and: {own.any { |e|e.voice==\edmAnthemBass}}) {anthemBars=anthemBars+1};
+                if(plan.edmAnthem.not and: {plan.section==\buildup and: {plan.sectionProgress==1}}) {
+                    assert.value(own.any { |e|e.role==\eTurnaround},"Standard EDM buildup lost its final pickup");
+                };
                 if(own.any { |e|e.role==\eSignature}) {signatureBars=signatureBars+1};
                 if(own.any { |e|e.role==\eChord}) {chordBars=chordBars+1};
                 if(plan.drumBreak) {assert.value(own.every { |e|e.lane==3},"E filled a drum spotlight with pitched parts")};
@@ -33,7 +36,7 @@ try {
             var plan=f.decks[e.deck];
             assert.value(e.beat>=last and: {e.beat<4},"E event timing invalid");last=e.beat;
             assert.value(defs.includes(e.voice),"Missing E voice: " ++ e.voice);
-            assert.value(e.duration>0 and: {e.duration<40} and: {e.amp>0} and: {e.amp<0.65},"Invalid E event bounds");
+            assert.value(e.duration>0 and: {e.duration<if(e.role==\djPad) {48} {40}} and: {e.amp>0} and: {e.amp<0.65},"Invalid EDM event bounds for "++e.role);
             if(e.lane<3 and: {e.role!=\eTurnaround}) {
                 assert.value(plan.scale.includes((e.midinote-plan.key)%12),"E note left the key")
             };
@@ -45,7 +48,7 @@ try {
             counts[e.role]=(counts[e.role] ? 0)+1;
         };
     };
-    [\eChord,\eTom,\eShaker,\eSignature,\eTurnaround,\slides].do { |role|
+    [\eChord,\eTom,\eShaker,\eSignature,\slides].do { |role|
         assert.value((counts[role] ? 0)>10,"Missing E building block: " ++ role)
     };
     assert.value(variants==Set[\a,\b],"E has no A/B development");
@@ -61,8 +64,9 @@ try {
         16.do {
             var f=original[\nextBar].value,g=variant[\nextBar].value;
             var roles=[\djBass,\djKick,\djClap,\djSnare,\djHat];
-            assert.value(f.events.select { |e|roles.includes(e.role)}==g.events.select { |e|roles.includes(e.role)},
-                "A component comparison changed its foundation");
+            var left=f.events.select { |e|roles.includes(e.role)}.sort { |a,b|a.seed<b.seed };
+            var right=g.events.select { |e|roles.includes(e.role)}.sort { |a,b|a.seed<b.seed };
+            assert.value(left==right,"A component comparison changed its foundation");
         };
     };
     ("PASS: EDM E / 1024 reproducible bars; voiced stabs, shaker/tom phrases, sparse signature, short turnaround, "

@@ -26,8 +26,17 @@
 // Build a call, its answer, a short climb and a held target in each four-bar cell.
 ~djRockMelodicPhrase={|plan,local,age,bars,kind|
     var phase=age%4, playerID=if(plan[\rockPlayer].isNil){1}{plan.rockPlayer.id};
-    var contour=[[-1,1,0],[-1,2,0],[-2,2,0]][playerID];
-    var rhythm=[[0.16,0.66,1.36],[0.22,0.78,1.48],[0.34,0.92,1.58]][playerID];
+    var theme=(plan.hookID+plan.serial)%4;
+    var contour=[
+        [[-1,1,0],[0,2,0],[2,1,0],[-2,1,0]],
+        [[-1,2,0],[1,3,0],[0,2,1],[-2,2,0]],
+        [[-2,2,0],[0,3,0],[2,-1,0],[-1,3,1]]
+    ][playerID][theme];
+    var rhythm=[
+        [[0.16,0.66,1.36],[0.10,0.85,1.60]],
+        [[0.22,0.78,1.48],[0.35,1.10,1.75]],
+        [[0.34,0.92,1.58],[0.20,1.15,1.85]]
+    ][playerID][theme%2];
     var scale=plan.scale, key=plan.key;
     var pitches=(57..84).select {|note|
         var pc=(note-key)%12;

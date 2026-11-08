@@ -1,6 +1,8 @@
 // Sparse Tension colors, fixed-mode studies and pentatonic melodies. Pure functions.
 (
 ~djTonalities=(
+    harmonicMinor:(scale:[0,2,3,5,7,8,11],family:\minor,label:"Harmonic minor"),
+    melodicMinor:(scale:[0,2,3,5,7,9,11],family:\minor,label:"Melodic minor"),
     aeolian:(scale:[0,2,3,5,7,8,10],family:\minor,label:"Aeolian"),
     ionian:(scale:[0,2,4,5,7,9,11],family:\major,label:"Ionian"),
     dorian:(scale:[0,2,3,5,7,9,10],family:\minor,label:"Dorian"),
@@ -29,6 +31,10 @@
 };
 ~djModalLibrary={ |original,tonality=\original|
     var lib=original,banks=(
+        harmonicMinor:[[0,3,4,0],[0,5,3,4],[0,3,5,4],[5,3,4,0],[0,4,3,0],[3,0,5,4],
+            [0,0,3,4],[0,5,4,0],[3,5,4,0],[5,4,3,0],[0,3,0,4],[0,4,5,3]],
+        melodicMinor:[[0,1,3,4],[0,3,4,0],[0,1,4,0],[3,0,1,4],[0,4,3,0],[1,3,4,0],
+            [0,0,3,4],[0,3,1,4],[3,1,4,0],[1,0,3,4],[0,4,1,3],[0,1,0,4]],
         dorian:[[0,3,0,6],[0,1,3,0],[0,6,3,0],[0,2,3,0],[0,3,1,6],[3,0,6,0],
             [0,4,3,0],[0,3,2,6],[6,3,0,0],[0,1,6,3],[0,2,6,3],[0,6,1,3]],
         phrygian:[[0,1,0,6],[0,5,1,0],[0,3,1,0],[0,1,5,6],[0,6,1,0],[5,1,0,0],
@@ -47,7 +53,7 @@
     lib;
 };
 ~djMelodyPalette={ |events,plan,choice=\full|
-    var palette=if(plan.mode==\major){[0,2,4,7,9]}{[0,3,5,7,10]};
+    var palette=plan.scale.atAll(if(plan.mode==\major){[0,1,2,4,5]}{[0,2,3,4,6]});
     plan.melodyPalette=if(choice==\pentatonic){palette}{plan.scale};
     if(choice==\pentatonic){
         events.collect {|event|

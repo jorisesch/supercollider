@@ -9,7 +9,7 @@ var fingerprint;
 ~djRecipeDir=~djRecipeDir ? (root +/+ "saved-tracks");
 fingerprint=hash.value(["engine.scd","style.scd","pop-style.scd","library.scd",
     "instruments.scd","palette-instruments.scd","pop-instruments.scd","recall.scd",
-    "e-style.scd","e-instruments.scd","modes.scd","rock-style.scd","rock-instruments.scd",
+    "e-style.scd","e-instruments.scd","modes.scd","variety.scd","rock-style.scd","rock-instruments.scd",
     "rock-expression.scd","rock-expressive-instruments.scd",
     "rock-physical-style.scd","rock-physical-instruments.scd","rock-circuits.scd","rock-players.scd","guitar-pickups/model.scd"]
     .collect { |file| File.readAllString(root +/+ file) }.join("\n"));
@@ -34,11 +34,16 @@ fingerprint=hash.value(["engine.scd","style.scd","pop-style.scd","library.scd",
     // SC 3.13's JSON reader returns strings for every scalar. Normalize
     // numeric fields without evaluating any of the file as SuperCollider code.
     convert={ |value|
+        if(value.isKindOf(Dictionary)){
+            var normalized=();
+            value.keysValuesDo {|key,item|normalized[key.asSymbol]=convert.value(item)};
+            normalized;
+        }{
         if(value.isKindOf(Array)) {value.collect(convert)} {
             if(value.isString and: {"^-?[0-9]+([.][0-9]+)?([eE][+-]?[0-9]+)?$".matchRegexp(value)}) {
                 value.asFloat
             } {value};
-        };
+        }};
     };
     convert.value(text.parseJSON);
 };
@@ -58,11 +63,13 @@ fingerprint=hash.value(["engine.scd","style.scd","pop-style.scd","library.scd",
     adjectives[a%32] ++ " " ++ nouns[(a div:32)%32] ++ " at " ++
         adjectives[b%32] ++ " " ++ nouns[(b div:32)%32];
 };
-~makeDJSession={ |seed=2600,bpm=128,settings,persist=true|
-    var base=~makeDJEngine.value(seed,bpm,settings),session=base.copy;
+~djSourceFingerprint=fingerprint;
+~makeDJSession={ |seed,bpm=128,settings,persist=true|
+    var actualSeed=seed ? ~djFreshSeed.value;
+    var base=~makeDJEngine.value(actualSeed,bpm,settings),session=base.copy;
     var journal=List.new,bar=0,names=Dictionary.new,initial=~djRecallVector.value(base.controls);
     var last=initial.copy,next=base[\nextBar];
-    session.persistRecipes=persist;
+    session.persistRecipes=persist;session.recipeSpecs=Dictionary.new;
     session.recallJournal=journal;
     session.recallNames=names;
     methods.do { |key,i|
@@ -79,7 +86,7 @@ fingerprint=hash.value(["engine.scd","style.scd","pop-style.scd","library.scd",
         frame.decks.do { |plan|
             if(plan.notNil) {
                 if(names[plan.serial].isNil) {
-                    var spec=[7,fingerprint,seed,bpm,[\legacy,\pop,\edme,\rock].indexOf(base.channel),
+                    var spec=[8,fingerprint,actualSeed,bpm,[\legacy,\pop,\edme,\rock].indexOf(base.channel),
                         initial,plan.serial,bar,journal.asArray.deepCopy,0,
                         base.controls.tonality.asString,base.controls.melody.asString,base.controls.modalPolicy.asString,
                         base.controls.rockLeadVersion,base.controls.rockToneVersion,base.controls.rockPlayerVersion];
@@ -90,7 +97,7 @@ fingerprint=hash.value(["engine.scd","style.scd","pop-style.scd","library.scd",
                         if(spec[9]>1024) {Error("Track name library is full").throw};
                         name=~djRecipeName.value(spec);path=~djRecipeDir +/+ (name ++ ".json");
                     };
-                    names[plan.serial]=name;
+                    names[plan.serial]=name;session.recipeSpecs[plan.serial]=spec.deepCopy;
                     if(session.persistRecipes) {
                         ~djRecipeDir.mkdir;
                         if(File.exists(path)) {
@@ -113,14 +120,8 @@ fingerprint=hash.value(["engine.scd","style.scd","pop-style.scd","library.scd",
     if("^[A-Za-z]+ [A-Za-z]+ at [A-Za-z]+ [A-Za-z]+$".matchRegexp(name).not) {Error("Paste the complete track name").throw};
     if(File.exists(~djRecipeDir +/+ (name ++ ".json")).not) {Error("Track is not in this local recipe library").throw};
     spec=~djParseRecipe.value(File.readAllString(~djRecipeDir +/+ (name ++ ".json")));
-    if(((spec.size==10 and:{spec[0]==2}) or:{spec.size==12 and:{spec[0]==3}}
-        or:{spec.size==13 and:{spec[0]==4}} or:{spec.size==14 and:{spec[0]==5}}
-        or:{spec.size==15 and:{spec[0]==6}} or:{spec.size==16 and:{spec[0]==7}}).not or: {
-        (spec[1]!=fingerprint) and:{[2112806582,588589464,122551949,96742884,2133735198,2074328684,2014457403,1822520365,210581853,1858730134,1874145526,2014952595,1745543930,1995479297].includes(spec[1].asInteger).not} and: {
-        // Old Pop harmony changed; only unchanged EDM/Classic recipes are compatible.
-        spec[4]==1 or: {[506492780,1646806499].includes(spec[1].asInteger).not}
-    }}) {
-        Error("This recipe needs the music source version that created it").throw;
+    if(spec.size!=16 or:{spec[0]!=8} or:{spec[1]!=fingerprint}){
+        Error("This track was made with a different music source version").throw;
     };
     if(~djRecipeName.value(spec)!=name) {Error("Track recipe checksum mismatch").throw};
     spec;
@@ -130,13 +131,15 @@ fingerprint=hash.value(["engine.scd","style.scd","pop-style.scd","library.scd",
     var settings=~djRecallSettings.value(spec[5],channel);
     var session;
     var commands=spec[8],cursor=0;
+    if(spec.size!=16 or:{spec[0]!=8}){Error("This track needs the source version that created it").throw};
     if(spec.size>10){settings.tonality=spec[10].asSymbol;settings.melody=spec[11].asSymbol};
     settings.modalPolicy=if(spec.size>12){spec[12].asSymbol}{\fixed};
     settings.rockLeadVersion=if(spec.size>13){spec[13].asInteger}{0};
     settings.rockToneVersion=if(spec.size>14){spec[14].asInteger}{0};
-    settings.rockPlayerVersion=if(spec.size>15){spec[15].asInteger}{0};
+    settings.rockPlayerVersion=spec[15].asInteger;
     session=~makeDJSession.value(spec[2].asInteger,spec[3].asFloat,settings,false);
     session.recallNames[spec[6].asInteger]=~djRecipeName.value(spec);
+    session.recipeSpecs[spec[6].asInteger]=spec.deepCopy;
     (spec[7].asInteger+1).do { |bar|
         while {cursor<commands.size and: {commands[cursor][0]==bar}} {
             var command=commands[cursor],code=command[1].asInteger,argument;

@@ -1,6 +1,6 @@
 # Infinite DJ
 
-Music that keeps playing, creating and mixing new tracks as it goes. Start it, leave it running, or shape the music with the controls.
+Music that keeps playing, creating and mixing new tracks as it goes. Each launch starts a fresh set with different keys, instruments, scales and song structures. [Hear six generated songs](../../../audio/dj-variety-preview.m4a).
 
 ## Install
 
@@ -35,12 +35,13 @@ Start with the default settings. Try moving one knob at a time:
 | **Chaos** | Adds rhythmic variation and fills. |
 | **Density** | Adds more notes and percussion. |
 | **Mutation** | Lets musical patterns change more often. |
-| **Tension** | Adds brightness and drive; high settings add brief modal accents in EDM/Pop. |
+| **Tension** | Adds brightness and drive. Higher settings let Auto choose from more scales. |
 | **Next** | Requests the next track. |
 | **Bass hook / Chorus / Riff** | Brings the current track's hook forward. |
 | **Fill** | Requests a drum fill. |
 | **Hold** | Keeps the current track playing. |
 | **STOP / START** | Fades out, then lets you continue the same set. |
+| **👍 / 👎** | Saves your rating for the song on that deck. |
 
 Changes enter on musical boundaries, so allow a few seconds to hear them. The highlighted track is the one you are hearing. The spectrum shows the sound's frequencies.
 
@@ -78,11 +79,19 @@ For infinitely evolving soundscapes, use this separate launcher:
 
 It opens its own control window. Close the DJ window before starting it if you only want to hear soundscapes.
 
+## Rate what you hear
+
+Use **👍** or **👎** under the playing deck. During a handover, each deck has its own buttons. Your choice is highlighted, and you can change it.
+
+Ratings save locally in `infinite/experiments/dj/feedback/`, together with the track recipe, generation settings and listening position. They are collected for later training. [Feedback data details](FEEDBACK.md).
+
+To start a new set, choose **More… → New set**. **STOP / START** continues the current set.
+
 ## Try musical modes
 
-In EDM and Pop, leave **Mode** on **Auto / follows Tension**. Above 60%, Tension can add brief modal accents; above 85%, rarer colors become possible. Normal major/minor harmony remains the foundation, and Pop choruses keep their returning harmony. Moving Tension keeps the set playing.
+Leave **Mode** on **Auto / varied songs** for a new scale on each song. Aeolian, Ionian, Dorian and Mixolydian form the regular choices. Above 60% **Tension**, harmonic and melodic minor join the pool. Above 85%, Phrygian and Lydian become possible.
 
-Optional **Pentatonic melodies** use five-note lead phrases. Press **Apply mode** after changing the Mode or Pentatonic choices; that restarts with a fade. Rock keeps fixed mode choices. [Listen to the examples and see the choices](MODES.md).
+Choose a named mode to keep that scale, or enable **Pentatonic melodies** for five-note leads. Press **Apply mode** to start a fresh set with those choices. [Scales and listening examples](MODES.md).
 
 ## Stop
 

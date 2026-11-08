@@ -66,7 +66,7 @@ In the earlier set preview, the first eight-bar solo starts around **0:57** and 
 
 ## Play with scales
 
-The first default track starts in **E minor**. Try **E minor pentatonic: E G A B D** over it. The key is shown in the track's tooltip and changes with new records; use **Hold** to stay with one track.
+Each set starts with a new key and scale. Hover over the track title to see them, and use **Hold** to stay with that song while playing along.
 
 Choose **Dorian** in the main **Mode** menu for brighter minor harmony, or **Mixolydian** for major harmony with a flat seventh. Check **Pentatonic melodies** for five-note lead replies, then press **Apply mode**. The backing chords still use the full seven-note mode. [More about modes](MODES.md).
 

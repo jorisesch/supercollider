@@ -16,9 +16,10 @@ values=[0.25, 0.55, 0.30, 0.20].collect { |fallback, i|
 bpm=if(args.at(5).notNil) { args[5].asFloat.clip(40, 200) } {
     switch(mode,\edm,{128},\baseline,{128},\pop,{138},\rock,{102},{60})
 };
-seed=if(args.at(6).notNil) { args[6].asInteger } { 2600 };
+seed=args.at(6).tryPerform(\asInteger);
 if([\edm,\pop,\rock].includes(mode)) {
     (root +/+ "experiments/dj/launch.scd").load;
+    if(seed.isNil) { seed=~djFreshSeed.value };
     ~djRun.value([seed.asString,bpm.asString]++values.collect(_.asString)++[mode.asString]
         ++options);
 } {
@@ -27,7 +28,7 @@ if([\edm,\pop,\rock].includes(mode)) {
 // Own server: do not replace or reconfigure an existing IDE server.
 server=Server(\infiniteMusic, NetAddr("127.0.0.1", 57130),
     ServerOptions.new.numInputBusChannels_(0).numOutputBusChannels_(2));
-~startInfinite.value(if(mode==\baseline){\edm}{mode}, seed, bpm, server);
+~startInfinite.value(if(mode==\baseline){\edm}{mode}, seed ? 2600, bpm, server);
 if(options.includesEqual("nogui").not) {
     (root +/+ "infinite-controls.scd").load;
     {

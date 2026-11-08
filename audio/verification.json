@@ -266,6 +266,16 @@
       -20.53
     ]
   },
+  "dj-variety-preview.wav": {
+    "seconds": 72.3373,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -2.45,
+    "rms_dbfs": -20.68,
+    "end_peak": 0.0,
+    "title": "Six generated EDM, Pop and Rock songs",
+    "human_listening_review": "pending"
+  },
   "edm-e-building-blocks.wav": {
     "seconds": 64.1013,
     "sample_rate": 48000,

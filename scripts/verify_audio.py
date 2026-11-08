@@ -57,7 +57,7 @@ for manifest_path in (Path('infinite/experiments/dj/preview.json'), Path('infini
         dj_manifests[spec['file']] = spec
 assert expected <= {p.name for p in Path('audio').glob('*.wav')}, 'Missing audio renders'
 supported = (expected | set(dj_manifests) | {'neon-rush.wav', 'infinite-soundscape.wav', guitar_study['file'], 'rock-riff-study.wav', 'rock-blues.wav', 'rock-single-coil-decay.wav',
-                                                       'rock-single-coil-power-chords.wav', 'rock-humbucker-power-chords.wav'}
+                                                       'rock-single-coil-power-chords.wav', 'rock-humbucker-power-chords.wav', 'dj-variety-preview.wav'}
              | set(rock_specs) | set(modes_specs) | set(tension_specs) | set(phrasing_specs) | set(contact_specs)
              | set(harmony_specs) | set(player_specs) | set(pickup_specs) | {'voltage-heart-e-minor.wav'})
 noise_signatures = {}
@@ -78,6 +78,21 @@ for path in sorted(Path('audio').glob('*.wav')):
     edge = max(map(abs, values[-4800:]))
     assert edge < 0.0001
     result = dict(seconds=round(frames/rate, 4), sample_rate=rate, channels=channels, peak_dbfs=round(20*math.log10(peak), 2), rms_dbfs=round(20*math.log10(rms), 2), end_peak=edge)
+    if path.name == 'dj-variety-preview.wav':
+        spec = json.loads(Path('infinite/experiments/dj/variety-preview.json').read_text())
+        assert abs(frames/rate-spec['seconds']) < 0.003
+        assert len(spec['segments']) == 6
+        assert {s['channel'] for s in spec['segments']} == {'edme', 'pop', 'rock'}
+        assert len({s['seed'] for s in spec['segments']}) == 6
+        for i, segment in enumerate(spec['segments']):
+            start = round(segment['start_seconds']*rate)*channels
+            end_seconds = spec['segments'][i+1]['start_seconds'] if i<5 else spec['seconds']
+            end = round(end_seconds*rate)*channels
+            excerpt = values[start:end]
+            assert max(map(abs, excerpt[:round(0.07*rate)*channels])) < 0.0001
+            assert max(map(abs, excerpt[-4800:])) < 0.0001
+            assert math.sqrt(sum(v*v for v in excerpt)/len(excerpt)) > 0.001
+        result.update(title='Six generated EDM, Pop and Rock songs', human_listening_review='pending')
     if path.name in {'rock-single-coil-power-chords.wav', 'rock-humbucker-power-chords.wav'}:
         assert abs(frames/rate-22) < 0.003
         for bar in range(9):

@@ -29,7 +29,8 @@ server.waitForBoot {
             waitFor.value {~djRoutine.notNil and:{~djEngine.controls.tonality==\dorian}};
             assert.value(~djEngine.controls.melody==\pentatonic,"Checkbox did not reach the engine");
             waitFor.value {~djEngine.state.decks[0].notNil};
-            assert.value(~djEngine.state.decks[0].scale==[0,2,3,5,7,8,10],"Low Tension should keep the minor base");
+            assert.value(~djEngine.controls.modalPolicy==\fixed,"Named mode should use fixed harmony");
+            assert.value(~djEngine.state.decks[0].scale==[0,2,3,5,7,9,10],"Apply did not pin Dorian");
             3.4.wait;assert.value(firstBus.index.isNil,"Mode restart leaked its old bus");
             engine=~djEngine;
             ui.value {~djUI.transport.valueAction_(1);~djUI.transport.valueAction_(0)};

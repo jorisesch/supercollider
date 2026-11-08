@@ -1,5 +1,28 @@
 # Development and reference notes
 
+## Current song generator and listening feedback
+
+Normal launch commands generate a fresh seed with `Date.seed`. Supplying a seed explicitly reproduces the same generation choices. **More → New set**, channel changes and **Apply mode** start fresh sessions. Stop/Start resumes the existing engine.
+
+`variety.scd` defines six section-order templates per channel with independently sampled phrase lengths. Keys, opening palette, rhythm, harmony, form and melody are sampled for the first song as well as later songs. Subsequent tempos can move by two to eight BPM within the channel range. Rock retains its per-song guitarist and pickup identity while selecting from more call contours.
+
+Auto mode selects a base scale for each record. Named modes use a fixed policy. The added harmonic/melodic minor banks avoid diminished and augmented accompaniment roots, and five-note melodies use pitch classes from the selected scale.
+
+Recipes now use schema 8 and the current source fingerprint. Saved names from earlier generators need their original source checkout. The older generation studies and their recorded audio remain reference material. Their frozen recipe and first-song assertions describe their original generator.
+
+Run the current checks from the repository root:
+
+```sh
+sclang -D infinite/experiments/dj/variety-check.scd
+sclang -D infinite/experiments/dj/channels-check.scd
+sclang -D infinite/experiments/dj/variety-runtime-check.scd
+sclang -D infinite/experiments/dj/variety-render.scd
+python3 scripts/verify_audio.py
+```
+
+The score check covers multiple seeds/channels, all eight modes, generated forms, current recipe recall, immutable feedback snapshots, duplicate/revised votes, persistence and equivalent generation with/without votes. The muted UI check clicks both decks’ rating buttons during a handover and applies a new fixed mode. [Feedback schema and storage](FEEDBACK.md).
+
+
 For installation and everyday use, follow the [run guide](README.md). The notes below include implementation details, comparisons and historical listening results.
 
 # Infinite DJ — EDM, Pop and Rock
@@ -26,7 +49,7 @@ sclang -D infinite/experiments/e-edm.scd
 sclang -D infinite/experiments/e-edm.scd 2600 128 0.25 0.55 0.30 0.20
 ~~~
 
-E develops the current groove with short warm chord stabs, shaker/tom conversations, articulated bass and occasional slides. A small synthesized vowel-like signature returns in selected hook/drop phrases. The drop introduces a B bass rhythm for eight bars and returns to A for eight; **Bass hook** requests B for four bars. A short reverse breath marks the pre-drop pickup. Bass and drums remain central, with no continuous new melody. The earlier grammar is retained internally for faithful saved-track replay and historical rendering; it has no live channel entry.
+E develops the current groove with short warm chord stabs, shaker/tom conversations, articulated bass and occasional slides. A small synthesized vowel-like signature returns in selected hook/drop phrases. The drop introduces a B bass rhythm for eight bars and returns to A for eight; **Bass hook** requests B for four bars. A short reverse breath marks the pre-drop pickup. Bass and drums remain central, with no continuous new melody. The earlier grammar is retained internally for historical comparisons.
 
 [Track edit, 94 seconds](../../../audio/edm-e-groove.m4a) · [Building-block comparison, 64 seconds](../../../audio/edm-e-building-blocks.m4a) · [Infinite-set excerpt](../../../audio/edm-e-set.m4a)
 
@@ -103,7 +126,7 @@ EDM keeps its lead phrases sparse, with short chord stabs and percussion around 
 
 Some EDM records use an anthem arrangement inspired by [Voltage Heart](../../studies/voltage-heart/README.md). A syncopated motif starts in a lower register, then returns an octave up after an accelerating snare build. The motif follows each record's scale and chords.
 
-Four ensembles rotate through a seeded shuffle bag. Each is stable for its whole record, including Hold and motif mutations. Consecutive records choose different ensembles; the display and post window identify the instruments. Palette selection has its own random stream, so changing the ensemble preserves the composed notes and rhythms.
+Four ensembles rotate through a seeded shuffle bag. Each is stable for its whole record, including Hold and motif mutations. Consecutive records choose different ensembles; the display and post window identify the instruments. The initial palette is sampled too, so a new session can start with any ensemble.
 
 | Ensemble | Bass | Lead | Drum kit |
 | --- | --- | --- | --- |
@@ -130,7 +153,7 @@ The compact window shows a generated **track name** for each deck. The leading d
 
 The thin slider is the **A/B mix position**: it starts left while A plays, moves right during the handover to B, stays right for B's record, then moves left during the return to A. Stopping holds its position. Hover for the mix percentages, tempo and bar.
 
-The four knobs retain Chaos, Density, Mutation and Tension. **Next** queues a record, **Bass hook / Chorus / Riff** brings its hook forward, **Fill** requests a drum fill, and **Hold** keeps the current record and freezes motif changes. **STOP / START** fades out and continues the same set. The **More...** menu contains Mutate motif, Restart seed and Replay track. Restart seed clears Hold.
+The four knobs retain Chaos, Density, Mutation and Tension. **Next** queues a record, **Bass hook / Chorus / Riff** brings its hook forward, **Fill** requests a drum fill, and **Hold** keeps the current record and freezes motif changes. **STOP / START** fades out and continues the same set. The **More...** menu contains Mutate motif, New set and Replay track. New set clears Hold.
 
 Choose **Filter**, **Echo**, **Wash**, or **Stutter 1/4, 1/8, 1/16** from the effect menu. Selection alone does nothing. **Start FX** activates the selection on the next generated bar and keeps it running until **Stop FX**. Filter and wash develop over their first bar and then hold; echo keeps sending; stutter continues at the selected note division. Effects follow the leading deck through handovers. Stop releases the effect with smoothing, including the remaining automation in the current bar, while existing echo/reverb tails decay. Stop the effect before choosing another. Stopping music also clears the manual effect.
 
@@ -251,7 +274,7 @@ The pure check covers 8,192 seeded bars and 2,048 bars at macro extremes: timing
 
 The live channels are EDM, Pop and Rock. EDM uses the winning arrangement and instruments; `edm`, `edme` and `classic` command/API aliases all resolve to that channel. The older foundation remains an internal `legacy` grammar for faithful replay of saved tracks and historical comparisons, without a live channel-menu entry.
 
-Recipe channel numbers retain their meanings: 0 is the archived foundation, 1 Pop, 2 the winning EDM, and 3 Rock. Prior default and modal source fingerprints remain accepted for compatible recipes. Historical reproduction manifests describe their original sources.
+Recipe channel numbers retain their meanings: 0 is the archived foundation, 1 Pop, 2 the winning EDM, and 3 Rock. Current recipes require schema 8 and a matching source fingerprint. Historical reproduction manifests describe their original sources.
 
 Default rendering writes the standard set: `sclang -D infinite/experiments/dj/render.scd`. Add `track` for its 48-bar edit or `pop` for Pop. Rock uses `rock-render.scd`. Historical `classic`, `palettes` and `digital` render flags explicitly request the archived grammar. Definition packets are loaded individually to stay within OSC bundle limits.
 
@@ -273,7 +296,7 @@ New EDM/Pop sets use `modalPolicy: \tension`. Their base remains Aeolian for min
 
 Rock defaults to `modalPolicy: \fixed` and retains its existing behavior. Fixed-mode studies are still available with `(modalPolicy: \fixed, tonality: \dorian)` or `~djMode.value(\dorian, \full, \fixed)`. `modes-render.scd` explicitly uses that policy for the earlier full-mode comparisons. Pentatonic remains a melody palette for hook/arp/signature roles; backing harmony keeps the active seven-note scale.
 
-Recipe schema 4 stores the harmony policy after the existing mode/melody fields. Schema 2/3 recipes decode with the fixed policy, preserving their original notes even at high Tension. The pre-Tension source fingerprint remains accepted. The parameter journal reconstructs the new selector's timing/cooldown for exact recall after earlier knob changes.
+Schema 4 introduced the harmony-policy field. The parameter journal records control changes for exact recall within the matching generator version.
 
 `tension-check.scd` checks 32,768 bars for rarity, thresholds, mode families, two-bar bounds, cooldowns, base returns, characteristic notes and unchanged drums/FX, plus exact performance-history recall. `tension-runtime-check.scd` exercises the real knob, sound response and a brief modal excursion without restarting, then Pop's major/Lydian preference and cleanup, with hardware muted. `tension-render.scd` exports condensed four-excerpt demonstrations; `tension-tour.json` records their timing. `scripts/verify_audio.py` checks the base/accent/return audio sections. These demonstrations concentrate rare events for comparison; they do not represent their frequency in a continuous set.
 
@@ -291,7 +314,7 @@ Run `rock-check.scd` for 4,608 bars across six mode choices, three ensembles and
 
 Lead notes are appended after backing events so solo length does not change the backing's random stream, drum velocities or timing. All new lead phrases, including short replies, end on the active schedule's chord root, third or fifth. Roots are preferred. The pentatonic transform intersects the chord tones with its five-note set for marked landing notes; a generic nearest-scale snap cannot override that cadence. The final held note and its instrument release fit inside the current chord bar.
 
-Recipe schema 5 appends `rockLeadVersion`. New Rock sets use lead version 3, which adds standard and quick-change 12-bar blues forms to the default mode. Tone version 3 introduced the 20-mode two-coil string and its shared vintage series load before the pedal rig. Tone version 4 recalls the earlier blues bass trim. Version 5 uses the original bass and drum levels and applies a 160 Hz high-pass and a 5 dB cut at 300 Hz to the guitar bus before the pedal rig. Version 6 uses the revised 20-mode string decay for both pickups. June uses a single coil, while Rook and Flint use a vintage series humbucker. Each deck applies the humbucker load only for its current record. Saved recipes keep their recorded phrase version. Recipes from before schema 5 use version 0 and play short replies. `rock-solo-check.scd` covers 14,336 bars across seven scale choices and both melody palettes, phrase lengths, sparse placement, final-note chord membership, root preference, pentatonic intersections, Riff/Next behavior and old/new recall. `rock-solo-runtime-check.scd` exercises the actual Riff button and verifies landing notes delivered to the server with hardware output muted. Rock preview timelines include solo spans and landing-note/chord-degree information for audio checks.
+Recipe schema 5 appends `rockLeadVersion`. New Rock sets use lead version 3, which adds standard and quick-change 12-bar blues forms to the default mode. Tone version 3 introduced the 20-mode two-coil string and its shared vintage series load before the pedal rig. Tone version 4 recalls the earlier blues bass trim. Version 5 uses the original bass and drum levels and applies a 160 Hz high-pass and a 5 dB cut at 300 Hz to the guitar bus before the pedal rig. Version 6 uses the revised 20-mode string decay for both pickups. June uses a single coil, while Rook and Flint use a vintage series humbucker. Each deck applies the humbucker load only for its current record. Saved recipes keep their recorded phrase version. Pre-schema-5 source revisions used version 0 and played short replies. `rock-solo-check.scd` covers 14,336 bars across seven scale choices and both melody palettes, phrase lengths, sparse placement, final-note chord membership, root preference, pentatonic intersections, Riff/Next behavior and old/new recall. `rock-solo-runtime-check.scd` exercises the actual Riff button and verifies landing notes delivered to the server with hardware output muted. Rock preview timelines include solo spans and landing-note/chord-degree information for audio checks.
 
 ## Earlier expressive guitar and saved-tone processing
 
@@ -299,7 +322,7 @@ Saved Rock tracks with `rockToneVersion: 1` use the following earlier implementa
 
 `rock-expressive-instruments.scd` adds a sustained body to the plucked-string model, smooth pitch paths and three pedal-inspired voicings: open gain, a mid-focused overdrive and harder clipping. The reference colors are [BD-2](https://articles.boss.info/five-creative-way-to-use-the-bd2-blues-driver/), [Tube Screamer](https://www.ibanez.com/eu/products/detail/ts9_99.html) and [DS-1](https://www.boss.info/uk/products/ds-1/); these are synthesis voicings rather than circuit models. Picking level drives the nonlinear stage before cabinet filtering. Tension raises gain, and stronger/cleaner sections choose different drive colors.
 
-The `rockGuitarDeck` compressor and slow stereo chorus process only the music/guitar input, before bass and drums join the program. Compression uses a parallel blend, 8 ms attack and 130 ms release. Existing deck filter/echo/wash/stutter controls still work. The original instrument/deck definitions remain byte-identical for earlier recipes. Schema 6 appends the tone version; older schemas use tone version 0 and their original guitar graphs.
+The `rockGuitarDeck` compressor and slow stereo chorus process only the music/guitar input, before bass and drums join the program. Compression uses a parallel blend, 8 ms attack and 130 ms release. Existing deck filter/echo/wash/stutter controls still work. Schema 6 introduced the tone version. Earlier source revisions used tone version 0 and the original guitar graphs.
 
 Run `rock-expression-check.scd` for written-note/rhythm preservation, bounded gestures, all pedal colors and exact new/old recall; `rock-solo-check.scd` checks cadences across scales. `rock-guitar-signal-check.scd` renders temporary pitch and routing probes, then `python3 scripts/verify_rock_guitar.py` measures actual waveform pitch using normalized autocorrelation, settled endings, guitar dynamic-range reduction and PCM-identical bass/drums with full guitar processing enabled. The native `rock-solo-runtime-check.scd` exercises the real Riff button, live audio and cleanup with hardware output muted.
 
@@ -308,7 +331,7 @@ Render the set and three-tone comparison with `rock-render.scd`. The comparison 
 
 ## Physical guitar and shared circuit rig
 
-Current Rock sessions use `rockToneVersion: 2`; the schema 6 tone field already supports it. Tone 0 and 1 keep their earlier event streams and SynthDefs for saved-track playback. The immediately previous source fingerprint is accepted. New synthesis is in `rock-physical-instruments.scd`, circuit reductions in `rock-circuits.scd`, and playable gestures/rig selection in `rock-physical-style.scd`.
+This revision introduced `rockToneVersion: 2`. Tone 0 and 1 were retained in that source for earlier saved-track playback. New synthesis is in `rock-physical-instruments.scd`, circuit reductions in `rock-circuits.scd`, and playable gestures/rig selection in `rock-physical-style.scd`.
 
 The guitar bus now owns the nonlinear rig, so simultaneous notes interact before bass and drums are added. The new voice sends a modal string/pickup signal into it. The [guitar research and listening notes](GUITAR.md) document equations, original research/schematics, approximation boundaries and the one-minute isolated study. `rock-physical-render.scd` renders that study and temporary pitch/circuit/routing probes; `verify_rock_physical.py` verifies the actual PCM. `rock-physical-check.scd` checks score preservation, playable strings and tone-version recall. Numerical checks do not constitute human listening review.
 
@@ -316,4 +339,4 @@ The guitar bus now owns the nonlinear rig, so simultaneous notes interact before
 
 Current Rock songs assign Rook, June or Flint once per record. `rock-players.scd` defines their small rhythm/lead vocabularies, pick/vibrato ranges and fixed pedal setups. Guitar rhythm replacement follows backing-score construction, preserving bass/drum events and the composition RNG. Lead contours repeat with related fourth-bar answers; phrase endings keep their chord-tone rules. [Player design, limits and checks](PLAYERS.md).
 
-Recipe schema 7 appends `rockPlayerVersion`: current physical Rock uses 1, previous schemas decode as 0. Compatible older recipes retain their earlier guitar event/FX policy. Other channels retain their events and automation. `rock-players-check.scd` covers identity, bounds, repetition, rhythm-section preservation and old/new handover recall. `channels-runtime-check.scd` additionally checks visible guitarist labels and their removal after switching to EDM. Render the current previews with `guitar-players/render.scd`, index them with `guitar-players/package.py`, and run the general audio verifier. The earlier guitar-study previews remain available as listening references.
+Schema 7 introduced `rockPlayerVersion`. Current physical Rock uses policy 1 in schema 8. Earlier recipes need their original source revision. Other channels retain their events and automation. `rock-players-check.scd` covers identity, bounds, repetition, rhythm-section preservation and old/new handover recall. `channels-runtime-check.scd` additionally checks visible guitarist labels and their removal after switching to EDM. Render the current previews with `guitar-players/render.scd`, index them with `guitar-players/package.py`, and run the general audio verifier. The earlier guitar-study previews remain available as listening references.

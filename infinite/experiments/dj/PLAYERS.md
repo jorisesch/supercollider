@@ -39,7 +39,7 @@ The recorded comparison predates the new solo phrasing. It plays eight bars per 
 
 Profiles and bounded rhythm replacement are in [rock-players.scd](rock-players.scd). [rock-style.scd](rock-style.scd) applies the lead vocabulary; [rock-physical-style.scd](rock-physical-style.scd) applies personal gestures and rig settings. `engine.scd` assigns a profile once per record. The live status, tooltip and track announcement identify the player.
 
-New sessions save recipe schema 7, appending `rockPlayerVersion`. Current physical Rock defaults to policy 1. Earlier recipes decode with policy 0 and retain the previous guitar choices; their compatible source fingerprint remains accepted. EDM and Pop receive no player profile. Historical reproduction records for the earlier studies describe their source at the time they were rendered; the new policy does not rewrite those snapshots or their audio.
+Current sessions save recipe schema 8 with `rockPlayerVersion`. Physical Rock defaults to policy 1. Earlier recipes need the generator version that created them. EDM and Pop receive no player profile. Historical reproduction records for the earlier studies describe their source at the time they were rendered; the new policy does not rewrite those snapshots or their audio.
 
 From the repository folder:
 

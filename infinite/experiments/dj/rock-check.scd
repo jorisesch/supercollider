@@ -11,7 +11,7 @@ try {
             [\full,\pentatonic].do {|melody|
                 var settings=(channel:\rock,palette:palette,tonality:mode,melody:melody);
                 var a=~makeDJEngine.value(731,102,settings),b=~makeDJEngine.value(731,102,settings);
-                128.do {
+                256.do {
                     var f=a[\nextBar].value,g=b[\nextBar].value,last=0;
                     assert.value(f.events==g.events and:{f.automation==g.automation},"Rock is not reproducible");
                     assert.value(a.state.bpm.inclusivelyBetween(78,124),"Rock tempo out of range");

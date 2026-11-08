@@ -50,7 +50,7 @@ These commands are for macOS. On Windows or Linux, replace the full executable p
 
 ## Musical modes
 
-In EDM and Pop, leave **Mode** on **Auto / follows Tension**. Turn **Tension** up for occasional modal accents; lower settings keep normal major/minor harmony. You can also choose simpler **Pentatonic melodies**, then press **Apply mode**. Rock retains its fixed mode choices. [See the Tension ranges and hear examples](experiments/dj/MODES.md).
+Leave **Mode** on **Auto / varied songs** to explore different scales and song forms. Higher **Tension** unlocks rarer modes. Choose a named mode to pin a scale, or enable **Pentatonic melodies** for simpler leads, then press **Apply mode**. Use the **👍 / 👎** buttons under each deck to save a rating for later training. [Modes and examples](experiments/dj/MODES.md).
 
 ## Play and stop
 

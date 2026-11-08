@@ -52,7 +52,7 @@
         });
     };
     chorus=contrast.value([verse]);
-    // A spacious two-chord bridge is fully heard within its eight-bar section.
+    // Give both bridge chords space in every section length.
     bridge=contrast.value([verse,chorus]).atAll([0,2]);
     chorusDurations=choose.value(lib.durations.reject { |durations| durations==plan.durations });
     harmony=(verse:verse,chorus:chorus,bridge:bridge,
@@ -65,7 +65,7 @@
             {part.name==\buildup} {\buildup} {true} {\verse};
         progression=harmony[role];
         durations=switch(role,
-            \chorus,{chorusDurations}, \bridge,{[4,4]},
+            \chorus,{chorusDurations}, \bridge,{[part.bars div:2,part.bars-(part.bars div:2)]},
             \buildup,{[part.bars-2,2]}, {plan.durations});
         while {cursor<(part.start+part.bars)} {
             var length=durations.wrapAt(index).min(part.start+part.bars-cursor);

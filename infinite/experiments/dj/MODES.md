@@ -1,37 +1,24 @@
-# Musical color with Tension
+# Scales and modes
 
-EDM and Pop stay grounded in normal major and minor harmony. Turning **Tension** up keeps its brightness and drive, and adds occasional modal accents near phrase endings.
+Leave **Mode** on **Auto / varied songs** to hear a changing mix of scales. Each song keeps its base scale as the chords and sections develop.
 
-## Start with Auto
-
-Leave **Mode** on **Auto / follows Tension** and move the **Tension** knob. The music keeps playing; there is no Apply step for the knob.
-
-| Tension | Harmony |
+| Tension | Available song scales |
 | --- | --- |
-| 0–60% | Normal major/minor scales. |
-| Above 60% | Occasional Dorian accents in minor tracks, or Mixolydian in major tracks. |
-| Above 85% | Rarer Phrygian accents in minor, or Lydian in major, also become possible. |
+| 0–60% | Aeolian, Ionian, Dorian and Mixolydian, favoring natural minor and major. |
+| Above 60% | Harmonic minor and melodic minor also become possible. |
+| Above 85% | Phrygian and Lydian join the choices. |
 
-Each accent lasts **two bars**, then returns home. At least sixteen clear bars separate accents. Intros, handovers and Pop choruses keep their familiar harmony. Even at full Tension, the set spends most of its time in the base scale. Lowering Tension lets a current accent finish before returning to the normal scale.
+In EDM and Pop, high Tension can also add a brief modal accent near a phrase ending. Those accents last two bars and leave at least sixteen clear bars between them. Rock’s Tension also controls guitar brightness and drive.
 
-| Base | More open color | Rarer color |
-| --- | --- | --- |
-| Minor / Aeolian | **Dorian:** raised sixth | **Phrygian:** flat second |
-| Major / Ionian | **Mixolydian:** flat seventh | **Lydian:** raised fourth |
+Choose a named mode to keep the set in that scale. **Harmonic minor** raises natural minor’s seventh. **Melodic minor** raises its sixth and seventh. Press **Apply mode** to start a fresh set with your choice.
 
-## Other choices
-
-**Minor** or **Major** keeps that base family. A named mode narrows the preferred accent; it still enters sparsely at the appropriate Tension level in EDM/Pop. Press **Apply mode** after changing this menu; it restarts with a fade.
-
-Check **Pentatonic melodies (five notes)** for simpler lead phrases, then press **Apply mode**. Backing chords retain the full active scale. Saved track names remember these choices and the harmony policy.
-
-Rock keeps its fixed mode choices. Its Tension knob continues to control brightness and drive.
+Check **Pentatonic melodies** for a five-note melody palette within the chosen scale. The backing chords use the full scale.
 
 ## Listen
 
 [EDM Tension examples](../../../audio/edm-tension.m4a) · [Pop Tension examples](../../../audio/pop-tension.m4a)
 
-These are four short excerpts selected from actual sets at full Tension: **Dorian, Phrygian, Mixolydian, Lydian**. Each plays four base bars, two colored bars, then two bars back home, followed by a fade. The examples bring rare events closer together for comparison; a continuous set uses them much less often.
+The earlier Tension study contains four short excerpts at full Tension: **Dorian, Phrygian, Mixolydian, Lydian**. Each plays four base bars, two colored bars, then two bars back home, followed by a fade. The examples bring rare events closer together for comparison; a continuous set uses them much less often.
 
 ## Start from Terminal
 

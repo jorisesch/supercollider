@@ -1,5 +1,10 @@
 # Verification tools
 
+The current Infinite DJ generator uses `variety-check.scd` for seeds, modes, forms, current recipes and passive feedback persistence. Run `channels-check.scd` for CLI flags and fresh launch seeds, and `variety-runtime-check.scd` for the actual rating buttons, deck targeting and mode changes. These paths live under `infinite/experiments/dj/`.
+
+Render `variety-render.scd` for six current song excerpts, then run `python3 scripts/verify_audio.py`. Its timing and generation details are in `variety-preview.json`. The older study checks below include frozen first-song and recipe assertions for their original generator versions.
+
+
 Run `python3 scripts/verify_audio.py` from the repository root after rendering. The script also accepts invocation by full path from another directory: it resolves audio and manifests against the repository automatically.
 
 It checks available WAVs for sample format, duration, finite non-silent samples, peak headroom and quiet endings. Additional checks cover Quindar frequencies and available DJ timeline manifests. EDM E manifests also require its chord, percussion, signature and slide events, both A/B groove variants, and bounded pullbacks; the comparison reports levels for each component pass. Results are written to `audio/verification.json`. Required Quindar WAVs can be generated with `sclang -D patches/render.scd`.

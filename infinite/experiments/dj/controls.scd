@@ -5,20 +5,29 @@ var root=thisProcess.nowExecutingPath.dirname;
 ~djShow={
     if(~djWindow.isNil) {
         var window=Window("Infinite DJ",Rect(0,0,860,600).center_(Window.availableBounds.center));
-        var titles,deckLabels,deckStatus,progress,knobs,transport,next,hook,fill,hold,more,channel,auto,fxMenu,fxButton,update,spectrum;
+        var titles,deckLabels,deckStatus,ratings,progress,knobs,transport,next,hook,fill,hold,more,channel,auto,fxMenu,fxButton,update,spectrum;
         var fxNames=["Filter","Echo","Wash","Stutter 1/4","Stutter 1/8","Stutter 1/16"];
         var fxKinds=[\filter,\echo,\wash,\stutter4,\stutter8,\stutter16];
         var descriptions=["Adventurous fills and rhythmic variation","Bass pickups and percussion",
-            "Small changes to the bass answer","Brightness and drive; above 60%, occasional modal accents in EDM/Pop"];
+            "Small changes to the bass answer","Brightness and drive; higher settings unlock rarer song modes"];
         var recallWindow,lastModeEngine,mode,pent,apply,harmonyHint,tick=0;
-        var modeChoices=[\original,\aeolian,\ionian,\dorian,\phrygian,\mixolydian,\lydian];
+        var modeChoices=[\original,\aeolian,\ionian,\dorian,\phrygian,\mixolydian,\lydian,\harmonicMinor,\melodicMinor];
+        var modeLabels=["Auto / varied songs","Aeolian / natural minor","Ionian / major","Dorian / brighter minor",
+            "Phrygian / flat second","Mixolydian / flat seventh","Lydian / raised fourth","Harmonic minor","Melodic minor"];
         ~djWindow=window;
-        deckLabels=Array.newClear(2);deckStatus=Array.newClear(2);
+        deckLabels=Array.newClear(2);deckStatus=Array.newClear(2);ratings=Array.newClear(2);
         titles=Array.fill(2,{ |deck|
             var x=20+(deck*425),title;
             deckLabels[deck]=StaticText(window,Rect(x,20,22,28)).font_(Font("Helvetica",16)).string_(["A","B"][deck]);
-            deckStatus[deck]=StaticText(window,Rect(x+25,51,370,17)).font_(Font("Helvetica",11))
+            deckStatus[deck]=StaticText(window,Rect(x+25,51,255,20)).font_(Font("Helvetica",11))
                 .string_("Idle").stringColor_(Color.gray(0.45));
+            ratings[deck]=[1,-1].collect {|rating,i|
+                Button(window,Rect(x+290+(i*45),51,40,23))
+                    .states_([[if(rating>0){"👍"}{"👎"}],[if(rating>0){"👍"}{"👎"},Color.white,Color.new255(35,113,89)]])
+                    .font_(Font("Helvetica",14))
+                    .toolTip_("Save your rating for this deck’s song, with its recipe and listening position.")
+                    .action_ {try {~djRate.value(deck,rating)} {|error|("DJ feedback error / "++error.errorString).postln}};
+            };
             title=TextField(window,Rect(x+25,18,370,32)).font_(Font("Helvetica",14))
                 .string_("").toolTip_("Track details appear here when a record starts. Select a name to copy it.");
             title.setProperty(\readOnly,true);title;
@@ -31,7 +40,7 @@ var root=thisProcess.nowExecutingPath.dirname;
             Knob(window,Rect(x,110,60,60)).mode_(\vert).value_(~djSettings[key]).action_ { |view|
                 ~djSettings[key]=view.value;~djSet.value;
                 ("DJ " ++ key ++ ": " ++ (view.value*100).round ++ "% / next bar").postln;
-                if(key==\tension){"DJ Tension harmony / occasional phrase endings above 60%; rare colors above 85%".postln};
+                if(key==\tension){"DJ Tension harmony / more song modes above 60%; rare colors above 85%".postln};
             };
         });
         transport=Button(window,Rect(20,190,90,30)).states_([["STOP"],["START"]])
@@ -46,11 +55,11 @@ var root=thisProcess.nowExecutingPath.dirname;
             .toolTip_("A drum fill on the next generated bar.").action_ {~djFill.value};
         hold=Button(window,Rect(395,190,100,30)).states_([["Hold"],["Held"]])
             .toolTip_("Keep this record and freeze motif mutations.").action_ { |view| ~djHold.value(view.value==1)};
-        more=PopUpMenu(window,Rect(505,190,140,30)).items_(["More...","Mutate motif","Restart seed","Replay track..."])
+        more=PopUpMenu(window,Rect(505,190,140,30)).items_(["More...","Mutate motif","New set","Replay track..."])
             .toolTip_("Extra actions and track recall.").action_ { |view|
                 switch(view.value,
                     1,{~djMutate.value},
-                    2,{~djHold.value(false);~djStart.value(~djSeed ? 2600,~djInitialBpm ? 128,~djServer)},
+                    2,{~djHold.value(false);~djStart.value(nil,~djInitialBpm ? 128,~djServer)},
                     3,{
                         if(recallWindow.isNil) {
                             var input,message,play;
@@ -81,9 +90,7 @@ var root=thisProcess.nowExecutingPath.dirname;
             .toolTip_("Occasional automatic half-bar stutters. Manual effects take priority.")
             .action_ { |view|~djAutoStutter.value(view.value==1)};
         StaticText(window,Rect(20,285,45,24)).string_("Mode");
-        mode=PopUpMenu(window,Rect(70,282,240,28)).items_([
-            "Auto / follows Tension","Minor / Aeolian base","Major / Ionian base",
-            "Dorian accents / minor","Phrygian accents / minor","Mixolydian accents / major","Lydian accents / major"])
+        mode=PopUpMenu(window,Rect(70,282,240,28)).items_(modeLabels)
             .value_(modeChoices.indexOf(~djSettings.tonality) ? 0).action_ {|view|
                 ("DJ mode selected / "++modeChoices[view.value]++" / press Apply mode").postln;
             };
@@ -95,13 +102,13 @@ var root=thisProcess.nowExecutingPath.dirname;
             .toolTip_("Apply these musical choices to the current channel; restart with a fade.").action_ {
                 ~djMode.value(modeChoices[mode.value],if(pent.value){\pentatonic}{\full});
             };
-        harmonyHint=StaticText(window,Rect(70,312,770,20)).string_("Higher Tension adds brief modal accents. Apply restarts with a fade.")
+        harmonyHint=StaticText(window,Rect(70,312,770,20)).string_("Auto varies modes between songs. Higher Tension unlocks rarer colors.")
             .font_(Font("Helvetica",11)).stringColor_(Color.gray(0.4));
         spectrum=~djAddSpectrum.value(window,~djServer ? s,180,340);
         ~djSpectrum=spectrum;
         ~djUI=(window:window,titles:titles,deckStatus:deckStatus,deckLabels:deckLabels,progress:progress,knobs:knobs,transport:transport,
             next:next,hook:hook,fill:fill,hold:hold,more:more,channel:channel,
-            fxMenu:fxMenu,fxButton:fxButton,auto:auto,modeChoice:mode,pentatonicChoice:pent,modeApply:apply);
+            fxMenu:fxMenu,fxButton:fxButton,auto:auto,ratings:ratings,modeChoice:mode,pentatonicChoice:pent,modeApply:apply);
         update=Routine {
             loop {
                 var playing=~djPlaying ? false,engine=~djEngine,manual=~djManualFX;
@@ -121,18 +128,10 @@ var root=thisProcess.nowExecutingPath.dirname;
                     blend=gains[1][2].clip(0,1);
                     channel.value_(~djChannelIDs.indexOf(engine.channel) ? 0);
                     if(engine!==lastModeEngine){
-                        mode.items_(if(engine.channel==\rock){[
-                            "Auto / major and minor","Aeolian / natural minor","Ionian / major","Dorian / brighter minor",
-                            "Phrygian / flat second","Mixolydian / flat seventh","Lydian / raised fourth"]}{[
-                            "Auto / follows Tension","Minor / Aeolian base","Major / Ionian base","Dorian accents / minor",
-                            "Phrygian accents / minor","Mixolydian accents / major","Lydian accents / major"]});
+                        mode.items_(modeLabels);
                         mode.value_(modeChoices.indexOf(engine.controls.tonality) ? 0);
                         pent.value_(engine.controls.melody==\pentatonic);lastModeEngine=engine;
-                        harmonyHint.string_(if(engine.channel==\rock){
-                            "Modes color the chords. Pentatonic simplifies melodies. Apply restarts with a fade."
-                        }{
-                            "Low Tension: major/minor. Higher: occasional modal accents. Apply restarts with a fade."
-                        });
+                        harmonyHint.string_("Auto varies songs. A named mode pins the scale. Apply starts a fresh set.");
                     };
                     apply.enabled_(modeChoices[mode.value]!=engine.controls.tonality or:{
                         pent.value!=(engine.controls.melody==\pentatonic)
@@ -150,7 +149,7 @@ var root=thisProcess.nowExecutingPath.dirname;
                         knob.value_(value).toolTip_(descriptions[i] ++ " / " ++ (value*100).round ++ "% / next bar");
                     };
                     2.do { |deck|
-                        var plan=state.decks[deck],audible,dominant,mixing,label,ink,background;
+                        var plan=state.decks[deck],audible,dominant,mixing,label,ink,background,heard,vote;
                         audible=playing and: {~djLastAutomation.notNil} and: {gains[deck].maxItem>0.001};
                         dominant=audible and: {gains[deck][2]>=gains[1-deck][2]};
                         mixing=gains[0][2]>0.001 and: {gains[1][2]>0.001};
@@ -163,6 +162,13 @@ var root=thisProcess.nowExecutingPath.dirname;
                             {audible} {"Playing"}
                             {plan.serial>state.currentSerial} {"Cued"}
                             {true} {"Finished"};
+                        heard=if(~djHeardTracks.notNil){~djHeardTracks[deck]}{nil};
+                        vote=if(heard.notNil){~djRatings[heard.track_id]}{nil};
+                        ratings[deck].do {|button,i|
+                            button.enabled_(playing and:{heard.notNil} and:{~djLastAutomation.notNil}
+                                and:{~djLastAutomation.gains[deck].maxItem>0.001});
+                            button.value_(if(vote.notNil and:{vote.rating==[1,-1][i]}){1}{0});
+                        };
                         deckStatus[deck].string_(label++~djRockPlayerLabel.value(plan)).stringColor_(ink);
                         deckLabels[deck].stringColor_(ink);
                         titles[deck].background_(background);
@@ -187,6 +193,7 @@ var root=thisProcess.nowExecutingPath.dirname;
                         };
                     };
                 } {
+                    ratings.flat.do {|button|button.enabled_(false)};
                     deckStatus.do { |label|label.string_(if(playing) {waiting} {"Idle"})};
                 };
                 0.1.wait;

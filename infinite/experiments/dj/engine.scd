@@ -7,6 +7,7 @@ var root=thisProcess.nowExecutingPath.dirname;
 (root +/+ "pop-style.scd").load;
 (root +/+ "e-style.scd").load;
 (root +/+ "modes.scd").load;
+(root +/+ "variety.scd").load;
 (root +/+ "rock-style.scd").load;
 (root +/+ "rock-expression.scd").load;
 (root +/+ "rock-players.scd").load;
@@ -35,15 +36,15 @@ var root=thisProcess.nowExecutingPath.dirname;
         {channel==\edme} {~djELibrary.value(~djLibrary,eMode)} {true} {~djLibrary};
     var styleBar=case {channel==\rock} {~djRockBar} {channel==\pop} {~djPopBar} {channel==\edme} {~djEBar} {true} {~djStyleBar};
     var rng=(seed.abs%2147483646)+1,random,choose,take,makeRecord,nextBar,engine;
-    var bags=(variation:List.new,key:List.new,duration:List.new,hook:List.new,form:List.new,
-        major:List.new,minor:List.new);
+    var bags=(variation:List.new,key:List.new,duration:List.new,hook:List.new,form:List.new);
+    var harmonyBags=Dictionary.new;
     var current,incoming,mixPosition=0,mixLength=8,bar=0,serial=0;
     var nextRequested=false,hookRequested=false,fillRequested=false,fxRequested=nil;
     var heldFX=nil,heldRequest=nil,releaseFX=false;
     var controls=(chaos:0.25,density:0.55,mutation:0.30,tension:0.20,hold:false,autoStutter:(channel!=\rock));
-    var paletteBag=List.new,paletteRng=((seed.abs+104729)%2147483646)+1,lastPalette,choosePalette;
+    var paletteBag=List.new,lastPalette,choosePalette;
     var fxRng=((seed.abs+65537)%2147483646)+1,fxRandom,stutter=nil,nextAutoBar=8;
-    var nextModalBar=0;
+    var nextModalBar=0,lastTonality,lastForm;
     var state=(bar:0,bpm:bpm,mixing:false,progress:0,decks:[nil,nil],phase:0,lastFX:\none);
     if(channel==\rock and:{rockToneVersion>=2}){
         lib.palettes=lib.palettes.collect {|palette|var p=palette.copy;
@@ -52,7 +53,7 @@ var root=thisProcess.nowExecutingPath.dirname;
     if(tonality!=\original and:{~djTonalities[tonality].isNil}){Error("Unknown musical mode").throw};
     if([\full,\pentatonic].includes(melody).not){Error("Choose full or pentatonic melody").throw};
     if([\tension,\fixed].includes(modalPolicy).not){Error("Choose tension or fixed harmony").throw};
-    if(modalPolicy==\fixed){lib=~djModalLibrary.value(lib,tonality)};
+
     controls.tonality=tonality;controls.melody=melody;controls.modalPolicy=modalPolicy;
     controls.rockLeadVersion=rockLeadVersion;
     controls.rockToneVersion=rockToneVersion;
@@ -68,10 +69,10 @@ var root=thisProcess.nowExecutingPath.dirname;
         if(bag.isEmpty) { size.do { |i| bag.add(i) } };
         choices=bag.asArray.reject { |item| item==excluded };
         if(choices.isEmpty) { choices=bag.asArray };
-        picked=if(preferred.notNil and: { choices.includes(preferred) }) { preferred } { choose.value(choices) };
+        picked=if(preferred.notNil and: { choices.includes(preferred) }) { preferred } {choose.value(choices)};
         bag.removeAt(bag.indexOf(picked)); picked;
     };
-    // A separate random stream preserves the composition when palettes change.
+    // Rotate ensembles across records while allowing a pinned rehearsal palette.
     choosePalette={ |index|
         var choices,id;
         if(controls[\palette].notNil) {
@@ -79,37 +80,47 @@ var root=thisProcess.nowExecutingPath.dirname;
         } {
             if(paletteBag.isEmpty) {lib.palettes.size.do { |i| paletteBag.add(i)}};
             choices=paletteBag.asArray.reject { |i| i==lastPalette };
-            paletteRng=(paletteRng*48271)%2147483647;
-            id=if(index==0) {0} {choices[(paletteRng/2147483647*choices.size).floor.asInteger]};
+            id=choose.value(choices);
             paletteBag.removeAt(paletteBag.indexOf(id));
         };
         lastPalette=id;
         lib.palettes[id];
     };
     makeRecord={ |deck,index,previousKey,previousBpm,entryBars=0|
-        var first=index==0,preferred=if(first) {0} {nil},plan,next,key,mode,scale,progression,durations;
+        var first=index==0,plan,next,key,mode,scale,progression,durations;
         var variation,progressionID,durationID,hookID,formID,form,sections=List.new,total=0,schedule;
         var cursor=0,chordIndex=0,localBar,forcedHook=0,change=false,forcedFill=false;
         var phraseLift=0,patternID,mutations=0,energyBias,wildness,densityBias;
-        var modalTone=nil,modalEndBar= -1;
+        var modalTone=nil,modalEndBar= -1,recordTonality,recordLib,tones,harmonyBag;
         var blues=channel==\rock and:{rockLeadVersion>=3} and:{tonality==\original}
             and:{modalPolicy==\fixed} and:{(seed+index)%4==1};
-        key=take.value(bags.key,12,previousKey,if(first and:{channel==\rock}){4}{preferred});
-        mode=if(index.even) {\minor} {\major};
-        if(blues){mode=\major};
-        if(tonality!=\original){mode=~djTonalities[tonality].family};
-        scale=if(mode==\minor) {[0,2,3,5,7,8,10]} {[0,2,4,5,7,9,11]};
-        if(tonality!=\original and:{modalPolicy==\fixed}){scale=~djTonalities[tonality].scale};
-        progressionID=take.value(bags[mode],lib[mode].size,nil,if(channel==\pop){nil}{preferred});
-        durationID=take.value(bags.duration,lib.durations.size,nil,if(channel==\pop){nil}{preferred});
-        hookID=take.value(bags.hook,lib.hooks.size,nil,preferred);
-        formID=take.value(bags.form,lib.forms.size,nil,preferred);
-        variation=lib.variations[take.value(bags.variation,lib.variations.size,nil,preferred)].copy;
-        if(first) { variation.name=if(channel==\pop) {"Neon Pop / C minor"} {"Interlock / C minor"} };
-        progression=lib[mode][progressionID];
-        durations=if([\pop,\rock].includes(channel)) {lib.durations[durationID].copy} {
-            lib.durations[durationID].collect { |n| (n/2).round.asInteger.max(1)*2 }
-        }; form=if(blues){[[\intro,4],[\groove,12],[\hook,12],[\drop,24],[\outro,8]]}{lib.forms[formID]};
+        tones=[\aeolian,\aeolian,\ionian,\ionian,\dorian,\mixolydian];
+        if(controls.tension>0.60){tones=tones++[\harmonicMinor,\melodicMinor]};
+        if(controls.tension>0.85){tones=tones++[\phrygian,\lydian]};
+        recordTonality=if(tonality==\original){
+            choose.value(tones.reject {|tone|tone==lastTonality})
+        }{tonality};
+        if(blues){recordTonality=\ionian};
+        lastTonality=recordTonality;
+        key=take.value(bags.key,12,previousKey,nil);
+        mode=~djTonalities[recordTonality].family;
+        scale=~djTonalities[recordTonality].scale;
+        recordLib=~djModalLibrary.value(lib,recordTonality);
+        harmonyBag=harmonyBags[recordTonality];
+        if(harmonyBag.isNil){harmonyBag=List.new;harmonyBags[recordTonality]=harmonyBag};
+        progressionID=take.value(harmonyBag,recordLib[mode].size,nil,nil);
+        durationID=take.value(bags.duration,lib.durations.size,nil,nil);
+        hookID=take.value(bags.hook,lib.hooks.size,nil,nil);
+        formID=take.value(bags.form,~djFormTemplates[if(channel==\legacy){\edme}{channel}].size,lastForm,nil);
+        lastForm=formID;
+        variation=lib.variations[take.value(bags.variation,lib.variations.size,nil,nil)].copy;
+        progression=recordLib[mode][progressionID];
+        durations=if([\pop,\rock].includes(channel)){lib.durations[durationID].copy}{
+            lib.durations[durationID].collect {|n|(n/2).round.asInteger.max(1)*2}
+        };
+        form=if(blues){
+            [[\intro,4],[\groove,12],[\hook,12],[\drop,choose.value([12,24,36])],[\outro,8]]
+        }{~djSongForm.value(if(channel==\legacy){\edme}{channel},formID,choose)};
         form.do { |part|
             sections.add((name:part[0],start:total,bars:part[1])); total=total+part[1];
         };
@@ -123,15 +134,15 @@ var root=thisProcess.nowExecutingPath.dirname;
         // Cue the incoming intro so its groove arrives by the end of a short mix.
         localBar=if(first) { if(channel==\pop) {0} {form[0][1]} } { (form[0][1]-entryBars).max(0) };
         patternID=variation.rhythm;
-        energyBias=if(first) {1} {choose.value([0.85,0.94,1.0,1.08])};
-        wildness=if(first) {1} {choose.value([0.75,0.9,1.1,1.35])};
-        densityBias=if(first) {1} {choose.value([0.85,0.95,1.05,1.15])};
+        energyBias=choose.value([0.85,0.94,1.0,1.08]);
+        wildness=choose.value([0.75,0.9,1.1,1.35]);
+        densityBias=choose.value([0.85,0.95,1.05,1.15]);
         plan=(deck:deck,serial:index,key:key,mode:mode,scale:scale,style:if(channel==\pop) {\pop} {\interlock},keyName:lib[\keys][key] ++ " " ++ mode,
             variation:variation,palette:choosePalette.value(index),progression:progression,progressionID:progressionID,durations:durations,
             durationID:durationID,hookID:hookID,formID:formID,sections:sections.asArray,schedule:schedule,
             length:total,mixBars:if(form.last[1] >= 16) {choose.value([8,16])} {8},
             targetBpm:if(first) {bpm} {
-                var target=previousBpm+choose.value([-4,-2,2,4]);
+                var target=previousBpm+choose.value([-8,-6,-4,-2,2,4,6,8]);
                 if(channel==\rock){target.clip(78,124)}{target.clip(122,136)}
             },
             position:localBar,localBar:localBar,section:\groove,hook:false,mutations:0,
@@ -141,11 +152,11 @@ var root=thisProcess.nowExecutingPath.dirname;
         };
         plan.tonality=tonality;
         plan.modalPolicy=modalPolicy;plan.baseScale=scale;
-        plan.baseTonality=if(mode==\minor){\aeolian}{\ionian};
-        plan.activeTonality=if(tonality==\original){plan.baseTonality}{tonality};plan.modalAccent=false;
-        if(tonality!=\original and:{modalPolicy==\fixed}){plan.keyName=lib[\keys][key]++" "++~djTonalities[tonality].label};
+        plan.baseTonality=recordTonality;
+        plan.activeTonality=recordTonality;plan.modalAccent=false;
+        plan.keyName=lib[\keys][key]++" "++~djTonalities[recordTonality].label;
         if(channel==\edme) {plan.eMode=eMode;plan.style=\edme};
-        if([\pop,\rock].includes(channel)) {plan.schedule=~djPopHarmony.value(plan,lib,seed)};
+        if([\pop,\rock].includes(channel)) {plan.schedule=~djPopHarmony.value(plan,recordLib,seed)};
         if(channel==\rock){
             if(blues){
                 plan.keyName=lib[\keys][key]++" blues";
@@ -176,7 +187,7 @@ var root=thisProcess.nowExecutingPath.dirname;
                 plan.modalAccent=modalTone.notNil;plan.modalBarsRemaining=if(modalTone.isNil){0}{modalEndBar-bar};
                 plan.activeTonality=modalTone ? plan.baseTonality;
                 plan.scale=if(modalTone.isNil){plan.baseScale}{~djTonalities[modalTone].scale};
-                plan.keyName=lib[\keys][key]++" "++if(modalTone.isNil){mode.asString}{~djTonalities[modalTone].label};
+                plan.keyName=lib[\keys][key]++" "++~djTonalities[plan.activeTonality].label;
             };
             if(local%4==0) { phraseLift=choose.value([-0.03,0,0.02,0.04]) };
             intensity=case { section==\intro } {0.5+(progress*0.2)}
@@ -392,7 +403,7 @@ var root=thisProcess.nowExecutingPath.dirname;
         };
         frame;
     };
-    engine=(channel:channel,controls:controls,state:state,nextBar:nextBar,requestNext:{ nextRequested=true },
+    engine=(seed:seed,channel:channel,controls:controls,state:state,nextBar:nextBar,requestNext:{ nextRequested=true },
         requestHook:{ hookRequested=true },requestFill:{ fillRequested=true },requestMutation:{ current[\mutate].value },
         requestFX:{ |kind,bars=1|
             var length=if(bars<1) {0.5} {bars.asInteger.clip(1,4)};

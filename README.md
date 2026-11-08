@@ -39,7 +39,7 @@ For Windows/Linux instructions, other channels and help starting, follow the **[
 
 Move **Chaos**, **Density**, **Mutation** or **Tension** to change the music. Try **Fill**, request the **Next** track, or choose **EDM**, **Pop** or **Rock** in the channel menu. Changes may take a few seconds to enter with the music.
 
-In EDM and Pop, leave **Mode** on **Auto / follows Tension**. Higher **Tension** adds occasional two-bar modal accents while keeping its brightness and drive. Optional **Pentatonic melodies** simplify the leads; press **Apply mode** after changing that choice.
+Each launch starts a freshly seeded set. **Auto / varied songs** changes scales between songs, with rarer modes available at higher **Tension**. Choose a named mode to keep one scale, then press **Apply mode**. The **👍 / 👎** buttons under each deck save your ratings for later training.
 
 To use an effect, select it and press **Start FX**. Press **Stop FX** to release it.
 
