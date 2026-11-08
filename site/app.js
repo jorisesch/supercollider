@@ -7,10 +7,13 @@ const engineEvents = new EventTarget();
 const runtime = new URL("./runtime/", import.meta.url);
 const manifestURL = new URL("./dj/manifest.json", import.meta.url);
 manifestURL.search = new URL(import.meta.url).search;
+let recovery = new URL(location.href).searchParams.get("retry");
 let language, audioContext, initialized, unlockAudio, latestTrack;
 let state = "loading";
 
 class StartupError extends Error {}
+class DownloadError extends StartupError {}
+let retryDownload = false;
 
 const repository = document.querySelector('meta[name="repository-url"]')?.content;
 if (repository) {
@@ -26,10 +29,10 @@ function show(nextState, message) {
   status.textContent = message;
   const playing = state === "playing";
   play.disabled = state === "loading" || state === "unavailable";
-  channel.disabled = state === "loading" || state === "unlock";
+  channel.disabled = state === "loading" || state === "unlock" || state === "resume";
   next.disabled = !playing;
   document.querySelector("#play-icon").textContent = playing ? "■" : "▶";
-  const label = { playing: "Stop", error: "Retry", unlock: "Enable audio" };
+  const label = { playing: "Stop", error: "Retry", unlock: "Enable audio", resume: "Resume audio" };
   document.querySelector("#play-label").textContent = label[state] ?? "Play";
   if (!playing) delete status.dataset.track;
 }
@@ -39,7 +42,10 @@ async function download(url, read) {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), 45000);
     try {
-      const result = await fetch(url, { signal: controller.signal });
+      const result = await fetch(url, {
+        signal: controller.signal,
+        cache: recovery || attempt ? "reload" : "default",
+      });
       if (!result.ok) throw new Error(`Could not load ${url.pathname} (${result.status})`);
       return await read(result);
     } catch (error) {
@@ -74,15 +80,17 @@ function awaitEngine(name, timeout = 12000) {
 
 function reportError(error) {
   console.error(error);
+  retryDownload = error instanceof DownloadError;
   const message = error instanceof StartupError ? error.message : "The set couldn’t start or respond.";
-  show("error", `${message} Tap Retry to reload.`);
+  const action = retryDownload ? "Tap Retry to download again." : "Tap Retry to restart the player.";
+  show("error", `${message} ${action}`);
 }
 
-async function startupStep(message, action) {
+async function startupStep(message, action, Failure = StartupError) {
   try {
     return await action();
   } catch (error) {
-    throw new StartupError(message, { cause: error });
+    throw new Failure(message, { cause: error });
   }
 }
 
@@ -114,6 +122,17 @@ async function resumeAudio() {
     clearTimeout(timer);
   }
   return context.state === "running";
+}
+
+async function audioClockIsRunning() {
+  const before = audioContext.currentTime;
+  await new Promise((resolve) => setTimeout(resolve, 350));
+  return audioContext.state === "running" && audioContext.currentTime > before;
+}
+
+function showPlaying() {
+  show("playing", latestTrack || channel.selectedOptions[0].text);
+  if (latestTrack) status.dataset.track = latestTrack;
 }
 
 function promptForAudio(onRunning) {
@@ -148,27 +167,33 @@ function onLanguagePrint(message) {
 
 async function initialize() {
   const binary = (name) => download(new URL(name, runtime), (result) => result.arrayBuffer());
-  const load = async (name) => {
+  const prepare = async (name) => {
     const moduleURL = new URL(`${name}.js`, runtime);
     if (name === "scsynth") moduleURL.search = manifestURL.search;
+    if (recovery) moduleURL.searchParams.set("retry", recovery);
     const [{ default: create }, wasm, data] = await Promise.all([
       loadWithTimeout(import(moduleURL)),
       binary(`${name}.wasm`),
       name === "sclang" ? binary("sclang.data") : null,
     ]);
-    return loadWithTimeout(create({
-      locateFile: (file) => file === "scsynth.js" ? moduleURL.href : new URL(file, runtime).href,
+    return () => loadWithTimeout(create({
+      locateFile: (file) => file === `${name}.js` ? moduleURL.href : new URL(file, runtime).href,
       mainScriptUrlOrBlob: moduleURL.href,
       wasmBinary: new Uint8Array(wasm),
       ...(data ? { getPreloadedPackage: () => data } : {}),
     }));
   };
-  const [synth, lang, manifest] = await Promise.all([
-    startupStep("Couldn’t load the SuperCollider audio engine.", () => load("scsynth")),
-    startupStep("Couldn’t load the SuperCollider language runtime.", () => load("sclang")),
-    startupStep("Couldn’t load the music sources.", () => download(manifestURL, (result) => result.json())),
+  // Start no workers until all downloads succeed, so a failed fetch can be retried in this tab.
+  const [createSynth, createLang, manifest] = await Promise.all([
+    startupStep("Couldn’t download the audio engine.", () => prepare("scsynth"), DownloadError),
+    startupStep("Couldn’t download the language runtime.", () => prepare("sclang"), DownloadError),
+    startupStep("Couldn’t download the music sources.", () => download(manifestURL, (result) => result.json()), DownloadError),
   ]);
   status.textContent = "Starting SuperCollider…";
+  const [synth, lang] = await Promise.all([
+    startupStep("Couldn’t initialize the audio engine.", createSynth),
+    startupStep("Couldn’t initialize the language runtime.", createLang),
+  ]);
   language = lang;
 
   const directories = new Set();
@@ -268,8 +293,7 @@ async function start() {
     const playing = awaitEngine("playing");
     language.runCode(`~webStart.value(${seed}, '${selected}');`);
     await playing;
-    show("playing", latestTrack || channel.selectedOptions[0].text);
-    if (latestTrack) status.dataset.track = latestTrack;
+    showPlaying();
   } catch (error) {
     reportError(error);
   }
@@ -277,7 +301,25 @@ async function start() {
 
 play.addEventListener("click", async () => {
   if (state === "error") {
-    location.reload();
+    recovery = String(Date.now());
+    if (retryDownload) {
+      initialized = null;
+      await start();
+    } else {
+      const url = new URL(location.href);
+      url.searchParams.set("retry", recovery);
+      location.replace(url);
+    }
+  } else if (state === "resume") {
+    show("loading", "Resuming browser audio…");
+    try {
+      if (!await resumeAudio() || !await audioClockIsRunning()) {
+        throw new StartupError("Browser audio stayed paused.");
+      }
+      showPlaying();
+    } catch (error) {
+      reportError(error);
+    }
   } else if (state === "unlock") {
     const resume = unlockAudio;
     unlockAudio = null;
@@ -299,6 +341,13 @@ play.addEventListener("click", async () => {
     }
   } else {
     await start();
+  }
+});
+document.addEventListener("visibilitychange", async () => {
+  if (document.hidden || state !== "playing" || !audioContext) return;
+  const running = await audioClockIsRunning();
+  if (!document.hidden && state === "playing" && !running) {
+    show("resume", "Playback paused while the page was in the background.");
   }
 });
 channel.addEventListener("change", () => {

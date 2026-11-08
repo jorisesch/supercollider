@@ -2,7 +2,7 @@
 
 Press **Play** and choose **EDM**, **Pop**, **Soundscape** or **Rock**. **Next** starts a transition to another song or a fresh soundscape. **Energy** shapes the arrangement. Use your device’s volume controls to set the listening level.
 
-If the browser asks for another tap after loading, press **Enable audio** to start playback. If startup fails, the status line identifies the step that failed. Press **Retry** to reload the player.
+If the browser asks for another tap after loading, press **Enable audio**. If playback was interrupted while the page was in the background, press **Resume audio**. The status line identifies startup failures. **Retry** tries a failed download again in place or restarts the player if the audio engine failed.
 
 EDM opens on a generated 134 BPM anthem hook, and Pop opens on a chorus. Each set still starts with a fresh seed. The page loads the same SuperCollider composition and synthesis sources as the desktop app. The browser runs both `sclang` and `scsynth` in WebAssembly and routes their OSC messages through JavaScript. The player downloads a single bundle of music sources alongside the runtime. The browser generates the audio locally. [Runtime source and licenses](runtime/SOURCE.txt).
 
