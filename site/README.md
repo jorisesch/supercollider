@@ -4,6 +4,8 @@ Choose **EDM**, **Pop**, **Soundscape**, **Rock** or **London Dubstep**, then pr
 
 If the browser asks for another tap after loading, press **Enable audio**. If playback was interrupted while the page was in the background, press **Resume audio**. The status line identifies startup failures. **Retry** tries a failed download again in place or restarts the player if the audio engine failed.
 
+After a deployment, an older tab reloads once if the page, player and music bundle have different versions. It keeps the selected channel and Energy setting. A set that is already playing continues with the music sources it loaded. The WebAssembly runtime has its own version, so music updates can reuse the cached runtime.
+
 EDM opens on a generated 134 BPM anthem hook, and Pop opens on a chorus. London Dubstep opens with sliding acid and rotates among dry half-step, sparse rim-and-sub, and a straight kick pattern that drops back into half-step. Each set starts with a fresh seed. The page loads the same SuperCollider composition and synthesis sources as the desktop app. The browser runs both `sclang` and `scsynth` in WebAssembly and routes their OSC messages through JavaScript. The player downloads a single bundle of music sources alongside the runtime. The browser generates the audio locally. [Runtime source and licenses](runtime/SOURCE.txt).
 
 ## Preview locally

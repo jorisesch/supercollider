@@ -6,7 +6,8 @@ self.addEventListener("fetch", (event) => {
   if (!request.url.startsWith(self.registration.scope)
       || (request.cache === "only-if-cached" && request.mode !== "same-origin")) return;
 
-  event.respondWith(fetch(request).then((response) => {
+  const options = request.mode === "navigate" ? { cache: "no-cache" } : undefined;
+  event.respondWith(fetch(request, options).then((response) => {
     if (!response.ok || response.status === 0) return response;
     const headers = new Headers(response.headers);
     headers.set("Cross-Origin-Opener-Policy", "same-origin");

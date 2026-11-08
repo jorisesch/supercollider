@@ -6,7 +6,11 @@ const status = document.querySelector("#status");
 const engineEvents = new EventTarget();
 const runtime = new URL("./runtime/", import.meta.url);
 const manifestURL = new URL("./dj/manifest.json", import.meta.url);
-manifestURL.search = new URL(import.meta.url).search;
+const pageVersion = new URL(import.meta.url).searchParams.get("v");
+const appVersion = "__INFINITE_DJ_RELEASE__";
+const runtimeVersion = "__INFINITE_DJ_RUNTIME__";
+manifestURL.searchParams.set("v", appVersion);
+const releaseSettingsKey = "infinite-dj-release-settings";
 let recovery = new URL(location.href).searchParams.get("retry");
 let language, audioContext, initialized, unlockAudio, latestTrack;
 let state = "loading";
@@ -37,14 +41,14 @@ function show(nextState, message) {
   if (!playing) delete status.dataset.track;
 }
 
-async function download(url, read) {
+async function download(url, read, cache = "default") {
   for (let attempt = 0; ; attempt += 1) {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), 45000);
     try {
       const result = await fetch(url, {
         signal: controller.signal,
-        cache: recovery || attempt ? "reload" : "default",
+        cache: recovery || attempt ? "reload" : cache,
       });
       if (!result.ok) throw new Error(`Could not load ${url.pathname} (${result.status})`);
       return await read(result);
@@ -165,11 +169,32 @@ function onLanguagePrint(message) {
   }
 }
 
+function refreshRelease(update) {
+  const url = new URL(location.href);
+  if (url.searchParams.get("update") === update) {
+    throw new StartupError("The latest player files are still out of sync.");
+  }
+  try {
+    sessionStorage.setItem(releaseSettingsKey, JSON.stringify({ channel: channel.value, energy: energy.value }));
+  } catch (error) {
+    console.debug("Could not carry settings across the refresh", error);
+  }
+  show("loading", "Updating the player…");
+  url.searchParams.set("update", update);
+  location.replace(url);
+  return false;
+}
+
 async function initialize() {
-  const binary = (name) => download(new URL(name, runtime), (result) => result.arrayBuffer());
+  if (pageVersion !== appVersion) return refreshRelease(appVersion);
+  const runtimeURL = (name) => {
+    const url = new URL(name, runtime);
+    url.searchParams.set("v", runtimeVersion);
+    return url;
+  };
+  const binary = (name) => download(runtimeURL(name), (result) => result.arrayBuffer());
   const prepare = async (name) => {
-    const moduleURL = new URL(`${name}.js`, runtime);
-    if (name === "scsynth") moduleURL.search = manifestURL.search;
+    const moduleURL = runtimeURL(`${name}.js`);
     if (recovery) moduleURL.searchParams.set("retry", recovery);
     const [{ default: create }, wasm, data] = await Promise.all([
       loadWithTimeout(import(moduleURL)),
@@ -177,7 +202,7 @@ async function initialize() {
       name === "sclang" ? binary("sclang.data") : null,
     ]);
     return () => loadWithTimeout(create({
-      locateFile: (file) => file === `${name}.js` ? moduleURL.href : new URL(file, runtime).href,
+      locateFile: (file) => file === `${name}.js` ? moduleURL.href : runtimeURL(file).href,
       mainScriptUrlOrBlob: moduleURL.href,
       wasmBinary: new Uint8Array(wasm),
       ...(data ? { getPreloadedPackage: () => data } : {}),
@@ -187,8 +212,9 @@ async function initialize() {
   const [createSynth, createLang, manifest] = await Promise.all([
     startupStep("Couldn’t download the audio engine.", () => prepare("scsynth"), DownloadError),
     startupStep("Couldn’t download the language runtime.", () => prepare("sclang"), DownloadError),
-    startupStep("Couldn’t download the music sources.", () => download(manifestURL, (result) => result.json()), DownloadError),
+    startupStep("Couldn’t download the music sources.", () => download(manifestURL, (result) => result.json(), "no-cache"), DownloadError),
   ]);
+  if (manifest.version !== appVersion) return refreshRelease(manifest.version || "latest");
   status.textContent = "Starting SuperCollider…";
   const [synth, lang] = await Promise.all([
     startupStep("Couldn’t initialize the audio engine.", createSynth),
@@ -271,6 +297,7 @@ async function initialize() {
     lang.runCode(`"/${manifest.entry}".load;`);
     await ready;
   });
+  return true;
 }
 
 function setEnergy() {
@@ -282,7 +309,7 @@ async function start() {
   show("loading", initialized ? "Starting set…" : "Downloading SuperCollider…");
   try {
     initialized ??= initialize();
-    await initialized;
+    if (!await initialized) return;
     if (audioContext && audioContext.state !== "running" && !await resumeAudio()) {
       promptForAudio(start);
       return;
@@ -368,6 +395,16 @@ energy.addEventListener("input", () => {
 async function enablePlayer() {
   if (crossOriginIsolated && typeof AudioWorkletNode !== "undefined") {
     sessionStorage.removeItem("infinite-dj-isolation");
+    try {
+      const settings = JSON.parse(sessionStorage.getItem(releaseSettingsKey));
+      sessionStorage.removeItem(releaseSettingsKey);
+      if (settings && Array.from(channel.options).some((option) => option.value === settings.channel)) {
+        channel.value = settings.channel;
+        energy.value = settings.energy;
+      }
+    } catch (error) {
+      console.debug("Could not restore player settings", error);
+    }
     show("idle", "Ready to play.");
     return;
   }

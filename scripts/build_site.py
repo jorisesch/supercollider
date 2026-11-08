@@ -51,7 +51,7 @@ def build_site(output, repository_url):
         if hashlib.sha256((runtime / name).read_bytes()).hexdigest() != checksums[name]:
             raise SystemExit(f'SuperCollider runtime checksum mismatch: {name}')
 
-    for name in ('index.html', 'style.css', 'app.js', 'isolation-sw.js'):
+    for name in ('index.html', 'style.css', 'isolation-sw.js'):
         copy_file(SITE / name, output / name)
     for name in (*RUNTIME_FILES, 'COPYING', 'LICENSE', 'SOURCE.txt'):
         copy_file(runtime / name, output / 'runtime' / name)
@@ -82,13 +82,18 @@ def build_site(output, repository_url):
         'sources': {path.as_posix(): (output / 'dj' / path).read_bytes().decode('utf-8')
                     for path in [*sources, entry]},
     }
-    bundle = (json.dumps(manifest, indent=2) + '\n').encode('utf-8')
-    (output / 'dj/manifest.json').write_bytes(bundle)
+    runtime_version = hashlib.sha256(''.join(checksums[name] for name in RUNTIME_FILES).encode('ascii')).hexdigest()[:12]
+    version = hashlib.sha256(
+        (SITE / 'index.html').read_bytes() + (SITE / 'app.js').read_bytes() + (SITE / 'style.css').read_bytes()
+        + json.dumps(manifest).encode('utf-8') + runtime_version.encode('ascii')
+    ).hexdigest()[:12]
+    manifest['version'] = version
+    (output / 'dj/manifest.json').write_text(json.dumps(manifest, indent=2) + '\n', encoding='utf-8')
+    player = (SITE / 'app.js').read_text(encoding='utf-8')
+    player = player.replace('__INFINITE_DJ_RELEASE__', version).replace('__INFINITE_DJ_RUNTIME__', runtime_version)
+    (output / 'app.js').write_text(player, encoding='utf-8')
 
     index = output / 'index.html'
-    version = hashlib.sha256(
-        (SITE / 'app.js').read_bytes() + (SITE / 'style.css').read_bytes() + bundle + glue
-    ).hexdigest()[:12]
     page = index.read_text(encoding='utf-8')
     page = page.replace('src="app.js"', f'src="app.js?v={version}"')
     page = page.replace('href="style.css"', f'href="style.css?v={version}"')
