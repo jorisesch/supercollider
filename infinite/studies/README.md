@@ -1,8 +1,14 @@
-# 32-bar listening studies
+# Composed tracks
 
 Original, composed SuperCollider pieces for choosing the musical direction of the infinite DJ. The first five explore melodic house and EDM; a sixth explores chill disco and funk. Each has a recurring hook, coordinated bass/drums, chord voicings, a breakdown and a return. They use individually written musical material; they do not call the random DJ planner or an external music-generation service.
 
-Each is 32 bars in 4/4, approximately one minute of music, with a 100 ms lead-in and six seconds for release and effects tails. AAC previews are the committed listening copies; local WAV renders are stereo 48 kHz / 24-bit masters and are ignored by Git.
+Each of the six listening studies is 32 bars in 4/4, approximately one minute of music, with a 100 ms lead-in and six seconds for release and effects tails. AAC previews are the committed listening copies; local WAV renders are stereo 48 kHz / 24-bit masters and are ignored by Git.
+
+## Voltage Heart
+
+[Listen](../../audio/voltage-heart-e-minor.m4a) · [Source and playback](voltage-heart/README.md)
+
+A 134 BPM melodic EDM track in E minor. A snare build leads into the octave lift at 0:36.
 
 ## Rock backing tracks
 

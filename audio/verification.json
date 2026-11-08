@@ -1601,5 +1601,18 @@
     "title": "Guitar voicing and chord phrasing study",
     "study": "triads",
     "human_listening_review": "pending"
+  },
+  "voltage-heart-e-minor.wav": {
+    "seconds": 74.7227,
+    "sample_rate": 48000,
+    "channels": 2,
+    "peak_dbfs": -1.01,
+    "rms_dbfs": -15.98,
+    "end_peak": 0.0,
+    "title": "Voltage Heart",
+    "bpm": 134,
+    "key": "E minor",
+    "drop_seconds": 35.961,
+    "human_listening_review": "pending"
   }
 }

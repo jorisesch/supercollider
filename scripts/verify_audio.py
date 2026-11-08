@@ -59,7 +59,7 @@ assert expected <= {p.name for p in Path('audio').glob('*.wav')}, 'Missing audio
 supported = (expected | set(dj_manifests) | {'neon-rush.wav', 'infinite-soundscape.wav', guitar_study['file'], 'rock-riff-study.wav', 'rock-blues.wav', 'rock-single-coil-decay.wav',
                                                        'rock-single-coil-power-chords.wav', 'rock-humbucker-power-chords.wav'}
              | set(rock_specs) | set(modes_specs) | set(tension_specs) | set(phrasing_specs) | set(contact_specs)
-             | set(harmony_specs) | set(player_specs) | set(pickup_specs))
+             | set(harmony_specs) | set(player_specs) | set(pickup_specs) | {'voltage-heart-e-minor.wav'})
 noise_signatures = {}
 results = {}
 for path in sorted(Path('audio').glob('*.wav')):
@@ -472,6 +472,16 @@ for path in sorted(Path('audio').glob('*.wav')):
         noise_signatures[path.stem] = noise_segment
         result['noise_crest_factor'] = round(crest, 2)
         result.update(measured_hz=hz, pre_tone_noise_dbfs=round(20*math.log10(noise_rms), 2))
+    if path.stem == 'voltage-heart-e-minor':
+        beat = 60 / 134
+        drop = 0.14 + 80 * beat
+        assert abs(frames/rate - (0.14 + 160*beat + 2.94)) < 0.003
+        assert max(map(abs, values[:round(0.12*rate)*channels])) < 0.0001
+        before = values[round((drop-0.20)*rate)*channels:round((drop-0.015)*rate)*channels]
+        after = values[round((drop+0.015)*rate)*channels:round((drop+0.20)*rate)*channels]
+        assert sum(v*v for v in after) > 16 * sum(v*v for v in before), 'Missing Voltage Heart drop contrast'
+        result.update(title='Voltage Heart', bpm=134, key='E minor', drop_seconds=round(drop, 3),
+                      human_listening_review='pending')
     results[path.name] = result
 a, b = noise_signatures['quindar-in-noisy'], noise_signatures['quindar-out-noisy']
 correlation = sum(x*y for x,y in zip(a,b)) / math.sqrt(sum(x*x for x in a)*sum(y*y for y in b))
