@@ -20,7 +20,7 @@ Bass, drums and synth grooves, with new tracks mixed in automatically:
 
 ## Pop
 
-Bright synths, varied chord progressions and returning chorus hooks:
+Bright synths, varied chord progressions and returning chorus hooks, with a compressed mix for a fuller sound:
 
 ```sh
 /Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/infinite-pop.scd

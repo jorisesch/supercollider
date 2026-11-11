@@ -19,7 +19,7 @@ try {
         score.add([offset+0.01,[\g_new,group,0,1],[\g_new,source,0,group],
             [\s_new,mix.deck,decks[0],1,group,\in,16,\out,28,\musicGain,0,\bassGain,0,\drumsGain,0,\bpm,tempo],
             [\s_new,mix.deck,decks[1],1,group,\in,22,\out,28,\musicGain,0,\bassGain,0,\drumsGain,0,\bpm,tempo],
-            [\s_new,\djMaster,master,1,group,\in,28,\drive,mix.drive]]);
+            [\s_new,mix.master,master,1,group,\in,28,\drive,mix.drive]]);
         if(mix.inputEQ ? false){
             eqNodes=decks+4;
             eqNodes.do {|id,deck|score.add([offset+0.02,[\s_new,\rockBluesEQ,id,2,decks[deck],\in,16+(deck*6)]])};

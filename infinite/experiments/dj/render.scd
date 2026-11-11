@@ -65,7 +65,7 @@ try {
             \fxFilter,0,\fxCutoff,12000,\fxResonance,0.35,\fxEcho,0,\fxDelay,0.33,\fxReverb,0.14,\fxStutter,0],
         [\s_new,mix.deck,801,1,100,\in,22,\out,28,\musicGain,0,\bassGain,0,\drumsGain,0,\bpm,128,
             \fxFilter,0,\fxCutoff,12000,\fxResonance,0.35,\fxEcho,0,\fxDelay,0.33,\fxReverb,0.14,\fxStutter,0],
-        [\s_new,\djMaster,999,1,100,\in,28,\drive,mix.drive]]);
+        [\s_new,mix.master,999,1,100,\in,28,\drive,mix.drive]]);
     timeline=File(root +/+ (name ++ "-timeline.tsv"),"w");
     timeline.write(columns.join("\t") ++ "\n");
     bars.do { |bar|

@@ -134,7 +134,7 @@ playSoundscape = { |session, currentGraph|
                                 Synth.before(deck, \rockBluesEQ, [\in, mixBus + (id * 6)]).nodeID;
                             };
                         };
-                        Synth.tail(currentGraph[\group], \djMaster, [\in, mixBus + 12, \out, mixBus + 14, \drive, mix.drive]);
+                        Synth.tail(currentGraph[\group], mix.master, [\in, mixBus + 12, \out, mixBus + 14, \drive, mix.drive]);
                         mixBus = mixBus + 14;
                     };
                     currentGraph[\output] = Synth.tail(currentGraph[\group], \webDJOutput, [\in, mixBus]);

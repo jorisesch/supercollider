@@ -1,5 +1,7 @@
 # Listening feedback
 
+Pop's strong compression comparison was selected on 2026-11-11 and is now the default Pop master processing. The [compression study](pop-compression/README.md) records the comparison and settings.
+
 Each deck has **👍** and **👎** buttons. They rate the song on that deck, including during a handover. Buttons become available once the deck is playing. A saved choice is highlighted.
 
 The post window confirms that a rating was saved. Clicking the same rating again leaves one opinion for that song. Changing your vote creates a new event pointing to the previous one, so later training can use the latest vote.

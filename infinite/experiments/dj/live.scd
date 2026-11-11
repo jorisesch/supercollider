@@ -150,7 +150,7 @@ var root=thisProcess.nowExecutingPath.dirname;
             if(mix.inputEQ ? false){
                 eqNodes=decks.collect {|deck,id|Synth.before(deck,\rockBluesEQ,[\in,bus.index+(id*6)]).nodeID};
             };
-            master=Synth.tail(group,\djMaster,[\in,bus.index+12,\attack,if(resume,3,0.1),\drive,mix.drive]);
+            master=Synth.tail(group,mix.master,[\in,bus.index+12,\attack,if(resume,3,0.1),\drive,mix.drive]);
             srv.sync;
             if(generation == ~djGeneration) {
                 ~djBus=bus; ~djGroup=group; ~djMaster=master;

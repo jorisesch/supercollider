@@ -19,7 +19,7 @@ try {
                 [\g_new,sources[0],0,group],[\g_new,sources[1],0,group],
                 [\s_new,\djDeck,decks[0],1,group,\in,16,\out,28,\musicGain,0,\bassGain,0,\drumsGain,0,\bpm,bpm],
                 [\s_new,\djDeck,decks[1],1,group,\in,22,\out,28,\musicGain,0,\bassGain,0,\drumsGain,0,\bpm,bpm],
-                [\s_new,\djMaster,master,1,group,\in,28]]);
+                [\s_new,~djMixSpec.value(channel).master,master,1,group,\in,28]]);
             8.do {|bar|
                 var frame=engine[\nextBar].value;
                 frame.automation.do {|point|

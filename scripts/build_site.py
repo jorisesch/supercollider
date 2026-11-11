@@ -25,6 +25,7 @@ DJ_SOURCES = (
     'instruments.scd',
     'palette-instruments.scd',
     'pop-instruments.scd',
+    'pop-master.scd',
     'e-instruments.scd',
     'dubstep-instruments.scd',
     'rock-instruments.scd',

@@ -31,7 +31,7 @@ try {
             score.add([time-0.03,[\g_new,100,0,1],[\g_new,110,0,100],[\g_new,111,0,100],
                 [\s_new,\djDeck,800,1,100,\in,16,\out,28,\musicGain,0,\bassGain,0,\drumsGain,0,\bpm,tempo],
                 [\s_new,\djDeck,801,1,100,\in,22,\out,28,\musicGain,0,\bassGain,0,\drumsGain,0,\bpm,tempo],
-                [\s_new,\djMaster,999,1,100,\in,28]]);
+                [\s_new,~djMixSpec.value(channel).master,999,1,100,\in,28]]);
             excerpt.frames.do {|frame,i|
                 var actions=List.new,previous=0;
                 if(i==4){colorAt=time};if(i==6){returnAt=time};

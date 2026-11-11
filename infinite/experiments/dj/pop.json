@@ -19,6 +19,8 @@
   "minimum_palettes": 2,
   "minimum_auto_stutters": 0,
   "timeline": "infinite/experiments/dj/dj-pop-preview-timeline.tsv",
-  "human_listening_review": "pending; refreshed for expanded progressions and section harmony",
+  "human_listening_review": "strong compression approved in matched excerpts; full set review pending",
+  "master": "djPopMaster",
+  "compression": {"ratio": 4, "threshold": 0.027, "attack_seconds": 0.004, "release_seconds": 0.18, "detector_highpass_hz": 110, "makeup_gain": 1.9},
   "section_harmony": true
 }
