@@ -112,6 +112,14 @@ async function loadWithTimeout(promise) {
   }
 }
 
+function runtimeFailed(name) {
+  const message = name === "scsynth" ? "The audio engine stopped unexpectedly." : "The language runtime stopped unexpectedly.";
+  engineEvents.dispatchEvent(new CustomEvent("error", { detail: message }));
+  if (state === "playing" || state === "resume" || state === "unlock") {
+    reportError(new StartupError(message));
+  }
+}
+
 async function resumeAudio() {
   const context = audioContext;
   let timer;
@@ -205,6 +213,11 @@ async function initialize() {
       locateFile: (file) => file === `${name}.js` ? moduleURL.href : runtimeURL(file).href,
       mainScriptUrlOrBlob: moduleURL.href,
       wasmBinary: new Uint8Array(wasm),
+      onAbort: () => runtimeFailed(name),
+      printErr: (line) => {
+        console.error(`[${name}]`, line);
+        if (String(line).includes("worker sent an error!")) runtimeFailed(name);
+      },
       ...(data ? { getPreloadedPackage: () => data } : {}),
     }));
   };

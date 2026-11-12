@@ -203,8 +203,9 @@ try {
             // cannot share files between the two WebAssembly modules.
             (~djDefs ++ ~infiniteDefs ++ [output]).do { |def|
                 server.sendMsg('/d_recv', def.asBytes);
+                // Bound allocations in the fixed WASM heap while definitions are compiled.
+                server.sync;
             };
-            server.sync;
             if(loadError.notNil) {
                 Error(loadError).throw;
             };
