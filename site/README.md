@@ -14,6 +14,8 @@ During startup, the browser forwards at most one status reply per poll and pause
 
 EDM and Pop choose a fresh first song, key and mode each time. Both open with eight bars of drums before the full song enters, then continue with randomly generated tracks. Every later EDM and Pop song, and every Rock and London Dubstep song, starts with four rhythm-only bars before its pitched parts enter. London Dubstep also chooses its first song randomly and rotates among dry half-step, sparse rim-and-sub, and a straight kick pattern that drops back into half-step. Each set starts with a fresh seed. The browser runs the same SuperCollider sources as the desktop app using WebAssembly. [Runtime source and licenses](runtime/SOURCE.txt).
 
+EDM and Pop share the approved strong compressor: stereo-linked 4:1 compression with a 4 ms attack and 180 ms release, followed by makeup gain and the output safety limiter.
+
 ## Preview locally
 
 Run these commands from the repository root.

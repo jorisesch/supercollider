@@ -1,5 +1,7 @@
 # Listening feedback
 
+EDM compression verdict (2026-11-12): **D · Stronger** for both E Aeolian / Brass Circuit and G Ionian / Wired House. Strong compression is now selected for both EDM and Pop. [EDM comparison and settings](edm-compression/README.md).
+
 Pop's strong compression comparison was selected on 2026-11-11 and is now the default Pop master processing. The [compression study](pop-compression/README.md) records the comparison and settings.
 
 Each deck has **👍** and **👎** buttons. They rate the song on that deck, including during a handover. Buttons become available once the deck is playing. A saved choice is highlighted.

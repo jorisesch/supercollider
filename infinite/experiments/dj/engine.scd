@@ -24,7 +24,7 @@ var root=thisProcess.nowExecutingPath.dirname;
 ~djDefaultBpm={|channel|switch(~djResolveChannel.value(channel),\pop,{138},\rock,{102},\dubstep,{140},{128})};
 ~djMixSpec={|channel,rockToneVersion=6|
     var mix=if(channel==\rock){(deck:case {rockToneVersion>=6}{\rockPhysicalDeck} {rockToneVersion>=3}{\rockHumbuckerDeck} {rockToneVersion>=2}{\rockPhysicalDeck} {rockToneVersion==1}{\rockGuitarDeck} {true}{\rockDeck},drive:1.8,inputEQ:rockToneVersion>=5)}{(deck:\djDeck,drive:if(channel==\dubstep){2.2}{3.4})};
-    mix.master=if(channel==\pop){\djPopMaster}{\djMaster};
+    mix.master=if([\edme,\pop].includes(channel)){\djPopMaster}{\djMaster};
     mix;
 };
 ~makeDJEngine={ |seed=2600,bpm=128,settings|

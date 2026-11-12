@@ -1,4 +1,4 @@
-// The selected Pop compressor. Both stereo channels share the same gain envelope.
+// The selected EDM and Pop compressor. Stereo channels share the same gain envelope.
 (
 ~djPopCompressionGain={|audio,threshold=0.027,ratio=4,attack=0.004,release=0.18|
     var sidechain=HPF.ar(audio,110);

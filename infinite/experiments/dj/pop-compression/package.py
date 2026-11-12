@@ -11,7 +11,13 @@ import wave
 
 root = Path(sys.argv[1])
 takes = []
-recipes = [json.loads((root / f'{track}.json').read_text()) for track in ('F', 'G')]
+config_path = root / 'comparison.json'
+config = json.loads(config_path.read_text()) if config_path.exists() else {}
+title = config.get('title', 'Pop compression')
+recipes = [json.loads((root / f'{track}.json').read_text()) for track in config.get('tracks', ('F', 'G'))]
+version_ids = [version['id'] for version in recipes[0]['versions']]
+version_labels = dict(zip(version_ids, (('A · Uncompressed', 'B · Previous EDM', 'C · Gentle', 'D · Stronger')
+                      if 'current' in version_ids else ('A · Uncompressed', 'B · Gentle', 'C · Stronger'))))
 for recipe in recipes:
     for version in recipe['versions']:
         name = f"{recipe['id']}-{version['id']}"
@@ -48,7 +54,7 @@ for recipe in recipes:
             shared = min(len(original), len(audio)-offset)
             assert max(abs(a-b) for a,b in zip(original[:shared], audio[offset:offset+shared])) <= 2, \
                 f'{name} did not preserve the original waveform'
-        else:
+        elif version['id'] != 'current':
             assert reduction > 0.25, f'{name} did not apply measurable compression'
         last_music = round((recipe['seconds'] - 4) * 48000) * 2
         assert max(abs(s) for s in audio[last_music:last_music+96000]) / 8388608 > 0.003, name
@@ -78,23 +84,24 @@ for take in takes:
 sections = []
 for recipe in recipes:
     track = recipe['id']
+    buttons = ''.join(f'<button type="button" data-version="{version}" aria-pressed="{str(i == 0).lower()}">{escape(version_labels[version])}</button>'
+                      for i, version in enumerate(version_ids))
+    choices = ''.join(f'<option>{escape(version_labels[version])}</option>' for version in version_ids)
     sections.append(f'''<section data-track="{track}">
 <h2>{escape(recipe['name'])}</h2>
-<p>{recipe['bpm']} BPM · same performance for all three versions</p>
+<p>{recipe['bpm']} BPM · same performance for all {len(version_ids)} versions</p>
 <audio controls preload="none" src="{track}-dry.m4a"></audio>
 <div class="versions">
-<button type="button" data-version="dry" aria-pressed="true">A · Uncompressed</button>
-<button type="button" data-version="gentle" aria-pressed="false">B · Gentle</button>
-<button type="button" data-version="strong" aria-pressed="false">C · Stronger</button>
+{buttons}
 </div>
 <label>Your preference<select><option value="">Choose after listening</option>
-<option>A · Uncompressed</option><option>B · Gentle</option><option>C · Stronger</option><option>No preference</option></select></label>
+{choices}<option>No preference</option></select></label>
 <label>Notes<input maxlength="300" placeholder="Optional"></label>
 </section>''')
 
 html = '''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Infinite DJ · Pop compression comparison</title>
+<title>Infinite DJ · __TITLE__ comparison</title>
 <style>
 :root{color-scheme:dark;background:#0c141a;color:#e9f0f0;font:16px/1.5 system-ui,sans-serif}
 body{max-width:48rem;margin:auto;padding:2rem 1rem}
@@ -108,20 +115,19 @@ button{cursor:pointer}button[aria-pressed=true]{color:#122421;background:#a9ede3
 label{display:block;margin-top:.7rem}select,input,textarea{width:100%;box-sizing:border-box;display:block}
 footer{padding:1rem 0}textarea{min-height:5rem;margin-top:.7rem}
 </style></head><body>
-<h1>Pop compression</h1>
-<p>Switch A, B and C while listening. The player keeps your position. All versions have matched average levels.</p>
-<p>A has the mix-bus compressor bypassed. B adds gentle compression. C uses a stronger setting.
-The deck’s existing kick ducking is present in all three.</p>
+<h1>__TITLE__</h1>
+<p>Switch versions while listening. The player keeps your position. All versions have matched average levels.</p>
+<p>__INTRO__</p>
 __SECTIONS__
 <footer><button id="copy" type="button">Copy feedback</button><p id="status" role="status"></p>
 <textarea readonly id="summary" aria-label="Feedback summary"></textarea></footer>
 <script>
-const key = "infinite-dj-pop-compression-01";
+const key = __STORAGE_KEY__;
 let feedback = {};
 try { feedback = JSON.parse(localStorage.getItem(key) || "{}"); } catch {}
 function update() {
   try { localStorage.setItem(key, JSON.stringify(feedback)); } catch {}
-  const lines = ["Infinite DJ Pop compression"];
+  const lines = [__FEEDBACK_TITLE__];
   document.querySelectorAll("[data-track]").forEach(section => {
     const entry = feedback[section.dataset.track];
     if (entry?.preference || entry?.note?.trim())
@@ -172,4 +178,8 @@ document.querySelector("#copy").onclick = async () => {
 update();
 </script></body></html>
 '''
-(root / 'listen.html').write_text(html.replace('__SECTIONS__','\n'.join(sections)))
+intro = config.get('intro', 'A has the mix-bus compressor bypassed. B adds gentle compression. C uses a stronger setting. The deck’s existing kick ducking is present in all three.')
+html = (html.replace('__SECTIONS__', '\n'.join(sections)).replace('__TITLE__', escape(title))
+        .replace('__INTRO__', escape(intro)).replace('__STORAGE_KEY__', json.dumps(config.get('storageKey', 'infinite-dj-pop-compression-01')))
+        .replace('__FEEDBACK_TITLE__', json.dumps('Infinite DJ ' + title)))
+(root / 'listen.html').write_text(html)

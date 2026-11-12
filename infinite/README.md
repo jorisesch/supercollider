@@ -14,7 +14,7 @@ Run the commands below from the **repository folder**, not from inside `infinite
 
 Each set starts with a randomly chosen song and eight bars of drums. Later songs begin with four bars of drums and use varied keys and ensembles.
 
-Bass, drums and synth grooves, with new tracks mixed in automatically:
+Bass, drums and synth grooves, with strong mix compression for a fuller sound and new tracks mixed in automatically:
 
 ```sh
 /Applications/SuperCollider.app/Contents/MacOS/sclang -D infinite/infinite-edm.scd

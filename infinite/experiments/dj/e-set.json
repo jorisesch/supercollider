@@ -20,7 +20,7 @@
   "minimum_palettes": 2,
   "minimum_auto_stutters": 0,
   "timeline": "infinite/experiments/dj/edm-e-set-timeline.tsv",
-  "human_listening_review": "pending",
+  "human_listening_review": "strong compression approved in matched Brass Circuit and Wired House excerpts; full set review pending",
   "e_building_blocks": [
     "e_chord_notes",
     "e_shaker_hits",
@@ -28,5 +28,14 @@
     "e_signature_hits",
     "e_slides"
   ],
-  "check_e_variants": true
+  "check_e_variants": true,
+  "master": "djPopMaster",
+  "compression": {
+    "ratio": 4,
+    "threshold": 0.027,
+    "attack_seconds": 0.004,
+    "release_seconds": 0.18,
+    "detector_highpass_hz": 110,
+    "makeup_gain": 1.9
+  }
 }

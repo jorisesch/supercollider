@@ -4,6 +4,9 @@ var root=thisProcess.nowExecutingPath.dirname,assert={|ok,msg|if(ok.not){Error(m
 try {
     var total=0,signatures=Set.new,feedbackPath=Platform.defaultTempDir+/+"dj-feedback-check";
     (root+/+"live.scd").load;
+    [\edme,\pop].do {|channel|
+        assert.value(~djMixSpec.value(channel).master==\djPopMaster,"EDM/Pop lost the approved strong compressor");
+    };
     [\edme,\pop,\rock].do {|channel|
         var modes=Set.new,orders=Set.new,lengths=Set.new,keys=Set.new,palettes=Set.new;
         [73,731,2600,98713].do {|seed|

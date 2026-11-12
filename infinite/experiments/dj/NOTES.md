@@ -1,5 +1,13 @@
 # Infinite DJ listening notebook
 
+## 2026-11-12 — strong compression approved for EDM and Pop
+
+Human comparison verdict: **D · Stronger** for both **E Aeolian / Brass Circuit** and **G Ionian / Wired House**. Apply the strong setting to both EDM and Pop. Pop already uses this setting; EDM now shares its master processing: stereo-linked 4:1 compression, threshold 0.027, 4 ms attack, 180 ms release and a 110 Hz high-pass detector, with makeup gain and the output safety limiter. The [EDM comparison](edm-compression/README.md) preserves the bypass, previous EDM, gentle and strong versions.
+
+## 2026-11-12 — Brass Circuit
+
+Listening favorite in EDM: **E Aeolian / Brass Circuit** — “total banger.”
+
 ## 2026-11-08 — Wired House at 30% Energy
 
 Listening favorite in EDM: **G Ionian / Wired House** with **Energy at 30%**. “Sweet.”
