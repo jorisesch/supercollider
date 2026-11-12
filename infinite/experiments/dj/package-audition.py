@@ -16,6 +16,7 @@ if revision:
     round_number += f'-{revision}'
 rows = []
 recipes = []
+verification = {}
 channels = {'edme': 'EDM', 'pop': 'Pop', 'rock': 'Rock', 'dubstep': 'London Dubstep'}
 for recipe_file in sorted(out.glob('[A-Z].json')):
     recipe = json.loads(recipe_file.read_text())
@@ -37,6 +38,15 @@ for recipe_file in sorted(out.glob('[A-Z].json')):
     peak /= 8388608
     rms = (energy / (len(samples) // 3)) ** 0.5 / 8388608
     assert 0.01 < peak < 0.95 and 0.002 < rms < 0.5, (track_id, peak, rms)
+    edge_frames = 1920
+    start_peak = max(abs(int.from_bytes(samples[i:i+3], 'little', signed=True))
+                     for i in range(0, edge_frames * 6, 3)) / 8388608
+    end_peak = max(abs(int.from_bytes(samples[i:i+3], 'little', signed=True))
+                   for i in range(len(samples) - edge_frames * 6, len(samples), 3)) / 8388608
+    assert start_peak < 0.0001 and end_peak < 0.0001, (track_id, start_peak, end_peak)
+    verification[track_id] = dict(seconds=seconds, sample_rate=48000, channels=2,
+                                  peak=peak, rms=rms, start_peak=start_peak, end_peak=end_peak,
+                                  human_listening_review="pending")
     # A valid WAV can still be padded with silence after a scheduling error.
     tail_offset = max(0, round((seconds - 4) * 48000) * 6)
     tail_peak = max(abs(int.from_bytes(samples[i:i+3], 'little', signed=True))
@@ -65,7 +75,7 @@ for recipe_file in sorted(out.glob('[A-Z].json')):
       <p>{escape(details)}</p>
       <audio controls preload="none" src="{track_id}.m4a" aria-label="{escape(recipe['name'])}"></audio>
       <div class="votes">
-        <button type="button" data-vote="up" aria-pressed="false">👍 Like</button>
+        <button type="button" data-vote="up" aria-pressed="false">👍 Approve</button>
         <button type="button" data-vote="down" aria-pressed="false">👎 Pass</button>
       </div>
       <label>What stood out?<input type="text" maxlength="300" placeholder="Optional"></label>
@@ -177,3 +187,5 @@ sync();
 intro = 'A is the Wired House reference. ' if round_number == '01' else ''
 (out / 'listen.html').write_text(template.replace('__ROUND__', round_number).replace('__INTRO__', intro)
                                  .replace('__ROWS__', '\n'.join(rows)).replace('__RECIPES__', json.dumps(recipes)))
+
+(out / 'verification.json').write_text(json.dumps(verification, indent=2) + '\n')

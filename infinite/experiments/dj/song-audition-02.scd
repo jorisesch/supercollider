@@ -1,4 +1,5 @@
-// Six separate arrangement grammars for the second listening round. Offline only.
+// Arrangement renderer for listening rounds. Offline only.
+// sclang -D song-audition-02.scd <output directory> [recipe file]
 (
 var root=thisProcess.nowExecutingPath.dirname, output=thisProcess.argv.at(0), index=0, render;
 var four=[0,4,8,12], recipes=[
@@ -60,6 +61,7 @@ var voices=[
 ];
 try {
     if(output.isNil or:{File.exists(output).not}){Error("Provide an existing output directory").throw};
+    if(thisProcess.argv.at(1).notNil){recipes=thisProcess.argv.at(1).load};
     (root+/+"engine.scd").load;
     (root+/+"instruments.scd").load;
     (root+/+"feedback.scd").load;
@@ -89,7 +91,7 @@ try {
             var contrast=bar>=form[1] and:{bar<form[2]}, full=bar>=form[0] and:{contrast.not};
             var cell=bar%2, degree=spec.chords.wrapAt(bar div:2), riff, accent, from, bassSteps;
             currentBar=bar;
-            if(style==\synthPop and:{chorus.not}){degree=[0,0,5,6].wrapAt(bar div:2)};
+            if(style==\synthPop and:{chorus.not}){degree=(spec.verseChords ? [0,0,5,6]).wrapAt(bar div:2)};
             kick=spec.kicks.wrapAt(cell);
             snare=case {style==\motorik}{\auditionSoftSnare} { [\breaks,\electro].includes(style)}{\djElectroSnare} {\djSnare};
             hatAmp=switch(style,\breaks,{0.034},\motorik,{0.011},{0.022});
@@ -106,6 +108,7 @@ try {
                     riff=if(cell==0){[[1,0],[3,0],[6,7],[7,5],[9,0],[13,2],[15,1]]}
                         {[[1,0],[4,0],[6,4],[9,0],[11,0],[14,1]]};
                     from=pitch.value(degree);
+                    riff=spec[if(cell==0){\riffA}{\riffB}] ? riff;
                     riff.do {|hit,j|
                         var note=pitch.value(degree+hit[1]), glide=[3,7,15].includes(hit[0]);
                         accent=[1,6,13,14].includes(hit[0]);
@@ -117,9 +120,11 @@ try {
                 },
                 \electro,{
                     bassSteps=if(cell==0){[0,3,6,11]}{[0,5,10,13]};
+                    bassSteps=spec[if(cell==0){\bassA}{\bassB}] ? bassSteps;
                     bassSteps.do {|step,j|add.value(\auditionSub,step,pitch.value(degree+if(j==3){4}{0}),0.4,0.15)};
                     if(full or:{contrast}){
                         riff=if(cell==0){[[1,7],[7,5],[12,3]]}{[[3,2],[8,1]]};
+                        riff=spec[if(cell==0){\riffA}{\riffB}] ? riff;
                         riff.do {|hit,j|add.value(\auditionFM,hit[0],pitch.value(hit[1],2),
                             if(contrast){0.62}{0.22},if(contrast){0.052}{0.077},0.64,(j-1)*0.22,[\ratio,2.71])};
                     };
@@ -127,34 +132,37 @@ try {
                 \breaks,{
                     kick.do {|step,j|add.value(\auditionSub,step+0.22,pitch.value(degree+[0,0,4,0][j]),0.30,0.15,0.51)};
                     if(full){
-                        (if(cell==0){[2,8]}{[2,13]}).do {|step,j|add.value(\auditionFM,step,pitch.value(degree+[7,4][j],2),
+                        (spec[if(cell==0){\stabsA}{\stabsB}] ? if(cell==0){[2,8]}{[2,13]}).do {|step,j|add.value(\auditionFM,step,pitch.value(degree+[7,4][j],2),
                             0.19,0.077,0.69,(j-1)*0.22,[\ratio,1.49])};
                     };
                 },
                 \trance,{
                     bassSteps=if(contrast){[2,6,10,14]}{four.collect {|step|[step+1,step+2,step+3]}.flat};
+                    bassSteps=spec[if(cell==0){\bassA}{\bassB}] ? bassSteps;
                     bassSteps.do {|step|add.value(\auditionSub,step,pitch.value(degree),0.16,0.13,0.61)};
                     if(bar>=8){
                         riff=if(cell==0){[[2,0,1.2],[8,2,0.43],[11,4,1.0]]}{[[2,4,0.58],[7,2,0.42],[10,0,1.12]]};
+                        riff=spec[if(cell==0){\riffA}{\riffB}] ? riff;
                         riff.do {|hit,j|add.value(\auditionPulse,hit[0],pitch.value(degree+hit[1],2),hit[2],0.074,
                             if(contrast){0.22}{0.46},(j-1)*0.15)};
                         [0,2,4].do {|offset,j|add.value(\auditionPulse,0,pitch.value(degree+offset,1),3.6,0.021,0.18,(j-1)*0.4)};
                     };
                 },
                 \synthPop,{
-                    [0,3,8,11].do {|step,j|add.value(\auditionSub,step,pitch.value(degree+[0,0,4,0][j]),0.45,0.13)};
+                    (spec[if(cell==0){\bassA}{\bassB}] ? [0,3,8,11]).do {|step,j|add.value(\auditionSub,step,pitch.value(degree+[0,0,4,0][j]),0.45,0.13)};
                     [0,2,4].do {|offset,j|
                         [2,10].do {|step|add.value(\auditionFM,step,pitch.value(degree+offset,2),0.8,0.044,0.26,(j-1)*0.27)};
                     };
                     if(chorus){
                         riff=if(cell==0){[[0,4,0.7],[4,4,0.38],[7,2,0.3],[10,0,1.05]]}{[[2,2,0.53],[6,4,0.41],[10,2,1.11]]};
+                        riff=spec[if(cell==0){\riffA}{\riffB}] ? riff;
                         riff.do {|hit|add.value(\auditionPulse,hit[0],pitch.value(degree+hit[1],2),hit[2],0.083,0.38)};
                     };
                 },
                 \motorik,{
                     four.do {|step|add.value(\auditionSub,step,pitch.value(degree),0.45,0.11,0.26)};
-                    [0,3,6,8,11,14].do {|step,j|
-                        var note=pitch.value(degree+[0,4,7,4,2,4][j],1);
+                    (spec.guitarSteps ? [0,3,6,8,11,14]).do {|step,j|
+                        var note=pitch.value(degree+(spec.guitarNotes ? [0,4,7,4,2,4]).wrapAt(j),1);
                         add.value(\rockSingleCoilDecay,step,note,0.57,0.072,0.62,-0.17,
                             [\stringIndex,2,\pickPosition,0.088,\mute,0.22,\color,1]);
                     };

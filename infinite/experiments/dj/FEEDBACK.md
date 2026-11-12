@@ -67,3 +67,43 @@ mkdir -p audio/listening-round/dubstep-timing
   infinite/experiments/dj/dubstep-audition.scd "$PWD/audio/listening-round/dubstep-timing"
 python3 infinite/experiments/dj/package-audition.py audio/listening-round/dubstep-timing 03-dubstep
 ```
+
+## Listening round 03
+
+Human listening decisions on 2026-11-12 approved eight of eighteen candidates.
+
+| ID | Song | Decision |
+| --- | --- | --- |
+| A | Copper Teeth | Approved for London Dubstep |
+| B | Sodium Bloom | Approved |
+| C | Redline Ritual | Passed. Too fast |
+| D | Robot Orchard | Passed |
+| E | Chrome Shuffle | Passed. Clanging timbre sounds experimental |
+| F | Magnet Rooms | Passed. Clanging timbre sounds experimental |
+| G | Sidewinder | Passed. Clanging timbre sounds experimental |
+| H | Paper Tigers | Passed. Clanging timbre sounds experimental |
+| I | Low Orbit | Passed. Possible Pop direction with a different timbre |
+| J | Violet Engine | Approved. “Banger!!!!” Refine the melody, possibly its tonality |
+| K | Horizon Wire | Approved. “Banger” |
+| L | Last Train Sun | Approved. Refine melody timing |
+| M | Velvet Satellites | Passed |
+| N | Borrowed Summer | Passed |
+| O | Neon Postcards | Passed |
+| P | Concrete Radio | Approved |
+| Q | Dust on the Dial | Approved |
+| R | Exit Ramp Gold | Approved |
+
+Exact votes, comments and the heard recipe snapshots are saved in
+`audio/listening-round/03/round-03-feedback.json`. The source recipes are in
+[song-audition-03.scd](song-audition-03.scd). A's channel assignment is London
+Dubstep. J's tonality and L's timing remain listening refinement requests.
+
+Render and package the round from the repository root.
+
+```sh
+mkdir -p audio/listening-round/03
+/Applications/SuperCollider.app/Contents/MacOS/sclang -D \
+  infinite/experiments/dj/song-audition-02.scd \
+  "$PWD/audio/listening-round/03" "$PWD/infinite/experiments/dj/song-audition-03.scd"
+python3 infinite/experiments/dj/package-audition.py audio/listening-round/03 03
+```
