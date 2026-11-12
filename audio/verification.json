@@ -153,11 +153,11 @@
     ]
   },
   "dj-pop-preview.wav": {
-    "seconds": 172.6307,
+    "seconds": 171.4653,
     "sample_rate": 48000,
     "channels": 2,
     "peak_dbfs": -2.45,
-    "rms_dbfs": -20.69,
+    "rms_dbfs": -20.59,
     "end_peak": 0.0,
     "section_progressions": {
       "0": {
@@ -184,34 +184,28 @@
       },
       "1": {
         "verse": [
-          3,
           0,
           1,
-          4
-        ],
-        "chorus": [
-          5,
-          4,
-          3,
-          0
+          6,
+          3
         ]
       }
     },
-    "one_bar_chord_bars": 15,
+    "one_bar_chord_bars": 21,
     "automatic_stutter_phrases": [
       {
-        "bar": 28,
-        "seconds": 49.6652,
+        "bar": 32,
+        "seconds": 56.6217,
         "division": 16,
         "bars": 0.5,
         "duration_seconds": 0.8696
       },
       {
-        "bar": 80,
-        "seconds": 140.4486,
+        "bar": 84,
+        "seconds": 147.1703,
         "division": 16,
         "bars": 0.5,
-        "duration_seconds": 0.9091
+        "duration_seconds": 0.8824
       }
     ],
     "title": "Infinite DJ \u2014 Pop with varied section harmony",
@@ -230,36 +224,36 @@
       1
     ],
     "palettes": [
-      2,
+      1,
       3
     ],
-    "music_seconds": 168.5304,
-    "music_rms_dbfs": -20.59,
+    "music_seconds": 167.3644,
+    "music_rms_dbfs": -20.49,
     "four_bar_rms_dbfs": [
-      -21.11,
-      -19.81,
-      -20.25,
-      -19.81,
-      -20.11,
-      -20.16,
-      -19.86,
-      -20.24,
-      -19.84,
-      -28.25,
-      -22.11,
-      -19.87,
-      -20.23,
-      -19.89,
-      -20.23,
+      -22.36,
+      -22.32,
+      -19.82,
+      -20.26,
+      -19.79,
+      -20.18,
+      -20.18,
+      -19.91,
+      -20.26,
+      -19.92,
+      -28.24,
+      -22.19,
       -19.88,
-      -20.21,
-      -19.87,
-      -21.87,
-      -22.55,
-      -20.82,
-      -20.77,
-      -20.79,
-      -21.05
+      -20.18,
+      -19.85,
+      -20.19,
+      -19.85,
+      -20.22,
+      -19.8,
+      -21.29,
+      -21.35,
+      -19.86,
+      -19.93,
+      -19.74
     ]
   },
   "dj-variety-preview.wav": {
@@ -407,34 +401,34 @@
     ]
   },
   "edm-e-set.wav": {
-    "seconds": 212.14,
+    "seconds": 215.064,
     "sample_rate": 48000,
     "channels": 2,
     "peak_dbfs": -2.45,
-    "rms_dbfs": -19.23,
+    "rms_dbfs": -18.8,
     "end_peak": 0.0,
     "automatic_stutter_phrases": [
       {
-        "bar": 28,
-        "seconds": 53.5375,
+        "bar": 32,
+        "seconds": 61.0375,
         "division": 16,
         "bars": 0.5,
         "duration_seconds": 0.9375
       },
       {
-        "bar": 88,
-        "seconds": 164.7542,
+        "bar": 84,
+        "seconds": 158.5375,
         "division": 16,
         "bars": 0.5,
-        "duration_seconds": 0.9231
+        "duration_seconds": 0.9375
       }
     ],
     "e_building_blocks": {
-      "e_chord_notes": 144,
-      "e_shaker_hits": 222,
-      "e_tom_hits": 59,
-      "e_signature_hits": 8,
-      "e_slides": 26
+      "e_chord_notes": 196,
+      "e_shaker_hits": 263,
+      "e_tom_hits": 68,
+      "e_signature_hits": 6,
+      "e_slides": 23
     },
     "e_variants": [
       "a",
@@ -458,39 +452,39 @@
     ],
     "palettes": [
       0,
-      2
+      3
     ],
-    "music_seconds": 208.0388,
-    "music_rms_dbfs": -19.14,
+    "music_seconds": 210.9633,
+    "music_rms_dbfs": -18.72,
     "four_bar_rms_dbfs": [
-      -18.98,
-      -18.72,
-      -18.61,
-      -18.65,
-      -18.98,
-      -19.79,
-      -18.58,
-      -18.61,
-      -18.6,
-      -18.65,
-      -20.59,
-      -20.66,
-      -18.46,
-      -19.87,
-      -18.68,
-      -19.06,
-      -17.99,
-      -19.59,
-      -18.11,
-      -19.19,
-      -22.47,
-      -23.17,
-      -20.41,
-      -19.48,
-      -17.59,
-      -19.12,
-      -18.25,
-      -19.36
+      -20.87,
+      -20.86,
+      -19.35,
+      -19.92,
+      -19.81,
+      -19.5,
+      -18.81,
+      -19.46,
+      -19.69,
+      -19.76,
+      -19.46,
+      -19.39,
+      -19.91,
+      -20.11,
+      -19.52,
+      -18.84,
+      -19.46,
+      -19.91,
+      -19.49,
+      -19.11,
+      -19.03,
+      -19.97,
+      -19.85,
+      -21.22,
+      -16.6,
+      -13.42,
+      -16.27,
+      -16.02
     ]
   },
   "edm-modes.wav": {
@@ -1049,16 +1043,16 @@
     "human_listening_review": "pending"
   },
   "rock-channel.wav": {
-    "seconds": 156.6013,
+    "seconds": 232.3573,
     "sample_rate": 48000,
     "channels": 2,
-    "peak_dbfs": -2.48,
-    "rms_dbfs": -18.83,
+    "peak_dbfs": -2.45,
+    "rms_dbfs": -19.71,
     "end_peak": 0.0,
     "automatic_stutter_phrases": [],
     "title": "Infinite DJ \u2014 Rock",
     "seed": 2600,
-    "bars": 64,
+    "bars": 96,
     "settings": {
       "channel": "rock",
       "autoStutter": false
@@ -1071,48 +1065,66 @@
       0,
       2
     ],
-    "music_seconds": 152.5009,
-    "music_rms_dbfs": -18.72,
+    "music_seconds": 228.2573,
+    "music_rms_dbfs": -19.63,
     "four_bar_rms_dbfs": [
-      -19.5,
-      -19.37,
-      -16.96,
-      -17.97,
-      -25.44,
-      -19.08,
-      -16.68,
-      -16.24,
-      -16.89,
-      -17.87,
-      -23.72,
-      -24.34,
-      -18.12,
-      -20.82,
-      -18.07,
-      -19.18
+      -26.52,
+      -20.52,
+      -20.99,
+      -20.58,
+      -21.08,
+      -20.61,
+      -18.32,
+      -18.36,
+      -18.38,
+      -20.4,
+      -20.54,
+      -18.46,
+      -18.43,
+      -18.31,
+      -18.39,
+      -18.31,
+      -18.47,
+      -18.88,
+      -18.77,
+      -20.35,
+      -23.91,
+      -22.95,
+      -19.16,
+      -19.28
     ],
     "solo_bars": 8,
     "solo_phrases": [
       {
-        "bar": 24,
-        "seconds": 56.570588235,
+        "bar": 68,
+        "seconds": 160.1,
         "bars": 8
       }
     ],
     "chord_landings": [
       {
-        "bar": 15,
-        "midinote": 76,
+        "bar": 31,
+        "midinote": 62,
         "chord_offset": 0
       },
       {
-        "bar": 31,
-        "midinote": 79,
-        "chord_offset": 2
+        "bar": 51,
+        "midinote": 62,
+        "chord_offset": 0
       },
       {
-        "bar": 39,
-        "midinote": 76,
+        "bar": 59,
+        "midinote": 62,
+        "chord_offset": 0
+      },
+      {
+        "bar": 67,
+        "midinote": 62,
+        "chord_offset": 0
+      },
+      {
+        "bar": 75,
+        "midinote": 74,
         "chord_offset": 0
       }
     ]
@@ -1499,8 +1511,8 @@
     "seconds": 68.5707,
     "sample_rate": 48000,
     "channels": 2,
-    "peak_dbfs": -2.46,
-    "rms_dbfs": -18.05,
+    "peak_dbfs": -3.1,
+    "rms_dbfs": -19.66,
     "end_peak": 0.0,
     "automatic_stutter_phrases": [],
     "title": "Rock guitar ensembles",
@@ -1521,14 +1533,14 @@
       2
     ],
     "music_seconds": 68.4706,
-    "music_rms_dbfs": -18.05,
+    "music_rms_dbfs": -19.66,
     "four_bar_rms_dbfs": [
-      -16.59,
-      -19.5,
-      -15.79,
-      -21.15,
-      -20.2,
-      -16.88
+      -16.44,
+      -19.74,
+      -18.36,
+      -23.31,
+      -19.44,
+      -22.36
     ],
     "solo_bars": 12,
     "solo_phrases": [
@@ -1551,39 +1563,24 @@
     "chord_landings": [
       {
         "bar": 3,
-        "midinote": 72,
-        "chord_offset": 2
-      },
-      {
-        "bar": 7,
-        "midinote": 76,
+        "midinote": 82,
         "chord_offset": 0
       },
       {
         "bar": 11,
-        "midinote": 72,
-        "chord_offset": 2
-      },
-      {
-        "bar": 15,
-        "midinote": 76,
+        "midinote": 82,
         "chord_offset": 0
       },
       {
         "bar": 19,
-        "midinote": 72,
-        "chord_offset": 2
-      },
-      {
-        "bar": 23,
-        "midinote": 76,
+        "midinote": 82,
         "chord_offset": 0
       }
     ],
     "segment_rms_dbfs": {
-      "Garage": -18.05,
-      "Jangle": -18.12,
-      "Fuzz room": -17.92
+      "Garage": -18.08,
+      "Jangle": -20.6,
+      "Fuzz room": -20.94
     }
   },
   "rock-triad-voicings-raw.wav": {

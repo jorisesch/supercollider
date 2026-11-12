@@ -10,7 +10,9 @@ After a deployment, an older tab reloads once if the page, player and music bund
 
 During startup, instrument definitions are uploaded one at a time so the fixed audio runtime can finish compiling each definition before receiving the next. A fatal worker error stops startup or displays a restart prompt during playback.
 
-EDM opens on a generated 134 BPM anthem hook, and Pop opens on a chorus. London Dubstep opens with sliding acid and rotates among dry half-step, sparse rim-and-sub, and a straight kick pattern that drops back into half-step. Each set starts with a fresh seed. The page loads the same SuperCollider composition and synthesis sources as the desktop app. The browser runs both `sclang` and `scsynth` in WebAssembly and routes their OSC messages through JavaScript. The player downloads a single bundle of music sources alongside the runtime. The browser generates the audio locally. [Runtime source and licenses](runtime/SOURCE.txt).
+During startup, the browser forwards at most one status reply per poll and pauses status replies while login and server tree setup finish. This prevents queued replies during slow or paused audio startup from triggering repeated logins and duplicate server setup. Normal status updates resume after the server boots.
+
+EDM and Pop choose a fresh first song, key and mode each time. Both open with eight bars of drums before the full song enters, then continue with randomly generated tracks. Every later EDM and Pop song, and every Rock and London Dubstep song, starts with four rhythm-only bars before its pitched parts enter. London Dubstep also chooses its first song randomly and rotates among dry half-step, sparse rim-and-sub, and a straight kick pattern that drops back into half-step. Each set starts with a fresh seed. The browser runs the same SuperCollider sources as the desktop app using WebAssembly. [Runtime source and licenses](runtime/SOURCE.txt).
 
 ## Preview locally
 

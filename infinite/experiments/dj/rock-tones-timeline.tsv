@@ -1,26 +1,26 @@
-bar	seconds	bpm	mixing	record_a	record_b	section_a	section_b	palette_a	palette_b	stutter_division	stutter_remaining	stutter_source	stutter_deck	stutter_start_beat	stutter_bars	solo_a	solo_b	solo_kind_a	solo_kind_b	solo_age_a	solo_age_b	solo_bars_a	solo_bars_b	landing_notes_a	landing_notes_b	landing_degrees_a	landing_degrees_b	landing_offsets_a	landing_offsets_b	landing_beats_a	landing_beats_b
-0	0.1	102	0	0	-1	hook	waiting	0	-1	0	0	none	-1	0	0	1	0	riff	none	0	0	4	0	none	none	none	none	none	none	none	none
-1	2.452941176	102	0	0	-1	hook	waiting	0	-1	0	0	none	-1	0	0	1	0	riff	none	1	0	4	0	none	none	none	none	none	none	none	none
-2	4.805882353	102	0	0	-1	hook	waiting	0	-1	0	0	none	-1	0	0	1	0	riff	none	2	0	4	0	none	none	none	none	none	none	none	none
-3	7.158823529	102	0	0	-1	hook	waiting	0	-1	0	0	none	-1	0	0	1	0	riff	none	3	0	4	0	72	none	3	none	2	none	2.0040755818738	none
-4	9.511764706	102	0	0	-1	hook	waiting	0	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-5	11.864705882	102	0	0	-1	hook	waiting	0	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-6	14.217647059	102	0	0	-1	hook	waiting	0	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-7	16.570588235	102	0	0	-1	hook	waiting	0	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	76	none	0	none	0	none	2.5059817218911	none
-8	22.923529412	102	0	0	-1	hook	waiting	1	-1	0	0	none	-1	0	0	1	0	riff	none	0	0	4	0	none	none	none	none	none	none	none	none
-9	25.276470588	102	0	0	-1	hook	waiting	1	-1	0	0	none	-1	0	0	1	0	riff	none	1	0	4	0	none	none	none	none	none	none	none	none
-10	27.629411765	102	0	0	-1	hook	waiting	1	-1	0	0	none	-1	0	0	1	0	riff	none	2	0	4	0	none	none	none	none	none	none	none	none
-11	29.982352941	102	0	0	-1	hook	waiting	1	-1	0	0	none	-1	0	0	1	0	riff	none	3	0	4	0	72	none	3	none	2	none	2.0040755818738	none
-12	32.335294118	102	0	0	-1	hook	waiting	1	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-13	34.688235294	102	0	0	-1	hook	waiting	1	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-14	37.041176471	102	0	0	-1	hook	waiting	1	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-15	39.394117647	102	0	0	-1	hook	waiting	1	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	76	none	0	none	0	none	2.5059817218911	none
-16	45.747058824	102	0	0	-1	hook	waiting	2	-1	0	0	none	-1	0	0	1	0	riff	none	0	0	4	0	none	none	none	none	none	none	none	none
-17	48.1	102	0	0	-1	hook	waiting	2	-1	0	0	none	-1	0	0	1	0	riff	none	1	0	4	0	none	none	none	none	none	none	none	none
-18	50.452941176	102	0	0	-1	hook	waiting	2	-1	0	0	none	-1	0	0	1	0	riff	none	2	0	4	0	none	none	none	none	none	none	none	none
-19	52.805882353	102	0	0	-1	hook	waiting	2	-1	0	0	none	-1	0	0	1	0	riff	none	3	0	4	0	72	none	3	none	2	none	2.0040755818738	none
-20	55.158823529	102	0	0	-1	hook	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-21	57.511764706	102	0	0	-1	hook	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-22	59.864705882	102	0	0	-1	hook	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-23	62.217647059	102	0	0	-1	hook	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	76	none	0	none	0	none	2.5059817218911	none
-24	68.570588235	102	0	-1	-1	end	end	-1	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
+bar	seconds	bpm	mixing	record_a	record_b	section_a	section_b	palette_a	palette_b	stutter_division	stutter_remaining	stutter_source	stutter_deck	stutter_start_beat	stutter_bars	solo_a	solo_b	solo_kind_a	solo_kind_b	solo_age_a	solo_age_b	solo_bars_a	solo_bars_b	landing_notes_a	landing_notes_b	landing_degrees_a	landing_degrees_b	landing_offsets_a	landing_offsets_b	landing_beats_a	landing_beats_b	guitarist_a	guitarist_b	pedal_a	pedal_b
+0	0.1	102	0	0	-1	groove	waiting	0	-1	0	0	none	-1	0	0	1	0	riff	none	0	0	4	0	none	none	none	none	none	none	none	none	Rook	none	2	-1
+1	2.452941176	102	0	0	-1	groove	waiting	0	-1	0	0	none	-1	0	0	1	0	riff	none	1	0	4	0	none	none	none	none	none	none	none	none	Rook	none	2	-1
+2	4.805882353	102	0	0	-1	groove	waiting	0	-1	0	0	none	-1	0	0	1	0	riff	none	2	0	4	0	none	none	none	none	none	none	none	none	Rook	none	2	-1
+3	7.158823529	102	0	0	-1	groove	waiting	0	-1	0	0	none	-1	0	0	1	0	riff	none	3	0	4	0	82	none	6	none	0	none	1.2428150503658	none	Rook	none	2	-1
+4	9.511764706	102	0	0	-1	groove	waiting	0	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Rook	none	2	-1
+5	11.864705882	102	0	0	-1	groove	waiting	0	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Rook	none	2	-1
+6	14.217647059	102	0	0	-1	groove	waiting	0	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Rook	none	2	-1
+7	16.570588235	102	0	0	-1	groove	waiting	0	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Rook	none	2	-1
+8	22.923529412	102	0	0	-1	groove	waiting	1	-1	0	0	none	-1	0	0	1	0	riff	none	0	0	4	0	none	none	none	none	none	none	none	none	June	none	1	-1
+9	25.276470588	102	0	0	-1	groove	waiting	1	-1	0	0	none	-1	0	0	1	0	riff	none	1	0	4	0	none	none	none	none	none	none	none	none	June	none	1	-1
+10	27.629411765	102	0	0	-1	groove	waiting	1	-1	0	0	none	-1	0	0	1	0	riff	none	2	0	4	0	none	none	none	none	none	none	none	none	June	none	1	-1
+11	29.982352941	102	0	0	-1	groove	waiting	1	-1	0	0	none	-1	0	0	1	0	riff	none	3	0	4	0	82	none	6	none	0	none	1.2428150503658	none	June	none	1	-1
+12	32.335294118	102	0	0	-1	groove	waiting	1	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	June	none	1	-1
+13	34.688235294	102	0	0	-1	groove	waiting	1	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	June	none	1	-1
+14	37.041176471	102	0	0	-1	groove	waiting	1	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	June	none	1	-1
+15	39.394117647	102	0	0	-1	groove	waiting	1	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	June	none	1	-1
+16	45.747058824	102	0	0	-1	groove	waiting	2	-1	0	0	none	-1	0	0	1	0	riff	none	0	0	4	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+17	48.1	102	0	0	-1	groove	waiting	2	-1	0	0	none	-1	0	0	1	0	riff	none	1	0	4	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+18	50.452941176	102	0	0	-1	groove	waiting	2	-1	0	0	none	-1	0	0	1	0	riff	none	2	0	4	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+19	52.805882353	102	0	0	-1	groove	waiting	2	-1	0	0	none	-1	0	0	1	0	riff	none	3	0	4	0	82	none	6	none	0	none	1.2428150503658	none	Flint	none	3	-1
+20	55.158823529	102	0	0	-1	groove	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+21	57.511764706	102	0	0	-1	groove	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+22	59.864705882	102	0	0	-1	groove	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+23	62.217647059	102	0	0	-1	groove	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+24	68.570588235	102	0	-1	-1	end	end	-1	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	none	none	-1	-1

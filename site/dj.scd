@@ -110,7 +110,7 @@ playSoundscape = { |session, currentGraph|
                     } {
                         mode = ~djResolveChannel.value(mode);
                         bpm = if(mode == \edme) { 134 } { ~djDefaultBpm.value(mode) };
-                        engine = ~makeDJEngine.value(actualSeed, bpm, (channel: mode, openWithHook: true));
+                        engine = ~makeDJEngine.value(actualSeed, bpm, (channel: mode));
                     };
                     applyEnergy.value;
                     currentGraph = (bus: Bus.audio(server, if(soundscape) { 4 } { 16 }), group: Group.new(server));
@@ -184,6 +184,7 @@ try {
     server.options.loadDefs = false;
     server.latency = 0.05;
     server.waitForBoot({
+        "WEB_DJ booted".postln;
         try {
             var output = SynthDef(\webDJOutput, { |in = 0, gain = 0|
                 Out.ar(0, In.ar(in, 2) * Lag.kr(gain, 0.04));

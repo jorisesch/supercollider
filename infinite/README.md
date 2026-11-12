@@ -12,6 +12,8 @@ Run the commands below from the **repository folder**, not from inside `infinite
 
 ## EDM
 
+Each set starts with a randomly chosen song and eight bars of drums. Later songs begin with four bars of drums and use varied keys and ensembles.
+
 Bass, drums and synth grooves, with new tracks mixed in automatically:
 
 ```sh
@@ -19,6 +21,8 @@ Bass, drums and synth grooves, with new tracks mixed in automatically:
 ```
 
 ## Pop
+
+Each set starts with a randomly chosen song and eight bars of drums. Later songs begin with four bars of drums and follow the normal random rotation.
 
 Bright synths, varied chord progressions and returning chorus hooks, with a compressed mix for a fuller sound:
 
@@ -30,6 +34,8 @@ You can switch between EDM, Pop, Rock and London Dubstep from the DJ window's ch
 
 ## Rock
 
+Each song begins with four bars of drums before the guitars and bass enter.
+
 Guitar riffs, occasional solos, bass and a room drum kit, with clean, crunch and fuzz arrangements:
 
 ```sh
@@ -39,6 +45,8 @@ Guitar riffs, occasional solos, bass and a room drum kit, with clean, crunch and
 [Listen and see the Rock controls](experiments/dj/ROCK.md).
 
 ## London Dubstep
+
+Each song begins with four bars of its drum pattern before the bass and synths enter.
 
 Half-step drums, deep mono sub, sliding acid and short dub echoes. Acid Relay brings in a straight kick pattern before returning to half-step. Start it from the repository folder.
 

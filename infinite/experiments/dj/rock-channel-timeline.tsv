@@ -1,66 +1,98 @@
-bar	seconds	bpm	mixing	record_a	record_b	section_a	section_b	palette_a	palette_b	stutter_division	stutter_remaining	stutter_source	stutter_deck	stutter_start_beat	stutter_bars	solo_a	solo_b	solo_kind_a	solo_kind_b	solo_age_a	solo_age_b	solo_bars_a	solo_bars_b	landing_notes_a	landing_notes_b	landing_degrees_a	landing_degrees_b	landing_offsets_a	landing_offsets_b	landing_beats_a	landing_beats_b
-0	0.1	102	0	0	-1	groove	waiting	0	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-1	2.452941176	102	0	0	-1	groove	waiting	0	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-2	4.805882353	102	0	0	-1	groove	waiting	0	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-3	7.158823529	102	0	0	-1	groove	waiting	0	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-4	9.511764706	102	0	0	-1	groove	waiting	0	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-5	11.864705882	102	0	0	-1	groove	waiting	0	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-6	14.217647059	102	0	0	-1	groove	waiting	0	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-7	16.570588235	102	0	0	-1	groove	waiting	0	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-8	18.923529412	102	0	0	-1	hook	waiting	0	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-9	21.276470588	102	0	0	-1	hook	waiting	0	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-10	23.629411765	102	0	0	-1	hook	waiting	0	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-11	25.982352941	102	0	0	-1	hook	waiting	0	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-12	28.335294118	102	0	0	-1	hook	waiting	0	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-13	30.688235294	102	0	0	-1	hook	waiting	0	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-14	33.041176471	102	0	0	-1	hook	waiting	0	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-15	35.394117647	102	0	0	-1	hook	waiting	0	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	76	none	0	none	0	none	2.5059817218911	none
-16	37.747058824	102	0	0	-1	space	waiting	0	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-17	40.1	102	0	0	-1	space	waiting	0	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-18	42.452941176	102	0	0	-1	space	waiting	0	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-19	44.805882353	102	0	0	-1	space	waiting	0	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-20	47.158823529	102	0	0	-1	buildup	waiting	0	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-21	49.511764706	102	0	0	-1	buildup	waiting	0	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-22	51.864705882	102	0	0	-1	buildup	waiting	0	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-23	54.217647059	102	0	0	-1	buildup	waiting	0	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-24	56.570588235	102	0	0	-1	drop	waiting	0	-1	0	0	none	-1	0	0	1	0	solo	none	0	0	8	0	none	none	none	none	none	none	none	none
-25	58.923529412	102	0	0	-1	drop	waiting	0	-1	0	0	none	-1	0	0	1	0	solo	none	1	0	8	0	none	none	none	none	none	none	none	none
-26	61.276470588	102	0	0	-1	drop	waiting	0	-1	0	0	none	-1	0	0	1	0	solo	none	2	0	8	0	none	none	none	none	none	none	none	none
-27	63.629411765	102	0	0	-1	drop	waiting	0	-1	0	0	none	-1	0	0	1	0	solo	none	3	0	8	0	none	none	none	none	none	none	none	none
-28	65.982352941	102	0	0	-1	drop	waiting	0	-1	0	0	none	-1	0	0	1	0	solo	none	4	0	8	0	none	none	none	none	none	none	none	none
-29	68.335294118	102	0	0	-1	drop	waiting	0	-1	0	0	none	-1	0	0	1	0	solo	none	5	0	8	0	none	none	none	none	none	none	none	none
-30	70.688235294	102	0	0	-1	drop	waiting	0	-1	0	0	none	-1	0	0	1	0	solo	none	6	0	8	0	none	none	none	none	none	none	none	none
-31	73.041176471	102	0	0	-1	drop	waiting	0	-1	0	0	none	-1	0	0	1	0	solo	none	7	0	8	0	79	none	0	none	2	none	1.9943583641017	none
-32	75.394117647	102	0	0	-1	drop	waiting	0	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-33	77.747058824	102	0	0	-1	drop	waiting	0	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-34	80.1	102	0	0	-1	drop	waiting	0	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-35	82.452941176	102	0	0	-1	drop	waiting	0	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-36	84.805882353	102	0	0	-1	drop	waiting	0	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-37	87.158823529	102	0	0	-1	drop	waiting	0	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-38	89.511764706	102	0	0	-1	drop	waiting	0	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-39	91.864705882	102	0	0	-1	drop	waiting	0	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	76	none	0	none	0	none	2.5027679843645	none
-40	94.217647059	102	1	0	1	outro	intro	0	2	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-41	96.576011987	101.5	1	0	1	outro	intro	0	2	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-42	98.946021412	101.0	1	0	1	outro	intro	0	2	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-43	101.327790895	100.5	1	0	1	outro	intro	0	2	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-44	103.721437724	100.0	1	0	1	outro	groove	0	2	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-45	106.127080955	99.5	1	0	1	outro	groove	0	2	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-46	108.544841438	99.0	1	0	1	outro	groove	0	2	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-47	110.974841861	98.5	1	0	1	outro	groove	0	2	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-48	113.417206786	98.0	0	-1	1	waiting	groove	-1	2	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-49	115.866186378	98	0	-1	1	waiting	groove	-1	2	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-50	118.315165969	98	0	-1	1	waiting	groove	-1	2	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-51	120.764145561	98	0	-1	1	waiting	groove	-1	2	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-52	123.213125153	98	0	-1	1	waiting	groove	-1	2	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-53	125.662104745	98	0	-1	1	waiting	groove	-1	2	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-54	128.111084337	98	0	-1	1	waiting	groove	-1	2	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-55	130.560063929	98	0	-1	1	waiting	groove	-1	2	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-56	133.00904352	98	0	-1	1	waiting	groove	-1	2	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-57	135.458023112	98	0	-1	1	waiting	groove	-1	2	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-58	137.907002704	98	0	-1	1	waiting	groove	-1	2	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-59	140.355982296	98	0	-1	1	waiting	groove	-1	2	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-60	142.804961888	98	0	-1	1	waiting	hook	-1	2	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-61	145.25394148	98	0	-1	1	waiting	hook	-1	2	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-62	147.702921071	98	0	-1	1	waiting	hook	-1	2	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-63	150.151900663	98	0	-1	1	waiting	hook	-1	2	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
-64	152.600880255	98	0	-1	-1	end	end	-1	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none
+bar	seconds	bpm	mixing	record_a	record_b	section_a	section_b	palette_a	palette_b	stutter_division	stutter_remaining	stutter_source	stutter_deck	stutter_start_beat	stutter_bars	solo_a	solo_b	solo_kind_a	solo_kind_b	solo_age_a	solo_age_b	solo_bars_a	solo_bars_b	landing_notes_a	landing_notes_b	landing_degrees_a	landing_degrees_b	landing_offsets_a	landing_offsets_b	landing_beats_a	landing_beats_b	guitarist_a	guitarist_b	pedal_a	pedal_b
+0	0.1	102	0	0	-1	intro	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+1	2.452941176	102	0	0	-1	intro	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+2	4.805882353	102	0	0	-1	intro	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+3	7.158823529	102	0	0	-1	intro	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+4	9.511764706	102	0	0	-1	groove	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+5	11.864705882	102	0	0	-1	groove	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+6	14.217647059	102	0	0	-1	groove	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+7	16.570588235	102	0	0	-1	groove	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+8	18.923529412	102	0	0	-1	groove	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+9	21.276470588	102	0	0	-1	groove	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+10	23.629411765	102	0	0	-1	groove	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+11	25.982352941	102	0	0	-1	groove	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+12	28.335294118	102	0	0	-1	groove	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+13	30.688235294	102	0	0	-1	groove	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+14	33.041176471	102	0	0	-1	groove	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+15	35.394117647	102	0	0	-1	groove	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+16	37.747058824	102	0	0	-1	buildup	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+17	40.1	102	0	0	-1	buildup	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+18	42.452941176	102	0	0	-1	buildup	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+19	44.805882353	102	0	0	-1	buildup	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+20	47.158823529	102	0	0	-1	buildup	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+21	49.511764706	102	0	0	-1	buildup	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+22	51.864705882	102	0	0	-1	buildup	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+23	54.217647059	102	0	0	-1	buildup	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+24	56.570588235	102	0	0	-1	hook	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+25	58.923529412	102	0	0	-1	hook	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+26	61.276470588	102	0	0	-1	hook	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+27	63.629411765	102	0	0	-1	hook	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+28	65.982352941	102	0	0	-1	hook	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+29	68.335294118	102	0	0	-1	hook	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+30	70.688235294	102	0	0	-1	hook	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+31	73.041176471	102	0	0	-1	hook	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	62	none	0	none	0	none	2.4978226002528	none	Flint	none	3	-1
+32	75.394117647	102	0	0	-1	hook	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+33	77.747058824	102	0	0	-1	hook	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+34	80.1	102	0	0	-1	hook	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+35	82.452941176	102	0	0	-1	hook	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+36	84.805882353	102	0	0	-1	space	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+37	87.158823529	102	0	0	-1	space	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+38	89.511764706	102	0	0	-1	space	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+39	91.864705882	102	0	0	-1	space	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+40	94.217647059	102	0	0	-1	space	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+41	96.570588235	102	0	0	-1	space	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+42	98.923529412	102	0	0	-1	space	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+43	101.276470588	102	0	0	-1	space	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+44	103.629411765	102	0	0	-1	hook	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+45	105.982352941	102	0	0	-1	hook	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+46	108.335294118	102	0	0	-1	hook	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+47	110.688235294	102	0	0	-1	hook	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+48	113.041176471	102	0	0	-1	hook	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+49	115.394117647	102	0	0	-1	hook	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+50	117.747058824	102	0	0	-1	hook	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+51	120.1	102	0	0	-1	hook	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	62	none	0	none	0	none	2.5017221008799	none	Flint	none	3	-1
+52	122.452941176	102	0	0	-1	hook	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+53	124.805882353	102	0	0	-1	hook	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+54	127.158823529	102	0	0	-1	hook	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+55	129.511764706	102	0	0	-1	hook	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+56	131.864705882	102	0	0	-1	hook	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+57	134.217647059	102	0	0	-1	hook	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+58	136.570588235	102	0	0	-1	hook	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+59	138.923529412	102	0	0	-1	hook	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	62	none	0	none	0	none	2.4942964925302	none	Flint	none	3	-1
+60	141.276470588	102	0	0	-1	drop	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+61	143.629411765	102	0	0	-1	drop	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+62	145.982352941	102	0	0	-1	drop	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+63	148.335294118	102	0	0	-1	drop	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+64	150.688235294	102	0	0	-1	drop	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+65	153.041176471	102	0	0	-1	drop	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+66	155.394117647	102	0	0	-1	drop	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+67	157.747058824	102	0	0	-1	drop	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	62	none	0	none	0	none	2.500828462725	none	Flint	none	3	-1
+68	160.1	102	0	0	-1	drop	waiting	2	-1	0	0	none	-1	0	0	1	0	solo	none	0	0	8	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+69	162.452941176	102	0	0	-1	drop	waiting	2	-1	0	0	none	-1	0	0	1	0	solo	none	1	0	8	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+70	164.805882353	102	0	0	-1	drop	waiting	2	-1	0	0	none	-1	0	0	1	0	solo	none	2	0	8	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+71	167.158823529	102	0	0	-1	drop	waiting	2	-1	0	0	none	-1	0	0	1	0	solo	none	3	0	8	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+72	169.511764706	102	0	0	-1	drop	waiting	2	-1	0	0	none	-1	0	0	1	0	solo	none	4	0	8	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+73	171.864705882	102	0	0	-1	drop	waiting	2	-1	0	0	none	-1	0	0	1	0	solo	none	5	0	8	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+74	174.217647059	102	0	0	-1	drop	waiting	2	-1	0	0	none	-1	0	0	1	0	solo	none	6	0	8	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+75	176.570588235	102	0	0	-1	drop	waiting	2	-1	0	0	none	-1	0	0	1	0	solo	none	7	0	8	0	74	none	0	none	0	none	1.2405261077967	none	Flint	none	3	-1
+76	178.923529412	102	0	0	-1	outro	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+77	181.276470588	102	0	0	-1	outro	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+78	183.629411765	102	0	0	-1	outro	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+79	185.982352941	102	0	0	-1	outro	waiting	2	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	none	3	-1
+80	188.335294118	102	1	0	1	outro	intro	2	0	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	Rook	3	2
+81	190.699117399	101.0	1	0	1	outro	intro	2	0	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	Rook	3	2
+82	193.086454384	100.0	1	0	1	outro	intro	2	0	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	Rook	3	2
+83	195.497777572	99.0	1	0	1	outro	intro	2	0	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	Rook	3	2
+84	197.93357385	98.0	1	0	1	outro	groove	2	0	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	Rook	3	2
+85	200.394345083	97.0	1	0	1	outro	groove	2	0	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	Rook	3	2
+86	202.880608733	96.0	1	0	1	outro	groove	2	0	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	Rook	3	2
+87	205.392898512	95.0	1	0	1	outro	groove	2	0	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	Flint	Rook	3	2
+88	207.931765071	94.0	0	-1	1	waiting	groove	-1	0	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	none	Rook	-1	2
+89	210.484956561	94	0	-1	1	waiting	groove	-1	0	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	none	Rook	-1	2
+90	213.03814805	94	0	-1	1	waiting	groove	-1	0	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	none	Rook	-1	2
+91	215.591339539	94	0	-1	1	waiting	groove	-1	0	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	none	Rook	-1	2
+92	218.144531029	94	0	-1	1	waiting	groove	-1	0	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	none	Rook	-1	2
+93	220.697722518	94	0	-1	1	waiting	groove	-1	0	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	none	Rook	-1	2
+94	223.250914008	94	0	-1	1	waiting	groove	-1	0	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	none	Rook	-1	2
+95	225.804105497	94	0	-1	1	waiting	groove	-1	0	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	none	Rook	-1	2
+96	228.357296986	94	0	-1	-1	end	end	-1	-1	0	0	none	-1	0	0	0	0	none	none	0	0	0	0	none	none	none	none	none	none	none	none	none	none	-1	-1

@@ -4,7 +4,7 @@
   "title": "Infinite DJ \u2014 Rock",
   "timeline": "infinite/experiments/dj/rock-channel-timeline.tsv",
   "seed": 2600,
-  "bars": 64,
+  "bars": 96,
   "initial_bpm": 102,
   "bpm_range": [
     78,

@@ -12,7 +12,7 @@ try {
     render={|tones=false|
         var score=List.new,time=0.1,tempo=102,node=1000;
         var name=if(blues){"rock-blues"}{(~djRockRenderNames ? ["rock-channel","rock-tones"])[if(tones){1}{0}]};
-        var bars=if(tones or:{blues}){24}{64},engine,timeline,duration,osc,records=Set.new,palettes=Set.new;
+        var bars=if(tones or:{blues}){24}{96},engine,timeline,duration,osc,records=Set.new,palettes=Set.new;
         var master=999,decks=[800,801],sources=[110,111],group=100,eqNodes=if(blues){[810,811]};
         var makeMix={|at|
             score.add([at,[\g_new,group,0,1],[\g_new,sources[0],0,group],[\g_new,sources[1],0,group],

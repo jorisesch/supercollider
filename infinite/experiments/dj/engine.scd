@@ -88,9 +88,6 @@ var root=thisProcess.nowExecutingPath.dirname;
                 lib.palettes.do {|palette,i|if(palette.auditionOnly!=true){paletteBag.add(i)}};
             };
             choices=paletteBag.asArray.reject { |i| i==lastPalette };
-            if(channel==\dubstep and:{index==0}){
-                choices=choices.select {|i|i==0 or:{lib.palettes[i].relay==true}};
-            };
             id=choose.value(choices);
             paletteBag.removeAt(paletteBag.indexOf(id));
         };
@@ -103,14 +100,15 @@ var root=thisProcess.nowExecutingPath.dirname;
         var cursor=0,chordIndex=0,localBar,forcedHook=0,change=false,forcedFill=false;
         var phraseLift=0,patternID,mutations=0,energyBias,wildness,densityBias;
         var modalTone=nil,modalEndBar= -1,recordTonality,recordLib,tones,harmonyBag;
-        var openWithHook=first and:{controls[\openWithHook]==true and:{[\edme,\pop].includes(channel)}};
+        var rhythmOpening=tonality==\original and:{controls[\palette].isNil and:{~djChannelIDs.includes(channel)}};
+        var openingBars=if(rhythmOpening){if(first and:{[\edme,\pop].includes(channel)}){8}{4}}{0};
+        var openWithHook=first and:{rhythmOpening.not and:{controls[\openWithHook]==true and:{[\edme,\pop].includes(channel)}}};
         var blues=channel==\rock and:{rockLeadVersion>=3} and:{tonality==\original}
             and:{modalPolicy==\fixed} and:{(seed+index)%4==1};
         tones=[\aeolian,\aeolian,\ionian,\ionian,\dorian,\mixolydian];
         if(controls.tension>0.60){tones=tones++[\harmonicMinor,\melodicMinor]};
         if(controls.tension>0.85){tones=tones++[\phrygian,\lydian]};
         if(channel==\dubstep){tones=[\phrygian,\aeolian,\dorian,\harmonicMinor]};
-        if(channel==\dubstep and:{first}){tones=[\phrygian]};
         recordTonality=if(tonality==\original){
             choose.value(tones.reject {|tone|tone==lastTonality})
         }{tonality};
@@ -135,6 +133,7 @@ var root=thisProcess.nowExecutingPath.dirname;
         form=if(blues){
             [[\intro,4],[\groove,12],[\hook,12],[\drop,choose.value([12,24,36])],[\outro,8]]
         }{~djSongForm.value(if(channel==\legacy){\edme}{channel},formID,choose)};
+        if(rhythmOpening){form[0]=[\intro,openingBars]};
         form.do { |part|
             sections.add((name:part[0],start:total,bars:part[1])); total=total+part[1];
         };
@@ -147,6 +146,7 @@ var root=thisProcess.nowExecutingPath.dirname;
         };
         // Cue the incoming intro so its groove arrives by the end of a short mix.
         localBar=if(first) { if(channel==\pop) {0} {form[0][1]} } { (form[0][1]-entryBars).max(0) };
+        if(rhythmOpening){localBar=0};
         if(openWithHook) {
             localBar=sections.detect { |part| [\hook,\drop].includes(part.name) }.start;
         };
@@ -169,6 +169,7 @@ var root=thisProcess.nowExecutingPath.dirname;
         };
         plan.tonality=tonality;
         plan.modalPolicy=modalPolicy;plan.baseScale=scale;
+        plan.openingBars=openingBars;
         plan.baseTonality=recordTonality;
         plan.activeTonality=recordTonality;plan.modalAccent=false;
         plan.keyName=lib[\keys][key]++" "++~djTonalities[recordTonality].label;
@@ -192,7 +193,7 @@ var root=thisProcess.nowExecutingPath.dirname;
             var local=localBar,part=sections.detect { |item| local < (item.start+item.bars) };
             var section=part.name,partBar=local-part.start,progress=partBar/(part.bars-1).max(1);
             var intensity,effective,drumBreak,hook,fill,events;
-            if(modalPolicy==\tension){
+            if(plan.modalPolicy==\tension){
                 if(bar>=modalEndBar or:{forcedHook>0}){modalTone=nil};
                 // Only phrase endings outside choruses/intros/outros and handovers.
                 // EDM breakdown pads are long-held, so leave those scales alone.
@@ -243,6 +244,11 @@ var root=thisProcess.nowExecutingPath.dirname;
             if(channel==\rock and:{rockLeadVersion>=2}){~djMelodyPalette.value(#[],plan,melody)};
             events=styleBar.value(plan,local,section,progress,effective,hook,drumBreak,
                 patternID,fill,seed,random,forcedHook>0);
+            if(local<plan.openingBars){
+                events=if([\edme,\pop].includes(channel)){~djOpeningDrums.value(plan,local,seed)}{
+                    events.select {|event|event.lane==3}
+                };
+            };
             events=~djMelodyPalette.value(events,plan,melody);
             if(channel==\rock and:{rockToneVersion>0}){events=if(rockToneVersion>=2){~djRockPhysicalExpression.value(events,plan)}{~djRockExpression.value(events,plan)}};
             localBar=(localBar+1)%total; plan.position=localBar;

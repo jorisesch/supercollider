@@ -1,6 +1,6 @@
 # Infinite DJ
 
-Music that keeps playing, creating and mixing new tracks as it goes. Each launch starts a fresh set with different keys, instruments, scales and song structures. [Hear six generated songs](../../../audio/dj-variety-preview.m4a).
+Music that keeps playing, creating and mixing new tracks as it goes. EDM and Pop choose a fresh first song, key and mode each time. Both begin with eight bars of drums before the full song enters. Every later EDM and Pop song, and every Rock and London Dubstep song, starts with four rhythm-only bars before its pitched parts enter. Later tracks vary their keys, instruments, scales and song structures. [Hear six generated songs](../../../audio/dj-variety-preview.m4a).
 
 ## Install
 

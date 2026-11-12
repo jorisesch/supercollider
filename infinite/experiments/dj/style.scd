@@ -147,4 +147,20 @@
     if(section==\drop and: {partBar==0}) {add.value(3,\djImpact,0,60,2,0.12)};
     events.asArray.sort { |a,b| a.beat < b.beat };
 };
+// Opening kit for default EDM/Pop records. Pitched parts enter after the intro.
+~djOpeningDrums={|plan,bar,seed|
+    var events=List.new,add;
+    add={|role,step,duration,amp,pan=0|
+        events.add((deck:plan.deck,track:(plan.deck*4)+3,lane:3,role:role,
+            voice:plan.palette.voices[role] ? role,beat:step*0.25,step:step,swing:0,ghost:false,
+            midinote:50,duration:duration,amp:amp,pan:pan,color:plan.palette.color,tone:0.5,
+            seed:seed+(bar*101)+events.size));
+    };
+    [0,4,8,12].do {|step|add.value(\djKick,step,0.42,if(step==0){0.47}{0.43})};
+    [4,12].do {|step|add.value(\djClap,step,0.16,0.13,-0.04)};
+    [2,6,10,14].do {|step,i|add.value(\djHat,step,0.10,0.057*[1,0.72,0.88,0.75][i],0.2)};
+    if(bar>=4){[7,15].do {|step|add.value(\djPerc,step,0.075,0.032,-0.24)}};
+    if(bar==(plan.openingBars-1)){[13,14,15].do {|step,i|add.value(\djSnare,step,0.09,0.043+(i*0.018),-0.1)}};
+    events.asArray;
+};
 )

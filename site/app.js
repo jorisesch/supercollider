@@ -249,11 +249,30 @@ async function initialize() {
 
   const pending = [];
   let driverReady = false;
+  const decoder = new TextDecoder();
+  let bootStatusReceived = false;
+  let loginPending = false;
+  let serverBooted = false;
+  engineEvents.addEventListener("booted", () => { serverBooted = true; }, { once: true });
   lang.onOsc = (packet) => {
+    if (!serverBooted) {
+      const address = decoder.decode(packet.subarray(0, packet.indexOf(0)));
+      if (address === "/status" && !loginPending) bootStatusReceived = false;
+      if (address === "/notify") loginPending = true;
+    }
     if (driverReady) synth.sendOsc(packet);
     else pending.push(new Uint8Array(packet));
   };
-  synth.onOscReply = (reply) => lang.sendOsc(reply);
+  synth.onOscReply = (reply) => {
+    // Batched status replies can each initiate login before sclang finishes
+    // handling the first one, creating duplicate server trees and allocations.
+    const address = decoder.decode(reply.subarray(0, reply.indexOf(0)));
+    if (!serverBooted && address === "/status.reply") {
+      if (bootStatusReceived) return;
+      bootStatusReceived = true;
+    }
+    lang.sendOsc(reply);
+  };
   synth.onPrint = (line) => console.debug("[scsynth]", line);
   lang.printCallback = onLanguagePrint;
   lang.printErrCallback = (line) => console.error("[sclang]", line);

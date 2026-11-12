@@ -13,8 +13,13 @@ try {
             384.do {
                 var f=a[\nextBar].value,g=b[\nextBar].value;
                 assert.value(f.events==g.events and:{f.automation==g.automation},"Explicit seed lost reproducibility");
+                f.decks.do {|plan|if(plan.notNil and:{plan.localBar<plan.openingBars}){
+                    var notes=f.events.select {|event|event.deck==plan.deck};
+                    assert.value(notes.notEmpty and:{notes.every {|event|event.lane==3}},"Song intro is not rhythm only");
+                }};
                 f.decks.do {|plan|if(plan.notNil and:{seen.includes(plan.serial).not}){
                     var cursor=0;
+                    assert.value(plan.localBar==0,"Song skipped its rhythm intro when cued");
                     seen.add(plan.serial);modes.add(plan.baseTonality);keys.add(plan.key);palettes.add(plan.palette.id);
                     orders.add(plan.sections.collect(_.name).asCompileString);lengths.add(plan.length);
                     plan.sections.do {|part|
@@ -37,16 +42,40 @@ try {
         assert.value(modes.size>=5 and:{orders.size>=4} and:{lengths.size>=5} and:{keys.size>=6},"Songs still repeat too few musical choices");
     };
     assert.value(signatures.size>=10,"Different seeds repeat the opening record");
-    [\edme,\pop].do {|channel|
-        (1..24).do {|seed|
-            var session=~makeDJEngine.value(seed,134,(channel:channel,openWithHook:true));
-            var first=session[\nextBar].value;
-            assert.value([\hook,\drop].includes(first.decks[0].section),"Web set opened before the hook");
-            assert.value(first.events.any {|e|e.role==\djHook},"Web opening is missing its lead");
-            if(channel==\edme) {
-                assert.value(first.events.any {|e|e.voice==\edmAnthemLead},"EDM web opening is missing its anthem lead");
-            };
+    {
+        var engine=~makeDJEngine.value(731,140,(channel:\dubstep)),seen=Set.new;
+        192.do {
+            var frame=engine[\nextBar].value;
+            frame.decks.do {|plan|if(plan.notNil){
+                if(seen.includes(plan.serial).not){
+                    assert.value(plan.localBar==0 and:{plan.openingBars==4},"Dubstep skipped its rhythm intro");
+                    seen.add(plan.serial);
+                };
+                if(plan.localBar<plan.openingBars){
+                    var notes=frame.events.select {|event|event.deck==plan.deck};
+                    assert.value(notes.notEmpty and:{notes.every {|event|event.lane==3}},"Dubstep intro has pitched parts");
+                };
+            }};
         };
+        assert.value(seen.size>=2,"Dubstep did not rotate songs");
+    }.value;
+    [\edme,\pop].do {|channel|
+        var openingPalettes=Set.new,openingKeys=Set.new,openingModes=Set.new;
+        (1..24).collect {|i|i*7919}.do {|seed|
+            var session=~makeDJEngine.value(seed,134,(channel:channel,openWithHook:true));
+            var frame;
+            8.do {
+                frame=session[\nextBar].value;
+                openingPalettes.add(frame.decks[0].palette.id);
+                openingKeys.add(frame.decks[0].key);openingModes.add(frame.decks[0].baseTonality);
+                assert.value(frame.events.every {|e|e.lane==3},"Pitched parts entered during the drum opening");
+                assert.value(frame.events.select {|e|e.role==\djKick}.collect(_.step)==[0,4,8,12],"Opening lost its kick pulse");
+            };
+            frame=session[\nextBar].value;
+            assert.value(frame.events.any {|e|e.role==\djBass},"Bass did not enter after eight drum bars");
+            assert.value(frame.decks[0].section!=\intro,"Opening did not enter the full song");
+        };
+        assert.value(openingPalettes.size>=3 and:{openingKeys.size>=4 and:{openingModes.size>=2}},"First song choices are still fixed");
     };
     [\edme,\pop,\rock].do {|channel|~djTonalities.keys.do {|tone|[\full,\pentatonic].do {|melody|
         var engine=~makeDJEngine.value(439,128,(channel:channel,tonality:tone,modalPolicy:\fixed,melody:melody));
