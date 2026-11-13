@@ -39,7 +39,8 @@ anthemBar={ |source,plan,local,section,part,partBar,seed,forced|
             target=((target-8)..(target+8)).select {|note|chordTones.includes((note-plan.key)%12)}
                 .minItem {|note|(note-target).abs};
         };
-        target+if(full){0}{-12};
+        // The approved Anthem register is one octave below the original lead.
+        target-12+if(full){0}{-12};
     };
     // Two calls share the 3+3+2 pickup. The answers fall and leave space for the next call.
     leadPhrase=[

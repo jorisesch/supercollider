@@ -4,7 +4,7 @@
     SynthDef(\edmAnthemLead,{ |out=0,freq=440,amp=0.23,seed=1,sustain=0.18,tone=0.65,pan=0|
         var pitch,env,attack,center,sides,sig,cutoff;
         RandSeed.ir(1,seed);
-        pitch=freq.clip(120,2400)*(1+(SinOsc.kr(5.4)*Line.kr(0,0.004,0.28)));
+        pitch=freq.clip(55,2400)*(1+(SinOsc.kr(5.4)*Line.kr(0,0.004,0.28)));
         env=EnvGen.kr(Env([0,1,0.81,0],[0.008,sustain.max(0.02),0.084],[-2,-2,-4]),doneAction:2);
         attack=EnvGen.kr(Env.perc(0.008,0.095,curve:-3));
         center=(VarSaw.ar(pitch,0,0.31)*0.62)+(SinOsc.ar(pitch)*0.21)+(SinOsc.ar(pitch*2)*attack*0.09);

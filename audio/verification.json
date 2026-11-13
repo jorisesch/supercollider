@@ -405,7 +405,7 @@
     "sample_rate": 48000,
     "channels": 2,
     "peak_dbfs": -2.45,
-    "rms_dbfs": -18.59,
+    "rms_dbfs": -18.55,
     "end_peak": 0.0,
     "automatic_stutter_phrases": [
       {
@@ -455,7 +455,7 @@
       3
     ],
     "music_seconds": 210.9633,
-    "music_rms_dbfs": -18.51,
+    "music_rms_dbfs": -18.47,
     "four_bar_rms_dbfs": [
       -22.44,
       -22.44,
@@ -481,9 +481,9 @@
       -18.88,
       -18.87,
       -21.06,
-      -18.16,
-      -16.13,
-      -15.21,
+      -18.05,
+      -15.96,
+      -14.9,
       -15.22
     ]
   },

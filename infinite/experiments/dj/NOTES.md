@@ -1,5 +1,9 @@
 # Infinite DJ listening notebook
 
+## 2026-11-13 — lower Anthem melody approved
+
+**Gb Ionian / Anthem**: “one octave lower is much better for that track.” The [matched register comparison](anthem-register/README.md) changed only the Anthem lead by −12 semitones. Apply that lower register to the production Anthem melody, preserving its backing, rhythm, expression and strong compression. This transposition applies to Anthem in every key.
+
 ## 2026-11-12 — strong compression approved for EDM and Pop
 
 Human comparison verdict: **D · Stronger** for both **E Aeolian / Brass Circuit** and **G Ionian / Wired House**. Apply the strong setting to both EDM and Pop. Pop already uses this setting; EDM now shares its master processing: stereo-linked 4:1 compression, threshold 0.027, 4 ms attack, 180 ms release and a 110 Hz high-pass detector, with makeup gain and the output safety limiter. The [EDM comparison](edm-compression/README.md) preserves the bypass, previous EDM, gentle and strong versions.
