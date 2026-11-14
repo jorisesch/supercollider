@@ -12,7 +12,7 @@ Run the commands below from the **repository folder**, not from inside `infinite
 
 ## EDM
 
-Each set starts with a randomly chosen song and eight bars of drums. Later songs begin with four bars of drums and use varied keys and ensembles. The rotation includes the Violet Afterburn, Night Signal and Horizon Lights styles: instrumental grooves played in freshly generated keys, chords and forms.
+Each set starts with a randomly chosen song and eight bars of drums. Later songs begin with four bars of drums and use varied keys and ensembles. The rotation includes the Violet Afterburn, Night Signal and Horizon Lights styles in freshly generated keys, chords and forms, with soft keys or clean pluck melodies and occasional instrumental versions.
 
 Bass, drums and synth grooves, with strong mix compression for a fuller sound and new tracks mixed in automatically:
 
@@ -22,7 +22,7 @@ Bass, drums and synth grooves, with strong mix compression for a fuller sound an
 
 ## Pop
 
-Each set starts with a randomly chosen song and eight bars of drums. Later songs begin with four bars of drums and follow the normal random rotation. The rotation includes the Neon Gravity and Silver Motion styles in freshly generated keys, chords and forms. Neon Gravity plays its melody on soft keys or a clean pluck, and occasionally without a lead.
+Each set starts with a randomly chosen song and eight bars of drums. Later songs begin with four bars of drums and follow the normal random rotation. The rotation includes the Neon Gravity and Silver Motion styles in freshly generated keys, chords and forms. Both play their melodies on soft keys or a clean pluck, and occasionally without a lead.
 
 Bright synths, varied chord progressions and returning chorus hooks, with a compressed mix for a fuller sound:
 

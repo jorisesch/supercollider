@@ -1,6 +1,6 @@
 // Round 04 song styles in the live EDM/Pop rotation. Pure engine check; no audio.
 (
-var root=thisProcess.nowExecutingPath.dirname,neonLeads=Set.new,assert={|ok,message|if(ok.not){Error(message).throw}};
+var root=thisProcess.nowExecutingPath.dirname,neonLeads=Set.new,bare=Set.new,assert={|ok,message|if(ok.not){Error(message).throw}};
 try {
     (root+/+"engine.scd").load;(root+/+"instruments.scd").load;
     assert.value(~djSongStyles.size==5,"Expected five approved song styles");
@@ -22,13 +22,19 @@ try {
                             lengths.add(plan.length);modes.add(plan.baseTonality);
                         };
                         assert.value(spec.channel==channel,"Style played on the wrong channel");
-                        if(~djSongStyleLeads[spec.id.asSymbol].isNil){
-                            assert.value(mine.every {|e|e.lane!=1},"Instrumental style played a lead");
-                        }{
-                            neonLeads.add(plan[\styleLead] !? {|lead|lead.voice} ? \none);
-                            mine.select {|e|e.lane==1}.do {|e|
-                                assert.value(e.voice==plan.styleLead.voice,"Lead changed sound mid-song");
-                                assert.value(e.midinote>=57 and:{e.midinote<=83},"Lead left its range");
+                        neonLeads.add(plan[\styleLead] !? {|lead|lead.voice} ? \none);
+                        if(plan[\styleLead].isNil){
+                            assert.value(mine.every {|e|e.lane!=1},"No-lead version played a lead");
+                        };
+                        mine.select {|e|e.lane==1}.do {|e|
+                            assert.value(e.voice==plan.styleLead.voice,"Lead changed sound mid-song");
+                            assert.value(e.midinote>=57 and:{e.midinote<=83},"Lead left its range");
+                        };
+                        if(plan.styleBare==true){
+                            bare.add(spec.id);
+                            assert.value(spec.id=="C" and:{plan.styleLead.voice==\neonSoftKeys},"Wrong style dropped its groove");
+                            if([\space,\breakdown].includes(plan.section) and:{local>=plan.openingBars}){
+                                assert.value(mine.every {|e|[1,2].includes(e.lane)},"Groove-free breakdown kept drums or bass");
                             };
                         };
                         mine.select {|e|e.lane==2}.do {|e|
@@ -46,7 +52,8 @@ try {
             "Song styles did not vary key, tempo, form and mode");
     };
     assert.value(neonLeads==Set[\neonSoftKeys,\neonCleanPluck,\none],
-        "Neon Gravity did not rotate soft keys, clean pluck and no lead: "++neonLeads.asString);
+        "Styles did not rotate soft keys, clean pluck and no lead: "++neonLeads.asString);
+    assert.value(bare==Set["C"],"Night Signal never played a groove-free breakdown");
     // The approved arrangement still uses the same grammar.
     ~djSongStyles.do {|spec|
         var state=~djSongStyleState.value;

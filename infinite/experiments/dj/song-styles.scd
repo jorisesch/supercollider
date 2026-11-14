@@ -7,25 +7,30 @@ var root=thisProcess.nowExecutingPath.dirname;
 var bassNames=(djReeseBass:"Reese bass",edmAnthemBass:"Rolling sub",djAcidBass:"Acid bass",popBass:"Offbeat pulse");
 var kitNames=(djAnalogKick:"Analog punch",djDustKick:"Dust kick",djKick:"Tight house");
 ~djSongStyles=(root+/+"melodic-round/recipes.scd").load;
-// Round 04 dropped every original lead. Round 04-neon approved two clean Neon Gravity
-// leads and its no-lead version; the other styles stay instrumental until a lead passes.
-~djSongStyleLeads=(A:[(voice:\neonSoftKeys,amp:0.085,tone:0.3,name:"Soft keys"),
-    (voice:\neonCleanPluck,amp:0.095,tone:0.3,name:"Clean pluck")]);
+// Round 04 dropped every original lead. Rounds 04-neon and 04-leads approved soft keys
+// and clean pluck on every style, and the no-lead versions too.
+~djSongStyleLeadChoices=[(voice:\neonSoftKeys,amp:0.085,tone:0.3,name:"Soft keys"),
+    (voice:\neonCleanPluck,amp:0.095,tone:0.3,name:"Clean pluck")];
+// Night Signal with soft keys "can also work without groove": its breakdowns drop
+// drums and bass, leaving the melody over the chord bed.
+~djSongStyleBareSpace=(C:\neonSoftKeys);
 // Ensembles appended to a channel's palettes; the engine rotates them like any other.
 ~djSongStylePalettes={|channel,firstID=0|
     ~djSongStyles.select {|spec|spec.channel==channel}.collect {|spec,i|
-        (id:firstID+i,name:spec.name++" style",bassName:bassNames[spec.bassVoice] ? spec.bassVoice.asString,
-            leadName:if(~djSongStyleLeads[spec.id.asSymbol].isNil){"No lead"}{"Clean lead"},kitName:kitNames[spec.drum] ? spec.drum.asString,color:i%4,songStyle:spec,
+        (id:firstID+i,name:spec.name,bassName:bassNames[spec.bassVoice] ? spec.bassVoice.asString,
+            leadName:"Clean lead",kitName:kitNames[spec.drum] ? spec.drum.asString,color:i%4,songStyle:spec,
             voices:(djKick:spec.drum,djClap:\djAnalogClap,djHat:\djAnalogHat,djPerc:\djAnalogPerc,
                 djSnare:\djAnalogSnare,djBass:spec.bassVoice,djPad:\popPad));
     };
 };
 ~djSongStyleState={(pads:[55,60,64])};
 // ctx: section (\intro \groove \hook \space \build), local, partBar, partBars, degree,
-// scale, tonic, hook, fill, patternID; optional lead (voice, amp, tone), returning, final.
+// scale, tonic, hook, fill, patternID; optional lead (voice, amp, tone), returning, final,
+// bare (a space section with no drums or bass).
 ~djSongStyleBar={|spec,ctx,state|
     var events=List.new,add,local=ctx.local,partBar=ctx.partBar,partBars=ctx.partBars.max(1);
     var intro=ctx.section==\intro,space=ctx.section==\space,build=ctx.section==\build;
+    var bare=space and:{ctx.bare==true};
     var pitch,rootNote,tones,steps,voicing,melody=List.new,lift=if(build){partBar*4/partBars}{0};
     pitch={|degree|ctx.tonic+ctx.scale.wrapAt(degree)+(12*(degree div:7))};
     rootNote=pitch.value(ctx.degree);
@@ -37,16 +42,16 @@ var kitNames=(djAnalogKick:"Analog punch",djDustKick:"Dust kick",djKick:"Tight h
             duration:span,amp:gain,tone:tone,pan:pan,drive:0.24,
             seed:spec.seed+(local*101)+events.size));
     };
-    steps=if(space){[0,8]}{spec.kicks.wrapAt(local)};
+    steps=case {bare}{[]} {space}{[0,8]} {true}{spec.kicks.wrapAt(local)};
     steps.do {|step|add.value(3,\djKick,spec.drum,step,36,0.43,if(step==0){0.43}{0.39})};
-    [4,12].do {|step|add.value(3,\djClap,\djAnalogClap,step,50,0.14,0.10,0.4,-0.05)};
+    if(bare.not){[4,12].do {|step|add.value(3,\djClap,\djAnalogClap,step,50,0.14,0.10,0.4,-0.05)}};
     if(space.not){[2,6,10,14].do {|step,i|
         add.value(3,\djHat,\djAnalogHat,step,104,0.09,0.039*[1,0.70,0.88,0.74][i],0.3,0.22);
     }};
     if(local%8>=4 and:{intro.not and:{space.not}}){
         [7,15].do {|step|add.value(3,\djPerc,\djAnalogPerc,step,60,0.06,0.024,0.3,-0.22)};
     };
-    if(local%8==7 or:{ctx.fill==true}){
+    if(bare.not and:{local%8==7 or:{ctx.fill==true}}){
         [13,14,15].do {|step,i|add.value(3,\djSnare,\djAnalogSnare,step,50,0.07,0.024+(i*0.01))};
     };
     if(build and:{partBar>=(partBars-2)}){
@@ -55,7 +60,7 @@ var kitNames=(djAnalogKick:"Analog punch",djDustKick:"Dust kick",djKick:"Tight h
         };
     };
     if(intro.not){
-        var bassSteps=if(space){[0,8]}{spec.bassSteps.wrapAt(local)};
+        var bassSteps=case {bare}{[]} {space}{[0,8]} {true}{spec.bassSteps.wrapAt(local)};
         var rolling=spec.style==\trance and:{bassSteps.size>8};
         // Diatonic fifth, octave or fourth above the chord root, so it stays in the scale.
         var answer=pitch.value(ctx.degree+[4,7,4,3].wrapAt(ctx.patternID ? 0))-pitch.value(ctx.degree);
@@ -76,16 +81,17 @@ var kitNames=(djAnalogKick:"Analog punch",djDustKick:"Dust kick",djKick:"Tight h
     };
     // The style's four-bar melodic cells over whatever chord is sounding.
     if(ctx.lead.notNil and:{[\hook,\space,\build].includes(ctx.section)}){
-        var phrase=partBar%4,cell=spec.motif[phrase],last=cell.size-1,landing;
+        var phrase=partBar%4,cell=spec.motif[phrase],last=cell.size-1,landing,leadLift=ctx.leadLift ? 0;
         landing={|target|
             ((target-4)..(target+4)).select {|note|tones.includes(note%12)}.minItem {|note|(note-target).abs};
         };
-        if(space){cell=cell.select {|hit,i|i==0 or:{i==last}}};
+        // Without the groove the melody carries the breakdown, so it keeps the whole cell.
+        if(space and:{bare.not}){cell=cell.select {|hit,i|i==0 or:{i==last}}};
         cell.do {|hit,i|
-            var note=pitch.value(hit[1])+24,isLanding=i==(cell.size-1);
+            var note=pitch.value(hit[1])+24+leadLift,isLanding=i==(cell.size-1);
             var sustain=hit[2],gain=ctx.lead.amp,step=hit[0];
             if(isLanding or:{i==0}){note=landing.value(note)};
-            if(ctx.final==true and:{isLanding}){note=ctx.tonic+24};
+            if(ctx.final==true and:{isLanding}){note=ctx.tonic+24+leadLift};
             if(space){sustain=(sustain*1.45).min((16-step)*0.25-0.08);gain=gain*0.66};
             if(build){gain=gain*(0.73+(lift*0.06))};
             if(ctx.returning==true){gain=gain*1.045};
@@ -110,21 +116,28 @@ var kitNames=(djAnalogKick:"Analog punch",djDustKick:"Dust kick",djKick:"Tight h
 ~djSongStyleLiveBar={|plan,local,section,partBar,partBars,hook,fill,patternID|
     var spec=plan.palette.songStyle,tonic,ctx;
     if(plan[\styleState].isNil){
-        var leads=~djSongStyleLeads[spec.id.asSymbol],choice;
+        var leads=~djSongStyleLeadChoices,choice;
         plan.styleState=~djSongStyleState.value;
         // Each lead is twice as likely as the occasional no-lead version.
-        if(leads.notNil){
-            choice=(leads++leads++[nil]).wrapAt((plan.serial*3)+plan.key+(plan.length div:4));
-            plan.styleLead=choice;
-            plan.palette=plan.palette.copy.put(\leadName,if(choice.isNil){"No lead (instrumental)"}{choice.name});
-        };
+        choice=(leads++leads++[nil]).wrapAt((plan.serial*3)+plan.key+(plan.length div:4));
+        plan.styleLead=choice;
+        plan.styleBare=choice.notNil and:{~djSongStyleBareSpace[spec.id.asSymbol]==choice.voice};
+        plan.palette=plan.palette.copy.put(\leadName,if(choice.isNil){"No lead (instrumental)"}{
+            choice.name++if(plan.styleBare){", groove-free breakdowns"}{""}});
     };
     // Stay within a fourth or fifth of the approved register.
     tonic=spec.tonic+((plan.key-spec.tonic)%12);
     if(tonic-spec.tonic>6){tonic=tonic-12};
+    // Move the whole melody up instead of down when down would leave the lead register.
+    if(plan[\styleLeadLift].isNil){
+        var lowest=spec.motif.flatten(1).collect {|hit|
+            spec.tonic+24+spec.scale.wrapAt(hit[1])+(12*(hit[1] div:7))
+        }.minItem;
+        plan.styleLeadLift=if(lowest+(tonic-spec.tonic)-5<57){12}{0};
+    };
     ctx=(local:local,partBar:partBar,partBars:partBars,degree:plan.schedule[local].degree,
         scale:plan.scale,tonic:tonic,hook:hook,fill:fill,patternID:patternID,
-        lead:plan[\styleLead],returning:section==\drop,
+        lead:plan[\styleLead],returning:section==\drop,bare:plan[\styleBare],leadLift:plan.styleLeadLift,
         section:case {[\hook,\drop].includes(section)}{\hook} {[\space,\breakdown].includes(section)}{\space}
             {section==\buildup}{\build} {section==\intro}{\intro} {true}{\groove});
     ~djSongStyleBar.value(spec,ctx,plan.styleState).events.collect {|event|

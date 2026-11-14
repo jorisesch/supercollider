@@ -158,5 +158,24 @@ Human listening decisions on 2026-11-14 on the Neon Gravity lead tones.
 | C | Clean pluck | Approved. “Also great!” |
 | D | No lead | Approved. Occasionally play the song without a lead |
 
-The study page still showed EDM because it was rendered before the Pop reclassification; Neon Gravity is a Pop style. The live Neon Gravity style now plays its melody with soft keys or clean pluck, and roughly one song in five plays without a lead. The melody is the approved four-bar cell set, landing on the generated chords. The other four styles stay instrumental until a lead passes listening. Exact comments and heard recipes are in `audio/listening-round/04-neon/round-04-neon-feedback.json`.
+The study page still showed EDM because it was rendered before the Pop reclassification; Neon Gravity is a Pop style. The live Neon Gravity style now plays its melody with soft keys or clean pluck, and roughly one song in five plays without a lead. The melody is the approved four-bar cell set, landing on the generated chords. Round 04-leads later approved the same leads for the other four styles. Exact comments and heard recipes are in `audio/listening-round/04-neon/round-04-neon-feedback.json`.
 
+
+### Round 04-leads — Neon leads on the other styles
+
+Soft keys and clean pluck, approved for Neon Gravity, are now auditioned on Violet Afterburn, Night Signal, Silver Motion and Horizon Lights with each song's approved notes and backing. [Versions and render commands](melodic-round/style-leads/README.md). The listening page is `audio/listening-round/04-leads/listen.html`.
+
+Human listening decisions on 2026-11-14 approved all eight. Night Signal with soft keys (C) “can also work w.o. groove.”
+
+| ID | Version | Decision |
+| --- | --- | --- |
+| A | Violet Afterburn / soft keys | Approved |
+| B | Violet Afterburn / clean pluck | Approved |
+| C | Night Signal / soft keys | Approved. Can also work without the groove |
+| D | Night Signal / clean pluck | Approved |
+| E | Silver Motion / soft keys | Approved |
+| F | Silver Motion / clean pluck | Approved |
+| G | Horizon Lights / soft keys | Approved |
+| H | Horizon Lights / clean pluck | Approved |
+
+Every live style now plays its melody cells on soft keys or clean pluck, and roughly one song in five plays without a lead. When a style moves to a key whose lead would sink below the lead register, the whole melody moves up instead of down. Night Signal songs with soft keys drop drums and bass in their breakdowns, leaving the full melody over the chord bed. Exact comments and heard recipes are in `audio/listening-round/04-leads/round-04-leads-feedback.json`.

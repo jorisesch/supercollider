@@ -3,6 +3,7 @@
 var root=thisProcess.nowExecutingPath.dirname,dj=root.dirname,output=thisProcess.argv.at(0);
 var recipes=(root+/+"recipes.scd").load,index=0,render,velvet,extraDefs=#[];
 var neonStudy=thisProcess.argv.at(1)=="neon",instrumental=thisProcess.argv.at(1)=="instrumental";
+var styleLeads=thisProcess.argv.at(1)=="leads";
 var referenceBacking,referenceMelody;
 try {
     if(output.isNil or:{File.exists(output).not}){Error("Provide an existing output directory").throw};
@@ -10,12 +11,13 @@ try {
         recipes=(root+/+"neon-leads/recipes.scd").load;
         extraDefs=(root+/+"neon-leads/instruments.scd").load;
     };
+    if(styleLeads){recipes=(root+/+"style-leads/recipes.scd").load};
     // Round 04 verdict: keep every backing, drop the lead until a better one is approved.
     if(instrumental){
         recipes=recipes.collect {|spec|spec.copy.putAll((muteLead:true,
             paletteName:spec.paletteName++" / instrumental, lead dropped"))};
     };
-    if(thisProcess.argv.at(1).notNil and:{neonStudy.not and:{instrumental.not}}){
+    if(thisProcess.argv.at(1).notNil and:{neonStudy.not and:{instrumental.not} and:{styleLeads.not}}){
         recipes=recipes.select {|spec|spec.id==thisProcess.argv[1]};
         if(recipes.isEmpty){Error("Unknown audition ID").throw};
     };

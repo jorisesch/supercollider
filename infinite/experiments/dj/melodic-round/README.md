@@ -18,7 +18,7 @@ Each excerpt starts with four drum-only bars, followed by four bars of drum and 
 
 The four-bar melodic cells use fixed rhythms, modest pitch movement and chord tones at their beginnings and endings. The eight-bar harmony repeats; the hook's first seven returning bars keep exactly the same lead pitches and durations. Only the closing bar resolves differently. Pads use close, gently moving voicings. Hats and fills stay restrained, and every candidate uses the approved strong stereo-linked compression and existing kick ducking.
 
-All five backings were approved and are now song styles in the live EDM and Pop rotation, generated in new keys, chords and forms. Their grammar lives in [song-styles.scd](../song-styles.scd), which this renderer also uses for the approved arrangement. Only Neon Gravity has a live lead: soft keys or clean pluck, approved in round 04-neon. The generated-song melody generator is unchanged.
+All five backings were approved and are now song styles in the live EDM and Pop rotation, generated in new keys, chords and forms. Their grammar lives in [song-styles.scd](../song-styles.scd), which this renderer also uses for the approved arrangement. Every style plays its melody on soft keys or clean pluck, approved in rounds 04-neon and 04-leads, and occasionally without a lead. The generated-song melody generator is unchanged.
 
 From the repository root on macOS:
 
