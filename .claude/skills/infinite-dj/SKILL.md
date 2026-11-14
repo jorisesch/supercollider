@@ -26,11 +26,11 @@ perl -e 'alarm 240; exec @ARGV' /Applications/SuperCollider.app/Contents/MacOS/s
 `.claude/skills/infinite-dj/run-checks.sh [name ...]` runs `infinite/experiments/dj/<name>.scd` (default: `check.scd` plus every `*-check.scd`) sequentially under the alarm and prints PASS/FAIL, seconds and the thrown error. Full logs go to `$TMPDIR/infinite-dj-checks/<name>.log`. `TIMEOUT=300` changes the per-check limit.
 
 ```bash
-.claude/skills/infinite-dj/run-checks.sh check pop-check fixed-songs-check
+.claude/skills/infinite-dj/run-checks.sh check pop-check song-styles-check
 ```
 
 Kinds (first-line comment of each file says which):
-- Pure engine checks (no server, seconds): `check`, `channels-check`, `e-check`, `interaction-check`, `pop-check`, `modes-check`, `variety-check`, `tension-check`, `fixed-songs-check`, `rock-check`, `rock-expression-check`, `rock-physical-check`, `rock-players-check`, `rock-solo-check`.
+- Pure engine checks (no server, seconds): `check`, `channels-check`, `e-check`, `interaction-check`, `pop-check`, `modes-check`, `variety-check`, `tension-check`, `song-styles-check`, `rock-check`, `rock-expression-check`, `rock-physical-check`, `rock-players-check`, `rock-solo-check`.
 - Offline NRT signal probes: `bass-check`, `stutter-check`, `manual-fx-check`, `rock-stutter-check`, `rock-guitar-signal-check`.
 - Muted native UI/server checks (boot a private server, open windows): `deck-view-check`, `spectrum-check`, `runtime-check`, `*-runtime-check`.
 
@@ -41,7 +41,8 @@ Things that made checks stale before, worth knowing when writing new ones:
 - Notes follow `plan.scale` (base scale, or a flagged two-bar `plan.modalAccent` colour), not a hardcoded major/minor scale.
 - A chosen mode is pinned (`modalPolicy:\fixed`). Only `tonality:\original` EDM/Pop use `\tension`.
 - Recall accepts only schema 8 with the current source fingerprint. Older names are rejected on purpose, so don't write replay tests for older schemas.
-- Half of EDM/Pop slots are fixed songs. Grammar checks pass `fixedSongs:false`.
+- Round 04 song styles are appended to the EDM/Pop palettes. Grammar checks pass `songStyles:false` to leave them out.
+- Every pitched event in lanes 0–2 must stay in `plan.scale` (`check` and `tension-check` enforce this). Write melodies and bass as diatonic degrees, not fixed semitone offsets.
 - Runtime waits must cover real musical time (a 16-bar Rock handover at 102 BPM is about 38 s). Compare OSC addresses with `msg[1].asString=="/d_load"`: a Symbol never equals a String. The user's startup file boots SuperDirt, so a `/d_load` failure for `superfm` and "Could not open UDP port 57120" are environment noise.
 - Kill your own leftover `sclang`/`scsynth` (`ps -ef | grep -E 'sclang|scsynth'`) before rerunning runtime checks.
 
@@ -69,8 +70,8 @@ A new `.scd` source used by the live engine must be added in **all** of:
 - `infinite/experiments/dj/engine.scd` — the `(root +/+ "x.scd").load` list at the top (style/generator code). Instrument files load from `instruments.scd` instead.
 - `scripts/build_site.py` — `DJ_SOURCES` (otherwise the browser build lacks it).
 - `infinite/experiments/dj/recall.scd` — the fingerprint file list near the top. Saved recipes embed this hash; changing any listed file invalidates old recipe names (expected; don't "fix" it by removing files).
-- SynthDefs: append to `~djDefs` (`~djDefs=~djDefs++[...]`, see `pop-instruments.scd`), or `live.scd` won't send them and renders won't include them.
+- SynthDefs: append to `~djDefs` (`~djDefs=~djDefs++[...]`, see `pop-instruments.scd`), or `live.scd` won't send them and renders won't include them. Instrument files outside the top folder are loaded from `instruments.scd` (e.g. `melodic-round/neon-leads/instruments.scd`) and also need the `DJ_SOURCES` and fingerprint entries.
 
-Approved fixed songs: specs (id, name, `channel`, style, bpm, ...) live in `infinite/experiments/dj/melodic-round/recipes.scd`; `fixed-songs.scd` turns them into live bars. `engine.scd` `chooseSong` makes half of a channel's slots fixed songs for that channel. Grammar/generator checks must construct engines with `(fixedSongs:false, ...)` so the rotation does not replace generated records; `fixed-songs-check` covers the rotation itself.
+Song styles: the approved round 04 songs (specs in `infinite/experiments/dj/melodic-round/recipes.scd`, leads in `~djSongStyleLeads`) become grammars in `song-styles.scd`. `~djSongStylePalettes` appends them to the EDM/Pop palettes in `engine.scd`, and `~djSongStyleLiveBar` generates their bars in any key, mode, form and tempo. Pass `(songStyles:false, ...)` in generator checks that must not draw those palettes. `song-styles-check` covers the styles themselves.
 
 After changes: run the relevant checks, compare against the baseline above, then render a listening round if the sound changed.

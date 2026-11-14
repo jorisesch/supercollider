@@ -9,12 +9,14 @@ var waitFor={ |fn,seconds=12| var end=Main.elapsedTime+seconds;
 var onFail,onLevel;
 ~djRecipeDir=Platform.defaultTempDir +/+ "dj-e-ui-recipes";
 (root+/+"live.scd").load; (root+/+"controls.scd").load;
+// Song-style records play their own bass and have no E "B" groove; test the generated E grammar.
+~djSettings.songStyles=false;
 server=Server(\eCheck,NetAddr("127.0.0.1",57136),ServerOptions.new.numInputBusChannels_(0)
     .numOutputBusChannels_(2).numWireBufs_(128).memSize_(65536).loadDefs_(false));
 server.volume.mute;
-onFail=OSCFunc({ |msg| failures.add(msg) },'/fail',server.addr);
+onFail=OSCFunc({ |msg| if(msg[1].asString!="/d_load"){failures.add(msg)} },'/fail',server.addr);
 onLevel=OSCFunc({ |msg| levels.add(msg[3]) },'/eCheckLevel',server.addr);
-SystemClock.sched(65,{"FAIL: EDM E runtime watchdog".postln;server.quit;1.exit;nil});
+SystemClock.sched(100,{"FAIL: EDM E runtime watchdog".postln;server.quit;1.exit;nil});
 server.waitForBoot {
     Routine {
         try {
@@ -41,7 +43,8 @@ server.waitForBoot {
             waitFor.value {~djEngine.state.decks[0].eVariant==\b};
             ui.value {~djUI[\next].valueAction_(0)};
             waitFor.value {~djEngine.state.mixing};
-            waitFor.value({~djEngine.state.currentSerial==1},24);
+            // Up to a 16-bar mix plus the queued boundary.
+            waitFor.value({~djEngine.state.currentSerial==1},(18*240/~djEngine.state.bpm)+4);
             assert.value(~djEngine.channel==\edme,"EDM E handover changed channel");
             assert.value(levels.notEmpty and:{levels.maxItem>0.01},"Silent EDM E output");
             ui.value {

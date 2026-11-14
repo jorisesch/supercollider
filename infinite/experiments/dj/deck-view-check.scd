@@ -22,7 +22,8 @@ server=Server(\djDeckViewCheck,NetAddr("127.0.0.1",57137),ServerOptions.new
 server.volume.mute;
 onGo=OSCFunc({ |m|alive.add(m[1])},'/n_go',server.addr);
 onEnd=OSCFunc({ |m|alive.remove(m[1])},'/n_end',server.addr);
-onFail=OSCFunc({ |m|failures.add(m);m.postln},'/fail',server.addr);
+// /d_load failures come from startup-file extensions (e.g. SuperDirt), not the DJ.
+onFail=OSCFunc({ |m|if(m[1].asString!="/d_load"){failures.add(m)};m.postln},'/fail',server.addr);
 SystemClock.sched(95,{"FAIL: Deck view watchdog".postln;server.quit;1.exit;nil});
 server.waitForBoot({
     Routine {

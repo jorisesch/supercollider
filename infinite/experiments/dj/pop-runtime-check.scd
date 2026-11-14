@@ -12,9 +12,10 @@ var onFail,onLevel;
 server=Server(\popCheck,NetAddr("127.0.0.1",57139),ServerOptions.new.numInputBusChannels_(0)
     .numOutputBusChannels_(2).numWireBufs_(128).memSize_(65536).loadDefs_(false));
 server.volume.mute;
-onFail=OSCFunc({ |msg| failures.add(msg) },'/fail',server.addr);
+// /d_load failures come from startup-file extensions (e.g. SuperDirt), not the DJ.
+onFail=OSCFunc({ |msg| if(msg[1].asString!="/d_load"){failures.add(msg)} },'/fail',server.addr);
 onLevel=OSCFunc({ |msg| levels.add(msg[3]) },'/popCheckLevel',server.addr);
-SystemClock.sched(65,{"FAIL: Pop runtime watchdog".postln;server.quit;1.exit;nil});
+SystemClock.sched(100,{"FAIL: Pop runtime watchdog".postln;server.quit;1.exit;nil});
 server.waitForBoot {
     Routine {
         try {
@@ -40,7 +41,8 @@ server.waitForBoot {
                 ~djUI[\next].valueAction_(0);
             };
             waitFor.value {~djEngine.state.mixing};
-            waitFor.value({~djEngine.state.currentSerial==1},24);
+            // Up to a 16-bar mix plus the queued boundary.
+            waitFor.value({~djEngine.state.currentSerial==1},(18*240/~djEngine.state.bpm)+4);
             assert.value(~djEngine.channel==\pop,"Pop handover changed channel");
             assert.value(levels.notEmpty and:{levels.maxItem>0.01},"Silent Pop output");
             ui.value {

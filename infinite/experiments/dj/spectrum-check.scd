@@ -23,7 +23,8 @@ server=Server(\djSpectrumCheck,NetAddr("127.0.0.1",57138),ServerOptions.new
 server.volume.mute;
 onGo=OSCFunc({ |msg| alive.add(msg[1]) },'/n_go',server.addr);
 onEnd=OSCFunc({ |msg| alive.remove(msg[1]) },'/n_end',server.addr);
-onFail=OSCFunc({ |msg| failures.add(msg); msg.postln },'/fail',server.addr);
+// /d_load failures come from startup-file extensions (e.g. SuperDirt), not the DJ.
+onFail=OSCFunc({ |msg| if(msg[1].asString!="/d_load"){failures.add(msg)}; msg.postln },'/fail',server.addr);
 SystemClock.sched(35,{"FAIL: Spectrum watchdog".postln;server.quit;1.exit;nil});
 // The CLI opens its window before the audio server finishes booting.
 ~djServer=server; ~djPlaying=false;

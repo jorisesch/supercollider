@@ -14,7 +14,8 @@ server=Server(\djCheck,NetAddr("127.0.0.1",57135),ServerOptions.new
 server.volume.mute;
 onGo=OSCFunc({ |m|alive.add(m[1])},'/n_go',server.addr);
 onEnd=OSCFunc({ |m|alive.remove(m[1])},'/n_end',server.addr);
-onFail=OSCFunc({ |m|failures.add(m);m.postln},'/fail',server.addr);
+// /d_load failures come from startup-file extensions (e.g. SuperDirt), not the DJ.
+onFail=OSCFunc({ |m|if(m[1].asString!="/d_load"){failures.add(m)};m.postln},'/fail',server.addr);
 onLevel=OSCFunc({ |m|levels.add(m[3..4])},'/djCheckLevel',server.addr);
 SystemClock.sched(110,{"FAIL: DJ UI watchdog".postln;server.quit;1.exit;nil});
 server.waitForBoot({
