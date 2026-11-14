@@ -5,7 +5,7 @@ try {
     var defs,count=0,pickups=Set.new,records=Set.new,palettes=Set.new,effects=Set.new,kickShapes=Set.new,progressions=Set.new;
     (root+/+"engine.scd").load;(root+/+"instruments.scd").load;(root+/+"recall.scd").load;
     defs=~djDefs.collect(_.name);
-    assert.value(~djChannelNames==["EDM","Pop","Rock"],"Channel menu must have one EDM");
+    assert.value(~djChannelNames==["EDM","Pop","Rock","London Dubstep"],"Channel menu must list each channel once");
     [\original,\aeolian,\ionian,\dorian,\phrygian,\mixolydian].do {|mode|
         3.do {|palette|
             [\full,\pentatonic].do {|melody|
@@ -58,7 +58,8 @@ try {
     {
         var engine=~makeDJEngine.value(2601,102,(channel:\rock,hold:true));
         var previous=~makeDJEngine.value(2601,102,(channel:\rock,hold:true,rockToneVersion:3));
-        var expected=[0,0,0,0,3,3,0,0,4,3,0,4]++[0,3,0,0,3,3,0,0,4,3,0,4];
+        // Four drums-only intro bars on I, then a 12-bar chorus and a quick-change chorus.
+        var expected=[0,0,0,0]++[0,0,0,0,3,3,0,0,4,3,0,4]++[0,3,0,0,3,3,0,0,4,3,0,4];
         expected.do {|degree|
             var frame=engine[\nextBar].value,plan=frame.decks[0],old=previous[\nextBar].value;
             assert.value(frame.events.size==old.events.size,"New guitar voice changed the blues event count");

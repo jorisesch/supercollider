@@ -33,10 +33,15 @@ try {
     {
         var session=~makeDJSession.value(140207,140,(channel:\dubstep),false), frame=session[\nextBar].value;
         var replay=~djSessionFromRecipe.value(session.recipeSpecs[0]);
-        var palettes=Set[frame.decks[0].palette.id], relay;
-        assert.value(frame.events.any {|e|e.voice==\djDubAcid},"London Dubstep did not open with acid");
+        var palettes=Set[frame.decks[0].palette.id], relay, groove=frame, introBars=0;
         assert.value([0,3].includes(frame.decks[0].palette.id),"London Dubstep should open with an acid palette");
         assert.value(replay.channel==\dubstep and:{replay[\nextBar].value.events==frame.events},"London Dubstep recipe did not round-trip");
+        // Songs open with a drums-only intro; the acid riff must enter on the first groove bar.
+        while {groove.decks[0].section==\intro and:{introBars<8}} {
+            assert.value(groove.events.every {|e|[\djHat,\djDustKick,\djDustSnare].includes(e.voice)},"London Dubstep intro was not drums only");
+            introBars=introBars+1;groove=session[\nextBar].value;
+        };
+        assert.value(introBars==4 and:{groove.events.any {|e|e.voice==\djDubAcid}},"London Dubstep did not open its groove with acid");
         320.do {
             frame=session[\nextBar].value;
             frame.decks.do {|deck|if(deck.notNil){palettes.add(deck.palette.id)}};

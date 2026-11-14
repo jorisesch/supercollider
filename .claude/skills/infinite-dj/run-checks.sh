@@ -4,7 +4,7 @@
 #        TIMEOUT=300 run-checks.sh   (seconds per check, default 240)
 SCLANG=/Applications/SuperCollider.app/Contents/MacOS/sclang
 ROOT="$(git -C "$(dirname "$0")" rev-parse --show-toplevel)"
-DJ="$ROOT/infinite/experiments/dj"
+DJ="${DJ:-$ROOT/infinite/experiments/dj}"  # DJ=<dir> to test another checkout
 TIMEOUT="${TIMEOUT:-240}"
 LOGDIR="${TMPDIR:-/tmp}/infinite-dj-checks"; mkdir -p "$LOGDIR"
 if [ $# -eq 0 ]; then set -- $(cd "$DJ" && ls check.scd *-check.scd | sed 's/\.scd$//'); fi

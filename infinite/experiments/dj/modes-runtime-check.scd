@@ -13,7 +13,7 @@ server=Server(\modeCheck,NetAddr("127.0.0.1",57148),ServerOptions.new.numInputBu
 server.volume.mute;
 // Our definitions use /d_recv. Record unrelated startup-extension file loads separately.
 onFail=OSCFunc({|msg|
-    if(msg[1]=="/d_load"){startupFileFailures.add(msg)}{failures.add(msg)};msg.postln;
+    if(msg[1].asString=="/d_load"){startupFileFailures.add(msg)}{failures.add(msg)};msg.postln;
 },'/fail',server.addr);
 SystemClock.sched(55,{server.quit;1.exit;nil});
 server.waitForBoot {

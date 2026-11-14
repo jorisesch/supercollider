@@ -56,22 +56,12 @@ try {
             if(bar==0){spec=~djReadRecipe.value(f.decks[0].trackName)};
             expected.add([f.events.deepCopy,f.automation.deepCopy]);
         };
-        assert.value(spec.size==16 and:{spec[0]==7} and:{spec[14]==1},"Recipe lost the guitar tone version");
+        assert.value(spec.size==16 and:{spec[0]==8} and:{spec[14]==1},"Recipe lost the guitar tone version");
         replay=~djSessionFromRecipe.value(spec);replay.persistRecipes=false;
         expected.do {|old|var f=replay[\nextBar].value;assert.value([f.events,f.automation]==old,"Guitar gestures/strip differ on recall")};
     }.value;
-    {
-        var spec=[5,2133735198,2600,128,3,[0.25,0.55,0.3,1.0,0,0,-1],0,0,[],0,"original","full","fixed",1];
-        var name=~djRecipeName.value(spec),replay,reference;
-        File.use(~djRecipeDir+/+(name++".json"),"w",{|file|file.write(spec.asCompileString)});
-        replay=~djSessionFromRecipe.value(~djReadRecipe.value(name));replay.persistRecipes=false;
-        reference=~makeDJEngine.value(2600,128,(channel:\rock,tension:1,rockToneVersion:0,rockLeadVersion:1));
-        assert.value(replay.controls.rockToneVersion==0,"Older solo recipe acquired new guitar processing");
-        128.do {var a=replay[\nextBar].value,b=reference[\nextBar].value;
-            assert.value(a.events==b.events and:{a.automation==b.automation},"Previous Rock solo/tone changed on replay");
-        };
-        assert.value(~djMixSpec.value(\rock,0).deck==\rockDeck,"Older recipe lost its original guitar strip");
-    }.value;
+    // Recall only accepts the current schema (8) and source fingerprint; older names are rejected (channels-check).
+    assert.value(~djMixSpec.value(\rock,0).deck==\rockDeck,"Tone version 0 lost its original guitar strip");
     ("PASS: "++count++" expressive Rock bars; "++gestures.asCompileString++"; all pedal colors; unchanged written notes/bass/drums, chord-tone landings, bounded controls and exact recall").postln;
     0.exit;
 } {|e|e.reportError;1.exit};

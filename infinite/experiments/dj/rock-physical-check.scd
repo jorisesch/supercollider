@@ -40,15 +40,7 @@ try {
         replay=~djSessionFromRecipe.value(spec);replay.persistRecipes=false;
         expected.do {|old|var f=replay[\nextBar].value;assert.value([f.events,f.automation]==old,"Recall differs")};
     };
-    {
-        var spec=[6,2074328684,2600,102,3,[0.25,0.55,0.3,1.0,0,0,-1],0,0,[],0,"original","full","fixed",1,1];
-        var name=~djRecipeName.value(spec),replay,reference;
-        File.use(~djRecipeDir+/+(name++".json"),"w",{|file|file.write(spec.asCompileString)});
-        replay=~djSessionFromRecipe.value(~djReadRecipe.value(name));replay.persistRecipes=false;
-        reference=~makeDJEngine.value(2600,102,(channel:\rock,tension:1,rockToneVersion:1,rockLeadVersion:1));
-        64.do {var a=replay[\nextBar].value,b=reference[\nextBar].value;
-            assert.value(a.events==b.events and:{a.automation==b.automation},"Previous source recipe changed its sound")};
-    }.value;
+    // Recall only accepts the current schema (8) and source fingerprint; older names are rejected (channels-check).
     assert.value(~djMixSpec.value(\rock,1).deck==\rockGuitarDeck and:{~djMixSpec.value(\rock,2).deck==\rockPhysicalDeck},"Recall routed to wrong guitar rig");
     ~djDefs.do {|d|assert.value(d.asBytes.size<65000,"SynthDef exceeds a portable OSC packet: "++d.name)};
     ("PASS: "++bars++" physical Rock bars; "++gestures.asCompileString++"; playable strings, unchanged score/rhythm section, rig isolation and tone 1–6 recall").postln;

@@ -23,7 +23,7 @@ perl -e 'alarm 240; exec @ARGV' /Applications/SuperCollider.app/Contents/MacOS/s
 
 ## Check suite
 
-`.claude/skills/infinite-dj/run-checks.sh [name ...]` runs `infinite/experiments/dj/<name>.scd` (default: `check.scd` plus every `*-check.scd`) sequentially under the alarm and prints PASS/FAIL, seconds and the first `ERROR`/`FAIL` line. Full logs go to `$TMPDIR/infinite-dj-checks/<name>.log`. `TIMEOUT=300` changes the per-check limit.
+`.claude/skills/infinite-dj/run-checks.sh [name ...]` runs `infinite/experiments/dj/<name>.scd` (default: `check.scd` plus every `*-check.scd`) sequentially under the alarm and prints PASS/FAIL, seconds and the thrown error. Full logs go to `$TMPDIR/infinite-dj-checks/<name>.log`. `TIMEOUT=300` changes the per-check limit.
 
 ```bash
 .claude/skills/infinite-dj/run-checks.sh check pop-check fixed-songs-check
@@ -34,23 +34,16 @@ Kinds (first-line comment of each file says which):
 - Offline NRT signal probes: `bass-check`, `stutter-check`, `manual-fx-check`, `rock-stutter-check`, `rock-guitar-signal-check`.
 - Muted native UI/server checks (boot a private server, open windows): `deck-view-check`, `spectrum-check`, `runtime-check`, `*-runtime-check`.
 
-**Known baseline at commit 5024e31** (verified 2026-11-14; failures predate later work, so only a *new* failure or a changed message is a regression):
+**Baseline: every check passes** (all 29, verified 2026-11-14; a full run takes about 10 minutes). Any failure is a regression, or a check made stale by an intended change. When a check fails, find the commit that broke it (`DJ=<other checkout>/infinite/experiments/dj run-checks.sh ...` against a `git worktree add --detach` of older commits) before editing it. Then fix either the code or the check's expectation, with a comment saying why. Never loosen a check without finding the cause.
 
-| Check | Baseline error |
-| --- | --- |
-| `check` | Tempo jumped during handover |
-| `channels-check` | London Dubstep did not open with acid |
-| `channels-runtime-check` | Duplicate/missing channel |
-| `e-check` | A component comparison changed its foundation |
-| `interaction-check` | EDM Classic groove changed |
-| `rock-check` | Channel menu must have one EDM |
-| `rock-expression-check` | Recipe lost the guitar tone version |
-| `rock-physical-check` | This track was made with a different music source version |
-| `rock-players-check` | Recipe lost player policy |
-| `rock-solo-check` | Requested riff lost its call, answer, climb or arrival |
-| `tension-runtime-check` | Tension runtime timeout |
-
-All other checks pass: bass, deck-view, e-runtime, fixed-songs, manual-fx, modes, modes-runtime, pop, pop-runtime, rock-guitar-signal, rock-solo-runtime, rock-stutter, runtime, spectrum, stutter, tension, variety, variety-runtime. A full run takes about 9 minutes; the pure checks take seconds each. Runtime checks boot servers. A stray `sclang`/`scsynth` (`ps -ef | grep -E 'sclang|scsynth'`) can cause port errors, so kill leftovers from your own runs first. "Could not open UDP port 57120" alone is harmless noise.
+Things that made checks stale before, worth knowing when writing new ones:
+- Generated songs (EDM, Pop, Rock, Dubstep with `tonality:\original` and no pinned `palette`) open with a **drums-only intro**: 8 bars for the first EDM/Pop record, 4 otherwise. Request hooks/riffs or expect pitched parts only after `section!=\intro`. A pinned `palette:` skips the intro (`render.scd e compare` relies on this).
+- Notes follow `plan.scale` (base scale, or a flagged two-bar `plan.modalAccent` colour), not a hardcoded major/minor scale.
+- A chosen mode is pinned (`modalPolicy:\fixed`). Only `tonality:\original` EDM/Pop use `\tension`.
+- Recall accepts only schema 8 with the current source fingerprint. Older names are rejected on purpose, so don't write replay tests for older schemas.
+- Half of EDM/Pop slots are fixed songs. Grammar checks pass `fixedSongs:false`.
+- Runtime waits must cover real musical time (a 16-bar Rock handover at 102 BPM is about 38 s). Compare OSC addresses with `msg[1].asString=="/d_load"`: a Symbol never equals a String. The user's startup file boots SuperDirt, so a `/d_load` failure for `superfm` and "Could not open UDP port 57120" are environment noise.
+- Kill your own leftover `sclang`/`scsynth` (`ps -ef | grep -E 'sclang|scsynth'`) before rerunning runtime checks.
 
 ## Listening rounds
 

@@ -12,8 +12,8 @@ waitFor={|fn,seconds=12|var end=Main.elapsedTime+seconds;
 server=Server(\tensionCheck,NetAddr("127.0.0.1",57150),ServerOptions.new.numInputBusChannels_(0)
     .numOutputBusChannels_(2).numWireBufs_(128).memSize_(65536).loadDefs_(false));
 server.volume.mute;
-onFail=OSCFunc({|msg|if(msg[1]=="/d_load"){startupErrors.add(msg)}{errors.add(msg)};msg.postln},'/fail',server.addr);
-SystemClock.sched(65,{server.quit;1.exit;nil});
+onFail=OSCFunc({|msg|if(msg[1].asString=="/d_load"){startupErrors.add(msg)}{errors.add(msg)};msg.postln},'/fail',server.addr);
+SystemClock.sched(120,{"FAIL: Tension runtime watchdog".postln;server.quit;1.exit;nil});
 server.waitForBoot {
     Routine {
         try {
@@ -23,7 +23,8 @@ server.waitForBoot {
             ~djStart.value(seed,128,server);waitFor.value {~djRoutine.notNil};engine=~djEngine;bus=~djBus;
             ui.value {~djShow.value;~djWindow.minimize;~djUI.knobs[3].valueAction_(1)};
             assert.value(~djEngine===engine and:{~djBus===bus},"Tension restarted the set");
-            waitFor.value({engine.state.decks[0].notNil and:{engine.state.decks[0].modalAccent}},22);
+            // The colour lands on bar 22: after the 8-bar drums-only intro and the first groove phrases (~41 s at 128 BPM).
+            waitFor.value({engine.state.decks[0].notNil and:{engine.state.decks[0].modalAccent}},50);
             assert.value(engine.state.decks[0].effective.tension>0.6,"Existing sound Tension did not respond");
             assert.value([\dorian,\phrygian].includes(engine.state.decks[0].activeTonality),"Tension did not reach minor color");
             ui.value {~djUI.knobs[3].valueAction_(0.2)};
@@ -34,14 +35,15 @@ server.waitForBoot {
             ui.value {~djUI.modeChoice.valueAction_(6);~djUI.modeApply.valueAction_(0)};
             waitFor.value {~djRoutine.notNil and:{~djEngine.controls.tonality==\lydian}};
             engine=~djEngine;waitFor.value {engine.state.decks[0].notNil};lastBus=~djBus;
-            assert.value(engine.state.decks[0].activeTonality==\ionian,"Low-Tension major should stay Ionian");
+            // A chosen mode is pinned: Lydian plays as Lydian, and Tension no longer swaps the scale.
+            assert.value(engine.state.decks[0].activeTonality==\lydian and:{engine.controls.modalPolicy==\fixed},"Pinned Pop Lydian did not play Lydian");
             ui.value {~djUI.knobs[3].valueAction_(1)};
             waitFor.value {engine.state.decks[0].effective.tension>0.6};
-            assert.value(~djEngine===engine and:{engine.controls.modalPolicy==\tension},"Pop Tension did not stay live");
+            assert.value(~djEngine===engine and:{engine.state.decks[0].activeTonality==\lydian},"Pop Tension restarted the set or left the pinned mode");
             ui.value {~djWindow.close};3.5.wait;
             assert.value(bus.index.isNil and:{lastBus.index.isNil},"Tension/channel window leaked buses");
             assert.value(errors.isEmpty,"Tension runtime server errors");
-            "PASS: real Tension knob preserves timbre response, starts/returns a sparse EDM accent without restart; Pop Lydian preference stays major at low Tension; high Tension and cleanup; hardware muted".postln;
+            "PASS: real Tension knob preserves timbre response, starts/returns a sparse EDM accent without restart; pinned Pop Lydian stays Lydian under live high Tension; cleanup; hardware muted".postln;
             if(startupErrors.notEmpty){("Separate startup-extension failures: "++startupErrors.size).postln};
             onFail.free;server.quit;0.exit;
         } {|e|e.reportError;~djStop.value;server.quit;1.exit};

@@ -57,10 +57,11 @@ try {
     a=~makeDJEngine.value(2600,128,(songStyles:false,channel:\edme,hold:true));a[\requestHook].value;
     4.do {assert.value(a[\nextBar].value.decks[0].eVariant==\b,"E Bass hook did not request B")};
     assert.value(a[\nextBar].value.decks[0].eVariant==\a,"E Bass hook did not release after four bars");
-    // Separate component comparisons retain the underlying drum/bass notes.
+    // Separate component comparisons retain the underlying drum/bass notes. Like `render.scd e compare`,
+    // pin palette 0: a pinned palette skips the drums-only song intro, keeping both streams in phase.
     [\percussion,\chords].do { |mode|
-        var original=~makeDJEngine.value(2600,128,(songStyles:false,channel:\legacy,hold:true,autoStutter:false));
-        var variant=~makeDJEngine.value(2600,128,(songStyles:false,channel:\edme,eMode:mode,hold:true,autoStutter:false));
+        var original=~makeDJEngine.value(2600,128,(songStyles:false,channel:\legacy,palette:0,hold:true,autoStutter:false));
+        var variant=~makeDJEngine.value(2600,128,(songStyles:false,channel:\edme,eMode:mode,palette:0,hold:true,autoStutter:false));
         16.do {
             var f=original[\nextBar].value,g=variant[\nextBar].value;
             var roles=[\djBass,\djKick,\djClap,\djSnare,\djHat];

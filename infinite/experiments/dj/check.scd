@@ -162,14 +162,16 @@ try {
                     "Ghost hits became foreground accents");
             };
             if(event.lane < 3) {
-                scale=if(plan.mode == \minor,[0,2,3,5,7,8,10],[0,2,4,5,7,9,11]);
+                // The active scale is the record's own, or a flagged two-bar tension colour borrowed from a mode.
+                scale=plan.scale;
+                assert.value(scale==plan.baseScale or:{plan.modalAccent==true},"A deck left its scale without a modal accent");
                 assert.value(scale.includes((event.midinote - plan.key) % 12),"A note escaped its deck's key");
             };
             if(event.lane==0) {
                 var message=~djMessage.value(event,1000,110,16,barBpm);
                 bassTones.add(event.tone.round(0.02)); bassDrives.add(event.drive.round(0.02));
                 assert.value(message[message.indexOf(\drive)+1]==event.drive,"Bass drive did not reach the synth adapter");
-                scale=if(plan.mode==\minor,[0,2,3,5,7,8,10],[0,2,4,5,7,9,11]);
+                scale=plan.scale;
                 degree=plan.schedule[plan.localBar].degree;
                 allowed=[0,4].collect { |offset| (plan.key+scale.wrapAt(degree+offset))%12 };
                 bassNotes=bassNotes+1;
@@ -181,7 +183,8 @@ try {
         frame.automation.do { |point|
             var g=point.gains;
             assert.value(point.bpm >= 118 and: { point.bpm <= 140 },"Tempo outside range");
-            if(previousBpm.notNil) { assert.value((point.bpm-previousBpm).abs <= 0.032,"Tempo jumped during handover") };
+            // Records move up to 8 BPM over at least an 8-bar mix: 8/(8*16) per sixteenth is a smooth ramp.
+            if(previousBpm.notNil) { assert.value((point.bpm-previousBpm).abs <= (8/128+0.000001),"Tempo jumped during handover") };
             previousBpm=point.bpm;
             assert.value(g.flat.every { |gain| gain >= 0 and: { gain <= 1 } },"Invalid crossfader gain");
             assert.value((g[0][2]+g[1][2]-1).abs < 0.000001,"Drum crossfade is not complementary");
@@ -217,17 +220,19 @@ try {
     assert.value(swingHits>100 and: {ghostHits>100} and: {breaths>100} and: {lowGaps>0} and: {returns>0}
         and: {bassTones.size>12} and: {bassDrives.size>12},"Missing groove, articulation, subtraction or coordinated returns");
     {
-        var held=~makeClassicDJEngine.value(2600,128,(hold:true,autoStutter:false)),cells=List.new;
+        var held=~makeClassicDJEngine.value(2600,128,(hold:true,autoStutter:false)),cells=List.new,notes=List.new;
         var tones=List.new,drives=List.new,percCounts=Set.new;
         16.do { |i|
             var frame=held[\nextBar].value,bass=frame.events.select { |e| e.role==\djBass };
             if(i<4) {
-                cells.add(bass.collect(_.step)); tones.add(bass.first.tone); drives.add(bass.first.drive);
+                cells.add(bass.collect(_.step)); notes.add(bass.collect(_.midinote));
+                tones.add(bass.first.tone); drives.add(bass.first.drive);
             };
             percCounts.add(frame.events.count { |e| e.role==\djPerc });
         };
-        assert.value(cells[0]==cells[1] and: {cells[1]==cells[2]},"Bass motif changed before its answer");
-        assert.value(cells[3]!=cells[0] and: {cells[3].count { |step| cells[0].includes(step) } >= 3},
+        assert.value(cells[0]==cells[1] and: {cells[1]==cells[2]} and: {notes[0]==notes[1]},"Bass motif changed before its answer");
+        // Every fourth bar answers by moving its last note to the fifth, and sometimes by shifting its last step.
+        assert.value((cells[3]!=cells[0] or: {notes[3].last!=notes[0].last}) and: {cells[3].count { |step| cells[0].includes(step) } >= 3},
             "Bass answer lost the memorable cell");
         assert.value(tones.last>(tones.first+0.05) and: {drives.last>(drives.first+0.05)},
             "Bass filter and saturation failed to evolve through the phrase");
@@ -277,7 +282,8 @@ try {
             var frame=extreme[\nextBar].value;
             frame.events.do { |event|
                 var plan=frame.decks[event.deck];
-                var scale=if(plan.mode==\minor,[0,2,3,5,7,8,10],[0,2,4,5,7,9,11]);
+                var scale=plan.scale;
+                assert.value(scale==plan.baseScale or:{plan.modalAccent==true},"Extreme controls left the scale without a modal accent");
                 assert.value(event.beat >= 0 and: { event.beat < 4 } and: { event.amp > 0 }
                     and: { event.amp <= 0.65 } and: { event.duration > 0 },"Invalid extreme-control event");
                 if(event.lane < 3) {

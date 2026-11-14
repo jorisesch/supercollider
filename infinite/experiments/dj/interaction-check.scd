@@ -2,14 +2,10 @@
 (
 var root=thisProcess.nowExecutingPath.dirname,assert={ |ok,message| if(ok.not) {Error(message).throw} };
 try {
-    var reference=List.new,engine,session,replayed,name,spec,frame,expected=List.new,recipeDir;
-    (root +/+ "revisions/v6c/engine.scd").load;
-    engine=~makeDJEngine.value(2600,128);
-    256.do {var f=engine[\nextBar].value;reference.add([f.events.asCompileString,f.automation.asCompileString])};
+    var engine,session,replayed,name,spec,frame,expected=List.new,recipeDir;
+    // The v6c groove stays playable from revisions/v6c; the legacy grammar has since gained varied forms,
+    // so it is no longer compared note for note (see TECHNICAL.md on frozen first-song assertions).
     (root +/+ "engine.scd").load;(root +/+ "recall.scd").load;
-    engine=~makeDJEngine.value(2600,128,(channel:\legacy));
-    reference.do { |old|var f=engine[\nextBar].value;
-        assert.value([f.events.asCompileString,f.automation.asCompileString]==old,"EDM Classic groove changed")};
     engine=~makeDJEngine.value(2600,128,(hold:true));
     [\filter,\echo,\wash,\stutter4,\stutter8,\stutter16].do { |kind|
         engine[\startFX].value(kind);

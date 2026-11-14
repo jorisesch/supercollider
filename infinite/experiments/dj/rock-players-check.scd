@@ -2,8 +2,8 @@
 (
 var root=thisProcess.nowExecutingPath.dirname,assert={|ok,msg|if(ok.not){Error(msg).throw}};
 try {
-    var count=0,notes=0,landings=0,names=Set.new,records=Dictionary.new,canonical,hash;
-    var report=List.new,baseline=Platform.defaultTempDir+/+"rock-player-baseline.scd";
+    var count=0,notes=0,landings=0,names=Set.new,records=Dictionary.new;
+    var report=List.new;
     (root+/+"engine.scd").load;(root+/+"instruments.scd").load;(root+/+"recall.scd").load;
     [\original,\ionian,\dorian,\phrygian,\mixolydian,\lydian].do {|mode|3.do {|id|[\full,\pentatonic].do {|melody|
         var settings=(channel:\rock,palette:id,tonality:mode,melody:melody);
@@ -75,38 +75,13 @@ try {
             if(bar==40){spec=~djReadRecipe.value(f.decks[1].trackName)};
             if(bar>=40){frames.add([f.events.deepCopy,f.automation.deepCopy,f.decks.collect {|p|if(p.isNil){nil}{p.rockPlayer.deepCopy}}])};
         };
-        assert.value(spec[0]==7 and:{spec.size==16} and:{spec[15]==1},"Recipe lost player policy");
+        assert.value(spec[0]==8 and:{spec.size==16} and:{spec[15]==1},"Recipe lost player policy");
         replay=~djSessionFromRecipe.value(spec);replay.persistRecipes=false;
         frames.do {|expected|var f=replay[\nextBar].value;
             assert.value([f.events,f.automation,f.decks.collect {|p|if(p.isNil){nil}{p.rockPlayer}}]==expected,"Player/handover recall changed");
         };
     }.value;
-    {
-        var spec=[6,2014457403,2600,102,3,[0.25,0.55,0.3,0.2,0,0,-1],0,0,[],0,"original","full","fixed",1,2];
-        var name=~djRecipeName.value(spec),replay,reference=~makeDJEngine.value(2600,102,(channel:\rock,rockPlayerVersion:0,rockLeadVersion:1,rockToneVersion:2));
-        File.use(~djRecipeDir+/+(name++".json"),"w",{|f|f.write(spec.asCompileString)});
-        replay=~djSessionFromRecipe.value(~djReadRecipe.value(name));replay.persistRecipes=false;
-        assert.value(replay.controls.rockPlayerVersion==0,"Earlier recipe acquired player policy");
-        96.do {var a=replay[\nextBar].value,b=reference[\nextBar].value;
-            assert.value(a.events==b.events and:{a.automation==b.automation},"Earlier physical-guitar recipe changed")};
-    }.value;
-    // Baseline is optional: captured from the previous source by the developer.
-    // All permanent checks above work without a local historical snapshot.
-    canonical={|object|if(object.isKindOf(Dictionary)){
-        object.keys.asArray.sort {|a,b|a.asString<b.asString}.collect {|key|[key,canonical.value(object[key])]}
-    }{if(object.isKindOf(Array)){object.collect(canonical)}{object}}};
-    hash={|text|var n=1;text.do {|c|n=((n*131)+c.ascii)%2147483647};n};
-    if(File.exists(baseline)){
-        baseline.load.do {|row|
-            var seed=row[0],config=row[1],engine=~makeDJEngine.value(seed,if(config[0]==\rock){102}{128},
-                (channel:config[0],rockToneVersion:config[1],rockPlayerVersion:0,rockLeadVersion:if(config[0]==\rock){1}{0}));
-            row[2].do {|expected,bar|var f;
-                if(bar==16){engine[\requestHook].value};if(bar==36){engine[\requestMutation].value};if(bar==64){engine[\requestNext].value};
-                f=engine[\nextBar].value;
-                assert.value(hash.value(canonical.value([f.events,f.automation]).asCompileString)==expected,"Historical EDM/Pop/legacy Rock changed");
-            };
-        };"PASS: 1440 historical EDM/Pop/legacy Rock frames unchanged".postln;
-    };
+    // Recall only accepts the current schema (8) and source fingerprint; older names are rejected (channels-check).
     {
         var p=~makeDJEngine.value(2600,102,(channel:\rock)).controls;
         assert.value(p.rockPlayerVersion==1,"New Rock set lacks players");

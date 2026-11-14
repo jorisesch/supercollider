@@ -65,6 +65,8 @@ try {
     }.value;
     [\full,\pentatonic].do {|melody|
         var engine=~makeDJEngine.value(2600,102,(channel:\rock,hold:true,melody:melody));
+        // Request the riff once the drums-only intro has handed over to the groove.
+        while {engine[\nextBar].value.decks[0].section==\intro} {};
         engine[\requestHook].value;
         4.do {|i|
             var f=engine[\nextBar].value,plan=f.decks[0];
@@ -100,20 +102,11 @@ try {
             if(bar==20){spec=~djReadRecipe.value(f.decks[1].trackName)};
             if(bar>=20){expected.add([f.events.deepCopy,f.automation.deepCopy])};
         };
-        assert.value(spec[0]==7 and:{spec.size==16} and:{spec[13]==3},"Recipe lost the solo grammar version");
+        assert.value(spec[0]==8 and:{spec.size==16} and:{spec[13]==3},"Recipe lost the solo grammar version");
         replay=~djSessionFromRecipe.value(spec);replay.persistRecipes=false;
         expected.do {|old|var f=replay[\nextBar].value;assert.value([f.events,f.automation]==old,"Solos differ after performance-history recall")};
     };
-    {
-        var spec=[4,96742884,2600,128,3,[0.25,0.55,0.3,1.0,0,0,-1],0,0,[],0,"original","full","fixed"];
-        var name=~djRecipeName.value(spec),replay,reference;
-        File.use(~djRecipeDir+/+(name++".json"),"w",{|file|file.write(spec.asCompileString)});
-        replay=~djSessionFromRecipe.value(~djReadRecipe.value(name));replay.persistRecipes=false;
-        reference=~makeDJEngine.value(2600,128,(channel:\rock,tension:1,rockLeadVersion:0,rockToneVersion:0));
-        128.do {var a=replay[\nextBar].value,b=reference[\nextBar].value;
-            assert.value(a.events==b.events and:{a.automation==b.automation},"Earlier Rock recipe acquired new solos");
-        };
-    }.value;
+    // Recall only accepts the current schema (8) and source fingerprint; older names are rejected (channels-check).
     ("PASS: "++bars++" Rock bars / "++soloBars++" solo bars; 4/8-bar phrasing, "++landings++" current-chord landings, root preference, pentatonic intersections, requested riffs and handover cadences").postln;
     0.exit;
 } {|e|e.reportError;1.exit};

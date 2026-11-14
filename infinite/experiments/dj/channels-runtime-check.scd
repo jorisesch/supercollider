@@ -11,9 +11,9 @@ waitFor={|fn,seconds=12|var end=Main.elapsedTime+seconds;
 server=Server(\channelCheck,NetAddr("127.0.0.1",57149),ServerOptions.new.numInputBusChannels_(0)
     .numOutputBusChannels_(2).numWireBufs_(128).memSize_(65536).loadDefs_(false));
 server.volume.mute;
-onFail=OSCFunc({|msg|if(msg[1]=="/d_load"){startupFailures.add(msg)}{failures.add(msg)};msg.postln},'/fail',server.addr);
+onFail=OSCFunc({|msg|if(msg[1].asString=="/d_load"){startupFailures.add(msg)}{failures.add(msg)};msg.postln},'/fail',server.addr);
 onLevel=OSCFunc({|msg|levels.add(msg[3])},'/channelLevel',server.addr);
-SystemClock.sched(90,{server.quit;1.exit;nil});
+SystemClock.sched(140,{"FAIL: Channel runtime watchdog".postln;server.quit;1.exit;nil});
 server.waitForBoot {
     Routine {
         try {
@@ -21,7 +21,7 @@ server.waitForBoot {
             ~djStart.value(2600,128,server);waitFor.value {~djRoutine.notNil};oldBus=~djBus;
             ui.value {
                 ~djShow.value;~djWindow.minimize;
-                assert.value(~djUI.channel.items==["EDM","Pop","Rock"],"Duplicate/missing channel");
+                assert.value(~djUI.channel.items==~djChannelNames and:{~djChannelNames==["EDM","Pop","Rock","London Dubstep"]},"Duplicate/missing channel");
                 assert.value(~djUI.modeChoice.parent===~djWindow.view,"Mode choice is hidden in another window");
                 ~djUI.modeChoice.valueAction_(3);~djUI.pentatonicChoice.valueAction_(true);~djUI.modeApply.valueAction_(0);
             };
@@ -51,7 +51,8 @@ server.waitForBoot {
             waitFor.value {~djEngine.state.manualFX.notNil};
             assert.value(~djEngine.state.manualFX.kind==\echo,"Rock effect did not reach engine");
             ui.value {~djUI.fxButton.valueAction_(0)};
-            waitFor.value({~djEngine.state.currentSerial==1},24);
+            // A Rock handover lasts up to 16 bars plus the queued boundary (about 45 s at 102 BPM).
+            waitFor.value({~djEngine.state.currentSerial==1},(18*240/~djEngine.state.bpm)+4);
             assert.value(levels.notEmpty and:{levels.maxItem>0.01},"Rock output is silent");
             engine=~djEngine;
             ui.value {~djUI.transport.valueAction_(1);~djUI.transport.valueAction_(0)};
