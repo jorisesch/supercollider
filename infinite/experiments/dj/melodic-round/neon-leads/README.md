@@ -22,4 +22,4 @@ mkdir -p audio/listening-round/04-neon
 python3 infinite/experiments/dj/package-audition.py audio/listening-round/04-neon 04-neon
 ```
 
-Open `audio/listening-round/04-neon/listen.html`. The main melody enters around 15 seconds. Audio checks and human listening preferences are recorded separately.
+Open `audio/listening-round/04-neon/listen.html`. The main melody enters around 15 seconds. Listening approved B (soft keys), C (clean pluck) and D (no lead) and passed A; see [FEEDBACK.md](../../FEEDBACK.md#round-04-neon-decisions).

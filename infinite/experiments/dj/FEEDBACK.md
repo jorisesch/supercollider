@@ -138,7 +138,7 @@ Human listening decisions on 2026-11-14 approved all five backings and rejected 
 | D | Silver Motion | Approved as Pop. Drop the melody unless it can be improved |
 | E | Horizon Lights | Approved backing. Drop the melody unless it can be improved |
 
-The working versions are now instrumental: drums, bass and chord bed, with the lead dropped at score export and all other events unchanged. Neon Gravity's channel is Pop; Pop and EDM share the same deck and strong master, so the sound is unchanged. A melody returns only if a replacement is approved in listening; the Neon lead study above is the remaining test of that. All five now play in the live rotation: Violet Afterburn, Night Signal and Horizon Lights on EDM, Neon Gravity and Silver Motion on Pop. About half the songs in those channels are these approved songs and the rest are generated. Live, each plays as an extended mix: drum intro, groove, hook, space, build, hook, space, build, the resolving hook, and an eight-bar groove outro to mix out on. They keep their approved tempo, key and flat send levels. The backing comes from [fixed-songs.scd](fixed-songs.scd), which the offline render also uses. The live melody generator is still unchanged. Exact comments and heard recipes are saved in `audio/listening-round/04/round-04-feedback.json`.
+The working versions are now instrumental: drums, bass and chord bed, with the lead dropped at score export and all other events unchanged. Neon Gravity's channel is Pop; Pop and EDM share the same deck and strong master, so the sound is unchanged. A melody returns only if a replacement is approved in listening; the Neon lead study above is the remaining test of that. Each song is now a style in the live rotation: Violet Afterburn, Night Signal and Horizon Lights on EDM, Neon Gravity and Silver Motion on Pop. A style is an ensemble like the existing ones. It keeps its kick and bass patterns, bass voice, kit and close chord bed, and the engine generates everything else: key, mode, chord progression, form, tempo, effects and track name. Styles rotate with the other ensembles, so about three in seven EDM songs and one in three Pop songs use one. The grammar is in [song-styles.scd](song-styles.scd); the offline render plays the approved arrangement through the same grammar. The live melody generator is still unchanged. Exact comments and heard recipes are saved in `audio/listening-round/04/round-04-feedback.json`.
 
 ```sh
 mkdir -p audio/listening-round/04-instrumental
@@ -146,3 +146,17 @@ mkdir -p audio/listening-round/04-instrumental
   infinite/experiments/dj/melodic-round/render.scd "$PWD/audio/listening-round/04-instrumental" instrumental
 python3 infinite/experiments/dj/package-audition.py audio/listening-round/04-instrumental 04-instrumental
 ```
+
+### Round 04-neon decisions
+
+Human listening decisions on 2026-11-14 on the Neon Gravity lead tones.
+
+| ID | Version | Decision |
+| --- | --- | --- |
+| A | Rounded lead | Passed |
+| B | Soft keys | Approved. “Great!” |
+| C | Clean pluck | Approved. “Also great!” |
+| D | No lead | Approved. Occasionally play the song without a lead |
+
+The study page still showed EDM because it was rendered before the Pop reclassification; Neon Gravity is a Pop style. The live Neon Gravity style now plays its melody with soft keys or clean pluck, and roughly one song in five plays without a lead. The melody is the approved four-bar cell set, landing on the generated chords. The other four styles stay instrumental until a lead passes listening. Exact comments and heard recipes are in `audio/listening-round/04-neon/round-04-neon-feedback.json`.
+

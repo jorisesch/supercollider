@@ -10,8 +10,8 @@ try {
     [\edme,\pop,\rock].do {|channel|
         var modes=Set.new,orders=Set.new,lengths=Set.new,keys=Set.new,palettes=Set.new;
         [73,731,2600,98713].do {|seed|
-            var a=~makeDJEngine.value(seed,128,(fixedSongs:false,channel:channel,tension:0.96));
-            var b=~makeDJEngine.value(seed,128,(fixedSongs:false,channel:channel,tension:0.96));
+            var a=~makeDJEngine.value(seed,128,(songStyles:false,channel:channel,tension:0.96));
+            var b=~makeDJEngine.value(seed,128,(songStyles:false,channel:channel,tension:0.96));
             var seen=Set.new;
             384.do {
                 var f=a[\nextBar].value,g=b[\nextBar].value;
@@ -46,7 +46,7 @@ try {
     };
     assert.value(signatures.size>=10,"Different seeds repeat the opening record");
     {
-        var engine=~makeDJEngine.value(731,140,(fixedSongs:false,channel:\dubstep)),seen=Set.new;
+        var engine=~makeDJEngine.value(731,140,(songStyles:false,channel:\dubstep)),seen=Set.new;
         192.do {
             var frame=engine[\nextBar].value;
             frame.decks.do {|plan|if(plan.notNil){
@@ -65,7 +65,7 @@ try {
     [\edme,\pop].do {|channel|
         var openingPalettes=Set.new,openingKeys=Set.new,openingModes=Set.new;
         (1..24).collect {|i|i*7919}.do {|seed|
-            var session=~makeDJEngine.value(seed,134,(fixedSongs:false,channel:channel,openWithHook:true));
+            var session=~makeDJEngine.value(seed,134,(songStyles:false,channel:channel,openWithHook:true));
             var frame;
             8.do {
                 frame=session[\nextBar].value;
@@ -81,7 +81,7 @@ try {
         assert.value(openingPalettes.size>=3 and:{openingKeys.size>=4 and:{openingModes.size>=2}},"First song choices are still fixed");
     };
     [\edme,\pop,\rock].do {|channel|~djTonalities.keys.do {|tone|[\full,\pentatonic].do {|melody|
-        var engine=~makeDJEngine.value(439,128,(fixedSongs:false,channel:channel,tonality:tone,modalPolicy:\fixed,melody:melody));
+        var engine=~makeDJEngine.value(439,128,(songStyles:false,channel:channel,tonality:tone,modalPolicy:\fixed,melody:melody));
         engine[\requestHook].value;
         24.do {
             var f=engine[\nextBar].value;

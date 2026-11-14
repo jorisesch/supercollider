@@ -19,7 +19,7 @@ try {
         recipes=recipes.select {|spec|spec.id==thisProcess.argv[1]};
         if(recipes.isEmpty){Error("Unknown audition ID").throw};
     };
-    (dj+/+"engine.scd").load;(dj+/+"instruments.scd").load;(dj+/+"fixed-songs.scd").load;(dj+/+"feedback.scd").load;
+    (dj+/+"engine.scd").load;(dj+/+"instruments.scd").load;(dj+/+"song-styles.scd").load;(dj+/+"feedback.scd").load;
     TempoClock.default.tempo=1;
     velvet=SynthDef(\round04VelvetLead,{|out=0,freq=440,amp=0.13,sustain=0.4,tone=0.4,pan=0|
         var env=EnvGen.kr(Env.linen(0.018,sustain.max(0.04),0.14),doneAction:2);
@@ -28,50 +28,22 @@ try {
     });
     render={
         var spec=recipes[index],score=List.new,beat=60/spec.bpm,bars=32,node=2000;
-        var events=List.new,melody=List.new,add,pitch,landing,mix=~djMixSpec.value(spec.channel);
-        var duration=0.11+(bars*4*beat)+4,path=output+/+spec.id,songState=~djFixedSongState.value;
-        var leadBase=spec.tonic+24;
+        var events=List.new,melody=List.new,mix=~djMixSpec.value(spec.channel);
+        var duration=0.11+(bars*4*beat)+4,path=output+/+spec.id,songState=~djSongStyleState.value;
         // A's theme is also the final return: same pitches and rhythm, not a new riff.
         (~djDefs++[velvet]++extraDefs).do {|def|score.add([0,[\d_recv,def.asBytes]])};
         score.add([0.01,[\g_new,100,0,1],[\g_new,110,0,100],
             [\s_new,mix.deck,800,1,100,\in,16,\out,28,\bpm,spec.bpm,
                 \musicGain,1,\bassGain,1,\drumsGain,1,\fxEcho,0.045,\fxDelay,0.75,\fxReverb,0.11],
             [\s_new,mix.master,900,1,100,\in,28,\drive,mix.drive]]);
-        pitch={|degree,base|base+spec.scale.wrapAt(degree)+(12*(degree div:7))};
-        landing={|target,tones|
-            ((target-4)..(target+4)).select {|note|tones.includes(note%12)}.minItem {|note|(note-target).abs};
-        };
-        add={|bar,lane,role,voice,step,note,span,gain,tone=0.4,pan=0|
-            events.add((bar:bar,lane:lane,role:role,voice:voice,step:step,midinote:note,
-                duration:span,amp:gain,tone:tone,pan:pan,deck:0,color:0,drive:0.24,
-                seed:spec.seed+(bar*101)+events.size,beat:step*0.25));
-        };
         bars.do {|bar|
-            var space=bar>=16 and:{bar<20},build=bar>=20 and:{bar<24};
-            var hook=(bar>=8 and:{bar<16}) or:{bar>=24},phrase=(bar-8)%4;
-            // Backing comes from the shared fixed-song module the live DJ plays.
-            var backing=~djFixedSongBar.value(spec,bar,songState),tones=backing.tones;
+            // Backing and lead comes from the song-style grammar the live DJ plays.
+            var backing=~djSongStyleSourceBar.value(spec,bar,songState,
+                (voice:spec.leadVoice,amp:spec.leadAmp,tone:spec.leadTone));
             backing.events.do {|event|
                 events.add(event.putAll((bar:bar,deck:0,color:0)));
             };
-            if(hook or:{build or:{space}}){
-                var cell=spec.motif[phrase],last=cell.size-1;
-                if(space){cell=cell.select {|hit,i|i==0 or:{i==last}}};
-                cell.do {|hit,i|
-                    var note=pitch.value(hit[1],leadBase),isLanding=i==(cell.size-1);
-                    var sustain=hit[2],gain=spec.leadAmp,step=hit[0];
-                    if(isLanding or:{i==0}){note=landing.value(note,tones)};
-                    if(bar==31 and:{isLanding}){note=leadBase};
-                    if(space){sustain=(sustain*1.45).min((16-step)*0.25-0.08);gain=gain*0.66};
-                    if(build){gain=gain*(0.73+((bar-20)*0.06))};
-                    if(bar>=24){gain=gain*1.045};
-                    if(i>0){gain=gain*0.88};
-                    add.value(bar,1,\lead,spec.leadVoice,step,note,sustain,gain,
-                        spec.leadTone+if(build){(bar-20)*0.035}{0},0);
-                    melody.add((bar:bar,step:step,note:note,duration:sustain,landing:isLanding,
-                        chordTones:tones,phrase:phrase));
-                };
-            };
+            backing.melody.do {|note|melody.add(note.put(\bar,bar))};
         };
         if(events.select {|e|e.bar<4}.any {|e|e.lane!=3}){Error("Drum intro has pitched parts").throw};
         melody.do {|note|

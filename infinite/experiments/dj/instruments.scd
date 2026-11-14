@@ -137,4 +137,6 @@ var root=thisProcess.nowExecutingPath.dirname;
 (root +/+ "e-instruments.scd").load;
 (root +/+ "dubstep-instruments.scd").load;
 (root +/+ "rock-instruments.scd").load;
+// Clean leads approved in listening round 04-neon, used by the Neon Gravity style.
+~djDefs=~djDefs++(root +/+ "melodic-round/neon-leads/instruments.scd").load;
 )
