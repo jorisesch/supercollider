@@ -13,6 +13,7 @@ var root=thisProcess.nowExecutingPath.dirname;
 (root +/+ "rock-expression.scd").load;
 (root +/+ "rock-players.scd").load;
 (root +/+ "rock-physical-style.scd").load;
+(root +/+ "fixed-songs.scd").load;
 ~djChannelIDs=[\edme,\pop,\rock,\dubstep];
 ~djChannelNames=["EDM","Pop","Rock","London Dubstep"];
 // Old command aliases now select the winning EDM. `legacy` is for saved recipes.
@@ -50,6 +51,11 @@ var root=thisProcess.nowExecutingPath.dirname;
     var paletteBag=List.new,lastPalette,choosePalette,tempoRange;
     var fxRng=((seed.abs+65537)%2147483646)+1,fxRandom,stutter=nil,nextAutoBar=8;
     var nextModalBar=0,lastTonality,lastForm;
+    // Approved fixed songs share the rotation with generated records. Their own RNG
+    // leaves every generated record's choices untouched.
+    // Nearby seeds give nearly equal first draws, so the generator is warmed up first.
+    var songRng=(1..8).inject(((seed.abs+92821)%2147483646)+1,{|r|(r*48271)%2147483647});
+    var songBag=List.new,lastSong,chooseSong;
     var state=(bar:0,bpm:bpm,mixing:false,progress:0,decks:[nil,nil],phase:0,lastFX:\none);
     if(channel==\rock and:{rockToneVersion>=2}){
         lib.palettes=lib.palettes.collect {|palette|var p=palette.copy;
@@ -93,6 +99,20 @@ var root=thisProcess.nowExecutingPath.dirname;
         };
         lastPalette=id;
         lib.palettes[id];
+    };
+    // Half the slots are approved songs for this channel, the other half generated records.
+    chooseSong={
+        var songs=(~djFixedSongs ? []).select {|spec|spec.channel==channel},choices,picked;
+        if(songs.isEmpty or:{controls[\fixedSongs]==false}){nil}{
+            if(songBag.isEmpty){songs.do {|spec|songBag.add(spec.id);songBag.add(\generated)}};
+            choices=songBag.asArray.reject {|item|item==lastSong and:{item!=\generated}};
+            if(choices.isEmpty){choices=songBag.asArray};
+            songRng=(songRng*48271)%2147483647;
+            picked=choices[(songRng/2147483647*choices.size).floor.asInteger];
+            songBag.removeAt(songBag.indexOf(picked));
+            if(picked!=\generated){lastSong=picked};
+            songs.detect {|spec|spec.id==picked};
+        };
     };
     makeRecord={ |deck,index,previousKey,previousBpm,entryBars=0|
         var first=index==0,plan,next,key,mode,scale,progression,durations;
@@ -178,6 +198,25 @@ var root=thisProcess.nowExecutingPath.dirname;
             if(openWithHook and:{eMode==\full}) {plan.edmAnthem=true};
         };
         if([\pop,\rock].includes(channel)) {plan.schedule=~djPopHarmony.value(plan,recordLib,seed)};
+        // Generated choices above still run, so later generated records stay reproducible.
+        if(rhythmOpening and:{[\edme,\pop].includes(channel)} and:{eMode==\full}) {
+            var song=chooseSong.value,live;
+            if(song.notNil) {
+                live=~djFixedSongLiveForm.value(openingBars);
+                sections=List.newFrom(live.sections);total=live.length;localBar=0;
+                key=song.tonic%12;scale=song.scale;
+                plan.putAll((fixedSong:song,fixedSourceBars:live.sourceBars,fixedState:~djFixedSongState.value,
+                    style:\fixed,key:key,scale:scale,baseScale:scale,keyName:song.keyName,
+                    sections:live.sections,length:total,position:0,localBar:0,mixBars:8,
+                    openingBars:0,modalPolicy:\fixed,edmAnthem:false,songName:song.name,
+                    targetBpm:song.bpm,
+                    schedule:live.sourceBars.collect {|bar|
+                        (degree:if(bar==31){0}{song.chords.wrapAt((bar-8).max(0) div:2)})
+                    },
+                    palette:plan.palette.copy.putAll((name:song.name,bassName:song.paletteName,
+                        leadName:"No lead (instrumental)",kitName:"Approved round 04 song"))));
+            };
+        };
         if(channel==\rock){
             if(blues){
                 plan.keyName=lib[\keys][key]++" blues";
@@ -242,8 +281,10 @@ var root=thisProcess.nowExecutingPath.dirname;
             plan.engineBar=bar;
             if(plan[\rockPlayer].notNil){plan.rockHeld=controls.hold};
             if(channel==\rock and:{rockLeadVersion>=2}){~djMelodyPalette.value(#[],plan,melody)};
-            events=styleBar.value(plan,local,section,progress,effective,hook,drumBreak,
-                patternID,fill,seed,random,forcedHook>0);
+            events=if(plan[\fixedSong].notNil){~djFixedSongLiveBar.value(plan,local)}{
+                styleBar.value(plan,local,section,progress,effective,hook,drumBreak,
+                    patternID,fill,seed,random,forcedHook>0)
+            };
             if(local<plan.openingBars){
                 events=if([\edme,\pop].includes(channel)){~djOpeningDrums.value(plan,local,seed)}{
                     events.select {|event|event.lane==3}
@@ -346,6 +387,10 @@ var root=thisProcess.nowExecutingPath.dirname;
                 filter=if([\space,\breakdown].includes(section)){0.10}{0.015};
                 cutoff=9000;resonance=0.6;echo=if(section==\space){0.08}{0.01};
                 reverb=if([\space,\breakdown].includes(section)){0.17}{0.07};
+            };
+            // Fixed songs keep the flat send levels they were approved with.
+            if(plan[\fixedSong].notNil){
+                filter=0;cutoff=12000;resonance=0.35;echo=0.045;delay=0.75;reverb=0.11;
             };
             stutter=0;
             if(activeStutter.notNil and: {plan.serial==activeStutter.serial}) {

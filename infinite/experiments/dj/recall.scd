@@ -12,7 +12,8 @@ fingerprint=hash.value(["engine.scd","style.scd","pop-style.scd","library.scd",
     "instruments.scd","palette-instruments.scd","pop-instruments.scd","pop-master.scd","recall.scd",
     "e-style.scd","e-instruments.scd","dubstep-style.scd","dubstep-instruments.scd","modes.scd","variety.scd","rock-style.scd","rock-instruments.scd",
     "rock-expression.scd","rock-expressive-instruments.scd",
-    "rock-physical-style.scd","rock-physical-instruments.scd","rock-circuits.scd","rock-players.scd","guitar-pickups/model.scd"]
+    "rock-physical-style.scd","rock-physical-instruments.scd","rock-circuits.scd","rock-players.scd","guitar-pickups/model.scd",
+    "fixed-songs.scd","melodic-round/recipes.scd"]
     .collect { |file| File.readAllString(root +/+ file) }.join("\n"));
 ~djRecallVector={ |controls|
     keys.collect { |key,i|

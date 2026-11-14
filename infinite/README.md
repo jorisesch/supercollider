@@ -12,7 +12,7 @@ Run the commands below from the **repository folder**, not from inside `infinite
 
 ## EDM
 
-Each set starts with a randomly chosen song and eight bars of drums. Later songs begin with four bars of drums and use varied keys and ensembles.
+Each set starts with a randomly chosen song and eight bars of drums. Later songs begin with four bars of drums and use varied keys and ensembles. About half the songs are the approved instrumentals Violet Afterburn, Night Signal and Horizon Lights; the rest are generated.
 
 Bass, drums and synth grooves, with strong mix compression for a fuller sound and new tracks mixed in automatically:
 
@@ -22,7 +22,7 @@ Bass, drums and synth grooves, with strong mix compression for a fuller sound an
 
 ## Pop
 
-Each set starts with a randomly chosen song and eight bars of drums. Later songs begin with four bars of drums and follow the normal random rotation.
+Each set starts with a randomly chosen song and eight bars of drums. Later songs begin with four bars of drums and follow the normal random rotation. About half the songs are the approved instrumentals Neon Gravity and Silver Motion; the rest are generated.
 
 Bright synths, varied chord progressions and returning chorus hooks, with a compressed mix for a fuller sound:
 

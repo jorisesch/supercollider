@@ -22,6 +22,8 @@ DJ_SOURCES = (
     'rock-expression.scd',
     'rock-players.scd',
     'rock-physical-style.scd',
+    'fixed-songs.scd',
+    'melodic-round/recipes.scd',
     'instruments.scd',
     'palette-instruments.scd',
     'pop-instruments.scd',

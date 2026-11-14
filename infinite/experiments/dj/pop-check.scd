@@ -13,15 +13,15 @@ try {
         assert.value(lib[mode].asSet.size==24,"Pop progressions are duplicated or missing");
     };
     [1,99,2600,7429,12345,65537,104729,999999].do { |seed|
-        var engine=~makeDJEngine.value(seed,138,(channel:\pop));
+        var engine=~makeDJEngine.value(seed,138,(fixedSongs:false,channel:\pop));
         firstChoices.add(engine[\nextBar].value.decks[0].progression.asCompileString);
     };
     assert.value(firstChoices.size>=4,"First Pop progression ignores the seed");
     ["live.scd","controls.scd","launch.scd","../pop.scd","../../infinite-run.scd"].do { |file|
         assert.value(File.readAllString(root+/+file).compile.notNil,"Parse failure: "++file);
     };
-    a=~makeDJEngine.value(2600,138,(channel:\pop,autoStutter:false));
-    b=~makeDJEngine.value(2600,138,(channel:\pop,autoStutter:false));
+    a=~makeDJEngine.value(2600,138,(fixedSongs:false,channel:\pop,autoStutter:false));
+    b=~makeDJEngine.value(2600,138,(fixedSongs:false,channel:\pop,autoStutter:false));
     8192.do { |bar|
         var f=a[\nextBar].value,g=b[\nextBar].value;
         assert.value(f.events==g.events,"Pop is not reproducible");
@@ -86,7 +86,7 @@ try {
     assert.value(sawShortBridge,"Four-bar bridge was not exercised");
     assert.value(returns>100,"Returning chorus hooks were not checked");
     // Hold retains a record, NEXT releases it, and forced chorus / fill reach the next bar.
-    a=~makeDJEngine.value(99,138,(channel:\pop,hold:true));
+    a=~makeDJEngine.value(99,138,(fixedSongs:false,channel:\pop,hold:true));
     200.do {a[\nextBar].value};
     assert.value(a.state.currentSerial==0,"Hold changed the Pop record");
     a[\requestHook].value; a[\requestFill].value;

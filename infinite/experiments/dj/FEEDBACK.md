@@ -107,3 +107,42 @@ mkdir -p audio/listening-round/03
   "$PWD/audio/listening-round/03" "$PWD/infinite/experiments/dj/song-audition-03.scd"
 python3 infinite/experiments/dj/package-audition.py audio/listening-round/03 03
 ```
+
+## Listening round 04 — connected melodies
+
+On 2026-11-14, the listener described the drums and bass as fairly decent, but the melody as disjointed. The exact live track or layer was not identified. Five new fixed compositions test one main lead, stable repeating themes, small pitch movements and chord-tone phrase endings, with the approved strong compression. They are prototypes pending human listening review; the live melody generator is unchanged.
+
+| ID | Song | Direction |
+| --- | --- | --- |
+| A | Neon Gravity | Warm E minor pop-house / brass hook |
+| B | Violet Afterburn | F# minor trance / rounded pulse lead |
+| C | Night Signal | A Dorian acid / low answering melody |
+| D | Silver Motion | D minor synth-pop / one singing lead |
+| E | Horizon Lights | D Dorian trance / lowered Anthem register |
+
+Open `audio/listening-round/04/listen.html` to rate the one-minute excerpts. Each starts with drums, adds bass after four bars, and introduces its main melody around 14–15 seconds. The hook returns around 42–46 seconds. [Composition details and render commands](melodic-round/README.md).
+
+### Neon Gravity — backing approved, lead rejected
+
+The listener “absolutely love[s] Neon Gravity EXCEPT the melody,” describing its sound as “a wet fart meets nails screeching on a blackboard.” Preserve the drums, bass and arrangement; the original brass lead is rejected. [Three clean lead replacements and a no-lead reference](melodic-round/neon-leads/README.md) retain the same melody notes and timing so the instrument tone can be judged separately. Their listening page is `audio/listening-round/04-neon/listen.html`.
+
+### Round 04 decisions
+
+Human listening decisions on 2026-11-14 approved all five backings and rejected every lead.
+
+| ID | Song | Decision |
+| --- | --- | --- |
+| A | Neon Gravity | Approved backing. Lead “overwhelming”; moved from EDM to Pop |
+| B | Violet Afterburn | Approved backing. Drop the melody unless it can be improved |
+| C | Night Signal | Approved backing. Drop the melody unless it can be improved |
+| D | Silver Motion | Approved as Pop. Drop the melody unless it can be improved |
+| E | Horizon Lights | Approved backing. Drop the melody unless it can be improved |
+
+The working versions are now instrumental: drums, bass and chord bed, with the lead dropped at score export and all other events unchanged. Neon Gravity's channel is Pop; Pop and EDM share the same deck and strong master, so the sound is unchanged. A melody returns only if a replacement is approved in listening; the Neon lead study above is the remaining test of that. All five now play in the live rotation: Violet Afterburn, Night Signal and Horizon Lights on EDM, Neon Gravity and Silver Motion on Pop. About half the songs in those channels are these approved songs and the rest are generated. Live, each plays as an extended mix: drum intro, groove, hook, space, build, hook, space, build, the resolving hook, and an eight-bar groove outro to mix out on. They keep their approved tempo, key and flat send levels. The backing comes from [fixed-songs.scd](fixed-songs.scd), which the offline render also uses. The live melody generator is still unchanged. Exact comments and heard recipes are saved in `audio/listening-round/04/round-04-feedback.json`.
+
+```sh
+mkdir -p audio/listening-round/04-instrumental
+/Applications/SuperCollider.app/Contents/MacOS/sclang -D \
+  infinite/experiments/dj/melodic-round/render.scd "$PWD/audio/listening-round/04-instrumental" instrumental
+python3 infinite/experiments/dj/package-audition.py audio/listening-round/04-instrumental 04-instrumental
+```

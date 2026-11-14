@@ -8,9 +8,9 @@ try {
     ["e-style.scd","e-instruments.scd","../e-edm.scd","../e-render.scd"].do { |file|
         assert.value(File.readAllString(root +/+ file).compile.notNil,"EDM E parse failed: " ++ file)
     };
-    a=~makeDJEngine.value(2600,128);
+    a=~makeDJEngine.value(2600,128,(fixedSongs:false));
     assert.value(a.channel==\edme,"Standard EDM did not select the E grammar");
-    b=~makeDJEngine.value(2600,128,(channel:\edme));
+    b=~makeDJEngine.value(2600,128,(fixedSongs:false,channel:\edme));
     1024.do {
         var f=a[\nextBar].value,g=b[\nextBar].value,last=0;
         assert.value(f.events.asCompileString==g.events.asCompileString,"E notes are not reproducible");
@@ -54,13 +54,13 @@ try {
     assert.value(variants==Set[\a,\b],"E has no A/B development");
     assert.value(anthemBars>0,"Default EDM set never played an anthem hook over its bass");
     assert.value(signatureBars/deckBars<0.1 and: {chordBars/deckBars<0.4},"E supporting parts became continuous");
-    a=~makeDJEngine.value(2600,128,(channel:\edme,hold:true));a[\requestHook].value;
+    a=~makeDJEngine.value(2600,128,(fixedSongs:false,channel:\edme,hold:true));a[\requestHook].value;
     4.do {assert.value(a[\nextBar].value.decks[0].eVariant==\b,"E Bass hook did not request B")};
     assert.value(a[\nextBar].value.decks[0].eVariant==\a,"E Bass hook did not release after four bars");
     // Separate component comparisons retain the underlying drum/bass notes.
     [\percussion,\chords].do { |mode|
-        var original=~makeDJEngine.value(2600,128,(channel:\legacy,hold:true,autoStutter:false));
-        var variant=~makeDJEngine.value(2600,128,(channel:\edme,eMode:mode,hold:true,autoStutter:false));
+        var original=~makeDJEngine.value(2600,128,(fixedSongs:false,channel:\legacy,hold:true,autoStutter:false));
+        var variant=~makeDJEngine.value(2600,128,(fixedSongs:false,channel:\edme,eMode:mode,hold:true,autoStutter:false));
         16.do {
             var f=original[\nextBar].value,g=variant[\nextBar].value;
             var roles=[\djBass,\djKick,\djClap,\djSnare,\djHat];
