@@ -1,6 +1,6 @@
 // Round 04 song styles in the live EDM/Pop rotation. Pure engine check; no audio.
 (
-var root=thisProcess.nowExecutingPath.dirname,neonLeads=Set.new,bare=Set.new,assert={|ok,message|if(ok.not){Error(message).throw}};
+var root=thisProcess.nowExecutingPath.dirname,neonLeads=Set.new,bare=Set.new,forms=Set.new,features=Set.new,assert={|ok,message|if(ok.not){Error(message).throw}};
 try {
     (root+/+"engine.scd").load;(root+/+"instruments.scd").load;
     assert.value(~djSongStyles.size==5,"Expected five approved song styles");
@@ -26,13 +26,29 @@ try {
                         if(plan[\styleLead].isNil){
                             assert.value(mine.every {|e|e.lane!=1},"No-lead version played a lead");
                         };
-                        mine.select {|e|e.lane==1}.do {|e|
+                        forms.add(plan.styleForm.id);
+                        // Round 05 forms: each feature only where its form allows it.
+                        mine.do {|e|
+                            if(e.voice==\djRise){features.add(\riser);assert.value(plan.styleForm[\bigBuild]==true and:{plan.section==\buildup},"Riser outside a big build")};
+                            if(e.voice==\djImpact){features.add(\impact);assert.value(plan.styleForm[\bigBuild]==true and:{plan.section==\drop},"Impact outside a drop")};
+                            if(e.voice==\edmEStab){features.add(\stabs);assert.value(plan.styleForm[\stabs]==true and:{plan.section==\drop},"Stabs outside a drop")};
+                            if(e.voice==\edmEShaker){features.add(\shaker);assert.value(plan.styleForm[\late]==true and:{plan.section==\drop},"Shaker outside a double drop")};
+                            if(e.role==\djAnswer){
+                                features.add(\answer);
+                                assert.value(plan.section==\drop and:{e.voice==plan.styleAnswer.voice} and:{e.voice!=plan.styleLead.voice},"Answer in the wrong place or voice");
+                                assert.value(tones.includes((e.midinote-plan.key)%12),"Answer left the chord");
+                            };
+                        };
+                        if(plan.styleForm[\bigBuild]==true and:{plan.section==\buildup} and:{plan.sectionProgress>=0.5} and:{local>=plan.openingBars}){
+                            assert.value(mine.every {|e|e.role!=\djKick},"Big build kept its kick");
+                        };
+                        mine.select {|e|e.lane==1 and:{e.role!=\djAnswer}}.do {|e|
                             assert.value(e.voice==plan.styleLead.voice,"Lead changed sound mid-song");
                             assert.value(e.midinote>=57 and:{e.midinote<=83},"Lead left its range");
                         };
                         if(plan.styleBare==true){
                             bare.add(spec.id);
-                            assert.value(spec.id=="C" and:{plan.styleLead.voice==\neonSoftKeys},"Wrong style dropped its groove");
+                            assert.value((spec.id=="C" and:{plan.styleLead.voice==\neonSoftKeys}) or:{plan.styleForm[\bare]==true},"Wrong style dropped its groove");
                             if([\space,\breakdown].includes(plan.section) and:{local>=plan.openingBars}){
                                 assert.value(mine.every {|e|[1,2].includes(e.lane)},"Groove-free breakdown kept drums or bass");
                             };
@@ -53,7 +69,9 @@ try {
     };
     assert.value(neonLeads==Set[\neonSoftKeys,\neonCleanPluck,\none],
         "Styles did not rotate soft keys, clean pluck and no lead: "++neonLeads.asString);
-    assert.value(bare==Set["C"],"Night Signal never played a groove-free breakdown");
+    assert.value(bare.includes("C"),"Night Signal never played a groove-free breakdown");
+    assert.value(forms==Set[\classic,\build,\payoff,\journey],"Styles did not rotate the four forms: "++forms.asString);
+    assert.value(features==Set[\riser,\impact,\stabs,\shaker,\answer],"A form feature never played: "++features.asString);
     // The approved arrangement still uses the same grammar.
     ~djSongStyles.do {|spec|
         var state=~djSongStyleState.value;

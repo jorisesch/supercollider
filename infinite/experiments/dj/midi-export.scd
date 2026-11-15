@@ -92,7 +92,8 @@
         frame.events.do {|event|
             var step=(event.beat*4).round.asInteger.clip(0,16);
             var gain=frame.gains[step][~djMidiGainIndex[event.lane]];
-            if(gain>0.02 and:{(frame.drumBreak and:{event.lane<3}).not}){
+            // Noise risers are a mix effect, not a playable part.
+            if(gain>0.02 and:{event.voice!=\djRise} and:{(frame.drumBreak and:{event.lane<3}).not}){
                 var trackKey=if(event.lane==3){\drums}{(event.lane.asString++"/"++event.voice).asSymbol};
                 var start=((bar*4)+event.beat)*~djMidiPPQ;
                 var key=if(event.lane==3){~djMidiDrumNote.value(event)}{event.midinote.round.asInteger.clip(0,127)};

@@ -4,7 +4,7 @@
 ~djRockPhysicalExpression={|events,plan|
     var previous=plan[\rockPhysicalLead],opens=[40,45,50,55,59,64];
     events.collect {|event|
-        var e=event.copy,rng,random,lead,at,near,strings,string,roll,p=plan[\rockPlayer];
+        var e=event.copy,rng,random,lead,at,near,strings,string,roll,p=plan[\rockPlayer],legato=0,legatoNote=false;
         if(e.voice==\rockGuitar){
             rng=((e.seed*65537)+((plan.serial+1).squared*13007)+524287)%2147483646+1;
             random={rng=(rng*48271)%2147483647;rng/2147483647};
@@ -25,6 +25,14 @@
                 e.pickPosition=p.pick+((random.value-0.5)*2*p.pickSpread);
             };
             e.articulation=0;roll=random.value;
+            // Hammer-ons and pull-offs: off unless the player has a legatoChance (round 05-legato).
+            legato=if(p.isNil){0}{p[\legatoChance] ? 0};
+            if(lead and:{near} and:{legato>0} and:{(e[\rockArrivalBend] ? false).not}
+                and:{(e.midinote-previous.note).abs<=4} and:{random.value<legato}){
+                // One hand reaches at most four frets on one string; up hammers, down pulls off.
+                e.fromNote=previous.note;e.slideBeats=0.012;
+                e.articulation=if(e.midinote>previous.note){2}{3};legatoNote=true;
+            };
             if(lead){
                 if(e[\rockMelodic] ? false){
                     if(e[\rockArrivalBend] ? false){
@@ -35,7 +43,7 @@
                     };
                     if(e.duration>1){e.vibrato=if(p.isNil){0.12}{p.vibrato}*if(e.bendMode==2){1}{0.83}};
                 }{
-                    if(near and:{roll<if(p.isNil){0.32}{p.slideChance}}){
+                    if(legatoNote){nil}{if(near and:{roll<if(p.isNil){0.32}{p.slideChance}}){
                         e.fromNote=previous.note;e.slideBeats=(e.duration*0.30).clip(0.08,0.18);
                         e.articulation=1; // fretted slide: retained energy, no fresh pick transient
                     }{
@@ -45,7 +53,7 @@
                             // An arrival bend must be possible below the target on this string.
                             if((e.midinote-e.bendSemis)<opens[string]){e.bendMode=0;e.bendSemis=0};
                         };
-                    };
+                    }};
                     if(e.duration>=if(p.isNil){0.75}{p.vibratoAfter}){
                         e.vibrato=if(p.isNil){0.12+(random.value*0.16)}{p.vibrato+((random.value-0.5)*2*p.vibratoSpread)};
                     };

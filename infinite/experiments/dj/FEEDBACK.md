@@ -179,3 +179,15 @@ Human listening decisions on 2026-11-14 approved all eight. Night Signal with so
 | H | Horizon Lights / clean pluck | Approved |
 
 Every live style now plays its melody cells on soft keys or clean pluck, and roughly one song in five plays without a lead. When a style moves to a key whose lead would sink below the lead register, the whole melody moves up instead of down. Night Signal songs with soft keys drop drums and bass in their breakdowns, leaving the full melody over the chord bed. Exact comments and heard recipes are in `audio/listening-round/04-leads/round-04-leads-feedback.json`.
+
+### Round 05-rock — guitar tone and playing (2026-11-15)
+
+All six clips approved: Rook today (A), cleaner amp (B), sparser ringing chords (C, "Almost a humbucker :)"), both (D, "nice bend at the end of the solo"), June (E) and Flint (F, "Nice!!!!!"). The earlier "guitar isn't great" did not single out a tone or a player, so no variant replaces the current Rock sound yet. The listener asked which other expressions are modeled; hammer-ons and pull-offs are not. [Round notes](round-05/README.md).
+
+### Round 05-form — builds, hooks and form (2026-11-15)
+
+All four Violet Afterburn arrangements approved ("The EDM tracks are all good. Allow variations like that in the infinite DJ stream"): the reference, the bigger build, the hook payoff, and the breakdown with a double drop. Every EDM and Pop song style now takes one of four forms for its whole length (`~djSongStyleForms`): classic, big build, hook payoff, or breakdown and double drop. The form name shows after the lead name in the desktop window. Noise risers are left out of MIDI exports.
+
+### Round 05-legato — hammer-ons and pull-offs (2026-11-15)
+
+All five clips approved ("Guitar hammer ons and pull offs are all good"). Rook, June and Flint now play half of their eligible lead notes as hammer-ons or pull-offs in the live Rock channel (`legatoChance:0.5`). June's and Flint's phrases mostly rise between close notes, so they hammer on far more than they pull off. [Round notes](round-05/README.md).

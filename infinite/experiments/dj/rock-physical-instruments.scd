@@ -87,9 +87,14 @@ makeString={|name,humbucker=false,decayStudy=false|
             // Fade partials before Nyquist, never fold them back into the string.
             SinOsc.ar(hz.min(SampleRate.ir*0.45))*coefficient*(((SampleRate.ir*0.45)-hz)/1800).clip(0,1);
         });
-        noise=HPF.ar(WhiteNoise.ar,2100)*EnvGen.kr(Env.perc(0.0003,0.006))*0.015*strength*(1-articulation);
-        noise=noise+(BPF.ar(WhiteNoise.ar,2800,0.7)*Decay2.kr(Changed.kr(motion.fret.round(1))*(slideTime>0),0.0005,0.008)*0.003);
-        wire=(wire*Select.kr(articulation,[1,0.68]))+noise;
+        // articulation: 0 picked, 1 fretted slide, 2 hammer-on, 3 pull-off. Only a picked note has pick noise.
+        noise=HPF.ar(WhiteNoise.ar,2100)*EnvGen.kr(Env.perc(0.0003,0.006))*0.015*strength*(articulation<0.5);
+        noise=noise+(BPF.ar(WhiteNoise.ar,2800,0.7)*Decay2.kr(Changed.kr(motion.fret.round(1))*(slideTime>0)*(articulation<1.5),0.0005,0.008)*0.003);
+        // A hammering fingertip thumps the fretboard; a pull-off plucks sideways with the fingertip.
+        noise=noise+(LPF.ar(WhiteNoise.ar,900)*EnvGen.kr(Env.perc(0.0005,0.012))*0.006*strength*((articulation-2).abs<0.5));
+        noise=noise+(BPF.ar(WhiteNoise.ar,1800,0.8)*EnvGen.kr(Env.perc(0.0004,0.005))*0.004*strength*(articulation>2.5));
+        // Legato notes reuse the string's remaining energy, so they start softer than a picked note.
+        wire=(wire*Select.kr(articulation,[1,0.68,0.62,0.52]))+noise;
         // Pickup inductance 2.5 H and cable capacitance 470 pF -> 4.64 kHz.
         if(humbucker.not){wire=RLPF.ar(wire,1/(2pi*(2.5*470e-12).sqrt),0.9)};
         env=EnvGen.kr(Env.linen(0.0015,hold,0.085,curve:-4),doneAction:2);

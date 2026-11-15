@@ -2,7 +2,7 @@
 (
 var root=thisProcess.nowExecutingPath.dirname,assert={|ok,msg|if(ok.not){Error(msg).throw}};
 try {
-    var count=0,notes=0,landings=0,names=Set.new,records=Dictionary.new;
+    var count=0,notes=0,landings=0,names=Set.new,records=Dictionary.new,legato=Dictionary.new;
     var report=List.new;
     (root+/+"engine.scd").load;(root+/+"instruments.scd").load;(root+/+"recall.scd").load;
     [\original,\ionian,\dorian,\phrygian,\mixolydian,\lydian].do {|mode|3.do {|id|[\full,\pentatonic].do {|melody|
@@ -36,6 +36,15 @@ try {
                     assert.value(e.vibrato<=(p.vibrato+p.vibratoSpread+1e-9),"Vibrato depth left character range");
                     assert.value(e.beat.inclusivelyBetween(0,3.95) and:{e.duration>0},"Invalid player event");
                     assert.value((e.midinote-[40,45,50,55,59,64][e.stringIndex]).inclusivelyBetween(0,22),"Unplayable string");
+                    // Hammer-ons rise, pull-offs fall, within four frets on the sounding string.
+                    if(e.articulation>=2){
+                        var step=e.midinote-e.fromNote;
+                        assert.value(e.role==\djHook and:{step.abs.inclusivelyBetween(1,4)},"Legato note is not a short lead step");
+                        assert.value(if(e.articulation==2){step>0}{step<0},"Hammer-on or pull-off goes the wrong way");
+                        assert.value((e.fromNote-[40,45,50,55,59,64][e.stringIndex]).inclusivelyBetween(0,22),"Legato note changes strings");
+                        assert.value(e.bendMode==0,"Legato note also bends");
+                        legato[[p.id,e.articulation]]=(legato[[p.id,e.articulation]] ? 0)+1;
+                    };
                     if(e[\rockLanding] ? false){
                         var degree=plan.schedule[plan.localBar].degree,pc=(e.midinote-plan.key)%12;
                         assert.value([0,2,4].collect {|offset|plan.scale.wrapAt(degree+offset)}.includes(pc),"Player lost chord ending");
@@ -88,6 +97,8 @@ try {
         [\edme,\pop].do {|channel|var f=~makeDJEngine.value(2600,128,(channel:channel))[\nextBar].value;
             assert.value(f.decks[0][\rockPlayer].isNil,"Guitarist reached EDM/Pop")};
     }.value;
+    3.do {|id|assert.value((legato[[id,2]] ? 0)>20,"Player "++id++" never hammers on")};
+    assert.value(legato.keys.any {|key|key[1]==3},"No player pulls off");
     ("PASS: "++count++" player bars / "++notes++" guitar notes / "++landings++" chord landings; three stable characters, bounded choices, recurring rhythms, bass/drums unchanged and exact handover recall").postln;
     0.exit;
 } {|e|e.reportError;1.exit};
