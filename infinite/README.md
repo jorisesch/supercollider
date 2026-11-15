@@ -68,6 +68,16 @@ These commands are for macOS. On Windows or Linux, replace the full executable p
 
 Leave **Mode** on **Auto / varied songs** to explore different scales and song forms. Higher **Tension** unlocks rarer modes. Choose a named mode to pin a scale, or enable **Pentatonic melodies** for simpler leads, then press **Apply mode**. Use the **👍 / 👎** buttons under each deck to save a rating for later training. [Modes and examples](experiments/dj/MODES.md).
 
+## Export MIDI
+
+Save any generated song as a Standard MIDI File, with one track per instrument and a General MIDI drum track. Give the channel, the set's seed and the song number (1 is the opening song):
+
+```sh
+/Applications/SuperCollider.app/Contents/MacOS/sclang infinite/experiments/dj/export-midi.scd pop 2600 1
+```
+
+The file is written to `infinite/experiments/dj/midi/`, or pass an output path as a fourth argument. The file has the song's tempo and key signature, and drum notes use the General MIDI map. Notes are muted wherever the DJ mix had that part silent, for example in drum-only intros. Soundscapes are not exported.
+
 ## Play and stop
 
 The music and audio server start automatically. Try moving one knob at a time and allow a few seconds to hear the change.

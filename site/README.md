@@ -16,6 +16,10 @@ EDM and Pop choose a fresh first song, key and mode each time. Both open with ei
 
 EDM and Pop share the approved strong compressor: stereo-linked 4:1 compression with a 4 ms attack and 180 ms release, followed by makeup gain and the output safety limiter.
 
+## MIDI export (hidden preview)
+
+Add `?midi` to the page URL to show **Download MIDI** under Energy. It saves the song shown in the status line as a Standard MIDI File. The player replays the set's logged bars, including Energy changes and Next presses, in a private copy of the engine. It then finishes the song at the current Energy setting, so the file matches what was heard and how the song would continue. The button stays hidden by default until MIDI export is offered publicly.
+
 ## Preview locally
 
 Run these commands from the repository root.

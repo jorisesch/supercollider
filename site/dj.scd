@@ -3,7 +3,7 @@
 var root = ~webSourceRoot ? "/infinite";
 var server = Server.default, ready = false, generation = 0;
 var graph, engine, clock, player, mode, energy = 0.5;
-var close, reportError, applyEnergy, playDJ, playSoundscape, loadError, failureListener;
+var close, reportError, setControls, applyEnergy, playDJ, playSoundscape, loadError, failureListener;
 
 reportError = { |message| ("WEB_DJ error " ++ message).postln };
 close = {
@@ -22,22 +22,25 @@ close = {
         });
     };
 };
-applyEnergy = {
-    if(engine.notNil) {
-        engine.controls.chaos = 0.08 + (energy * 0.34);
-        engine.controls.density = 0.28 + (energy * 0.54);
-        engine.controls.mutation = 0.12 + (energy * 0.36);
-        engine.controls.tension = 0.02 + (energy * 0.36);
-    };
+setControls = { |target, value|
+    target.controls.chaos = 0.08 + (value * 0.34);
+    target.controls.density = 0.28 + (value * 0.54);
+    target.controls.mutation = 0.12 + (value * 0.36);
+    target.controls.tension = 0.02 + (value * 0.36);
 };
+applyEnergy = { if(engine.notNil) { setControls.value(engine, energy) } };
 playDJ = { |session, currentGraph, beatClock|
-    var announced, bpm = session.state.bpm;
+    var announced, bpm = session.state.bpm, log = session[\webLog];
     loop {
-        var frame = session[\nextBar].value, previous = 0;
-        var plan = frame.decks.detect { |deck|
+        var frame, plan, actions, previous = 0;
+        // Log each bar's controls so a MIDI export can replay this set exactly.
+        if(log.pendingNext) { log.nexts.add(log.energies.size); log.pendingNext = false };
+        log.energies.add(energy);
+        frame = session[\nextBar].value;
+        plan = frame.decks.detect { |deck|
             deck.notNil and: { deck.serial == session.state.currentSerial }
         };
-        var actions = frame.automation.collect { |point| (beat: point.beat, automation: point) }
+        actions = frame.automation.collect { |point| (beat: point.beat, automation: point) }
             ++ frame.events.collect { |event| (beat: event.beat, note: event) };
         if(plan.notNil and: { plan.serial != announced }) {
             announced = plan.serial;
@@ -86,7 +89,38 @@ playSoundscape = { |session, currentGraph|
 ~webStop = { close.value; "WEB_DJ stopped".postln };
 ~webNext = {
     if(engine.notNil) {
-        if(mode == \soundscape) { ~webStart.value(nil, mode) } { engine[\requestNext].value };
+        if(mode == \soundscape) { ~webStart.value(nil, mode) } {
+            engine[\webLog].pendingNext = true;
+            engine[\requestNext].value;
+        };
+    };
+};
+// Export the song shown in the status line. A private engine replays the logged
+// bars, then finishes the song at the current Energy, yielding to live playback.
+~webMidi = {
+    var log = if(engine.notNil) { engine[\webLog] };
+    if(log.isNil) {
+        "WEB_DJ midifail MIDI export works on the DJ channels".postln;
+    } {
+        var energies = log.energies.copy, nexts = log.nexts.copy, target = engine.state.currentSerial, live = energy;
+        Routine {
+            try {
+                var copy = ~makeDJEngine.value(log.seed, log.bpm, (channel: log.channel));
+                var mark = Main.elapsedTime, capture, result, hex;
+                capture = ~djMidiCollect.value(copy, target, { |index, replay|
+                    setControls.value(replay, if(index < energies.size) { energies[index] } { live });
+                    if(nexts.includes(index)) { replay[\requestNext].value };
+                }, 6000, {
+                    if(Main.elapsedTime - mark > 0.012) { 0.004.wait; mark = Main.elapsedTime };
+                });
+                result = ~djMidiBytes.value(capture);
+                hex = ~djMidiHex.value(result.bytes);
+                forBy(0, hex.size - 1, 4096) { |start|
+                    ("WEB_DJ midichunk " ++ hex.copyRange(start, (start + 4095).min(hex.size - 1))).postln;
+                };
+                ("WEB_DJ midiready " ++ result.fileName).postln;
+            } { |error| ("WEB_DJ midifail " ++ error.errorString).postln };
+        }.play(SystemClock);
     };
 };
 ~webEnergy = { |value| energy = value.clip(0, 1); applyEnergy.value };
@@ -111,6 +145,8 @@ playSoundscape = { |session, currentGraph|
                         mode = ~djResolveChannel.value(mode);
                         bpm = if(mode == \edme) { 134 } { ~djDefaultBpm.value(mode) };
                         engine = ~makeDJEngine.value(actualSeed, bpm, (channel: mode));
+                        engine[\webLog] = (seed: actualSeed, bpm: bpm, channel: mode,
+                            energies: List.new, nexts: Set.new, pendingNext: false);
                     };
                     applyEnergy.value;
                     currentGraph = (bus: Bus.audio(server, if(soundscape) { 4 } { 16 }), group: Group.new(server));
@@ -167,9 +203,10 @@ playSoundscape = { |session, currentGraph|
 try {
     (root +/+ "experiments/dj/engine.scd").load;
     (root +/+ "experiments/dj/instruments.scd").load;
+    (root +/+ "experiments/dj/midi-export.scd").load;
     (root +/+ "infinite-engine.scd").load;
     (root +/+ "infinite-instruments.scd").load;
-    if(~makeDJEngine.isNil or: { ~djDefs.isNil or: { ~makeInfiniteEngine.isNil or: { ~infiniteDefs.isNil } } }) {
+    if(~makeDJEngine.isNil or: { ~djMidiBytes.isNil } or: { ~djDefs.isNil or: { ~makeInfiniteEngine.isNil or: { ~infiniteDefs.isNil } } }) {
         Error("Missing music engine or instruments").throw;
     };
     server.options.numInputBusChannels = 0;

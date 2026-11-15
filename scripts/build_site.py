@@ -23,6 +23,7 @@ DJ_SOURCES = (
     'rock-players.scd',
     'rock-physical-style.scd',
     'song-styles.scd',
+    'midi-export.scd',
     'melodic-round/recipes.scd',
     'melodic-round/neon-leads/instruments.scd',
     'instruments.scd',

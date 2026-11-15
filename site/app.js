@@ -2,6 +2,7 @@ const play = document.querySelector("#play");
 const channel = document.querySelector("#channel");
 const next = document.querySelector("#next");
 const energy = document.querySelector("#energy");
+const midi = document.querySelector("#midi");
 const status = document.querySelector("#status");
 const engineEvents = new EventTarget();
 const runtime = new URL("./runtime/", import.meta.url);
@@ -14,6 +15,9 @@ const releaseSettingsKey = "infinite-dj-release-settings";
 let recovery = new URL(location.href).searchParams.get("retry");
 let language, audioContext, initialized, unlockAudio, latestTrack;
 let state = "loading";
+// MIDI export stays hidden until it is offered publicly; add ?midi to the page URL to try it.
+let midiChunks = null;
+midi.hidden = !new URL(location.href).searchParams.has("midi");
 
 class StartupError extends Error {}
 class DownloadError extends StartupError {}
@@ -35,10 +39,37 @@ function show(nextState, message) {
   play.disabled = state === "loading" || state === "unavailable";
   channel.disabled = state === "loading" || state === "unlock" || state === "resume";
   next.disabled = !playing;
+  updateMidi();
   document.querySelector("#play-icon").textContent = playing ? "■" : "▶";
   const label = { playing: "Stop", error: "Retry", unlock: "Enable audio", resume: "Resume audio" };
   document.querySelector("#play-label").textContent = label[state] ?? "Play";
   if (!playing) delete status.dataset.track;
+}
+
+function updateMidi() {
+  midi.disabled = state !== "playing" || channel.value === "soundscape" || midiChunks !== null;
+}
+
+function exportMidi() {
+  return new Promise((resolve, reject) => {
+    function cleanup() {
+      clearTimeout(timer);
+      engineEvents.removeEventListener("midiready", ready);
+      engineEvents.removeEventListener("midifail", fail);
+    }
+    function ready(event) {
+      cleanup();
+      resolve(event.detail);
+    }
+    function fail(event) {
+      cleanup();
+      reject(new Error(event.detail));
+    }
+    const timer = setTimeout(() => fail({ detail: "MIDI export timed out." }), 90000);
+    engineEvents.addEventListener("midiready", ready);
+    engineEvents.addEventListener("midifail", fail);
+    language.runCode("~webMidi.value;");
+  });
 }
 
 async function download(url, read, cache = "default") {
@@ -410,7 +441,35 @@ document.addEventListener("visibilitychange", async () => {
   }
 });
 channel.addEventListener("change", () => {
+  updateMidi();
   if (state === "playing") void start();
+});
+engineEvents.addEventListener("midichunk", (event) => midiChunks?.push(event.detail));
+midi.addEventListener("click", async () => {
+  if (midiChunks !== null || state !== "playing") return;
+  midiChunks = [];
+  updateMidi();
+  midi.textContent = "Preparing MIDI…";
+  try {
+    const name = await exportMidi();
+    const hex = midiChunks.join("");
+    const bytes = new Uint8Array(hex.length / 2);
+    for (let index = 0; index < bytes.length; index += 1) {
+      bytes[index] = parseInt(hex.substr(index * 2, 2), 16);
+    }
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(new Blob([bytes], { type: "audio/midi" }));
+    link.download = name;
+    link.click();
+    setTimeout(() => URL.revokeObjectURL(link.href), 10000);
+    midi.textContent = "Download MIDI";
+  } catch (error) {
+    console.error(error);
+    midi.textContent = "MIDI failed – try again";
+  } finally {
+    midiChunks = null;
+    updateMidi();
+  }
 });
 next.addEventListener("click", () => {
   if (channel.value === "soundscape") {
