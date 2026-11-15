@@ -10,27 +10,34 @@
         mute:0.66,pick:0.112,pickSpread:0.002,rate:5.0,rateSpread:0.08,
         vibrato:0.14,vibratoSpread:0.015,vibratoAfter:1.0,
         slideChance:0.16,legatoChance:0.5,bendChance:0.36,bendSemis:1,
-        pedal:2,drive:0.32,driveMin:0.28,driveMax:0.41,tone:0.46,comp:0.18,chorusFX:0.025,fuzz:0),
+        pedal:2,drive:0.32,driveMin:0.28,driveMax:0.41,tone:0.46,comp:0.18,chorusFX:0.025,fuzz:0,
+        // Pedalboards approved in round 05-fx; each song takes one for its whole length.
+        boards:[(),(wah:0.9),(wah:0.9,boost:0.6,soloDelay:0.32,delayBeats:0.5),(delay:0.30,delayBeats:0.25)]),
     (id:1,name:"June",description:"Ringing jangle, spaced replies, light quick vibrato",
         rhythm:[[0,6,8,14],[0,6,8,15]],chorus:[[0,4,7,8,12,14],[0,4,7,8,12,15]],
         leadRhythm:[[0,4,8,12],[0,4,7,12]],contour:[[0,2,4,2],[2,1,0,2]],
         mute:0.22,pick:0.140,pickSpread:0.0025,rate:5.8,rateSpread:0.08,
         vibrato:0.12,vibratoSpread:0.012,vibratoAfter:0.75,
         slideChance:0.42,legatoChance:0.5,bendChance:0.14,bendSemis:1,
-        pedal:1,drive:0.10,driveMin:0.06,driveMax:0.19,tone:0.51,comp:0.48,chorusFX:0.24,fuzz:0),
+        pedal:1,drive:0.10,driveMin:0.06,driveMax:0.19,tone:0.51,comp:0.48,chorusFX:0.24,fuzz:0,
+        // Pedalboards approved in round 05-fx; each song takes one for its whole length.
+        boards:[(),(tremolo:0.65,tremoloRate:3),(delay:0.30,delayBeats:0.75)]),
     (id:2,name:"Flint",description:"Heavy spaced riffs, broad slow vibrato, whole-step bends",
         rhythm:[[0,3,8,11],[0,3,8,14]],chorus:[[0,3,6,8,11,14],[0,3,6,8,11,15]],
         leadRhythm:[[0,3,6,8,11],[0,3,8,12]],contour:[[0,2,0,4,2],[4,2,0,1]],
         mute:0.45,pick:0.102,pickSpread:0.002,rate:4.6,rateSpread:0.07,
         vibrato:0.23,vibratoSpread:0.015,vibratoAfter:0.75,
         slideChance:0.12,legatoChance:0.5,bendChance:0.58,bendSemis:2,
-        pedal:3,drive:0.46,driveMin:0.42,driveMax:0.55,tone:0.42,comp:0.18,chorusFX:0.025,fuzz:0.52)
+        pedal:3,drive:0.46,driveMin:0.42,driveMax:0.55,tone:0.42,comp:0.18,chorusFX:0.025,fuzz:0.52,
+        // Pedalboards approved in round 05-fx; each song takes one for its whole length.
+        boards:[(),(wah:0.9,boost:0.6)])
 ];
 ~djRockPlayerFor={|plan,seed|
     var player=~djRockPlayers[plan.palette.id].deepCopy;
     // Separate from the engine RNG, preserving drum/harmony decisions.
     var n=((seed.abs*65537)+((plan.serial+1)*104729)+13007)%2147483647;
-    player.motif=n%2;player;
+    player.motif=n%2;
+    player.board=(n div:2)%player.boards.size;player.putAll(player.boards[player.board]);player;
 };
 ~djRockPlayerLabel={|plan|
     if(plan.notNil and:{plan[\rockPlayer].notNil}){" / Guitar: "++plan.rockPlayer.name}{""};
@@ -68,6 +75,10 @@
     // dynamics and Tension move gain only within the player's personal range.
     (guitarComp:p.comp,guitarChorus:p.chorusFX,guitarPedal:p.pedal,
         guitarDrive:(p.drive+if(quiet){-0.04}{0}+(t*0.04)+if(solo){0.025}{0}).clip(p.driveMin,p.driveMax),
-        guitarTone:p.tone+(t*0.04),guitarFuzz:p.fuzz);
+        guitarTone:p.tone+(t*0.04),guitarFuzz:p.fuzz,
+        // Optional pedals (round 05-fx). Wah and boost are stepped on for solos only.
+        guitarWah:if(solo){p[\wah] ? 0}{0},guitarBoost:if(solo){p[\boost] ? 0}{0},
+        guitarTremolo:p[\tremolo] ? 0,guitarTremoloRate:p[\tremoloRate] ? 3,
+        guitarDelay:if(solo){p[\soloDelay] ? (p[\delay] ? 0)}{p[\delay] ? 0},guitarDelayBeats:p[\delayBeats] ? 0.75);
 };
 )

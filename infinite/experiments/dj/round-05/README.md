@@ -55,3 +55,27 @@ Same seed and 24 bars as 05-rock, with four solos requested (bars 4, 8, 14 and 1
 | E | Flint, half of the eligible notes. | 6 / 0 |
 
 A note is eligible when it follows the previous lead note within about a sixteenth, on the same string, at most four frets away. Rising notes hammer on and falling notes pull off. The string model gives them no pick noise, a softer start, a fingertip thump (hammer-on) or a small sideways pluck (pull-off). A player uses them only when it has a `legatoChance`. All five clips were approved on 2026-11-15, so Rook, June and Flint now play half of their eligible notes legato in the live Rock channel (`rock-players.scd`).
+
+## 05-fx: wah, overdrive boost, tremolo and delay
+
+```
+mkdir -p audio/listening-round/05-fx
+sclang infinite/experiments/dj/round-05/render.scd "$PWD/audio/listening-round/05-fx" fx
+python3 infinite/experiments/dj/package-audition.py audio/listening-round/05-fx 05-fx
+```
+
+Same seed, 24 bars and four requested solos as 05-legato. Rook, June and Flint already play with hammer-ons and pull-offs.
+
+| Clip | Player | Pedals |
+| --- | --- | --- |
+| A | Rook | None added (today's sound). |
+| B | Rook | Wah on the solos. |
+| C | Rook | Overdrive boost on the solos. |
+| D | Rook | Wah, boost and eighth-note echo on the solos. |
+| E | Rook | Slapback echo (a sixteenth) throughout. |
+| F | June | Tremolo (three dips per beat) throughout. |
+| G | June | Dotted-eighth echo throughout. |
+| H | Flint | Wah and boost on the solos. |
+
+Rhythm and lead guitar share one rig, so a pedal stepped on for a solo also colours the chords played under it. Wah and boost sit ahead of the compressor and drive pedals (in the deck's input stage); tremolo follows the chorus; the echo follows the speaker. Listening on 2026-11-15 approved B and D to H (H: "Gorgeous!!") and rejected C, the boost on its own, as "not that noticeable". D's echo was first a dotted eighth; on request it now falls on eighth notes. In the live Rock channel each song takes one pedalboard for its whole length (`boards` in `rock-players.scd`): Rook plays with none, wah, wah with boost and eighth-note echo, or slapback; June with none, tremolo, or dotted-eighth echo; Flint with none, or wah and boost. Tremolo and echo exist only on the current deck, not on the older humbucker deck used by tone versions 3 to 5.
+

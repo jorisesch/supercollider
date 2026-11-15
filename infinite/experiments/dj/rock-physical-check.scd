@@ -4,7 +4,8 @@ var root=thisProcess.nowExecutingPath.dirname,assert={|ok,msg|if(ok.not){Error(m
 try {
     var bars=0,gestures=(slide:0,bend:0,vibrato:0),pedals=Set.new;
     var expression=[\stringIndex,\fromNote,\slideBeats,\bendSemis,\bendMode,\vibrato,\vibratoRate,\pickPosition,\articulation];
-    var fxKeys=[\guitarComp,\guitarChorus,\guitarPedal,\guitarDrive,\guitarTone,\guitarFuzz];
+    var fxKeys=[\guitarComp,\guitarChorus,\guitarPedal,\guitarDrive,\guitarTone,\guitarFuzz,
+        \guitarWah,\guitarBoost,\guitarTremolo,\guitarTremoloRate,\guitarDelay,\guitarDelayBeats];
     (root+/+"engine.scd").load;(root+/+"instruments.scd").load;(root+/+"recall.scd").load;
     [\original,\aeolian,\ionian,\dorian,\phrygian,\mixolydian,\lydian].do {|mode|[\full,\pentatonic].do {|melody|
         var a=~makeDJEngine.value(2600,102,(channel:\rock,tonality:mode,melody:melody,rockPlayerVersion:0,rockToneVersion:3));

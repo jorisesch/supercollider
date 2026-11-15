@@ -2,6 +2,7 @@
 // sclang render.scd <output-dir> form   EDM builds, hooks and forms on one approved song style
 // sclang render.scd <output-dir> rock   Rock guitar tone and playing comparisons
 // sclang render.scd <output-dir> legato Hammer-ons and pull-offs in the Rock lead
+// sclang render.scd <output-dir> fx     Wah, overdrive boost, tremolo and delay on the Rock guitar
 (
 var root=thisProcess.nowExecutingPath.dirname,dj=root.dirname,output=thisProcess.argv.at(0);
 var study=(thisProcess.argv.at(1) ? "form").asSymbol,clips,index=0,render,record,options;
@@ -52,6 +53,8 @@ try {
         var decks=[800,801],sources=[110,111],eqNodes;
         ~djRockPlayers=~djRockPlayers.deepCopy;
         clip.player.keysValuesDo {|key,value|~djRockPlayers[clip.palette].put(key,value)};
+        // A clip states its own pedals; the per-song pedalboard choice is switched off.
+        ~djRockPlayers[clip.palette].put(\boards,[()]);
         engine=~makeDJEngine.value(clip.seed,tempo,(channel:\rock,palette:clip.palette,hold:true,tonality:\aeolian));
         mix=~djMixSpec.value(\rock,engine.controls.rockToneVersion);
         ~djDefs.do {|def|score.add([0,[\d_recv,def.asBytes]])};
@@ -108,6 +111,25 @@ try {
                 channel:\rock,bpm:102,keyName:clip.keyName,bars:clip.bars,seconds:built.duration,
                 paletteName:["Garage","Jangle","Fuzz room"][clip.palette]++" / "++(clip[\hammers] ? 0)++" hammer-ons, "++(clip[\pulls] ? 0)++" pull-offs",
                 sections:[[4,"solo"],[8,"solo"],[14,"solo"],[18,"solo"]],study:"legato"));
+        };
+    };
+    if(study==\fx){
+        clips=[
+            (id:"A",name:"Rook, no extra pedals (today)",palette:0,player:(),fx:"none"),
+            (id:"B",name:"Rook, wah on the solos",palette:0,player:(wah:0.9),fx:"wah"),
+            (id:"C",name:"Rook, overdrive boost on the solos",palette:0,player:(boost:0.8),fx:"boost"),
+            (id:"D",name:"Rook, wah, boost and echo on the solos",palette:0,player:(wah:0.9,boost:0.6,soloDelay:0.32,delayBeats:0.5),fx:"wah, boost, eighth-note delay"),
+            (id:"E",name:"Rook, slapback echo throughout",palette:0,player:(delay:0.30,delayBeats:0.25),fx:"slapback"),
+            (id:"F",name:"June, tremolo throughout",palette:1,player:(tremolo:0.65,tremoloRate:3),fx:"tremolo"),
+            (id:"G",name:"June, dotted-eighth echo throughout",palette:1,player:(delay:0.30,delayBeats:0.75),fx:"delay"),
+            (id:"H",name:"Flint, wah and boost on the solos",palette:2,player:(wah:0.9,boost:0.6),fx:"wah, boost")
+        ];
+        render={
+            var clip=clips[index].putAll((seed:2600,bars:24,soloBars:[4,8,14,18])),built=rockScore.value(clip);
+            record.value(built.score,output+/+clip.id,built.duration,(id:clip.id,file:clip.id++".wav",name:clip.name,
+                channel:\rock,bpm:102,keyName:clip.keyName,bars:clip.bars,seconds:built.duration,
+                paletteName:["Garage","Jangle","Fuzz room"][clip.palette]++" / "++clip.fx,
+                sections:[[4,"solo"],[8,"solo"],[14,"solo"],[18,"solo"]],study:"fx"));
         };
     };
     if(study==\form){

@@ -85,7 +85,8 @@ try {
                 var messages=~djAutomation.value(frame.automation[0],[800,801],[810,811]);
                 frame.decks.do {|plan,id|
                     assert.value(messages[2+id]==[\n_set,810+id,\bluesMix,
-                        frame.automation[0].fx[id].bluesMix,\humbuckerMix,if(plan.rockPickup==\humbucker){1}{0}],
+                        frame.automation[0].fx[id].bluesMix,\humbuckerMix,if(plan.rockPickup==\humbucker){1}{0},
+                        \guitarWah,0,\guitarBoost,0,\bpm,frame.automation[0].bpm],
                         "Pickup load did not follow its deck during a handover");
                 };
                 differentPickups=true;

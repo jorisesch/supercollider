@@ -191,3 +191,17 @@ All four Violet Afterburn arrangements approved ("The EDM tracks are all good. A
 ### Round 05-legato — hammer-ons and pull-offs (2026-11-15)
 
 All five clips approved ("Guitar hammer ons and pull offs are all good"). Rook, June and Flint now play half of their eligible lead notes as hammer-ons or pull-offs in the live Rock channel (`legatoChance:0.5`). June's and Flint's phrases mostly rise between close notes, so they hammer on far more than they pull off. [Round notes](round-05/README.md).
+
+### Round 05-fx — wah, overdrive boost, tremolo and echo (2026-11-15)
+
+| ID | Version | Decision |
+| --- | --- | --- |
+| B | Rook, wah on the solos | Approved |
+| C | Rook, overdrive boost on the solos | Rejected. "Not that noticeable" |
+| D | Rook, wah, boost and echo on the solos | Approved. "Align delay better with the quarter or eight notes" |
+| E | Rook, slapback echo | Approved |
+| F | June, tremolo | Approved |
+| G | June, dotted-eighth echo | Approved |
+| H | Flint, wah and boost on the solos | Approved. "Gorgeous!!" |
+
+Each live Rock song now takes one approved pedalboard for its whole length, or none. D's echo moved from a dotted eighth to eighth notes. The boost is used only together with the wah. [Round notes](round-05/README.md).

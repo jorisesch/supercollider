@@ -484,10 +484,11 @@ var root=thisProcess.nowExecutingPath.dirname;
             \fxResonance,fx.resonance,\fxEcho,fx.echo,\fxDelay,fx.delay,\fxReverb,fx.reverb,\fxStutter,fx.stutter,
             \fxStutterRate,fx.stutterRate,\t_stutter,if(fx.stutterReset) {1} {0}];
         if(fx[\guitarComp].notNil){message=message++[\guitarComp,fx.guitarComp,\guitarChorus,fx.guitarChorus]};
-        [\guitarPedal,\guitarDrive,\guitarTone,\guitarFuzz].do {|key|if(fx[key].notNil){message=message++[key,fx[key]]}};
+        [\guitarPedal,\guitarDrive,\guitarTone,\guitarFuzz,\guitarTremolo,\guitarTremoloRate,\guitarDelay,\guitarDelayBeats].do {|key|if(fx[key].notNil){message=message++[key,fx[key]]}};
         message;
     }) ++ if(eqNodes.isNil){[]}{
-        eqNodes.collect {|node,id|[\n_set,node,\bluesMix,point.fx[id][\bluesMix] ? 0,\humbuckerMix,point.fx[id][\humbuckerMix] ? 0]};
+        eqNodes.collect {|node,id|[\n_set,node,\bluesMix,point.fx[id][\bluesMix] ? 0,\humbuckerMix,point.fx[id][\humbuckerMix] ? 0,
+            \guitarWah,point.fx[id][\guitarWah] ? 0,\guitarBoost,point.fx[id][\guitarBoost] ? 0,\bpm,point.bpm]};
     };
 };
 )

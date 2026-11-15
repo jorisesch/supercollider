@@ -2,7 +2,7 @@
 (
 var root=thisProcess.nowExecutingPath.dirname,assert={|ok,msg|if(ok.not){Error(msg).throw}};
 try {
-    var count=0,notes=0,landings=0,names=Set.new,records=Dictionary.new,legato=Dictionary.new;
+    var count=0,notes=0,landings=0,names=Set.new,records=Dictionary.new,legato=Dictionary.new,boards=Set.new,soloPedals=0;
     var report=List.new;
     (root+/+"engine.scd").load;(root+/+"instruments.scd").load;(root+/+"recall.scd").load;
     [\original,\ionian,\dorian,\phrygian,\mixolydian,\lydian].do {|mode|3.do {|id|[\full,\pentatonic].do {|melody|
@@ -58,6 +58,13 @@ try {
                     assert.value(fx.guitarPedal==p.pedal and:{fx.guitarComp==p.comp}
                         and:{fx.guitarChorus==p.chorusFX} and:{fx.guitarFuzz==p.fuzz},"Guitar rig changed identity");
                     assert.value(fx.guitarDrive.inclusivelyBetween(p.driveMin,p.driveMax),"Gain left character range");
+                    // One approved pedalboard per song; wah and boost only while a solo plays.
+                    assert.value(p.boards[p.board].keys.every {|key|p[key]==p.boards[p.board][key]},"Song lost its pedalboard");
+                    assert.value(fx.guitarBoost==if(plan.rockSoloActive==true){p[\boost] ? 0}{0},"Boost did not follow the solo");
+                    assert.value(fx.guitarWah==if(plan.rockSoloActive==true){p[\wah] ? 0}{0},"Wah did not follow the solo");
+                    assert.value(fx.guitarTremolo==(p[\tremolo] ? 0) and:{fx.guitarDelay<=0.4}
+                        and:{[0.25,0.5,0.75].includes(fx.guitarDelayBeats)},"Tremolo or echo left its approved setting");
+                    boards.add([p.id,p.board]);if(fx.guitarWah>0){soloPedals=soloPedals+1};
                 };
             }};count=count+1;
         };
@@ -99,6 +106,13 @@ try {
     }.value;
     3.do {|id|assert.value((legato[[id,2]] ? 0)>20,"Player "++id++" never hammers on")};
     assert.value(legato.keys.any {|key|key[1]==3},"No player pulls off");
+    assert.value(boards.size>=4 and:{soloPedals>0},"Songs did not use pedalboards");
+    // Across songs every player reaches each of its approved pedalboards.
+    3.do {|id|
+        var seen=Set.new;
+        24.do {|serial|seen.add(~djRockPlayerFor.value((palette:(id:id),serial:serial),2600).board)};
+        assert.value(seen.size==~djRockPlayers[id].boards.size,"Player "++id++" misses a pedalboard");
+    };
     ("PASS: "++count++" player bars / "++notes++" guitar notes / "++landings++" chord landings; three stable characters, bounded choices, recurring rhythms, bass/drums unchanged and exact handover recall").postln;
     0.exit;
 } {|e|e.reportError;1.exit};

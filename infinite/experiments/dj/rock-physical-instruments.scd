@@ -106,26 +106,32 @@ makeString={|name,humbucker=false,decayStudy=false|
 // Keep transport, drum room and bass path identical to the earlier deck.
 makeDeck={|name,humbucker=false| SynthDef(name,{|in=16,out=28,musicGain=1,bassGain=1,drumsGain=1,bpm=102,
     fxFilter=0,fxCutoff=12000,fxResonance=0.35,fxEcho=0,fxDelay=0.75,fxReverb=0.08,fxStutter=0,fxStutterRate=4,t_stutter=0,
-    guitarComp=0,guitarChorus=0,guitarPedal=0,guitarDrive=0.3,guitarTone=0.5,guitarFuzz=0|
+    guitarComp=0,guitarChorus=0,guitarPedal=0,guitarDrive=0.3,guitarTone=0.5,guitarFuzz=0,
+    guitarTremolo=0,guitarTremoloRate=3,guitarDelay=0,guitarDelayBeats=0.75|
     var music=In.ar(in,2),bass=LPF.ar(In.ar(in+2,2),1800)*0.72,drums=In.ar(in+4,2)*1.15;
+    var tempo=bpm.clip(72,140);
     var musicLevel=Lag.kr(musicGain,0.02),bassLevel=Lag.kr(bassGain,0.02),drumsLevel=Lag.kr(drumsGain,0.02);
-    var delay=Lag.kr(fxDelay.clip(0.08,0.75),0.5)*(60/Lag.kr(bpm.clip(72,140),3));
+    var delay=Lag.kr(fxDelay.clip(0.08,0.75),0.5)*(60/Lag.kr(tempo,3));
     var echo,verb,room,program,filtered,phase,gate;
     if(humbucker){music=~hpLoad.value(music,vintage)};
     music=HPF.ar(~djGuitarRig.value(music,Lag.kr(guitarComp.clip(0,0.8),0.08),Lag.kr(guitarChorus.clip(0,0.35),0.2),
-        guitarPedal,Lag.kr(guitarDrive.clip(0,0.8),0.1),Lag.kr(guitarTone.clip(0,1),0.1),Lag.kr(guitarFuzz.clip(0,1),0.06)),100)*2;
+        guitarPedal,Lag.kr(guitarDrive.clip(0,0.8),0.1),Lag.kr(guitarTone.clip(0,1),0.1),Lag.kr(guitarFuzz.clip(0,1),0.06),
+        // Tremolo and echo only on the current deck: the older humbucker deck (tones 3-5)
+        // is already at the portable SynthDef size limit.
+        *if(humbucker){[]}{[Lag.kr(guitarTremolo.clip(0,0.9),0.2),(tempo/60)*guitarTremoloRate.clip(1,4),
+            Lag.kr(guitarDelay.clip(0,0.6),0.15),guitarDelayBeats.clip(0.25,0.75)*(60/tempo)]}),100)*2;
     room=FreeVerb2.ar(drums[0],drums[1],1,0.34,0.65)*0.08;
     echo=LPF.ar(CombC.ar(HPF.ar(music,450)*Lag.kr(fxEcho.clip(0,1),0.06),2,delay,2.6),3900)*0.35;
     verb=FreeVerb2.ar(music[0],music[1],1,0.52,0.6)*Lag.kr(fxReverb.clip(0,1),0.4)*0.22;
     program=((music+echo+verb)*musicLevel)+(bass*bassLevel)+((drums+room)*drumsLevel);
     filtered=RLPF.ar(program,Lag.kr(fxCutoff.clip(500,18000),0.08),Lag.kr(fxResonance.clip(0.25,0.9),0.08));
     program=(program*(1-Lag.kr(fxFilter.clip(0,1),0.06)))+(filtered*Lag.kr(fxFilter.clip(0,1),0.06));
-    phase=Phasor.kr(t_stutter,(bpm.clip(72,140)/60)*fxStutterRate.clip(1,4)*ControlDur.ir,0,1,0);
+    phase=Phasor.kr(t_stutter,(tempo/60)*fxStutterRate.clip(1,4)*ControlDur.ir,0,1,0);
     gate=1-(Lag.kr(fxStutter.clip(0,1),0.015)*(1-Lag.kr(phase<0.48,0.006)));
     Out.ar(out,LeakDC.ar(program*gate));
 })};
 ~djDefs=~djDefs++[makeDeck.value(\rockPhysicalDeck),makeDeck.value(\rockHumbuckerDeck,true),
-    SynthDef(\rockBluesEQ,{|in=16,bluesMix=0,humbuckerMix=0|
+    SynthDef(\rockBluesEQ,{|in=16,bluesMix=0,humbuckerMix=0,guitarWah=0,guitarBoost=0,bpm=102|
         var music=In.ar(in,2);
         var blend=Lag.kr(bluesMix.clip(0,1),0.06),guitarEQ,loaded;
         // Keep the humbucker's pick attack and trim chord body before the pedals.
@@ -133,7 +139,10 @@ makeDeck={|name,humbucker=false| SynthDef(name,{|in=16,out=28,musicGain=1,bassGa
         guitarEQ=MidEQ.ar(guitarEQ,300,0.9,-5);
         music=music+((guitarEQ-music)*blend);
         loaded=~hpLoad.value(music,vintage);
-        ReplaceOut.ar(in,music+((loaded-music)*Lag.kr(humbuckerMix.clip(0,1),0.02)));
+        music=music+((loaded-music)*Lag.kr(humbuckerMix.clip(0,1),0.02));
+        // Wah, then an overdrive boost, ahead of the compressor and drive pedals in the deck.
+        music=~djGuitarWah.value(music,Lag.kr(guitarWah.clip(0,1),0.08),bpm.clip(72,140));
+        ReplaceOut.ar(in,~djGuitarBoost.value(music,Lag.kr(guitarBoost.clip(0,1),0.08)));
     })
 ];
 )

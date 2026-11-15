@@ -92,13 +92,37 @@
     wet=DelayC.ar(wet,0.02,delay);wet=~djRC.value(~djRC.value(wet,5000),5000);
     (input*(1-(amount*0.35)))+(wet*amount*0.65);
 };
-~djGuitarRig={|input,comp=0,chorus=0,pedal=0,drive=0.3,tone=0.5,fuzz=0|
+~djGuitarWah={|input,amount=0,bpm=102|
+    // Inductor wah reduced to its resonant band-pass. The treadle rocks once per
+    // beat, heel (420 Hz) to toe (2.1 kHz), and sits before the compressor and drive pedals.
+    var foot=SinOsc.kr(bpm/60,1.5pi).range(0,1);
+    var wet=BPF.ar(input,Lag.kr(foot.linexp(0,1,420,2100),0.02),0.24)*2.6;
+    input+((wet-input)*amount);
+};
+~djGuitarBoost={|input,amount=0|
+    // Overdrive used as a solo boost: more level and upper mids into the main pedal.
+    (input*(1+(amount*0.8)))+(~djRC.value(input,720,true)*amount*2.4);
+};
+~djGuitarTremolo={|input,depth=0,hz=5|
+    // Amplifier tremolo: the output level dips smoothly, level kept at the peaks.
+    input*(1-(depth*SinOsc.kr(hz,1.5pi,0.5,0.5)));
+};
+~djGuitarDelay={|input,amount=0,seconds=0.4|
+    // Analogue-style echo after the speaker: each repeat is darker and about 10 dB quieter.
+    // 0.65 s covers three sixteenths at 72 BPM and keeps the browser's fixed audio memory small.
+    var wet=CombL.ar(HPF.ar(input,280),0.65,seconds,seconds*6);
+    input+(LPF.ar(wet,2800)*amount);
+};
+// Wah and boost run ahead of this rig, in the deck's input stage (\\rockBluesEQ).
+~djGuitarRig={|input,comp=0,chorus=0,pedal=0,drive=0.3,tone=0.5,fuzz=0,tremolo,tremoloHz=5,delay,delaySeconds=0.4|
     var x=~djGuitarCompressor.value(input,comp),cab;
     x=~djPedals.value(x,pedal,drive,tone,fuzz);
     x=~djGuitarChorus.value(x,chorus);
+    if(tremolo.notNil){x=~djGuitarTremolo.value(x,tremolo,tremoloHz)};
     // Broad loudspeaker rolloff/low resonance; intentionally not a measured IR.
     cab=HPF.ar(x,75)+(BPF.ar(x,125,0.8)*0.20);
     cab=LPF.ar(LPF.ar(cab,4700),6200);
-    LeakDC.ar(cab)*0.40;
+    cab=LeakDC.ar(cab)*0.40;
+    if(delay.notNil){~djGuitarDelay.value(cab,delay,delaySeconds)}{cab};
 };
 )

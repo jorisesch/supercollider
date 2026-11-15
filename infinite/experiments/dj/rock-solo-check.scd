@@ -75,7 +75,8 @@ try {
             {
                 var lead=f.events.select {|e|e.role==\djHook};
                 assert.value(lead.size==[3,3,5,2][i],"Requested riff lost its call, answer, climb or arrival");
-                assert.value(lead.every {|e|e.slideBeats==0 and:{e.articulation==0}},"Melodic lead lost its picked attacks");
+                // Riff notes are picked, or hammered on / pulled off (approved in round 05-legato); never slid.
+                assert.value(lead.every {|e|if(e.articulation>=2){e.slideBeats<0.02}{e.slideBeats==0 and:{e.articulation==0}}},"Melodic lead slid into a riff note");
                 if(i==3){
                     assert.value(lead.last.bendSemis==1 and:{lead.last.bendMode==2}
                         and:{lead.last.duration==2.45},"Requested riff lost its held semitone bend");
